@@ -310,7 +310,7 @@
 
         function seacrh(query = '') {
             $.ajax({
-                url: "api/search_student_by_name",
+                url: "/search_student_by_name",
                 type: 'GET',
                 data: {query: query},
                 dataType : 'json',

@@ -30,6 +30,7 @@ class CreateStudentsTable extends Migration
             $table->string('address')->nullable();
             $table->string('degree')->nullable();
             $table->string('faculty')->nullable();
+            $table->unsignedBigInteger('center_id');
             $table->timestamps();
         });
     }

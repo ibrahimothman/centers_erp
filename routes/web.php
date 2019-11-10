@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'StudentController@create' );
 Route::resource('students','StudentController');
 Route::get('students.table','StudentController@showTable')->name('students.table');
-Route::get('students/search_student_by_name','StudentController@searchByName');
+Route::get('/search_student_by_name','StudentController@searchByName');
 Route::get('students/image','Student@profileImage');
 
 
@@ -34,13 +34,13 @@ Route::post('/close_group','TestGroupController@closeGroup');
 //----------------------- Test Enrollment---------------
 Route::resource('test-enrollments','TestEnrollmentController');
 Route::get('get_tests_enrollments','TestEnrollmentController@getTestEnrollments');
+Route::delete('delete-test-enrollments','TestEnrollmentController@deleteEnrollment');
 
 //----------------------- test takes ------------
 Route::resource('test-takes','TestTakeController');
 
 //----------------------- test results ------------
 Route::resource('test-results','TestResultController');
-Route::patch('save_result','TestResultController@saveResult');
 
 
 //Route::resource('courses','CoursesController');

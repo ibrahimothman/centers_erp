@@ -127,7 +127,7 @@
                                                 <form class="card-footer border-primary " method="post" action="/tests/{{$test->id}}">
                                                     @csrf
                                                     @method('delete')
-                                                        <a href="/add_test_time" class="btn btn-outline-success "><i class="fas fa-plus"></i> <SPAN>تسجيل الامتحان</SPAN> </a>
+                                                        <a href="{{ route('test-groups.create') }}" class="btn btn-outline-success "><i class="fas fa-plus"></i> <SPAN>تسجيل الامتحان</SPAN> </a>
                                                         <a href="tests/{{$test->id}}/edit" class=" btn btn-outline-primary "><i class="fas fa-edit"></i> </a>
                                                         <button type="submit" class="btn btn-outline-danger"> <i class="fas fa-trash-alt"></i> </button>
                                                     </form>

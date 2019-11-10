@@ -447,15 +447,16 @@
     }
 
     function searchForStudents(query = '') {
+        console.log(query);
         $.ajax({
-            url:"api/search_student_by_name",
+            url:"/search_student_by_name",
             type:'GET',
             data:{query:query},
-            dataType : 'json',
+
             success:function (response) {
                 view(response);
             }
-        })
+        });
     }
 </script>
 
