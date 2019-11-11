@@ -12,6 +12,12 @@ use phpDocumentor\Reflection\Types\Null_;
 
 class TestGroupController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,13 +27,13 @@ class TestGroupController extends Controller
     {
         //echo 'test '.Input::get('test');
         //Input::get('test'
-        $allTests = DB::table('tests')
-            ->get();
+        $center = auth()->user()->center;
+        $allTests = $center->tests;
 
-        $tests = DB::table('tests');
+        $tests = $center->tests()->paginate(2);
         if (Input::get('test')!=null)
-            $tests=$tests->where('id',Input::get('test'));
-        $tests=$tests->paginate(2);
+            $tests=$center->tests()->where('id',Input::get('test'))->paginate(2);
+
 
         foreach ($tests as $test){
             $groups=DB::table('test_groups')
@@ -54,7 +60,7 @@ class TestGroupController extends Controller
      */
     public function create()
     {
-        $tests = Test::orderBy('created_at','desc')->paginate(10);
+        $tests = auth()->user()->center->tests()->orderBy('created_at','desc')->paginate(10);
 
         $testName=null;
         if (Input::get('test')!=null)
@@ -154,10 +160,10 @@ class TestGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TestGroup $testGroup)
     {
         //
-        $testGroup = TestGroup::find($id);
+        $this->authorize('update',$testGroup);
         return view('testGroup.edit')->with('testGroup',$testGroup);
     }
 
@@ -171,6 +177,7 @@ class TestGroupController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->authorize('update',$testGroup);
         $this->validate($request,[
             'test_group_date' => 'required',
             'test_group_chairs' => 'required',
@@ -199,6 +206,7 @@ class TestGroupController extends Controller
     public function destroy($id)
     {
         //
+        $this->authorize('update',$testGroup);
         $testGroup = TestGroup::find($id);
         $testGroup->delete();
         return redirect('/test-groups')

@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class TestTakeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -41,14 +45,20 @@ class TestTakeController extends Controller
         $today=$utility->getCurrentDay();
         $testGroups=DB::table('test_groups')
             ->join("tests",'test_groups.test_id','=','tests.id')
+            ->where('tests.center_id','=',auth()->user()->center->id)
             ->get();
         if (Input::get('test')!=null)
-            $testGroups=$testGroups->where("tests.id",Input::get('test'));
+            $testGroups=DB::table('test_groups')
+                ->join("tests",'test_groups.test_id','=','tests.id')
+                ->where('tests.center_id','=',auth()->user()->center->id)
+                ->where('tests.id','=',Input::get('test'))
+                ->get();
         foreach ($testGroups as $testGroup){
             $testGroup->students=DB::table('student_test_group')
                 ->join("students",'student_test_group.student_id','=','students.id')
                 ->join("tests",'student_test_group.test_group_id','=','tests.id')
                 ->where('student_test_group.test_group_id','=',$testGroup->id)
+                ->where('tests.center_id','=',auth()->user()->center->id)
                 ->select(['students.*' ,'student_test_group.id','student_test_group.take'])
                 ->get();
         }

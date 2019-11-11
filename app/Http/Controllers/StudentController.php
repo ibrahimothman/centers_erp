@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\StudentDetail;
+use App\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Student;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\HttpFoundation\File\File;
+use const http\Client\Curl\AUTH_ANY;
 
 
 class StudentController extends Controller
@@ -20,7 +23,7 @@ class StudentController extends Controller
 
     public function __construct()
     {
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -30,15 +33,15 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
+        $center = Auth::user()->center;
+
+        $students = $center->students;
+//        dd($students);
         return view('students.all')->with('students',$students);
     }
 
     public function viewAll(){
-        $students = DB::table('users')
-            ->orderBy('created_at','desc')
-            ->join('student_details', 'users.id', '=', 'student_details.student_id')
-            ;
+        $students = Auth::user()->center->students;
 
 
         return response()->json($students);
@@ -52,7 +55,7 @@ class StudentController extends Controller
     public function showTable()
     {
 
-        $students = Student::orderBy('id','asc')->get();
+        $students = Auth::user()->center->students;
         return view('students.all-table')->with('students', $students);
     }
 
@@ -78,8 +81,8 @@ class StudentController extends Controller
     {
 
         // todo : attach student to the center
-        $center = Center::first();
-        $student = Student::create($this->validateRequest(''));
+        $center = Auth::user()->center;
+        $student = $center->students()->create($this->validateRequest(''));
         $this->storeImage($student);
         $center->students()->syncWithoutDetaching($student);
 //        $center->push();
@@ -97,6 +100,9 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
+        // policy
+//        dd(auth()->user());
+        $this->authorize('view',$student);
         return view('students.show',compact('student'));
     }
 
@@ -110,7 +116,9 @@ class StudentController extends Controller
     {
 
 
+        // policy
 //        dd($student);
+        $this->authorize('view',$student);
         return view('students.studentEdit',compact('student'));
 
     }
@@ -124,6 +132,8 @@ class StudentController extends Controller
      */
     public function update(Student $student)
     {
+        //policy
+        $this->authorize('view',$student);
         $student->update($this->validateRequest($student->id));
         $this->storeImage($student);
         return redirect("/students/$student->id")->with('success','updated');
@@ -138,6 +148,11 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
 
+        //policy
+        $this->authorize('view',$student);
+        // delete from pivot
+        $center = Auth::user()->center;
+        $center->students()->detach($student);
         $student->delete();
         return redirect('/students')->with('success','students is deleted');
 
@@ -176,12 +191,14 @@ class StudentController extends Controller
     }
 
     public function searchByName(){
+        // search for only auth center
+        $center = Auth::user()->center;
         if(request()->ajax()){
             $query = request()->get('query');
             if($query != ''){
-                $students = Student::where('nameEn', 'like', '%' . $query . '%')->get();
+                $students = $center->students()->where('nameEn', 'like', '%' . $query . '%')->get();
             }else{
-                $students = Student::all();
+                $students = $center->students;
             }
 
         }

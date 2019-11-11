@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Input;
 
 class TestResultController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,14 +25,14 @@ class TestResultController extends Controller
     public function index()
     {
 
-        $center = Center::findOrFail(7);
+        $center = auth()->user()->center;
         $tests = $center->tests;
         if(Input::get('test')) {
             $test_id = explode(',', Input::get('test'), 2)[0];
             $group_id = explode(',', Input::get('test'), 2)[1];
 
-            $test = Test::findOrFail($test_id);
-            $students = TestGroup::findOrFail($group_id)->enrollers;
+            $test = auth()->user()->center->tests()->findOrFail($test_id);
+            $students = $test->groups()->findOrFail($group_id)->enrollers;
             return view('testResult.test-result',compact([
                 'tests' => $tests,
                 'test' => $test,
@@ -63,9 +67,15 @@ class TestResultController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        if(request()->ajax()){
+            $s_id = request()->get('student_id');
+            $g_id = request()->get('group_id');
+            $result = request()->get('result');
+        }
+        Student::findOrFail($s_id)->testsEnrolling()->updateExistingPivot($g_id,array('result' => $result));
+        return 'successfully updated';
     }
 
     /**
@@ -116,13 +126,5 @@ class TestResultController extends Controller
 
 
 
-    function saveResult(){
-        if(request()->ajax()){
-            $s_id = request()->get('student_id');
-            $g_id = request()->get('group_id');
-            $result = request()->get('result');
-        }
-        Student::findOrFail($s_id)->testsEnrolling()->updateExistingPivot($g_id,array('result' => $result));
-        return 'successfully updated';
-    }
+
 }

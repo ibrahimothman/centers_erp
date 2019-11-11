@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +22,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        //
-        $tests = Test::orderBy('created_at','desc')->get();
+
+        $tests = auth()->user()->center->tests()->orderBy('created_at','desc')->get();
         return view('test.index',compact('tests'));
     }
 
@@ -40,7 +46,7 @@ class TestController extends Controller
      */
     public function store()
     {
-        $center = Center::find(1);
+        $center = auth()->user()->center;
         $test = $center->tests()->create($this->validateRequest(''));
         $this->setRetake($test);
 
@@ -65,22 +71,24 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Test $test)
     {
         //
-        $test = Test::find($id);
+
+        $this->authorize('view',$test);
+
         $testGroups=DB::table('test_groups')
-            ->leftJoin('test_enrollments','test_groups.id','=','test_enrollments.test_group_id')
-            ->selectRaw('test_groups.*, count(test_enrollments.id) as enrollmentsCount')
+            ->leftJoin('student_test_group','test_groups.id','=','student_test_group.test_group_id')
+            ->selectRaw('test_groups.*, count(student_test_group.id) as enrollmentsCount')
             ->groupBy('test_groups.id')
-            ->where('test_groups.test_id',$id)
+            ->where('test_groups.test_id',$test->id)
             ->get();
 
-        $enrollments =DB::table('test_enrollments')
-            ->join('users','test_enrollments.student_id','=','users.id')
-            ->join('test_groups','test_enrollments.test_group_id','=','test_groups.id')
+        $enrollments =DB::table('student_test_group')
+            ->join('students','student_test_group.student_id','=','students.id')
+            ->join('test_groups','student_test_group.test_group_id','=','test_groups.id')
             ->join('tests','test_groups.test_id','=','test_id')
-            ->where('tests.id',$id)
+            ->where('tests.id',$test->id)
             ->paginate(10)
             ->items();
 
@@ -88,7 +96,7 @@ class TestController extends Controller
             ->with('test',$test)
             ->with('testGroups',$testGroups)
             ->with('enrollments',$enrollments)
-            ->with('id',$id);
+            ->with('id',$test->id);
 
     }
 
@@ -98,10 +106,10 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Test $test)
     {
         //
-        $test = Test::find($id);
+        $this->authorize('update',$test);
         return view('test.edit')->with('test',$test);
 
     }
@@ -116,6 +124,7 @@ class TestController extends Controller
     public function update(Test $test)
     {
 
+        $this->authorize('update',$test);
         $test->update($this->validateRequest($test->id));
         $this->setRetake($test);
         return redirect('/tests')->with('success','test updated');
@@ -131,6 +140,7 @@ class TestController extends Controller
     public function destroy(Test $test)
     {
 
+        $this->authorize('update',$test);
         $test->delete();
 
         return redirect('/tests')->with('success','test is deleted');

@@ -226,8 +226,8 @@ function getGroupsStudents(test_id) {
         var result = $('#result'+count+i).val();
         if(result.length !== 0 && result <= full_mark){
             $.ajax({
-                url:'/save_result',
-                type:'patch',
+                url:'/test-results',
+                type:'post',
                 data:{student_id : studentId, group_id : groupId,result : result, _token: "{{ csrf_token() }}"},
                 success: function (data) {
                     alert(data);

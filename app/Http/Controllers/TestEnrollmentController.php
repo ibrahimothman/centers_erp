@@ -14,6 +14,12 @@ use Monolog\Handler\StubNewRelicHandlerWithoutExtension;
 
 class TestEnrollmentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +28,7 @@ class TestEnrollmentController extends Controller
     public function index()
     {
 //        $this->getTestEnrollments();
-        $tests = Test::all();
+        $tests = auth()->user()->center->tests;
         return view('testEnrollments.index',compact('tests'));
     }
 
@@ -34,9 +40,9 @@ class TestEnrollmentController extends Controller
     public function create()
     {
 
-        $students = Student::all();
         // todo center
-        $center = Center::find(7);
+        $center = auth()->user()->center;
+        $students = $center->students;
         $tests = $center->tests;
 //        dd($tests);
 
@@ -112,12 +118,13 @@ class TestEnrollmentController extends Controller
 
     public function getTestEnrollments()
     {
+
         if(request()->ajax()){
             $test_id = request()->get('test_id');
         }
 
         // todo determine center
-        $test = Test::with('groups')->findOrFail($test_id);
+        $test = auth()->user()->center->tests()->with('groups')->findOrFail($test_id);
         foreach ($test->groups as $group){
             $group->enrollers;
         }
@@ -158,8 +165,18 @@ class TestEnrollmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return 'hello';
     }
 
+    public function deleteEnrollment()
+    {
+        if(request()->ajax()){
+            $student_id = request()->get('student_id');
+            $test_group_id = request()->get('test_group_id');
+        }
+
+        TestGroup::findOrFail($test_group_id)->enrollers()->detach($student_id);
+        return 'successfully deleted';
+    }
 }
 
