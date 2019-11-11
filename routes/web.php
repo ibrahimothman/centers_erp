@@ -42,6 +42,11 @@ Route::resource('test-takes','TestTakeController');
 Route::resource('test-results','TestResultController');
 Route::patch('save_result','TestResultController@saveResult');
 
+//----------------------- statement ------------
+Route::resource('statement_template','StatementTemplateController');
+Route::resource('statement_preview','StatementPreviewController');
+Route::post('saveStatementTemplate','StatementTemplateController@saveStatementTemplate');
+
 
 //Route::resource('courses','CoursesController');
 //Route::resource('Student','StudentController');
@@ -89,6 +94,7 @@ Route::patch('save_result','TestResultController@saveResult');
 //Route::get('search_tests','TestController@searchTest');
 //Route::get('check_stu_test','TestEnrollmentController@checkEnrollmentTest');
 //Route::get('check_stu_time','TestEnrollmentController@checkEnrollmentTime');
+
 
 
 
