@@ -20,4 +20,9 @@ class Test extends Model
 
     }
 
+    public function statement()
+    {
+        return $this->hasOne(TestStatement::class);
+    }
+
 }

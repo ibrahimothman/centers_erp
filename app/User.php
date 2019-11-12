@@ -37,6 +37,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // Automatically create empty center once new user has been created
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user){
+//            $center = $user->center()->create([
+//                'name' => 'center name'
+//            ]);
+
+//            $user->update([
+//                'center_id' => 2
+//            ]);
+        });
+    }
+
     public function center()
     {
         return $this->belongsTo(Center::class);

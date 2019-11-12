@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\TestStatement;
 use App\Utility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class statementPreviewController extends Controller
+class testStatementPreviewController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,11 +52,9 @@ class statementPreviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(TestStatement $testStatement)
     {
-        $statement=DB::table('statement_templates')
-            ->where('id',$id)
-            ->first();
+        $statement= TestStatement::findOrFail($testStatement);
 
         $statement->body=$this->parseStatement($statement->body);
 

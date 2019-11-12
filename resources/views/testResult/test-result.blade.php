@@ -310,6 +310,7 @@
             <!--Table head-->
 
             <!--Table body-->
+            var i = 1;
             group.enrollers.forEach(function (student) {
                 if(student.pivot.take) {
                     lines += "<tr>";
@@ -320,10 +321,11 @@
                     if (student.pivot.result >= test.result * .5) status = 'ناجح';
                     else status = 'راسب';
                     lines += "<td>" + status + "</td>";
-                    if (test.retake) lines += " <td> <button class='btn btn-primary' type='submit'><i class='fas fa-sync'></i> اعاده الامتحان</button> </td>";
-                    else lines += " <td> <button class='btn btn-primary' disabled   type='submit'><i class='fas fa-sync'></i> اعاده الامتحان</button> </td>";
-                    lines += " <td> <button class='btn btn-primary' type='submit'><i class='fas fa-sync'></i> طباعة افاده</button> </td>";
+                    if (test.retake) lines += " <td> <button id='retake_test' type='button' class='btn btn-primary' >اعاده الامتحان</button> </td>";
+                    else lines += " <td> <button class='btn btn-primary' disabled   ><i class='fas fa-sync'></i> اعاده الامتحان</button> </td>";
+                    lines += " <td> <button class='btn btn-primary' type='button' onclick='printStatement("+ test.statement.id +","+ student.id +");' ><i></i> طباعة افاده</button> </td>";
                     lines += "</tr>";
+                    i++;
                 }
 
             });
@@ -339,6 +341,12 @@
 
         $('#dispay_date').html(lines);
 
+    }
+
+    function printStatement(test_statement_id, student_id) {
+        //
+        location.href = 'test-statements-preview/'+test_statement_id+'/'+student_id;
+        console.log(test_statement_id+" / "+student_id);
     }
 
 </script>
