@@ -17,6 +17,15 @@
 <div style="text-align: right; margin-top: 2em;"><p style="margin-right: 2em;">يمكنك إضافة (اسم الطالب - اسم المركز - اسم المدير - التاريخ) عن طريق كتابة @ لظهور الإختيارات  </p></div>
 <div id="summernote"></div>
 <div style="margin-right:2em;text-align:right;">
+
+    <select id="tests">
+        <option value="">select test</option>
+        @foreach($tests as $test)
+            <option value="{{$test->id}}">{{$test->name}}</option>
+        @endforeach
+    </select>
+
+    <br> <br> <br>
     <button id="saveCert" name="saveCert">حفظ الشهادة</button>
 </div>
 
