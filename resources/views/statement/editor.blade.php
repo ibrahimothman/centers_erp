@@ -14,6 +14,24 @@
 </head>
 <body>
 
+<div class="card-body pb-5">
+
+    <div class=" clearfix col-md-8 mb-4">
+        <form >
+            <div class="form-row col-md-12 ">
+                <select   id="testselector"   class="form-control ">
+                    <option value="0">اختر الامتحان</option>
+                    @foreach($tests as $test)
+                        <option value={{ $test->id }}>{{ $test->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
 <div style="text-align: right; margin-top: 2em;"><p style="margin-right: 2em;">يمكنك إضافة (اسم الطالب - اسم المركز - اسم المدير - التاريخ) عن طريق كتابة @ لظهور الإختيارات  </p></div>
 <div id="summernote"></div>
 <div style="margin-right:2em;text-align:right;">
@@ -28,7 +46,6 @@
     <br> <br> <br>
     <button id="saveCert" name="saveCert">حفظ الشهادة</button>
 </div>
-
 
 <script>
     $(document).ready(function() {
@@ -78,23 +95,23 @@
 
         $('#saveCert').click(function(){
             var content=$('.note-editable').html();
+            var test_id = $('#testselector').val();
             //alert(content);
+            if(test_id != 0) {
+                $.ajax({
+                    url: "/test-statements",
+                    type: "POST",
+                    // dataType: 'text',
+                    data: {test_id : test_id,  body: content, _token: "{{ csrf_token() }}"},
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (data, errorThrown) {
+                        alert('request failed :');
+                    }
 
-            $.ajax({
-                url: "{{url('saveStatementTemplate')}}",
-                type: "POST",
-                dataType: 'text',
-                data: {"_token": "{{ csrf_token() }}","body":content},
-                //contentType: 'application/x-www-form-urlencoded',
-                success: function(data, textStatus, jqXHR){
-                    alert(data);
-                },
-                error: function(data, errorThrown)
-                {
-                    alert('request failed :');
-                }
-
-            });
+                });
+            }else alert('choose test');
         });
 
     });

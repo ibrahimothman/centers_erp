@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\StatementTemplate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StatementTemplateController extends Controller
@@ -26,12 +25,7 @@ class StatementTemplateController extends Controller
      */
     public function create()
     {
-        //Auth::user()->center;
-
-        $tests=DB::table('tests')
-            ->get();
-        return view('statement/editor')
-            ->with('tests',$tests);
+        return view('statement/editor');
     }
 
     /**

@@ -124,7 +124,7 @@ class TestEnrollmentController extends Controller
         }
 
         // todo determine center
-        $test = auth()->user()->center->tests()->with('groups')->findOrFail($test_id);
+        $test = auth()->user()->center->tests()->with('groups')->with('statement')->findOrFail($test_id);
         foreach ($test->groups as $group){
             $group->enrollers;
         }
