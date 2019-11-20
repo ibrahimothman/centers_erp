@@ -10,11 +10,12 @@ use Illuminate\Http\Request;
 use App\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use phpDocumentor\Reflection\Types\Null_;
-use Symfony\Component\HttpFoundation\File\File;
 use const http\Client\Curl\AUTH_ANY;
 
 
@@ -153,6 +154,10 @@ class StudentController extends Controller
         // delete from pivot
         $center = Auth::user()->center;
         $center->students()->detach($student);
+
+        // delete images
+        $this->deleteImage($student->image);
+        // delete record
         $student->delete();
         return redirect('/students')->with('success','students is deleted');
 
@@ -167,7 +172,7 @@ class StudentController extends Controller
             'nameEn' => 'required',
             'email' => 'required|unique:students,email,'.$user_id,
             'idNumber' => 'required|digits:14',
-            'image' => ' sometimes|image|file | max:10000',
+            'image' => ' required|image|file | max:10000',
             'idImage' => 'sometimes|image|file | max:10000',
             'phoneNumber' => 'required|regex:/(01)[0-9]{9}/',
             'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
@@ -184,8 +189,24 @@ class StudentController extends Controller
     private function storeImage($student)
     {
         if (request()->has('image')){
+
+            // if there is already image so delete it from files
+//            dd($student->image);
+            $this->deleteImage($student->image);
+
+            $image = request('image');
+
+            if(! is_dir(public_path('/uploads/profiles'))){
+                mkdir(public_path('/uploads/profiles'));
+            }
+
+            $basename = Str::random();
+            $original = $basename.'.'.$image->getClientOriginalExtension();
+
+            $image->move(public_path('/uploads/profiles'), $original);
+
             $student->update([
-                'image' => request()->image->store('profiles','public'),
+                'image' => $original,
             ]);
         }
     }
@@ -203,5 +224,12 @@ class StudentController extends Controller
 
         }
         return response()->json($students);
+    }
+
+    private function deleteImage($image)
+    {
+        File::delete([
+           public_path('/uploads/profiles/'.$image)
+        ]);
     }
 }

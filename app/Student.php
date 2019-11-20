@@ -11,7 +11,7 @@ class Student extends Model
     public function profileImage()
     {
         $imagePath = ($this->image) ? $this->image : 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
-        return '/uploads/' . $imagePath;
+        return '/uploads/profiles/' . $imagePath;
     }
     public function degreeOptions(){
         return [
