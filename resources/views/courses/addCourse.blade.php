@@ -8,7 +8,7 @@
 
 <div class="form-style-5">
 
-
+    @include('sidebar')
 <span style="font-family: Courier ;color: #1abc9c;margin-bottom: 10px ">
 
 

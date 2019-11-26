@@ -50,6 +50,8 @@ Route::get('test-statements-preview/{statement}/{student}','TestStatementControl
 Route::get('settings/profile','settingsController@showProfileSettings');
 Route::post('settings/profile/update','settingsController@updateProfileSettings');
 
+//----------- courses ---------------
+Route::resource('courses','CoursesController');
 
 
 
