@@ -27,6 +27,7 @@ class SideBarLinks
             'http://127.0.0.1:8000/test-takes/create' => 'تسجيل حضور الامتحان',
             'http://127.0.0.1:8000/test-results/create' => 'تسجيل نتيجة الامتحان',
             'http://127.0.0.1:8000/test-results' => 'نتيجة الامتحانات',
+            'http://127.0.0.1:8000//test-statements/create' => 'اضافه افاده',
         ];
     }
 

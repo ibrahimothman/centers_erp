@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head >
-    <title>statement preview</title>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,9 +27,11 @@
 
     <script src="{{url('js/jquery.min.js')}}"></script>
 
-</head>
-<body>
 
+
+</head>
+
+<body id="page-top">
 <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
 <script src="{{url('js/jquery.datetimepicker.js')}}"></script>
 <!-- Page Wrapper -->
@@ -60,37 +61,23 @@
                     </div>
                 </form>
 
-                @include('tobbar')
+@include('tobbar')
 
 
-<div id="statement">
-    <style type="text/css">
-    @page{
-    size: auto;
-    margin: 3mm;
-    }
-    </style>
 
-    {!!$statement->body!!}
-
-</div>
-
-<input type="button" id="print"  value="Print">
-
-<script>
-
-    $(document).ready(function() {
-        $('#print').click(function(){
-            var prtContent = document.getElementById("statement");
-            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-            WinPrint.document.write(prtContent.innerHTML);
-            WinPrint.document.close();
-            WinPrint.focus();
-            WinPrint.print();
-            WinPrint.close();
-        });
-    });
-</script>
+                <form type="" method="post" action="{{url('settings/profile/update')}}">
+                    @csrf
+    <label>
+        <input placeholder="center name" name="centerName" value="{{$center->name}}">center name
+    </label>
+    <br> <br>
+    <label>
+        <input placeholder="Manager name" name="ManagerName" value="{{$center->manager_name}}">ManagerName
+    </label>
+<br>
+    <input type="submit" value="save">
+</form>
+            </nav></div></div></div>
 
 </body>
 </html>

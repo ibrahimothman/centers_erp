@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\TestStatement;
 use App\Utility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class testStatementPreviewController extends Controller
@@ -106,7 +107,8 @@ class testStatementPreviewController extends Controller
             $statement=str_replace('@اسم المركز','جيليكوم',$statement);
         }
         if (strpos($statement, '@اسم المدير') !== false) {
-            $statement=str_replace('@اسم المدير',' محمد احمد',$statement);
+            $manger=Auth::user()->center->manager_name;
+            $statement=str_replace('@اسم المدير',$manger,$statement);
         }if (strpos($statement, '@التاريخ') !== false) {
             $date=date('d-m-y');
             $statement=str_replace('@التاريخ',$date,$statement);
