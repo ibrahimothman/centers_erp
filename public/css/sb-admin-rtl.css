@@ -2429,6 +2429,7 @@
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
+    font-weight: bold;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
   
@@ -10169,7 +10170,11 @@ a:focus {
 #wrapper #content-wrapper #content {
   -webkit-box-flex: 1;
   -ms-flex: 1 0 auto;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
+}
+
+#wrapper #content-wrapper .operations-bar {
+  margin-bottom: 1.5em;
 }
 
 .container,

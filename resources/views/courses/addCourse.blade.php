@@ -1,39 +1,173 @@
-
-
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<link href="{{asset('css/form.css')}}" rel="stylesheet" type="text/css"/>
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <meta name="description" content="">
+            <meta name="author" content="">
 
-<div class="form-style-5">
+            <title>Add a Course</title>
 
-    @include('sidebar')
-<span style="font-family: Courier ;color: #1abc9c;margin-bottom: 10px ">
+            <!-- Custom fonts for this template-->
+            <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+            <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+            
+            <!-- Custom styles for this template-->
+            <link href="/../../../css/sb-admin-rtl.css" rel="stylesheet">
+            <link href="/../../../css/styles.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
 
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
+            <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
+        </head>
 
-        </span>
+        <body>
+            <div id="wrapper">
+                @include('sidebar')
+                <div id="content-wrapper" class="d-flex flex-column">
+                    @include('operationBar')
+                    <div class="container-fluid">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="card mb-4">
+                                    <header>
+                                        <div class="card-header text-primary form-title">
+                                        إضافه دورة
+                                        </div>
+                                    </header>
+                                    <div class="card-body">
+                                        <form method="post" action="http://127.0.0.1:8000/courses/create">
+                                            <input type="hidden" name="_token" value="caqpERLciLTWzphyYqgtuefVDYgZucHbTa3nnb9Z">
+                                            <div class="form-row image-upload">
+                                                <div class="col-sm-8">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" name="image" id="customFile" src="" onchange="readURL(this);" required>
+                                                        <label class="custom-file-label" for="customFile">صوره الدورة</label>
+                                                        <div></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex  flex-column justify-content-center">
+                                                <img id="imageUploaded" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
+                                                <p>صورة الدورة</p>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-sm-6 form-group">
+                                                    <label for="course-name">اسم الدورة</label>
+                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="" name="course-name" required>
+                                                    <span id="test_course-name_error"></span>
+                                                    <div></div>
+                                                </div>
+                                                <div class="col-sm-6 form-group">
+                                                    <label for="course-teacher">اسم المدرس</label>
+                                                    <input type="text" class="form-control" id="course-teacher" placeholder="اسم المدرس " value="" name="course-teacher" required>
+                                                    <span id="test_course-teacher_error"></span>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-sm-12 form-group">
+                                                    <label for="course-place">مكان الدورة</label>
+                                                    <input type="text" class="form-control" id="course-place" placeholder="مكان الدورة " value="" name="course-place" required>
+                                                    <span id="test_course-place_error"></span>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-sm-6 form-group">
+                                                    <label for="course-duration">مدة الدورة</label>
+                                                    <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="course-duration" required>
+                                                    <span id="test_course-duration_error"></span>
+                                                    <div></div>
+                                                </div>
+                                                <div class="col-sm-6 form-group">
+                                                    <label for="course-cost">تكلفة الدورة</label>
+                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="" name="course-cost" required>
+                                                    <span id="test_course-cost_error"></span>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-row">
+                                            <label class="full-width"> محتوى الدورة <i class="fas fa-plus-circle" id='add-more' style="color:green; cursor:pointer"></i></label>
+                                                <div class="col-sm-12 input-group input-chapter">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">باب  1</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="" name="course-chapter-1" required>
+                                                    <span id="test_course-chapter-1_error"></span>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            <div class=" form-row">
+                                                <label for="course-description">وصف الدورة</label>
+                                                <textarea placeholder="وصف الدورة" rows="3" class="form-control" id="course-description" name="course-description" required></textarea>
+                                                <div></div>
+                                            </div>
+                                            <div class="form-row">
+                                                <header class="col-sm-12">
+                                                    <label class="full-width">مرافق المنشأة</label>
+                                                </header>
+                                                <div class="col-sm-4 form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck1" checked="">
+                                                    <label class="custom-control-label" for="customCheck1">شاشة عرض</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck2" checked="">
+                                                    <label class="custom-control-label" for="customCheck2">قاعة مكيفة</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck3" checked="">
+                                                    <label class="custom-control-label" for="customCheck3">انترنت</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck4" checked="">
+                                                    <label class="custom-control-label" for="customCheck4">أجهزة حاسب ألي</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck5" checked="">
+                                                    <label class="custom-control-label" for="customCheck5">سبورة</label>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="form-row save">
 
-    <form action="{{ route('courses.store') }}" method="post" enctype="multipart/form-data">
-        @csrf
-            <legend><span class="number">.</span> Course Registeration </legend>
-            <input type="text" name="name" placeholder="course Name *" required>
-            <input type="text" name="code" placeholder="course code *" required>
-            <input type="number" name="duration" placeholder="course duration *" required>
-            <input type="number" name="price" placeholder="course price *" required>
-            <textarea name="description" placeholder="course Description" required></textarea>
-            <textarea name="content" placeholder="course content" required></textarea>
-        Media<br>
-        <input type="file" name="images" class="file" required>
+                                                <div class="col-sm-6 mx-auto" style="width: 200px;">
+                                                    <hr/>
+                                                    <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة  <i class="fas fa-plus"></i></button>
+                                                    <button class="btn  btn-danger action-buttons" type="reset">  إلغاء  <i class="fas fa-times"></i></button>
+                                                </div>
 
-        <input name="add" type="submit" value="Add Course" required />
-    </form>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>     
+                        <!-- /.container-fluid -->
+                        </div>
+                    </div>
+                    @include('footer')
+                </div>
+            </div>
+        
 
+        <!-- Bootstrap core JavaScript-->
+        <script src="{{url('vendor/jquery/jquery.min.js')}}"></script>
+        <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="{{url('js/sb-admin-2.min.js')}}"></script>
+        <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+        
 
-</div>
-
-
-
+        <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
+    </body>
 
 </html>
 
