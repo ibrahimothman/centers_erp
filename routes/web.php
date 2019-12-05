@@ -52,6 +52,7 @@ Route::post('settings/profile/update','settingsController@updateProfileSettings'
 
 //----------- courses ---------------
 Route::resource('courses','CoursesController');
+Route::resource('course_groups','CourseGroupsController');
 
 
 
