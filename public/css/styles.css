@@ -3,6 +3,15 @@
     font-size: 1.2em;
 }
 
+.shadowed{
+    -webkit-box-shadow: 1px 1px 11px 0px rgba(0,0,0,0.19);
+-moz-box-shadow: 1px 1px 11px 0px rgba(0,0,0,0.19);
+box-shadow: 1px 1px 11px 0px rgba(0,0,0,0.19);
+}
+
+legend{
+    font-size: 1.1rem !important;
+}
 .action-buttons {
     font-weight:bold !important;
 }

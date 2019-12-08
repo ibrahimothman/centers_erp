@@ -33,7 +33,7 @@
                     <div class="container-fluid">
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-8">
-                                <div class="card mb-4">
+                                <div class="card mb-4 shadowed">
                                     <header>
                                         <div class="card-header text-primary form-title">
                                         إضافه دورة
@@ -88,7 +88,7 @@
                                             </div>
                                             <div class=" form-row">
                                                 <label for="course-description">وصف الدورة</label>
-                                                <textarea placeholder="وصف الدورة" rows="3" class="form-control" id="course-description" name="course-description" required></textarea>
+                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="course-description" required></textarea>
                                                 <div></div>
                                             </div>
                                             <fieldset>
