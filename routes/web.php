@@ -49,6 +49,14 @@ Route::resource('test-results','TestResultController');
 Route::resource('test-statements','TestStatementController');
 Route::get('test-statements-preview/{statement}/{student}','TestStatementController@previewStatement');
 
+//-------------settings -----
+Route::get('settings/profile','settingsController@showProfileSettings');
+Route::post('settings/profile/update','settingsController@updateProfileSettings');
+
+//----------- courses ---------------
+Route::resource('courses','CoursesController');
+Route::resource('course_groups','CourseGroupsController');
+Route::resource('rooms','RoomsController');
 
 
 

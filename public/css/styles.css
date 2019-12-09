@@ -1,0 +1,61 @@
+.form-title {
+    font-weight:bold !important;
+    font-size: 1.2em;
+}
+
+.action-buttons {
+    font-weight:bold !important;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.image-upload{
+    height: 200px;
+    width: 100%;
+    position: relative;
+    display: none !important;
+}
+
+.image-upload input, .image-upload label {
+    display: none;
+}
+
+.image-upload + div{
+    text-align: center;
+}
+.image-upload + div img{
+    width: 220px;
+    cursor: pointer;
+    top: 13px;
+    border: 1px solid #ced4da;
+    padding: 9px;
+    border-radius: 3px;
+    align-self: center;
+}
+
+header .full-width{
+    width: 100%;
+    margin-top: 15px;
+}
+
+.input-chapter{
+    margin-bottom: 5px;
+}
+
+.input-chapter:last-child{
+    margin-bottom: 15px;
+}
+
+.input-group-prepend span{
+    width:65px;
+}
+
+i {
+    margin-right: 5px;
+}
+
+footer{
+    font-weight: 300;
+}

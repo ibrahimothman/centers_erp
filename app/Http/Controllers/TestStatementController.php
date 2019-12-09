@@ -7,6 +7,7 @@ use App\Student;
 use App\Test;
 use App\TestStatement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TestStatementController extends Controller
@@ -121,7 +122,9 @@ class TestStatementController extends Controller
             $statement->body=str_replace('@اسم المركز',$statement->test->center->name,$statement->body);
         }
         if (strpos($statement->body, '@اسم المدير') !== false) {
-            $statement->body=str_replace('@اسم المدير',' محمد احمد',$statement->body);
+            $manger=Auth::user()->center->manager_name;
+
+            $statement->body=str_replace('@اسم المدير',$manger,$statement->body);
         }if (strpos($statement->body, '@التاريخ') !== false) {
             $date=date('d-m-y');
             $statement->body=str_replace('@التاريخ',$date,$statement->body);

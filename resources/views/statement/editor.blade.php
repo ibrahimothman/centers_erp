@@ -11,8 +11,10 @@
     <script src="{{url("js/summernote-ext-print.js")}}"></script>
     <script src="{{url("js/summernote-paper-size.js")}}"></script>
     <meta name="csrf_token" content="{{ csrf_token() }}">
+
 </head>
 <body>
+
 
 <div class="card-body pb-5">
 
@@ -32,9 +34,12 @@
 </div>
 
 
+
 <div style="text-align: right; margin-top: 2em;"><p style="margin-right: 2em;">يمكنك إضافة (اسم الطالب - اسم المركز - اسم المدير - التاريخ) عن طريق كتابة @ لظهور الإختيارات  </p></div>
 <div id="summernote"></div>
 <div style="margin-right:2em;text-align:right;">
+
+    <br>
     <button id="saveCert" name="saveCert">حفظ الشهادة</button>
 </div>
 

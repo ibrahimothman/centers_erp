@@ -2,20 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\TestStatement;
-use App\Utility;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class testStatementPreviewController extends Controller
+class RoomsController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +13,7 @@ class testStatementPreviewController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -33,7 +23,7 @@ class testStatementPreviewController extends Controller
      */
     public function create()
     {
-        //
+        return view('rooms/addRoom');
     }
 
     /**
@@ -53,14 +43,9 @@ class testStatementPreviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TestStatement $testStatement)
+    public function show($id)
     {
-        $statement= TestStatement::findOrFail($testStatement);
-
-        $statement->body=$this->parseStatement($statement->body);
-
-        return view('statement/statementPreview')
-            ->with('statement',$statement);
+        //
     }
 
     /**
@@ -94,26 +79,6 @@ class testStatementPreviewController extends Controller
      */
     public function destroy($id)
     {
-
-    }
-
-
-    public function parseStatement($statement){
-        if (strpos($statement, '@اسم الطالب') !== false) {
-            $statement=str_replace('@اسم الطالب','احمد خالد',$statement);
-        }
-
-        if (strpos($statement, '@اسم المركز') !== false) {
-            $statement=str_replace('@اسم المركز','جيليكوم',$statement);
-        }
-        if (strpos($statement, '@اسم المدير') !== false) {
-            $manger=Auth::user()->center->manager_name;
-            $statement=str_replace('@اسم المدير',$manger,$statement);
-        }if (strpos($statement, '@التاريخ') !== false) {
-            $date=date('d-m-y');
-            $statement=str_replace('@التاريخ',$date,$statement);
-        }
-
-        return $statement;
+        //
     }
 }
