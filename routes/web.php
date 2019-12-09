@@ -12,12 +12,15 @@
 */
 
 
-//use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
+
+//------------------------ center -------------
+Route::resource('centers','CentersController');
 
 // --------------------- students --------------------
 Route::get('/', 'StudentController@create' );
 Route::resource('students','StudentController');
+
 Route::get('students.table','StudentController@showTable')->name('students.table');
 Route::get('/search_student_by_name','StudentController@searchByName');
 Route::get('students/image','Student@profileImage');
