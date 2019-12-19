@@ -12,6 +12,7 @@
 */
 
 
+use App\Role;
 use Illuminate\Support\Facades\Route;
 
 //------------------------ center -------------
@@ -58,7 +59,15 @@ Route::resource('courses','CoursesController');
 Route::resource('course_groups','CourseGroupsController');
 Route::resource('rooms','RoomsController');
 
-
+Route::get('set_role',function (){
+    $roles = [
+        'test-group.edit','test-group.delete','test-group.view',
+        'test-enrollment.add','test-enrollment.edit','test-enrollment.delete','test-enrollment.view',
+    ];
+    foreach ($roles as $role) {
+        Role::create(['name' => $role]);
+    }
+});
 
 Auth::routes();
 

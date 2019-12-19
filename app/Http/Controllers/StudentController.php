@@ -39,7 +39,7 @@ class StudentController extends Controller
         $this->authorize('viewAny',Student::class);
         $center = Auth::user()->center;
         $students = $center->students;
-//        dd($students);
+
         return view('students.all')->with('students',$students);
     }
 
