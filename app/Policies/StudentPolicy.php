@@ -73,8 +73,12 @@ class StudentPolicy
     {
         //
         $role = Role::where('name','student.update')->first();
-        return Auth::user()->roles->contains($role->id);
+        foreach ($student->centers as $center){
+            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
+                return true;
+        }
 
+        return false;
     }
 
     /**

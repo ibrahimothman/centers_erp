@@ -67,7 +67,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        //check if user has rights to view create_student_form
+        $this->authorize('create',Student::class);
         $student = new Student();
         return view('students.studentCreate',compact('student'));
     }
