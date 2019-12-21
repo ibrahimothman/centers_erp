@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Center;
+use App\Role;
 use App\StudentDetail;
 use App\User;
 use Illuminate\Database\QueryException;
@@ -34,17 +35,16 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $center = Auth::user()->center;
 
+        $this->authorize('viewAny',Student::class);
+        $center = Auth::user()->center;
         $students = $center->students;
-//        dd($students);
+
         return view('students.all')->with('students',$students);
     }
 
     public function viewAll(){
         $students = Auth::user()->center->students;
-
-
         return response()->json($students);
     }
 
@@ -67,7 +67,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        //check if user has rights to view create_student_form
+        $this->authorize('create',Student::class);
         $student = new Student();
         return view('students.studentCreate',compact('student'));
     }
@@ -80,14 +81,13 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-
         // todo : attach student to the center
-        $center = Auth::user()->center;
-        $student = $center->students()->create($this->validateRequest(''));
-        $this->storeImage($student);
-        $center->students()->syncWithoutDetaching($student);
-//        $center->push();
+        // check if user has rights to add a new student
 
+        $this->authorize('create',Student::class);
+        $center = Auth::user()->center;
+        $student = Student::create($this->validateRequest(''));
+        $center->students()->syncWithoutDetaching($student);
         return redirect("/students/$student->id");
 
     }
@@ -101,8 +101,6 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        // policy
-//        dd(auth()->user());
         $this->authorize('view',$student);
         return view('students.show',compact('student'));
     }
@@ -115,13 +113,8 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-
-
-        // policy
-//        dd($student);
-        $this->authorize('view',$student);
+        $this->authorize('update',$student);
         return view('students.studentEdit',compact('student'));
-
     }
 
     /**
@@ -133,10 +126,11 @@ class StudentController extends Controller
      */
     public function update(Student $student)
     {
-        //policy
-        $this->authorize('view',$student);
+        $this->authorize('update',$student);
+
+        // todo delete prev image from profiles dir
+
         $student->update($this->validateRequest($student->id));
-        $this->storeImage($student);
         return redirect("/students/$student->id")->with('success','updated');
     }
 
@@ -150,7 +144,7 @@ class StudentController extends Controller
     {
 
         //policy
-        $this->authorize('view',$student);
+        $this->authorize('delete',$student);
         // delete from pivot
         $center = Auth::user()->center;
         $center->students()->detach($student);
@@ -185,30 +179,6 @@ class StudentController extends Controller
         ]);
     }
 
-    private function storeImage($student)
-    {
-        if (request()->has('image')){
-
-            // if there is already image so delete it from files
-//            dd($student->image);
-            $this->deleteImage($student->image);
-
-            $image = request('image');
-
-            if(! is_dir(public_path('/uploads/profiles'))){
-                mkdir(public_path('/uploads/profiles'));
-            }
-
-            $basename = Str::random();
-            $original = $basename.'.'.$image->getClientOriginalExtension();
-
-            $image->move(public_path('/uploads/profiles'), $original);
-
-            $student->update([
-                'image' => $original,
-            ]);
-        }
-    }
 
     public function searchByName(){
         // search for only auth center

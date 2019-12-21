@@ -2,9 +2,11 @@
 
 namespace App\Policies;
 
+use App\Role;
 use App\User;
 use App\TestGroup;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class TestGroupPolicy
 {
@@ -19,6 +21,8 @@ class TestGroupPolicy
     public function viewAny(User $user)
     {
         //
+        $role = Role::where('name','test-group.view')->first();
+        return Auth::user()->roles->contains($role->id);
     }
 
     /**
@@ -31,6 +35,8 @@ class TestGroupPolicy
     public function view(User $user, TestGroup $testGroup)
     {
         //
+        $role = Role::where('name','test-group.view')->first();
+        return $testGroup->test->center->users->contains(Auth::user()) && Auth::user()->roles->contains($role->id);
     }
 
     /**
@@ -42,6 +48,8 @@ class TestGroupPolicy
     public function create(User $user)
     {
         //
+        $role = Role::where('name','test-group.add')->first();
+        return auth()->user()->roles->contains($role->id);
     }
 
     /**
@@ -54,7 +62,8 @@ class TestGroupPolicy
     public function update(User $user, TestGroup $testGroup)
     {
         //
-        return $testGroup->test->center->users->contains(auth()->user());
+        $role = Role::where('name','test-group.update')->first();
+        return $testGroup->test->center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id);
     }
 
     /**
@@ -67,6 +76,8 @@ class TestGroupPolicy
     public function delete(User $user, TestGroup $testGroup)
     {
         //
+        $role = Role::where('name','test-group.delete')->first();
+        return $testGroup->test->center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id);
     }
 
     /**

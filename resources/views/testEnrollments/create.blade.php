@@ -109,7 +109,6 @@
 
     <div class="col-md-6 form-group">
         <label >اسم الطالب</label>
-
         <select  class="form-control "  placeholder="اختار طالب" id="stud" name="std" required>
             <option value='0'>اختر طالب</option>
             @foreach($students as $student)

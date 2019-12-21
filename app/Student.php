@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Student extends Model
 {
@@ -12,6 +13,19 @@ class Student extends Model
     {
         $imagePath = ($this->image) ? $this->image : 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
         return '/uploads/profiles/' . $imagePath;
+    }
+
+    // save image before setting it to db
+    public function setImageAttribute($image){
+        if(! is_dir(public_path('/uploads/profiles'))){
+            mkdir(public_path('/uploads/profiles'));
+        }
+        $basename = Str::random();
+        $original = $basename.'.'.$image->getClientOriginalExtension();
+        $image->move(public_path('/uploads/profiles'), $original);
+
+        $this->attributes['image'] = $original;
+//        dd($image);
     }
     public function degreeOptions(){
         return [

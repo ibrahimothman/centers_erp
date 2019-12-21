@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use Illuminate\Http\Request;
 use App\Test;
 use App\TestGroup;
@@ -25,8 +26,10 @@ class TestGroupController extends Controller
      */
     public function index()
     {
-        //echo 'test '.Input::get('test');
-        //Input::get('test'
+        // todo something wrong while calculating available_seats
+
+        $this->authorize('viewAny',TestGroup::class);
+
         $center = auth()->user()->center;
         $allTests = $center->tests;
 
@@ -60,8 +63,9 @@ class TestGroupController extends Controller
      */
     public function create()
     {
+        // check if user has rights to view create_test_group_form
+        $this->authorize('create',TestGroup::class);
         $tests = auth()->user()->center->tests()->orderBy('created_at','desc')->paginate(10);
-
         $testName=null;
         if (Input::get('test')!=null)
             $testName=Input::get('test');
@@ -78,25 +82,8 @@ class TestGroupController extends Controller
      */
     public function store(Request $request)
     {
-
-        //
-//        $this->validate($request,[
-//            'test' => 'required',
-//            'test_time' => 'required',
-//            'seat' => 'required',
-//
-//        ]);
-//
-//        $testId = $request->input('test');
-//        $date = $request->input('test_time');
-//        $seats = $request->input('seat');
-//
-//
-//
-//        $testGroup = new TestGroup;
-//        $testGroup->test_id = $testId;
-//        $testGroup->available_chairs = $seats;
-//        $testGroup->group_date = $date;
+        // check if user has rights to add a new test-group
+        $this->authorize('create',TestGroup::class);
         //todo handle multiple groups
 
         $this->validate($request,[
@@ -124,10 +111,6 @@ class TestGroupController extends Controller
         $testGroup->available_chairs = $seats;
         $testGroup->group_date = $date;
 
-//        $testGroup = new TestGroup;
-//        $testGroup->test_id = $testId;
-//        $testGroup->available_chairs = $seats;
-//        $testGroup->group_date = $date;
 
         $testGroup->save();
 
@@ -142,15 +125,11 @@ class TestGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(TestGroup $testGroup)
     {
-        // return $id;
-        //$testGroup = TestGroup::find($id);
-         $testGroup = DB::table('test_groups')
-             ->join('tests','test_groups.test_id','=','tests.id')
-             ->where('test_groups.test_id',$id)
-             ->first();
-//        return view('test.test-det-view-one')
+        $this->authorize('view',$testGroup);
+        // todo this view is missing
+//        return view('test.test-det-view-onee')
 //            ->with('testGroup',$testGroup) ;
     }
 
@@ -174,26 +153,19 @@ class TestGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, TestGroup $testGroup)
     {
         //
         $this->authorize('update',$testGroup);
-        $this->validate($request,[
-            'test_group_date' => 'required',
-            'test_group_chairs' => 'required',
-            'test_group_hall' => 'required'
-        ]);
-        $date = $request->input('test_group_date');
-        $chairs = $request->input('test_group_chairs');
-        $hall = $request->input('test_group_hall');
+        $testGroup->update($this->validate($request,[
+            'group_date' => 'required',
+            'available_chairs' => 'required',
+//            'opened' => 'required'
+        ]));
 
-        $testGroup = TestGroup::find($id);
-        $testGroup->available_chairs = $chairs;
-        $testGroup->hall_number = $hall;
-        $testGroup->group_date = $date;
-        $testGroup->save();
 
-        return redirect('/test_group/'.$testGroup->id)->with('sucsess','group updated');
+        // todo this view is missing
+//        return redirect('/test_group/'.$testGroup->id)->with('sucsess','group updated');
 
     }
 
@@ -203,11 +175,10 @@ class TestGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TestGroup $testGroup)
     {
         //
-        $this->authorize('update',$testGroup);
-        $testGroup = TestGroup::find($id);
+        $this->authorize('delete',$testGroup);
         $testGroup->delete();
         return redirect('/test-groups')
             ->with('message','test group deleted successfully');

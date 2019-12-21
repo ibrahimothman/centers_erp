@@ -2,9 +2,11 @@
 
 namespace App\Policies;
 
+use App\Role;
 use App\User;
 use App\Test;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class TestPolicy
 {
@@ -19,7 +21,8 @@ class TestPolicy
     public function viewAny(User $user)
     {
         //
-        return false;
+        $role = Role::where('name','test.view')->first();
+        return auth()->user()->roles->contains($role->id);
     }
 
     /**
@@ -31,8 +34,13 @@ class TestPolicy
      */
     public function view(User $user, Test $test)
     {
-        //
-        return $test->center->users->contains(auth()->user());
+        /*
+         * user has rights to view a test if :
+         * he is a member in the center which has this test and
+         * he has test.view rights
+         * */
+        $role = Role::where('name','test.view')->first();
+        return $test->center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id);
     }
 
     /**
@@ -44,6 +52,8 @@ class TestPolicy
     public function create(User $user)
     {
         //
+        $role = Role::where('name','test.add')->first();
+        return Auth::user()->roles->contains($role->id);
     }
 
     /**
@@ -56,7 +66,8 @@ class TestPolicy
     public function update(User $user, Test $test)
     {
         //
-        return $test->center->users->contains(auth()->user());
+        $role = Role::where('name','test.update')->first();
+        return $test->center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id);
 
     }
 
@@ -70,6 +81,9 @@ class TestPolicy
     public function delete(User $user, Test $test)
     {
         //
+        $role = Role::where('name','test.delete')->first();
+        return $test->center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id);
+
     }
 
     /**

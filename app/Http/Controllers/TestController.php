@@ -23,6 +23,7 @@ class TestController extends Controller
     public function index()
     {
 
+        $this->authorize('viewAny',Test::class);
         $tests = auth()->user()->center->tests()->orderBy('created_at','desc')->get();
         return view('test.index',compact('tests'));
     }
@@ -34,7 +35,8 @@ class TestController extends Controller
      */
     public function create()
     {
-        //
+        //check if auth user has rights to view create_test_form
+        $this->authorize('create',Test::class);
         return view('test.create');
     }
 
@@ -46,24 +48,16 @@ class TestController extends Controller
      */
     public function store()
     {
+        // check if auth user has rights to add a new test
+        $this->authorize('create',Test::class);
         $center = auth()->user()->center;
         $test = $center->tests()->create($this->validateRequest(''));
         $this->setRetake($test);
 
-//        dd($test);
         return redirect('/tests');
 
     }
 
-//    public function checkTest(Request $request){
-//        if($request->ajax()){
-//            $test_name = $request->get('test_name');
-//        }
-//
-//        $test_name = DB::table('tests')->where('name','=',$test_name)->count();
-//        if($test_name > 0) return 0;
-//        else return 1;
-//    }
 
     /**
      * Display the specified resource.
@@ -140,9 +134,8 @@ class TestController extends Controller
     public function destroy(Test $test)
     {
 
-        $this->authorize('update',$test);
+        $this->authorize('delete',$test);
         $test->delete();
-
         return redirect('/tests')->with('success','test is deleted');
     }
 
