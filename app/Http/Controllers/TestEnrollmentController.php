@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Center;
+use App\Policies\TestEnrollmentPolicy;
 use App\TestGroup;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Test;
-use App\TestEnrollments;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
-use Monolog\Handler\StubNewRelicHandlerWithoutExtension;
+use App\StudentTestGroup;
+
 
 class TestEnrollmentController extends Controller
 {
@@ -44,9 +42,7 @@ class TestEnrollmentController extends Controller
         $center = auth()->user()->center;
         $students = $center->students;
         $tests = $center->tests;
-//        dd($tests);
 
-            // return 'he has already enrolled in at least one test';
         return view('testEnrollments.create')
             ->with('students',$students)
             ->with('tests',$tests);

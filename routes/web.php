@@ -60,8 +60,9 @@ Route::resource('course_groups','CourseGroupsController');
 Route::resource('rooms','RoomsController');
 
 Route::get('set_role',function (){
-    $roles = [
-        'test-group.edit','test-group.delete','test-group.view',
+    $roles = ['student.add','student.edit','student.delete','student.view',
+        'test.add','test.edit','test.delete','test.view',
+        'test-group.add','test-group.edit','test-group.delete','test-group.view',
         'test-enrollment.add','test-enrollment.edit','test-enrollment.delete','test-enrollment.view',
     ];
     foreach ($roles as $role) {

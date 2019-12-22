@@ -4,19 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CentersController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function create()
     {
-//        return 'sad';
-        return view('setting.create');
+        return view('center.create');
     }
 
     public function store()
     {
-//        dd('store center');
-        Center::create($this->validateRequest());
+        Auth::user()->center()->create($this->validateRequest());
+        return redirect('/');
     }
 
     private function validateRequest()

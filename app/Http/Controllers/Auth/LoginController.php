@@ -39,8 +39,8 @@ class LoginController extends Controller
 //
     }
 
-//    protected function authenticated(Request $request, $user)
-//    {
-//        if($user->center_id == 0) return redirect()->route('centers.create');
-//    }
+    protected function authenticated(Request $request, $user)
+    {
+        if(! $user->center) return redirect()->route('centers.create');
+    }
 }

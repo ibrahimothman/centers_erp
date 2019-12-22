@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     public function center()
     {
-        return $this->belongsTo(Center::class);
+        return $this->hasOne(Center::class);
     }
 
     public function roles()

@@ -15,7 +15,7 @@ class Student extends Model
         return '/uploads/profiles/' . $imagePath;
     }
 
-    // save image before setting it to db
+    // save image before center it to db
     public function setImageAttribute($image){
         if(! is_dir(public_path('/uploads/profiles'))){
             mkdir(public_path('/uploads/profiles'));

@@ -5727,7 +5727,7 @@ function GZheader() {
                        // but leave for few code modifications
 
   //
-  // Setup limits is not necessary because in js we should not preallocate memory 
+  // Setup limits is not necessary because in js we should not preallocate memory
   // for inflate use constant limit in 65536 bytes
   //
 
@@ -8501,7 +8501,7 @@ function pqdownheap(s, tree, k)
     s.heap[k] = s.heap[j];
     k = j;
 
-    /* And continue down the tree, setting j to the left son of k */
+    /* And continue down the tree, center j to the left son of k */
     j <<= 1;
   }
   s.heap[k] = v;
