@@ -3,14 +3,29 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Center extends Model
 {
     protected $guarded = [];
 
-    public function user()
+    // once center is created assign user as an admin
+    protected static function boot()
     {
-        return $this->belongsTo(User::class);
+        parent::boot();
+        static::created(function ($center)
+        {
+            Auth::user()->centers()->syncWithoutDetaching([
+                $center->id => [
+                    'job' => 'admin'
+                ]
+            ]);
+        });
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot('job');
     }
 
     public function students()

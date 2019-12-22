@@ -21,7 +21,8 @@ class CentersController extends Controller
 
     public function store()
     {
-        Auth::user()->center()->create($this->validateRequest());
+        $center = Center::create($this->validateRequest());
+
         return redirect('/');
     }
 

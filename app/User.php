@@ -38,9 +38,9 @@ class User extends Authenticatable
     ];
 
 
-    public function center()
+    public function centers()
     {
-        return $this->hasOne(Center::class);
+        return $this->belongsToMany(Center::class)->withPivot('job');
     }
 
     public function roles()
