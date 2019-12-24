@@ -9,14 +9,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>students</title>
+    <title>add a new admin</title>
 
     <!-- Custom fonts for this template-->
-    <link href="{{url('/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+
+    <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{url('employee')}}" rel="stylesheet">
+    <link href="/../../../css/sb-admin-rtl.css" rel="stylesheet">
     <link
         rel="stylesheet"
         href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
@@ -24,18 +25,9 @@
         crossorigin="anonymous">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script
-        src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"
-        integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k"
-        crossorigin="anonymous"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- Custom styles for this page -->
-    <link href="{{url('vendor/datatables/datatables.min.css')}}" rel="stylesheet">
-
-    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"
+            integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k"
+            crossorigin="anonymous"></script>
 
 </head>
 
@@ -45,7 +37,7 @@
 <div id="wrapper">
 
 @include('sidebar')
-    <!-- Content Wrapper -->
+<!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
@@ -146,115 +138,100 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-
-
-            <!-- Page Heading -->
-
             <div class="container-fluid">
 
-                <div class="col-md-12">
-                    <div class="card">
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header text-primary">
+                                اضافه ادمن
 
-                        <div class="card-header text-primary">
+                            </div>
+                            <div class="card-body">
+                                <form method="post" action="{{ route('employees.store') }}">
+                                    @csrf
 
-                            <div class="row  ">
+                                    <div class="form-row">
 
-                                <div class="col-md-6">
-                                    بيانات الطلاب
+                                        <div class="col-sm-8 form-group">
 
-                                </div>
+                                            <label for="validationCustom01">اسم الموظف</label>
+                                            <input type="text" class="form-control"   value="{{ old('name') }}"  name="name">
+                                            <span id="test_name_error"></span>
+                                            <div>{{ $errors->first('name') }}</div>
+                                        </div>
+                                    </div>
 
-                                <div class="col-md-6 grid-view ">
+                                    <div class="form-row">
 
-                                    <button type="button" class="btn ">
-                                        <a href="#">
-                                            <i class="fas fa-th-list"></i>  </a>
-                                        <button type="button" class="btn ">
-                                            <a href="{{ route('students.index') }}">
+                                        <div class="col-sm-8 form-group">
 
-                                                <i class="fas fa-th"></i>
-                                            </a>
-                                        </button>
-                                </div>
+                                            <label for="validationCustom02">ايميل الموظف</label>
+                                            <input type="text" class="form-control"   value="{{ old('email') }}"  name="email">
+                                            <span id="test_name_error"></span>
+                                            <div>{{ $errors->first('email') }}</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-row">
+
+                                        <div class="col-sm-8 form-group">
+
+                                            <label for="validationCustom03">كلمة السر</label>
+                                            <input type="password" class="form-control"   value="{{ old('password') }}"  name="password">
+                                            <span id="test_name_error"></span>
+                                            <div>{{ $errors->first('password') }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+
+                                        <div class="col-sm-8 form-group ">
+                                            <label for="">الصلاحيات</label>
+                                            <select name="role" class="form-control" id="exampleFormControlSelect1">
+                                                @foreach(App\Employee::employeeRoles() as $role)
+                                                    <option>{{ $role }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row save">
+
+                                        <div class="col-sm-6 mx-auto" style="width: 200px;">
+                                            <br>
+                                            <button class="btn btn-primary" type="submit" id="submit"><i class="glyphicon glyphicon-ok-sign"></i> اضافه</button>
+                                            <button class="btn  btn-danger" type="reset"><i class="glyphicon glyphicon-repeat"></i> الغاء</button>
+                                        </div>
+
+                                    </div>
+                                </form>
 
 
                             </div>
-
-
-
-
-
                         </div>
-                        <div class="card-body">
+                    </div>
 
 
-                            <div class="table-responsive row x_content">
-                                <table id="datatable-buttons" class="table table-striped table-bordered display  hover">
-                                    <div class="buttons"></div>
-                                    <div class="form-group">
-                                        <input type="text" name="search" id="search" class="form-control" placeholder="Search Customer Data" />
-                                    </div
-                                    >
-                                    <thead class="table-primary">
-                                    <tr>
-                                        <th>#</th>
+                    <!-- /.container-fluid -->
+                </div>
+            </div>
+            <!-- End of Main Content -->
 
-                                        <th>الاسم باللغه العربيه</th>
-                                        <th>الاسم باللغه الانجليزيه</th>
-                                        <th>البريد الالكترونى </th>
-                                        <th>تاريخ الاضافه</th>
-                                        <th>التليفون</th>
-                                        <th>الرقم القومى  </th>
-                                        <th>التفاصيل </th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-
-                                    @foreach($students as $student)
-                                        <tr>
-                                            <td>{{$student->id}}</td>
-
-                                            <td>{{$student->nameAr}}</td>
-                                            <td>{{$student->nameEn}}</td>
-                                            <td>{{$student->email}}</td>
-                                            <td>{{$student->created_at}}</td>
-                                            <td>{{$student->phoneNumber}}</td>
-                                            <td>{{$student->idNumber}}</td>
-                                            <td>
-                                                <a href="/students/{{$student->id}}" class="view-item" > <i class="fas fa-info-circle"></i></a>
-                                                <a href="/students/{{$student->id}}/edit" class="view-item" > <i class="fas fa-user-edit"></i></a></td>
-
-                                        </tr>
-                                    @endforeach
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy;وحدة التعليم الالكترونى - جامعه المنصورة </span>
                     </div>
                 </div>
+            </footer>
+            <!-- End of Footer -->
 
-                <!-- /.container-fluid -->
-
-
-                <!-- End of Main Content -->
-
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy;وحدة التعليم الالكترونى - جامعه المنصورة </span>
-                        </div>
-                    </div>
-                </footer>
-                <!-- End of Footer -->
-
-            </div>
-            <!-- End of Content Wrapper -->
         </div>
+        <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -284,65 +261,14 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{url('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="/../../../vendor/jquery/jquery.min.js"></script>
+    <script src="/../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <script src="/../../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{url('js/sb-admin-2.min.js')}}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{url('vendor/datatables/datatables.min.js')}}"></script>
-    <!-- Page level custom scripts -->
-    <script src="{{url('vendor/datatables/datatables.min.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-    <script>
-
-        $('#search').keyup(function(e){
-            if(e.keyCode == 13) {
-                var query = $(this).val();
-                seacrh(query);
-            }
-        });
-
-        function seacrh(query = '') {
-            $.ajax({
-                url: "/search_student_by_name",
-                type: 'GET',
-                data: {query: query},
-                dataType : 'json',
-                success: function (response) {
-                    var lines = "";
-                    $.each(response,function (index,value) {
-                        lines += "<tr>";
-                        lines += "<td>"+value.id+"</td>"
-                        lines += "<td>"+this.nameAr+"</td>";
-                        lines += "<td>"+this.nameEn+"</td>";
-                        lines += "<td>"+this.email+"</td>";
-                        lines += "<td>"+this.created_at+"</td>";
-                        lines += "<td>"+this.phoneNumber+"</td>";
-                        lines += "<td>"+this.idNumber+"</td>";
-                        lines += "<td>";
-                        lines += "<a href=Student/"+this.id+">";
-                        lines += "<i class='fas fa-info-circle' fa-info-circle></i></a>";
-                        lines += "</a>";
-                        lines += "<a href=Student/"+this.id+"/edit>";
-                        lines += "<i class='fas fa-user-edit' fa-info-circle></i></a>";
-                        lines += "</a>";
-                        lines += "</td>";
-                        lines += "</tr>";
-                    });
-                     $('tbody').html(lines);
-
-                }
-            })
-        }
-
-    </script>
-
+    <script src=/../../../js/sb-admin-2.min.js"></script>
 
 
 </body>

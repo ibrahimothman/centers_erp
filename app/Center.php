@@ -9,7 +9,7 @@ class Center extends Model
 {
     protected $guarded = [];
 
-    // once center is created assign user as an admin
+    // once center is created assign user as a creator
     protected static function boot()
     {
         parent::boot();
@@ -17,7 +17,7 @@ class Center extends Model
         {
             Auth::user()->centers()->syncWithoutDetaching([
                 $center->id => [
-                    'job' => 'admin'
+                    'job' => 'creator'
                 ]
             ]);
         });

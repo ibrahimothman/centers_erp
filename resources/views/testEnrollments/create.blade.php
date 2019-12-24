@@ -190,7 +190,7 @@
 <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
 <!-- Custom scripts for alwl pages-->
-<script src="{{url('js/sb-admin-2.min.js')}}"></script>
+<script src="{{url('employee')}}"></script>
 
     <script>
 

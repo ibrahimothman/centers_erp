@@ -36,8 +36,8 @@ class StudentController extends Controller
     public function index()
     {
 
-        $this->authorize('viewAny',Student::class);
-        $center = Auth::user()->center;
+//        $this->authorize('viewAny',Student::class);
+        $center = Auth::user()->centers->first();
         $students = $center->students;
 
         return view('students.all')->with('students',$students);

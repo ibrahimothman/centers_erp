@@ -39,6 +39,14 @@ class LoginController extends Controller
 //
     }
 
+
+
+    // use user_name for auth instead of email
+//    public function username()
+//    {
+//        return 'username';
+//    }
+
     protected function authenticated(Request $request, $user)
     {
         if(! $user->center) return redirect()->route('centers.create');

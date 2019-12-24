@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 //------------------------ center -------------
 Route::resource('centers','CentersController');
 
+//--------------------------- center's admins ------------------
+Route::resource('employees','EmployeeController');
+
 // --------------------- students --------------------
 Route::get('/', 'StudentController@create' );
 Route::resource('students','StudentController');
@@ -50,9 +53,7 @@ Route::resource('test-results','TestResultController');
 Route::resource('test-statements','TestStatementController');
 Route::get('test-statements-preview/{statement}/{student}','TestStatementController@previewStatement');
 
-//-------------settings -----
-Route::get('settings/profile','settingsController@showProfileSettings');
-Route::post('settings/profile/update','settingsController@updateProfileSettings');
+
 
 //----------- courses ---------------
 Route::resource('courses','CoursesController');
@@ -70,5 +71,5 @@ Route::get('set_role',function (){
     }
 });
 
-Auth::routes();
+Auth::routes(['register' => true]);
 

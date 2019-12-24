@@ -251,7 +251,7 @@
 
 
     <!-- Custom scripts for all pages-->
-    <script src="{{url('js/sb-admin-2.min.js')}}"></script>
+    <script src="{{url('employee')}}"></script>
     <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 
 

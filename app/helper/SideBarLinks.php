@@ -31,4 +31,12 @@ class SideBarLinks
         ];
     }
 
+    public static function employeeLinks()
+    {
+        return [
+            'http://127.0.0.1:8000/'.'employees/create' =>'تسجيل موظف',
+            'http://127.0.0.1:8000/'.'employees' => 'عرض/تعديل بيانات موظف'
+        ];
+    }
+
 }

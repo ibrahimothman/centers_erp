@@ -23,7 +23,7 @@ class TestController extends Controller
     public function index()
     {
 
-        $this->authorize('viewAny',Test::class);
+//        $this->authorize('viewAny',Test::class);
         $tests = auth()->user()->center->tests()->orderBy('created_at','desc')->get();
         return view('test.index',compact('tests'));
     }
