@@ -78,6 +78,7 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
+        return view('courses/viewCourses');
         //
     }
 
