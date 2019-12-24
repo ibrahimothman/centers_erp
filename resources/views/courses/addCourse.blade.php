@@ -33,7 +33,7 @@
                     <div class="container-fluid">
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-8">
-                                <div class="card mb-4">
+                                <div class="card mb-4 shadowed">
                                     <header>
                                         <div class="card-header text-primary form-title">
                                         إضافه دورة
@@ -45,15 +45,32 @@
                                             <div class="form-row image-upload">
                                                 <div class="col-sm-8">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" name="image" id="customFile" src="" onchange="readURL(this);" required>
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image1" id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image2" id="customFile2" src="" onchange="readURL(this, 2);">
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image3" id="customFile3" src="" onchange="readURL(this, 3);">
+                                                        <input type="file" accept="video/*" class="custom-file-input" name="video" id="customFile4" src="" onchange="readURL(this, 4);">
                                                         <label class="custom-file-label" for="customFile">صوره الدورة</label>
                                                         <div></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex  flex-column justify-content-center">
-                                                <img id="imageUploaded" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
-                                                <p>صورة الدورة</p>
+                                            <div class="d-flex  justify-content-center">
+                                                <div class="course-image-input">
+                                                    <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
+                                                    <p>صورة الدورة</p>
+                                                </div>
+                                                <div class="course-image-input">
+                                                    <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
+                                                    <p>صورة الدورة</p>
+                                                </div>
+                                                <div class="course-image-input">
+                                                    <img id="imageUploaded3" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
+                                                    <p>صورة الدورة</p>
+                                                </div>
+                                                <div class="course-image-input">
+                                                    <img id="imageUploaded4" src="http://simpleicon.com/wp-content/uploads/video.svg" alt="your video" />
+                                                    <p>ڤيديو الدورة</p>
+                                                </div>
                                             </div>
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
@@ -63,51 +80,100 @@
                                                     <div></div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
-                                                    <label for="course-teacher">اسم المدرس</label>
-                                                    <input type="text" class="form-control" id="course-teacher" placeholder="اسم المدرس " value="" name="course-teacher" required>
-                                                    <span id="test_course-teacher_error"></span>
+                                                    <label for="course-id">كود الدورة</label>
+                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="" name="course-id" required>
+                                                    <span id="test_course-id_error"></span>
                                                     <div></div>
                                                 </div>
                                             </div>
-                                            <div class="form-row">
-                                                <div class="col-sm-12 form-group">
-                                                    <label for="course-place">مكان الدورة</label>
-                                                    <input type="text" class="form-control" id="course-place" placeholder="مكان الدورة " value="" name="course-place" required>
-                                                    <span id="test_course-place_error"></span>
+                                            <div class=" form-row">
+                                                <label for="course-description">وصف الدورة</label>
+                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="course-description" required></textarea>
+                                                <div></div>
+                                            </div>
+                                            <fieldset>
+                                                <div class="form-row">
+                                                <legend class="full-width"> محتوى الدورة <i class="fas fa-plus-circle" id='add-more' style="color:green; cursor:pointer"></i></legend>
+                                                    <div class="col-sm-12 input-group input-chapter">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1">باب  1</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="" name="course-chapter-1" required>
+                                                        <span id="test_course-chapter-1_error"></span>
+                                                        <div></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="chapter-1-desc">عن باب 1</label>
+                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc" name="chapter-1-desc"></textarea>
                                                     <div></div>
                                                 </div>
+                                            </fieldset>
+                                            <div class="form-row">
+                                                        <div class="col-sm-6 form-group">
+                                                        <label for="instructor-name">اسم المدرس</label>
+                                                        <select class="form-control" id="instructor-name" multiple required>
+                                                            <option value="1">د.سعد الحسيني</option>
+                                                            <option value="2">د.سمير أحمد</option>
+                                                            <option value="3">د.جمال جميل</option>
+                                                            <option value="4">م.احمد مرسي</option>
+                                                            <option value="5">م.علاء فتحي</option>
+                                                        </select>
+                                                            <span id="test_course-teacher_error"></span>
+                                                            <div></div>
+                                                        </div>
+                                                        <div class="col-sm-6 form-group">
+                                                            <label for="course-duration">مدة الدورة</label>
+                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="course-duration" required>
+                                                            <span id="test_course-duration_error"></span>
+                                                            <div></div>
+                                                        </div>
                                             </div>
                                             <div class="form-row">
-                                                <div class="col-sm-6 form-group">
-                                                    <label for="course-duration">مدة الدورة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="course-duration" required>
-                                                    <span id="test_course-duration_error"></span>
-                                                    <div></div>
-                                                </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-cost">تكلفة الدورة</label>
                                                     <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="" name="course-cost" required>
                                                     <span id="test_course-cost_error"></span>
                                                     <div></div>
                                                 </div>
-                                            </div>
-                                            
-                                            <div class="form-row">
-                                            <label class="full-width"> محتوى الدورة <i class="fas fa-plus-circle" id='add-more' style="color:green; cursor:pointer"></i></label>
-                                                <div class="col-sm-12 input-group input-chapter">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1">باب  1</span>
-                                                    </div>
-                                                    <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="" name="course-chapter-1" required>
-                                                    <span id="test_course-chapter-1_error"></span>
+                                                <div class="col-sm-6 form-group">
+                                                    <label for="course-group-cost">تكلفة الدورة المجمعة</label>
+                                                    <input type="number" min='0' class="form-control" id="course-group-cost" placeholder="تكلفة الدورة المجمعة " value="" name="course-group-cost" required>
+                                                    <span id="test_course-group-cost_error"></span>
                                                     <div></div>
                                                 </div>
                                             </div>
-                                            <div class=" form-row">
-                                                <label for="course-description">وصف الدورة</label>
-                                                <textarea placeholder="وصف الدورة" rows="3" class="form-control" id="course-description" name="course-description" required></textarea>
-                                                <div></div>
+
+                                            <div class="form-row">
+                                                <div class="col-sm-6 form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input part-of-diploma" name="retake" id="customCheck1">
+                                                    <label class="custom-control-label" for="customCheck1">هذه الدورة جزء من دبلومة</label>
+                                                </div>
+                                                <div class="shown-if-checked">
+                                                    <div>
+                                                        <label for="diploma-name">اسم الدبلومة</label>
+                                                        <input type="text" class="form-control" id="diploma-name" placeholder="اسم الدبلومة " value="" name="diploma-name" required>
+                                                        <span id="test_diploma-name_error"></span>
+                                                        <div></div>
+                                                        <label for="diploma-course-num"> ترتيب الدورة بالدبلومة</label>
+                                                        <input type="number" class="form-control" id="diploma-course-num" placeholder=" ترتيب الدورة بالدبلومة " value="" name="diploma-course-num" required>
+                                                        <span id="test_diploma-course-num_error"></span>
+                                                        <div></div>
+                                                    </div>
+                                                </div>
+                                        
+                                        
+                                        </div>
+                                        
+                                            <div class="col-sm-6 form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck2" checked="">
+                                                    <label class="custom-control-label" for="customCheck2">هذه الدورة لها امتحان</label>
+                                                </div>
                                             </div>
+                                        </div>
+<!-- 
                                             <div class="form-row">
                                                 <header class="col-sm-12">
                                                     <label class="full-width">مرافق المنشأة</label>
@@ -134,7 +200,7 @@
                                                     <label class="custom-control-label" for="customCheck5">سبورة</label>
                                                 </div>
                                             </div>
-                                            </div>
+                                            </div> -->
                                             <div class="form-row save">
 
                                                 <div class="col-sm-6 mx-auto" style="width: 200px;">
