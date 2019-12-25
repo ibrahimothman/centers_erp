@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Session;
 
 class CentersController extends Controller
 {
@@ -21,8 +22,9 @@ class CentersController extends Controller
 
     public function store()
     {
-        $center = Center::create($this->validateRequest());
+        Center::create($this->validateRequest());
 
+        dd(Session('center'));
         return redirect('/');
     }
 

@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Events\NewCenterHasCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Session;
 
 class Center extends Model
 {
@@ -15,17 +17,37 @@ class Center extends Model
         parent::boot();
         static::created(function ($center)
         {
-            Auth::user()->centers()->syncWithoutDetaching([
-                $center->id => [
-                    'job' => 'creator'
-                ]
+            // create employee record for center's creator
+            $employee = Employee::create([
+                'user_id' => Auth::id(),
+                'name' => Auth::user()->name
             ]);
+
+            // add employee to center
+            $employee->centers()->syncWithoutDetaching($center);
+
+            // create new admin job related to this center
+            $job = $center->jobs()->create([
+                'name' => 'admin'
+            ]);
+
+            // add admin job to center's creator
+            $employee->jobs()->syncWithoutDetaching($job);
+
+            // save center_id in session
+            Session(['center' => $center->id]);
+
         });
     }
 
-    public function users()
+    public function employees()
     {
-        return $this->belongsToMany(User::class)->withPivot('job');
+        return $this->belongsToMany(Employee::class);
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
     }
 
     public function students()

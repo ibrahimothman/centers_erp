@@ -38,14 +38,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-    public function centers()
-    {
-        return $this->belongsToMany(Center::class)->withPivot('job');
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class)->withTimestamps();
-    }
 }
