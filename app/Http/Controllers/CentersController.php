@@ -23,8 +23,6 @@ class CentersController extends Controller
     public function store()
     {
         Center::create($this->validateRequest());
-
-        dd(Session('center'));
         return redirect('/');
     }
 

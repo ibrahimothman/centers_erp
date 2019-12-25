@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -49,6 +50,10 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if(! $user->center) return redirect()->route('centers.create');
+        // if this user is not an employee so center is not created yes
+
+        if(! Employee::where('user_id',$user->id)->first()) {
+            return redirect('centers/create');
+        }
     }
 }
