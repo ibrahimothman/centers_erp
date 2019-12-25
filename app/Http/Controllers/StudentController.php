@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -84,8 +85,8 @@ class StudentController extends Controller
         // todo : attach student to the center
         // check if user has rights to add a new student
 
-        $this->authorize('create',Student::class);
-        $center = Auth::user()->center;
+//        $this->authorize('create',Student::class);
+        $center = Session::get('center');
         $student = Student::create($this->validateRequest(''));
         $center->students()->syncWithoutDetaching($student);
         return redirect("/students/$student->id");
@@ -101,7 +102,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        $this->authorize('view',$student);
+//        $this->authorize('view',$student);
         return view('students.show',compact('student'));
     }
 
@@ -113,7 +114,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        $this->authorize('update',$student);
+//        $this->authorize('update',$student);
         return view('students.studentEdit',compact('student'));
     }
 
@@ -126,7 +127,7 @@ class StudentController extends Controller
      */
     public function update(Student $student)
     {
-        $this->authorize('update',$student);
+//        $this->authorize('update',$student);
 
         // todo delete prev image from profiles dir
 
@@ -146,7 +147,7 @@ class StudentController extends Controller
         //policy
         $this->authorize('delete',$student);
         // delete from pivot
-        $center = Auth::user()->center;
+        $center = Session::get('center');
         $center->students()->detach($student);
 
         // delete images
@@ -182,7 +183,7 @@ class StudentController extends Controller
 
     public function searchByName(){
         // search for only auth center
-        $center = Auth::user()->center;
+        $center = Session::get('center');
         if(request()->ajax()){
             $query = request()->get('query');
             if($query != ''){

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Center;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use mysql_xdevapi\Session;
 
 class CentersController extends Controller
 {

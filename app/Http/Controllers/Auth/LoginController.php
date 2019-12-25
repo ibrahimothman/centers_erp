@@ -6,6 +6,7 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -41,19 +42,11 @@ class LoginController extends Controller
     }
 
 
-
-    // use user_name for auth instead of email
-//    public function username()
-//    {
-//        return 'username';
-//    }
-
     protected function authenticated(Request $request, $user)
     {
         // if this user is not an employee so center is not created yes
+        $employee = Employee::where('user_id',$user->id)->first();
+        Session::put('center',$employee->centers->first());
 
-        if(! Employee::where('user_id',$user->id)->first()) {
-            return redirect('centers/create');
-        }
     }
 }

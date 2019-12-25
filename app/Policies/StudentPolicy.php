@@ -40,13 +40,13 @@ class StudentPolicy
          * A member in center which student enrolled in and
          * Has student.view role
          * */
-        $role = Role::where('name','student.view')->first();
-        foreach ($student->centers as $center){
-            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
-                return true;
-        }
-//
-        return false;
+//        $role = Role::where('name','student.view')->first();
+//        foreach ($student->centers as $center){
+//            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
+//                return true;
+//        }
+////
+//        return false;
     }
 
     /**
@@ -57,6 +57,7 @@ class StudentPolicy
      */
     public function create(User $user)
     {
+
         $role = Role::where('name','student.add')->first();
         return Auth::user()->roles->contains($role->id);
 
@@ -72,13 +73,13 @@ class StudentPolicy
     public function update(User $user, Student $student)
     {
         //
-        $role = Role::where('name','student.update')->first();
-        foreach ($student->centers as $center){
-            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
-                return true;
-        }
-
-        return false;
+//        $role = Role::where('name','student.update')->first();
+//        foreach ($student->centers as $center){
+//            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
+//                return true;
+//        }
+//
+//        return false;
     }
 
     /**

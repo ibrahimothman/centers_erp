@@ -35,7 +35,7 @@ class Center extends Model
             $employee->jobs()->syncWithoutDetaching($job);
 
             // save center_id in session
-            Session(['center' => $center->id]);
+            Session(['center' => $center]);
 
         });
     }

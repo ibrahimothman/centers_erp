@@ -37,7 +37,6 @@
 <div id="wrapper">
 
 
-@include('sidebar')
 
 <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
