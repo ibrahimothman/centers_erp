@@ -18,4 +18,9 @@ class Course extends Model
         return $this->belongsToMany(Center::class);
     }
 
+    public function courses()
+    {
+        return $this->belongsToMany(Student::class);
+    }
+
 }
