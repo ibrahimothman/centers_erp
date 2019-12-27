@@ -57,8 +57,8 @@ Route::post('settings/profile/update','settingsController@updateProfileSettings'
 //----------- courses ---------------
 Route::resource('courses','CoursesController');
 Route::post('create_course','CoursesController@createCourse');
-Route::get('create_course','CoursesController@createCourse');
 Route::resource('course_groups','CourseGroupsController');
+Route::resource('course_enrollment','CourseEntrollmentsController');
 Route::resource('rooms','RoomsController');
 
 Route::get('set_role',function (){
