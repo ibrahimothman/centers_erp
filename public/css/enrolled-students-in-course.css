@@ -1,0 +1,61 @@
+.view-courses-title{
+    display: flex;
+    justify-content: space-between;
+    }
+
+    .align-end{
+        align-self: flex-end;
+    }
+    
+    .courses-wrap{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+    
+    .user-card{
+        width: 30%;
+        height: 240px;
+        margin-left: 3.3%;
+        display: flex;
+        margin-bottom: 20px;
+        flex-flow: column;
+        justify-content: flex-end;
+        align-items: center;
+        border:1px solid #ced4da;
+    }
+
+    .user-card p{
+        font-weight: bold;
+        color: white;
+        margin-bottom: 0;
+    }
+
+    .user-card a, .user-card a:hover, .user-card a:active{
+        color: red;
+        font-weight:bold ;
+    }
+    
+    
+    @media only screen and (max-width: 967px) {
+
+        .user-card{
+            width: 40%;
+            margin-left: 10%;
+        }
+    
+    }
+    
+    
+    @media only screen and (max-width: 550px) {
+    
+        .courses-wrap{
+            justify-content: center;
+        }
+    
+        .user-card{
+            width: 90%;
+            margin-left: 0;
+        }
+    
+    }
