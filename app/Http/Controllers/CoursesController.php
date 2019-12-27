@@ -23,7 +23,7 @@ class CoursesController extends Controller
 
     public function index()
     {
-        $courses=Auth::user()->center->courses;
+        $courses=Auth::user()->center->courses()->paginate(6);
 
         return view('courses/viewCourses')
             ->with('courses',$courses);
