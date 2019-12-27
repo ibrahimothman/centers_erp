@@ -16,10 +16,15 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        return view('courses/viewCourses');
 
+        return view('courses/viewCourses');
     }
 
     /**
@@ -29,8 +34,12 @@ class CoursesController extends Controller
      */
     public function create()
     {
+        $instructors= Auth::user()->center->instructor;
+
         //echo Auth::user()->center->courses;
-        return view('courses/addCourse');
+        return view('courses/addCourse')
+            ->with("instructors",$instructors);
+
 
     }
 
@@ -124,24 +133,24 @@ class CoursesController extends Controller
 
     public function createCourse(Request $request){
 
+        //echo $request->input('instructor_id');
+        $request['instructor_id']=(int)$request['instructor_id']['0'];
+        $request['center_id']=Auth::user()->center->id;
         $validate=$this->validate($request,
             ['name'=>'required',
                 'code'=>'required',
                 'duration'=>'required|regex:/^[0-9]+$/',
                 'cost'=>'required',
+                'teamCost'=>'nullable',
+                'instructor_id'=>'required',
+                'center_id'=>'required',
                 'description'=>'required',
                 'content'=>'required'
             ]);
-
 //
-        $course=new Course();
-        try{
+//
             Course::create($validate);
-        }catch (Exception $exception){
-            echo "exception ".$exception;
-            return json_encode( "failed");
 
-        }
 
 
         return json_encode( "course added successfully");
