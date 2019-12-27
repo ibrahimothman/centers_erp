@@ -113,11 +113,10 @@
                                                         <div class="col-sm-6 form-group">
                                                         <label for="instructor-name">اسم المدرس</label>
                                                         <select class="form-control" id="instructor-name" multiple required>
-                                                            <option value="1">د.سعد الحسيني</option>
-                                                            <option value="2">د.سمير أحمد</option>
-                                                            <option value="3">د.جمال جميل</option>
-                                                            <option value="4">م.احمد مرسي</option>
-                                                            <option value="5">م.علاء فتحي</option>
+                                                            @foreach($instructors as $instructor)
+                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
+
+                                                            @endforeach
                                                         </select>
                                                             <span id="test_course-teacher_error"></span>
                                                             <div></div>
@@ -243,24 +242,25 @@
                     var courseDescription = $("#course-description").val();
                     var courseDuration = $("#course-duration").val();
                     var courseCost = $("#course-cost").val();
-                    var instructorName = $("#instructor-name").val();
+                    var teamCost = $("#course-group-cost").val();
+                    var instructorId = $("#instructor-name").val();
                     var courseChapter = $("#course-chapter-1").val();
                     var chapterDesc = $("#chapter-1-desc").val();
                     var courseContent=courseChapter+chapterDesc;
-
                     $.ajax({
                         url: "/create_course",
                         method: "POST",
                         data: {name:courseName,code:courseCode,description:courseDescription,
                             duration:courseDuration,cost:courseCost, content:courseContent,
-                            _token: "{{ csrf_token() }}"},
+                            teamCost:teamCost,
+                            instructor_id:instructorId,_token: "{{ csrf_token() }}"},
                         dataType: "json",
                         success: function (data) {
                             // console.log(data);
                             alert(data);
                         },
                         error: function (xhr, textStatus, error) {
-                            alert(">> "+textStatus +xhr.statusText+error);
+                            alert(">> " +xhr.statusText);
                         }
 
                     });

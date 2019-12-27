@@ -27,11 +27,11 @@ class Center extends Model
         return $this->hasMany(Course::class);
     }
 
-    public function instructors(){
+    public function instructor(){
         return $this->belongsToMany(Instructor::class);
     }
 
-    public function instructor_center(){
-        return $this->belongsTo(Instructor_center::class);
-    }
+//    public function instructor_center(){
+//        return $this->belongsTo(Instructor_center::class);
+//    }
 }

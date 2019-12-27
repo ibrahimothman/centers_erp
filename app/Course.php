@@ -15,7 +15,7 @@ class Course extends Model
     }
 
     public function instructor(){
-
+        return $this->belongsToMany(Center::class);
     }
 
 }
