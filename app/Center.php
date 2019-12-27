@@ -22,4 +22,16 @@ class Center extends Model
     {
         return $this->hasMany(Test::class)->latest();
     }
+
+    public function courses(){
+        return $this->hasMany(Course::class);
+    }
+
+    public function instructors(){
+        return $this->belongsToMany(Instructor::class);
+    }
+
+    public function instructor_center(){
+        return $this->belongsTo(Instructor_center::class);
+    }
 }

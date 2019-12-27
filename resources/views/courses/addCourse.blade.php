@@ -14,7 +14,7 @@
             <!-- Custom fonts for this template-->
             <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
             <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-            
+
             <!-- Custom styles for this template-->
             <link href="/../../../css/sb-admin-rtl.css" rel="stylesheet">
             <link href="/../../../css/styles.css" rel="stylesheet">
@@ -162,10 +162,10 @@
                                                         <div></div>
                                                     </div>
                                                 </div>
-                                        
-                                        
+
+
                                         </div>
-                                        
+
                                             <div class="col-sm-6 form-group">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" name="retake" id="customCheck2" checked="">
@@ -173,7 +173,7 @@
                                                 </div>
                                             </div>
                                         </div>
-<!-- 
+<!--
                                             <div class="form-row">
                                                 <header class="col-sm-12">
                                                     <label class="full-width">مرافق المنشأة</label>
@@ -213,14 +213,14 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div>     
+                            </div>
                         <!-- /.container-fluid -->
                         </div>
                     </div>
                     @include('footer')
                 </div>
             </div>
-        
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="{{url('vendor/jquery/jquery.min.js')}}"></script>
@@ -230,9 +230,46 @@
         <!-- Custom scripts for all pages-->
         <script src="{{url('js/sb-admin-2.min.js')}}"></script>
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
-        
+
 
         <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
+
+        <script >
+            $(document).ready(function() {
+
+                $("#submit").click(function() {
+                    var courseName = $("#course-name").val();
+                    var courseCode = $("#course-id").val();
+                    var courseDescription = $("#course-description").val();
+                    var courseDuration = $("#course-duration").val();
+                    var courseCost = $("#course-cost").val();
+                    var instructorName = $("#instructor-name").val();
+                    var courseChapter = $("#course-chapter-1").val();
+                    var chapterDesc = $("#chapter-1-desc").val();
+                    var courseContent=courseChapter+chapterDesc;
+
+                    $.ajax({
+                        url: "/create_course",
+                        method: "POST",
+                        data: {name:courseName,code:courseCode,description:courseDescription,
+                            duration:courseDuration,cost:courseCost, content:courseContent,
+                            _token: "{{ csrf_token() }}"},
+                        dataType: "json",
+                        success: function (data) {
+                            // console.log(data);
+                            alert(data);
+                        },
+                        error: function (xhr, textStatus, error) {
+                            alert(">> "+textStatus +xhr.statusText+error);
+                        }
+
+                    });
+
+                });
+            });
+
+        </script>
+
     </body>
 
 </html>

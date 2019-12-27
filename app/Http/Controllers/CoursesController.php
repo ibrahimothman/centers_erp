@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\CourseMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Psy\Exception\Exception;
 
 class CoursesController extends Controller
 {
@@ -16,7 +18,7 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        //
+        return view('courses/viewCourses');
 
     }
 
@@ -27,6 +29,7 @@ class CoursesController extends Controller
      */
     public function create()
     {
+        //echo Auth::user()->center->courses;
         return view('courses/addCourse');
 
     }
@@ -39,7 +42,7 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,
+        $validate=$this->validate($request,
             ['name'=>'required',
             'code'=>'required',
             'duration'=>'required|regex:/^[0-9]+$/',
@@ -49,20 +52,17 @@ class CoursesController extends Controller
         ]);
 
         $course=new Course();
-        $course->name=request('name');
-        $course->code=request('code');
-        $course->duration=request('duration');
-        $course->cost=request('price');
-        $course->description=request('description');
-        $course->content=request('content');
-        $course->save();
-        $res=$this->uploadImage($request);
-        if ($res!=null){
-           $courseMedia=new CourseMedia();
-           $courseMedia->src=$res->getRealPath();
-           $courseMedia->course_id =$course->id;
-           $courseMedia->save();
-        }
+        Course::create($validate);
+
+
+
+//        $res=$this->uploadImage($request);
+//        if ($res!=null){
+//           $courseMedia=new CourseMedia();
+//           $courseMedia->src=$res->getRealPath();
+//           $courseMedia->course_id =$course->id;
+//           $courseMedia->save();
+//        }
 
             return redirect('courses/create')
                 ->with("message","course added successfully");
@@ -120,5 +120,30 @@ class CoursesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function createCourse(Request $request){
+
+        $validate=$this->validate($request,
+            ['name'=>'required',
+                'code'=>'required',
+                'duration'=>'required|regex:/^[0-9]+$/',
+                'cost'=>'required',
+                'description'=>'required',
+                'content'=>'required'
+            ]);
+
+//
+        $course=new Course();
+        try{
+            Course::create($validate);
+        }catch (Exception $exception){
+            echo "exception ".$exception;
+            return json_encode( "failed");
+
+        }
+
+
+        return json_encode( "course added successfully");
     }
 }
