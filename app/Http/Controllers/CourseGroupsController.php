@@ -46,6 +46,7 @@ class CourseGroupsController extends Controller
     public function show($id)
     {
         //
+        return view('courseGroups/course_group_students');
     }
 
     /**
