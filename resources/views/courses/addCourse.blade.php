@@ -247,6 +247,20 @@
                     var courseChapter = $("#course-chapter-1").val();
                     var chapterDesc = $("#chapter-1-desc").val();
                     var courseContent=courseChapter+chapterDesc;
+
+                    let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+                    let chapterName = [...$('fieldset textarea')];
+                    let chapterDescription = [...$('fieldset input')];
+
+                    chapterName.forEach(function(chapter,chapterIndex){
+                        let chapterInfo = {};
+                        chapterInfo.name = chapterName[chapterIndex].value;
+                        chapterInfo.description = chapterDescription[chapterIndex].value;
+
+                        chapters.push(chapterInfo);
+                    })                    
+                    
+
                     $.ajax({
                         url: "/create_course",
                         method: "POST",
