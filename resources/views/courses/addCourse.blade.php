@@ -249,8 +249,8 @@
                     var courseContent=courseChapter+chapterDesc;
 
                     let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
-                    let chapterName = [...$('fieldset textarea')];
-                    let chapterDescription = [...$('fieldset input')];
+                    let chapterDescription = [...$('fieldset textarea')];
+                    let chapterName = [...$('fieldset input')];
 
                     chapterName.forEach(function(chapter,chapterIndex){
                         let chapterInfo = {};
