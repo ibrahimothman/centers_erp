@@ -39,4 +39,12 @@ class SideBarLinks
         ];
     }
 
+    public static function jobLinks()
+    {
+        return [
+            'http://127.0.0.1:8000/'.'jobs/create' =>'تسجيل وظيفة جديده',
+            'http://127.0.0.1:8000/'.'jobs' => 'عرض/تعديل بيانات الوظيفه'
+        ];
+    }
+
 }

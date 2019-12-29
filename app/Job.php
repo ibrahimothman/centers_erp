@@ -18,4 +18,9 @@ class Job extends Model
     {
         return $this->belongsToMany(Employee::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
 }
