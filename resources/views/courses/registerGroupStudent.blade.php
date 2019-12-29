@@ -19,7 +19,7 @@
 
 
 
-    <form action="{{ route('groupStudents.store') }}" method="post" >
+    <form action="" method="post" >
         @csrf
         <legend><span class="number">.</span> Group Student Registeration </legend>
         <input type="text" id="studentName" name="studentName" placeholder="student *" required>
