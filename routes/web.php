@@ -62,11 +62,14 @@ Route::resource('course_groups','CourseGroupsController');
 Route::resource('course_enrollment','CourseEntrollmentsController');
 Route::resource('rooms','RoomsController');
 
+//-------------------- jobs ---------------------
+Route::resource('jobs','jobController');
+
 Route::get('set_role',function (){
-    $roles = ['student.add','student.edit','student.delete','student.view',
-        'test.add','test.edit','test.delete','test.view',
-        'test-group.add','test-group.edit','test-group.delete','test-group.view',
-        'test-enrollment.add','test-enrollment.edit','test-enrollment.delete','test-enrollment.view',
+    $roles = ['student.add','student.view','student.update','student.delete',
+        'test.add','test.view','test.update','test.delete',
+        'test-group.add','test-group.view','test-group.update','test-group.delete',
+        'test-enrollment.add','test-enrollment.view','test-enrollment.update','test-enrollment.delete',
     ];
     foreach ($roles as $role) {
         Role::create(['name' => $role]);
