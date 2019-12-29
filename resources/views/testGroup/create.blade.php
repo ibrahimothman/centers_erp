@@ -81,7 +81,7 @@
                                             <datalist id="test">
                                                 <select name="testt" onchange="onOptionSelected()">
                                                     @foreach($tests as $test)
-                                                        <option  value={{$test->name}}>{{$test->name}}</option>
+                                                        <option  >{{$test->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </datalist>

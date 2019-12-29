@@ -25,13 +25,13 @@ class TestResultController extends Controller
     public function index()
     {
 
-        $center = auth()->user()->center;
+        $center = Center::findOrFail(Session('center_id'));
         $tests = $center->tests;
         if(Input::get('test')) {
             $test_id = explode(',', Input::get('test'), 2)[0];
             $group_id = explode(',', Input::get('test'), 2)[1];
 
-            $test = auth()->user()->center->tests()->findOrFail($test_id);
+            $test = $center->tests()->findOrFail($test_id);
             $students = $test->groups()->findOrFail($group_id)->enrollers;
             return view('testResult.test-result',compact([
                 'tests' => $tests,
@@ -57,7 +57,8 @@ class TestResultController extends Controller
     {
         //
 //        return $this->getTestGroupStudents();
-        $tests = Test::all();
+        $center = Center::findOrFail(Session('center_id'));
+        $tests = $center->tests;
         return view('testResult.test-result-add',compact('tests'));
     }
 

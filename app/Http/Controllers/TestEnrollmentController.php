@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use App\Policies\TestEnrollmentPolicy;
 use App\TestGroup;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Test;
 use App\StudentTestGroup;
+use mysql_xdevapi\Session;
 
 
 class TestEnrollmentController extends Controller
@@ -25,8 +27,8 @@ class TestEnrollmentController extends Controller
      */
     public function index()
     {
-//        $this->getTestEnrollments();
-        $tests = auth()->user()->center->tests;
+        $center = Center::findOrFail(Session('center_id'));
+        $tests = $center->tests;
         return view('testEnrollments.index',compact('tests'));
     }
 
@@ -39,7 +41,7 @@ class TestEnrollmentController extends Controller
     {
 
         // todo center
-        $center = auth()->user()->center;
+        $center = Center::findOrFail(Session('center_id'));
         $students = $center->students;
         $tests = $center->tests;
 
@@ -120,7 +122,8 @@ class TestEnrollmentController extends Controller
         }
 
         // todo determine center
-        $test = auth()->user()->center->tests()->with('groups')->with('statement')->findOrFail($test_id);
+        $center = Center::findOrFail(Session('center_id'));
+        $test = $center->tests()->with('groups')->with('statement')->findOrFail($test_id);
         foreach ($test->groups as $group){
             $group->enrollers;
         }
@@ -161,7 +164,6 @@ class TestEnrollmentController extends Controller
      */
     public function destroy($id)
     {
-        return 'hello';
     }
 
     public function deleteEnrollment()
