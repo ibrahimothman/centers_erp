@@ -6,7 +6,8 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Session;
 
 class LoginController extends Controller
 {
@@ -44,9 +45,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        // if this user is not an employee so center is not created yes
-        $employee = Employee::where('user_id',$user->id)->first();
-        Session::put('center',$employee->centers->first());
-
+        // try to save center in session
+        Session(['center_id' => Auth::user()->centers->first()->id]);
     }
 }

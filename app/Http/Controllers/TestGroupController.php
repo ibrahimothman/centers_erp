@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use App\Role;
 use Illuminate\Http\Request;
 use App\Test;
@@ -28,9 +29,9 @@ class TestGroupController extends Controller
     {
         // todo something wrong while calculating available_seats
 
-        $this->authorize('viewAny',TestGroup::class);
+//        $this->authorize('viewAny',TestGroup::class);
 
-        $center = auth()->user()->center;
+        $center = Center::findOrFail(Session('center_id'));;
         $allTests = $center->tests;
 
         $tests = $center->tests()->paginate(2);
@@ -64,8 +65,9 @@ class TestGroupController extends Controller
     public function create()
     {
         // check if user has rights to view create_test_group_form
-        $this->authorize('create',TestGroup::class);
-        $tests = auth()->user()->center->tests()->orderBy('created_at','desc')->paginate(10);
+//        $this->authorize('create',TestGroup::class);
+        $center = Center::findOrFail(Session('center_id'));
+        $tests = $center->tests()->orderBy('created_at','desc')->paginate(10);
         $testName=null;
         if (Input::get('test')!=null)
             $testName=Input::get('test');
@@ -83,7 +85,7 @@ class TestGroupController extends Controller
     public function store(Request $request)
     {
         // check if user has rights to add a new test-group
-        $this->authorize('create',TestGroup::class);
+//        $this->authorize('create',TestGroup::class);
         //todo handle multiple groups
 
         $this->validate($request,[
@@ -98,21 +100,13 @@ class TestGroupController extends Controller
         $seats = $request->input('seat2');
 
 
-        $testId=DB::table('tests')
-            ->where('name',$test)
-            ->first();
+        $testId =Test::where('name',$test)->first()->id;
 
-        if ($testId==null)
-            $this->throwValidationException(['test'=>'this test oes not exist']);
-
-
-        $testGroup = new TestGroup;
-        $testGroup->test_id = $testId->id;
-        $testGroup->available_chairs = $seats;
-        $testGroup->group_date = $date;
-
-
-        $testGroup->save();
+        TestGroup::create([
+            'test_id' => $testId,
+            'available_chairs' => $seats,
+            'group_date' => $date,
+        ]);
 
         return redirect('/test-groups/create');
 
@@ -127,10 +121,7 @@ class TestGroupController extends Controller
      */
     public function show(TestGroup $testGroup)
     {
-        $this->authorize('view',$testGroup);
         // todo this view is missing
-//        return view('test.test-det-view-onee')
-//            ->with('testGroup',$testGroup) ;
     }
 
     /**
@@ -142,7 +133,7 @@ class TestGroupController extends Controller
     public function edit(TestGroup $testGroup)
     {
         //
-        $this->authorize('update',$testGroup);
+//        $this->authorize('update',$testGroup);
         return view('testGroup.edit')->with('testGroup',$testGroup);
     }
 
@@ -156,13 +147,12 @@ class TestGroupController extends Controller
     public function update(Request $request, TestGroup $testGroup)
     {
         //
-        $this->authorize('update',$testGroup);
+//        $this->authorize('update',$testGroup);
         $testGroup->update($this->validate($request,[
             'group_date' => 'required',
             'available_chairs' => 'required',
 //            'opened' => 'required'
         ]));
-
 
         // todo this view is missing
 //        return redirect('/test_group/'.$testGroup->id)->with('sucsess','group updated');
@@ -178,7 +168,7 @@ class TestGroupController extends Controller
     public function destroy(TestGroup $testGroup)
     {
         //
-        $this->authorize('delete',$testGroup);
+//        $this->authorize('delete',$testGroup);
         $testGroup->delete();
         return redirect('/test-groups')
             ->with('message','test group deleted successfully');

@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use mysql_xdevapi\Session;
 use phpDocumentor\Reflection\Types\Null_;
 use const http\Client\Curl\AUTH_ANY;
 
@@ -86,7 +86,7 @@ class StudentController extends Controller
         // check if user has rights to add a new student
 
 //        $this->authorize('create',Student::class);
-        $center = Session::get('center');
+        $center = Center::findOrFail(Session('center_id'));
         $student = Student::create($this->validateRequest(''));
         $center->students()->syncWithoutDetaching($student);
         return redirect("/students/$student->id");
@@ -147,7 +147,7 @@ class StudentController extends Controller
         //policy
         $this->authorize('delete',$student);
         // delete from pivot
-        $center = Session::get('center');
+        $center = Center::findOrFail(Session('center_id'));
         $center->students()->detach($student);
 
         // delete images

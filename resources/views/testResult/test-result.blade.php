@@ -99,16 +99,9 @@
                                                 @endforeach
                                             </select>
                                             <span id="testselector_error"></span>
-
                                         </div>
-
                                     </div>
-
-
-
                                     <!-- stu-block -->
-
-
                                     <div id = 'dispay_date'/>
 
 
@@ -215,6 +208,7 @@
 
     $('#testselector').change(function () {
         var test_id = $('#testselector').val();
+        console.log('test id : '+test_id);
         if(test_id != 0) getTestEnrollments(test_id);
     });
 </script>

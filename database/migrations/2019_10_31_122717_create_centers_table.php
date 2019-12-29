@@ -17,7 +17,7 @@ class CreateCentersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('manager_name');
-
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
         });

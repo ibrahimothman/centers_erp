@@ -11,33 +11,19 @@ class Center extends Model
 {
     protected $guarded = [];
 
-    // once center is created assign user as a creator
+    // once center is created save it in session
     protected static function boot()
     {
         parent::boot();
         static::created(function ($center)
         {
-            // create employee record for center's creator
-            $employee = Employee::create([
-                'user_id' => Auth::id(),
-                'name' => Auth::user()->name
-            ]);
-
-            // add employee to center
-            $employee->centers()->syncWithoutDetaching($center);
-
-            // create new admin job related to this center
-            $job = $center->jobs()->create([
-                'name' => 'admin'
-            ]);
-
-            // add admin job to center's creator
-            $employee->jobs()->syncWithoutDetaching($job);
-
-            // save center_id in session
-            Session(['center' => $center]);
-
+            Session(['center_id' => $center->id]);
         });
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function employees()
@@ -68,7 +54,4 @@ class Center extends Model
         return $this->belongsToMany(Instructor::class);
     }
 
-//    public function instructor_center(){
-//        return $this->belongsTo(Instructor_center::class);
-//    }
 }
