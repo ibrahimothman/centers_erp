@@ -101,7 +101,12 @@ class CoursesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $instructors= Auth::user()->center->instructor;
+        $course= Auth::user()->center->courses()->find($id);
+        return view('courses/updateCourse')
+            ->with("course",$course)
+            ->with("instructors",$instructors);
+
     }
 
     /**
@@ -113,7 +118,13 @@ class CoursesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $course = Course::find($id);
+        //$course->Update($request);
+        //Course::where('id', $id)->update($request->all());
+        DB::update(['name'=>'test']);
+
+        return json_encode( "course added successfull ".$request['_token']);
+
     }
 
     public function uploadImage(Request $request){
@@ -156,5 +167,20 @@ class CoursesController extends Controller
 
 
         return json_encode( "course added successfully");
+    }
+
+    private function getValidation(Request $request){
+        return $this->validate($request,
+            ['name'=>'required',
+                'code'=>'required',
+                'duration'=>'required|regex:/^[0-9]+$/',
+                'cost'=>'required',
+                'teamCost'=>'nullable',
+                'instructor_id'=>'required',
+                'center_id'=>'required',
+                'description'=>'required',
+                'content'=>'required'
+            ]);
+//
     }
 }

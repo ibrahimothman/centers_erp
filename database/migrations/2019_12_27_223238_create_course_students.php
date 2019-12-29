@@ -19,10 +19,10 @@ class CreateCourseStudents extends Migration
                 ->references("id")
                 ->on("students");
 
-            $table->unsignedBigInteger('center_id');
-            $table->foreign('center_id')
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')
                 ->references("id")
-                ->on("centers");
+                ->on("courses");
             $table->timestamps();
         });
     }
