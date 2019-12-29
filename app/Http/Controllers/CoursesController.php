@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\CourseMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Psy\Exception\Exception;
 
 class CoursesController extends Controller
 {
@@ -14,10 +16,17 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $courses=Auth::user()->center->courses()->paginate(6);
 
+        return view('courses/viewCourses')
+            ->with('courses',$courses);
     }
 
     /**
@@ -27,7 +36,12 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        return view('courses/addCourse');
+        $instructors= Auth::user()->center->instructor;
+
+        //echo Auth::user()->center->courses;
+        return view('courses/addCourse')
+            ->with("instructors",$instructors);
+
 
     }
 
@@ -39,7 +53,7 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,
+        $validate=$this->validate($request,
             ['name'=>'required',
             'code'=>'required',
             'duration'=>'required|regex:/^[0-9]+$/',
@@ -49,20 +63,17 @@ class CoursesController extends Controller
         ]);
 
         $course=new Course();
-        $course->name=request('name');
-        $course->code=request('code');
-        $course->duration=request('duration');
-        $course->cost=request('price');
-        $course->description=request('description');
-        $course->content=request('content');
-        $course->save();
-        $res=$this->uploadImage($request);
-        if ($res!=null){
-           $courseMedia=new CourseMedia();
-           $courseMedia->src=$res->getRealPath();
-           $courseMedia->course_id =$course->id;
-           $courseMedia->save();
-        }
+        Course::create($validate);
+
+
+
+//        $res=$this->uploadImage($request);
+//        if ($res!=null){
+//           $courseMedia=new CourseMedia();
+//           $courseMedia->src=$res->getRealPath();
+//           $courseMedia->course_id =$course->id;
+//           $courseMedia->save();
+//        }
 
             return redirect('courses/create')
                 ->with("message","course added successfully");
@@ -78,6 +89,7 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
+        return view('courses/viewCourses');
         //
     }
 
@@ -89,7 +101,12 @@ class CoursesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $instructors= Auth::user()->center->instructor;
+        $course= Auth::user()->center->courses()->find($id);
+        return view('courses/updateCourse')
+            ->with("course",$course)
+            ->with("instructors",$instructors);
+
     }
 
     /**
@@ -101,7 +118,13 @@ class CoursesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $course = Course::find($id);
+        //$course->Update($request);
+        //Course::where('id', $id)->update($request->all());
+        DB::update(['name'=>'test']);
+
+        return json_encode( "course added successfull ".$request['_token']);
+
     }
 
     public function uploadImage(Request $request){
@@ -119,5 +142,45 @@ class CoursesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function createCourse(Request $request){
+
+        //echo $request->input('instructor_id');
+        $request['instructor_id']=(int)$request['instructor_id']['0'];
+        $request['center_id']=Auth::user()->center->id;
+        $validate=$this->validate($request,
+            ['name'=>'required',
+                'code'=>'required',
+                'duration'=>'required|regex:/^[0-9]+$/',
+                'cost'=>'required',
+                'teamCost'=>'nullable',
+                'instructor_id'=>'required',
+                'center_id'=>'required',
+                'description'=>'required',
+                'content'=>'required'
+            ]);
+//
+//
+            Course::create($validate);
+
+
+
+        return json_encode( "course added successfully");
+    }
+
+    private function getValidation(Request $request){
+        return $this->validate($request,
+            ['name'=>'required',
+                'code'=>'required',
+                'duration'=>'required|regex:/^[0-9]+$/',
+                'cost'=>'required',
+                'teamCost'=>'nullable',
+                'instructor_id'=>'required',
+                'center_id'=>'required',
+                'description'=>'required',
+                'content'=>'required'
+            ]);
+//
     }
 }

@@ -9,7 +9,7 @@
             <meta name="description" content="">
             <meta name="author" content="">
 
-            <title>Add a Course</title>
+            <title>Update Course</title>
 
             <!-- Custom fonts for this template-->
             <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -36,7 +36,7 @@
                                 <div class="card mb-4 shadowed">
                                     <header>
                                         <div class="card-header text-primary form-title">
-                                        إضافه دورة
+                                        تعديل دورة
                                         </div>
                                     </header>
                                     <div class="card-body">
@@ -75,20 +75,23 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-name">اسم الدورة</label>
-                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="" name="course-name" required>
+                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة "
+                                                           value="{{$course->name}}" name="course-name" required>
                                                     <span id="test_course-name_error"></span>
                                                     <div></div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-id">كود الدورة</label>
-                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="" name="course-id" required>
+                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة "
+                                                           value="{{$course->code}}" name="course-id" required>
                                                     <span id="test_course-id_error"></span>
                                                     <div></div>
                                                 </div>
                                             </div>
                                             <div class=" form-row">
                                                 <label for="course-description">وصف الدورة</label>
-                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="course-description" required></textarea>
+                                                <textarea placeholder="وصف الدورة"  rows="2" class="form-control" id="course-description"
+                                                          name="course-description" required>{{$course->description}}</textarea>
                                                 <div></div>
                                             </div>
                                             <fieldset>
@@ -114,7 +117,7 @@
                                                         <label for="instructor-name">اسم المدرس</label>
                                                         <select class="form-control" id="instructor-name" multiple required>
                                                             @foreach($instructors as $instructor)
-                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
+                                                                <option {{$instructor->id==$course->instructor_id?"selected":""}} value="{{$instructor->id}}">{{$instructor->name}}</option>
 
                                                             @endforeach
                                                         </select>
@@ -123,7 +126,8 @@
                                                         </div>
                                                         <div class="col-sm-6 form-group">
                                                             <label for="course-duration">مدة الدورة</label>
-                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="course-duration" required>
+                                                            <input type="number" min='0' class="form-control" id="course-duration"
+                                                                   placeholder="مدة الدورة " value="{{$course->cost}}" name="course-duration" required>
                                                             <span id="test_course-duration_error"></span>
                                                             <div></div>
                                                         </div>
@@ -131,13 +135,15 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-cost">تكلفة الدورة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="" name="course-cost" required>
+                                                    <input type="number" min='0' class="form-control" id="course-cost"
+                                                           placeholder="تكلفة الدورة " value="{{$course->cost}}" name="course-cost" required>
                                                     <span id="test_course-cost_error"></span>
                                                     <div></div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-group-cost">تكلفة الدورة المجمعة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-group-cost" placeholder="تكلفة الدورة المجمعة " value="" name="course-group-cost" required>
+                                                    <input type="number" min='0' class="form-control" id="course-group-cost"
+                                                           placeholder="تكلفة الدورة المجمعة " value="{{$course->teamCost}}" name="course-group-cost" required>
                                                     <span id="test_course-group-cost_error"></span>
                                                     <div></div>
                                                 </div>
@@ -204,7 +210,7 @@
 
                                                 <div class="col-sm-6 mx-auto" style="width: 200px;">
                                                     <hr/>
-                                                    <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة  <i class="fas fa-plus"></i></button>
+                                                    <button class="btn btn-primary action-buttons" type="submit" id="submit"> تعديل  <i class="fas fa-plus"></i></button>
                                                     <button class="btn  btn-danger action-buttons" type="reset">  إلغاء  <i class="fas fa-times"></i></button>
                                                 </div>
 
@@ -247,27 +253,13 @@
                     var courseChapter = $("#course-chapter-1").val();
                     var chapterDesc = $("#chapter-1-desc").val();
                     var courseContent=courseChapter+chapterDesc;
-
-                    let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
-                    let chapterDescription = [...$('fieldset textarea')];
-                    let chapterName = [...$('fieldset input')];
-
-                    chapterName.forEach(function(chapter,chapterIndex){
-                        let chapterInfo = {};
-                        chapterInfo.name = chapterName[chapterIndex].value;
-                        chapterInfo.description = chapterDescription[chapterIndex].value;
-
-                        chapters.push(chapterInfo);
-                    })                    
-                    
-
                     $.ajax({
-                        url: "/create_course",
-                        method: "POST",
+                        url: "/courses/1",
+                        method: "PUT",
                         data: {name:courseName,code:courseCode,description:courseDescription,
                             duration:courseDuration,cost:courseCost, content:courseContent,
-                            teamCost:teamCost,
-                            instructor_id:instructorId,_token: "{{ csrf_token() }}"},
+                            teamCost:teamCost,center_id:1,
+                            instructor_id:1,_token: "{{ csrf_token() }}"},
                         dataType: "json",
                         success: function (data) {
                             // console.log(data);

@@ -11,7 +11,7 @@
 
 
 
-    <form action="{{ route('groups.store') }}" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data">
         @csrf
         <legend><span class="number">.</span> Group Registeration </legend>
         <input type="text" name="course" placeholder="course *" required>

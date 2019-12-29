@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CourseGroupsController extends Controller
+class CourseEntrollmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class CourseGroupsController extends Controller
      */
     public function index()
     {
-        //
+        return view("courseEnrollment.course_group_show_students");
     }
 
     /**
@@ -23,7 +23,8 @@ class CourseGroupsController extends Controller
      */
     public function create()
     {
-        return view('courseGroups/course_group_create');
+        return view("courseEnrollment\course_group_students");
+
     }
 
     /**
@@ -46,7 +47,6 @@ class CourseGroupsController extends Controller
     public function show($id)
     {
         //
-        return view('courseGroups/course_group_students');
     }
 
     /**

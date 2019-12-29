@@ -48,4 +48,9 @@ class Student extends Model
     {
         return $this->belongsToMany(TestGroup::class)->withPivot(['take','result'])->withTimestamps();
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class)->withTimestamps();
+    }
 }
