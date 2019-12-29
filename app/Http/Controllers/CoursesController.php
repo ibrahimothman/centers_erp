@@ -16,14 +16,14 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     public function index()
     {
-        $courses=Auth::user()->center->courses()->paginate(6);
+        $courses=Course::all();
 
         return view('courses/viewCourses')
             ->with('courses',$courses);
@@ -36,11 +36,10 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        $instructors= Auth::user()->center->instructor;
+//        $instructors= Auth::user()->center->instructor;
 
         //echo Auth::user()->center->courses;
-        return view('courses/addCourse')
-            ->with("instructors",$instructors);
+        return view('courses/addCourse');
 
 
     }
@@ -53,31 +52,9 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        $validate=$this->validate($request,
-            ['name'=>'required',
-            'code'=>'required',
-            'duration'=>'required|regex:/^[0-9]+$/',
-            'price'=>'required',
-            'description'=>'required',
-            'content'=>'required'
-        ]);
-
-        $course=new Course();
-        Course::create($validate);
-
-
-
-//        $res=$this->uploadImage($request);
-//        if ($res!=null){
-//           $courseMedia=new CourseMedia();
-//           $courseMedia->src=$res->getRealPath();
-//           $courseMedia->course_id =$course->id;
-//           $courseMedia->save();
-//        }
-
-            return redirect('courses/create')
-                ->with("message","course added successfully");
-
+        Course::create($this->getValidation());
+//
+        return json_encode( "course added successfully");
 
     }
 
@@ -87,9 +64,10 @@ class CoursesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Course $course)
     {
-        return view('courses/viewCourses');
+//        $courses = Course::all();
+//        return view('courses/viewCourses', compact('courses'));
         //
     }
 
@@ -101,11 +79,10 @@ class CoursesController extends Controller
      */
     public function edit($id)
     {
-        $instructors= Auth::user()->center->instructor;
-        $course= Auth::user()->center->courses()->find($id);
+//        $instructors= Auth::user()->center->instructor;
+        $course= Course::first();
         return view('courses/updateCourse')
-            ->with("course",$course)
-            ->with("instructors",$instructors);
+            ->with("course",$course);
 
     }
 
@@ -116,14 +93,10 @@ class CoursesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Course $course)
     {
-        $course = Course::find($id);
-        //$course->Update($request);
-        //Course::where('id', $id)->update($request->all());
-        DB::update(['name'=>'test']);
-
-        return json_encode( "course added successfull ".$request['_token']);
+        $course->update($this->getValidation());
+        return json_encode( "course successfully updated ");
 
     }
 
@@ -149,29 +122,15 @@ class CoursesController extends Controller
         //echo $request->input('instructor_id');
         $request['instructor_id']=(int)$request['instructor_id']['0'];
         $request['center_id']=Auth::user()->center->id;
-        $validate=$this->validate($request,
-            ['name'=>'required',
-                'code'=>'required',
-                'duration'=>'required|regex:/^[0-9]+$/',
-                'cost'=>'required',
-                'teamCost'=>'nullable',
-                'instructor_id'=>'required',
-                'center_id'=>'required',
-                'description'=>'required',
-                'content'=>'required'
-            ]);
-//
-//
-            Course::create($validate);
 
-
+        Course::create($this->getValidation());
 
         return json_encode( "course added successfully");
     }
 
-    private function getValidation(Request $request){
-        return $this->validate($request,
-            ['name'=>'required',
+    private function getValidation(){
+        return request()->validate([
+                'name'=>'required',
                 'code'=>'required',
                 'duration'=>'required|regex:/^[0-9]+$/',
                 'cost'=>'required',
@@ -181,6 +140,8 @@ class CoursesController extends Controller
                 'description'=>'required',
                 'content'=>'required'
             ]);
+
+
 //
     }
 }

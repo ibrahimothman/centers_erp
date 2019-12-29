@@ -40,8 +40,8 @@
                                         </div>
                                     </header>
                                     <div class="card-body">
-                                        <form method="post" action="http://127.0.0.1:8000/courses/create">
-                                            <input type="hidden" name="_token" value="caqpERLciLTWzphyYqgtuefVDYgZucHbTa3nnb9Z">
+                                        <form enctype="multipart/form-data">
+                                            @csrf
                                             <div class="form-row image-upload">
                                                 <div class="col-sm-8">
                                                     <div class="custom-file">
@@ -113,10 +113,10 @@
                                                         <div class="col-sm-6 form-group">
                                                         <label for="instructor-name">اسم المدرس</label>
                                                         <select class="form-control" id="instructor-name" multiple required>
-                                                            @foreach($instructors as $instructor)
-                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
+{{--                                                            @foreach($instructors as $instructor)--}}
+{{--                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
 
-                                                            @endforeach
+{{--                                                            @endforeach--}}
                                                         </select>
                                                             <span id="test_course-teacher_error"></span>
                                                             <div></div>
@@ -243,7 +243,7 @@
                     var courseDuration = $("#course-duration").val();
                     var courseCost = $("#course-cost").val();
                     var teamCost = $("#course-group-cost").val();
-                    var instructorId = $("#instructor-name").val();
+                    // var instructorId = $("#instructor-name").val();
                     var courseChapter = $("#course-chapter-1").val();
                     var chapterDesc = $("#chapter-1-desc").val();
                     var courseContent=courseChapter+chapterDesc;
@@ -258,16 +258,16 @@
                         chapterInfo.description = chapterDescription[chapterIndex].value;
 
                         chapters.push(chapterInfo);
-                    })                    
-                    
+                    })
+
 
                     $.ajax({
-                        url: "/create_course",
+                        url: "/courses",
                         method: "POST",
                         data: {name:courseName,code:courseCode,description:courseDescription,
                             duration:courseDuration,cost:courseCost, content:courseContent,
-                            teamCost:teamCost,
-                            instructor_id:instructorId,_token: "{{ csrf_token() }}"},
+                            teamCost:teamCost,center_id : 1,
+                            instructor_id:1 ,_token: "{{ csrf_token() }}"},
                         dataType: "json",
                         success: function (data) {
                             // console.log(data);

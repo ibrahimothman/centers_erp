@@ -40,8 +40,9 @@
                                         </div>
                                     </header>
                                     <div class="card-body">
-                                        <form method="post" action="http://127.0.0.1:8000/courses/create">
-                                            <input type="hidden" name="_token" value="caqpERLciLTWzphyYqgtuefVDYgZucHbTa3nnb9Z">
+                                        <form enctype="multipart/form-data" >
+
+                                            @csrf
                                             <div class="form-row image-upload">
                                                 <div class="col-sm-8">
                                                     <div class="custom-file">
@@ -116,10 +117,10 @@
                                                         <div class="col-sm-6 form-group">
                                                         <label for="instructor-name">اسم المدرس</label>
                                                         <select class="form-control" id="instructor-name" multiple required>
-                                                            @foreach($instructors as $instructor)
-                                                                <option {{$instructor->id==$course->instructor_id?"selected":""}} value="{{$instructor->id}}">{{$instructor->name}}</option>
+{{--                                                            @foreach($instructors as $instructor)--}}
+{{--                                                                <option {{$instructor->id==$course->instructor_id?"selected":""}} value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
 
-                                                            @endforeach
+{{--                                                            @endforeach--}}
                                                         </select>
                                                             <span id="test_course-teacher_error"></span>
                                                             <div></div>
@@ -249,7 +250,7 @@
                     var courseDuration = $("#course-duration").val();
                     var courseCost = $("#course-cost").val();
                     var teamCost = $("#course-group-cost").val();
-                    var instructorId = $("#instructor-name").val();
+                    // var instructorId = $("#instructor-name").val();
                     var courseChapter = $("#course-chapter-1").val();
                     var chapterDesc = $("#chapter-1-desc").val();
                     var courseContent=courseChapter+chapterDesc;

@@ -16,14 +16,14 @@ class CreateInstructorCenter extends Migration
         Schema::create('center_instructor', function (Blueprint $table) {
 
             $table->unsignedBigInteger('instructor_id');
-            $table->foreign('instructorId')
-                ->references("id")
-                ->on("instructors");
+//            $table->foreign('instructorId')
+//                ->references("id")
+//                ->on("instructors");
 
             $table->unsignedBigInteger('center_id');
-            $table->foreign('center_id')
-                ->references("id")
-                ->on("centers");
+//            $table->foreign('center_id')
+//                ->references("id")
+//                ->on("centers");
 
             $table->timestamps();
         });
