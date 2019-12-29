@@ -252,12 +252,27 @@
                     var instructorId = $("#instructor-name").val();
                     var courseChapter = $("#course-chapter-1").val();
                     var chapterDesc = $("#chapter-1-desc").val();
-                    var courseContent=courseChapter+chapterDesc;
+
+                    let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+                    let chapterDescription = [...$('fieldset textarea')];
+                    let chapterName = [...$('fieldset input')];
+
+                    chapterName.forEach(function(chapter,chapterIndex){
+                        let chapterInfo = {};
+                        chapterInfo.name = chapterName[chapterIndex].value;
+                        chapterInfo.description = chapterDescription[chapterIndex].value;
+
+                        chapters.push(chapterInfo);
+                    });
+
+
+
+
                     $.ajax({
                         url: "/courses/1",
                         method: "PUT",
                         data: {name:courseName,code:courseCode,description:courseDescription,
-                            duration:courseDuration,cost:courseCost, content:courseContent,
+                            duration:courseDuration,cost:courseCost, content:JSON.stringify(chapters),
                             teamCost:teamCost,center_id:1,
                             instructor_id:1,_token: "{{ csrf_token() }}"},
                         dataType: "json",

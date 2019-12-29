@@ -246,7 +246,6 @@
                     var instructorId = $("#instructor-name").val();
                     var courseChapter = $("#course-chapter-1").val();
                     var chapterDesc = $("#chapter-1-desc").val();
-                    var courseContent=courseChapter+chapterDesc;
 
                     let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
                     let chapterDescription = [...$('fieldset textarea')];
@@ -258,14 +257,14 @@
                         chapterInfo.description = chapterDescription[chapterIndex].value;
 
                         chapters.push(chapterInfo);
-                    })                    
-                    
+                    });
+
 
                     $.ajax({
                         url: "/create_course",
                         method: "POST",
                         data: {name:courseName,code:courseCode,description:courseDescription,
-                            duration:courseDuration,cost:courseCost, content:courseContent,
+                            duration:courseDuration,cost:courseCost, content:JSON.stringify(chapters),
                             teamCost:teamCost,
                             instructor_id:instructorId,_token: "{{ csrf_token() }}"},
                         dataType: "json",

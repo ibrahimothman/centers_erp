@@ -118,12 +118,19 @@ class CoursesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $course = Course::find($id);
-        //$course->Update($request);
-        //Course::where('id', $id)->update($request->all());
-        DB::update(['name'=>'test']);
+        $request['instructor_id']=(int)$request['instructor_id']['0'];
+        $request['center_id']=Auth::user()->center->id;
+        //echo(print_r( $request));
+        // todo handle validation with ajax
+        $this->getValidation($request);
 
-        return json_encode( "course added successfull ".$request['_token']);
+        $course = Course::find($id);
+        $course->content="test update";
+        //$course->save();
+        $course->Update($request);
+        //Course::where('id', $id)->update($request->all());
+
+        return json_encode( "course updated successfully ");
 
     }
 
@@ -149,6 +156,7 @@ class CoursesController extends Controller
         //echo $request->input('instructor_id');
         $request['instructor_id']=(int)$request['instructor_id']['0'];
         $request['center_id']=Auth::user()->center->id;
+
         $validate=$this->validate($request,
             ['name'=>'required',
                 'code'=>'required',
@@ -173,7 +181,7 @@ class CoursesController extends Controller
         return $this->validate($request,
             ['name'=>'required',
                 'code'=>'required',
-                'duration'=>'required|regex:/^[0-9]+$/',
+                'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',
                 'instructor_id'=>'required',
