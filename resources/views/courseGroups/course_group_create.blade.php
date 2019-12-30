@@ -48,22 +48,16 @@
                                        </div>
                                     </header>
                                     <div class="card-body">
-                                        <form action="">
+                                        <form action="" enctype="multipart/form-data">
+                                            @csrf
 
                                             <div class="form-row">
-
                                                 <div class="col-sm-6 form-group">
-                                                    <label for="instructor-name">اسم الدوره</label>
-                                                    <select class="form-control" id="course-name" required>
-                                                        <option value="0">اختار كورس</option>
-                                                        @foreach($courses as $course)
-                                                            <option value="{{ $course->id }}">{{ $course->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <span id="test_course-teacher_error"></span>
+                                                    <label for="course-location">اسم الدورة</label>
+                                                    <input type="text" class="form-control" id="course-location" placeholder="اسم الدورة " value="{{ old('name') }}" name="course-location" required>
+                                                    <span id="test_course-location_error"></span>
                                                     <div></div>
                                                 </div>
-
                                                 <div class='col-sm-6'>
                                                     <div class="form-group">
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
@@ -77,19 +71,20 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
-                                                    <label for="instructor-name">اسم المدرس</label>
-                                                    <select class="form-control" id="instructor-name" required>
-                                                        <option value="1">د.سعد الحسيني</option>
-                                                        <option value="2">د.سمير أحمد</option>
-                                                        <option value="3">د.جمال جميل</option>
-                                                        <option value="4">م.احمد مرسي</option>
-                                                        <option value="5">م.علاء فتحي</option>
+                                                    <label for="instructor-name">اختار كورس</label>
+                                                    <select class="form-control" name="course" id="course" required>
+                                                        <option value="0">اختار كورس</option>
+                                                        @foreach($courses as $course)
+                                                            <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                                        @endforeach
                                                     </select>
-                                                        <span id="test_course-teacher_error"></span>
-                                                        <div></div>
+                                                    <span id="test_course-teacher_error"></span>
+                                                    <div></div>
                                                 </div>
+
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-group-room">قاعة الدورة</label>
                                                     <select class="form-control" id="course-group-room" required>
