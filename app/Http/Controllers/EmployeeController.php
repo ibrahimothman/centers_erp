@@ -41,11 +41,27 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        // 1) create user account for this employee
-        $user = User::create($this->validateRequest());
+        // todo 1) create user account for this employee
+//        $user = User::create($this->validateRequest());
 
         // 2) create an employee related to that user
-        Employee::create(['name' => $user->name, 'user_id' => $user->id]);
+        $date = $this->validateRequest();
+        $employee = Employee::create([
+            'name' => $date['name'],
+            'email' => $date['email'],
+            'phoneNumber' => $date['phoneNumber'],
+        ]);
+
+        // create address
+        $employee->address()->create([
+            'state' => $date['state'],
+            'city' => $date['city'],
+            'address' => $date['address'],
+        ]);
+
+        // save job
+        $employee->jobs()->syncWithoutDetaching($date['job']);
+        dd('ok');
     }
 
     /**
@@ -93,12 +109,16 @@ class EmployeeController extends Controller
         //
     }
 
-    public function validateRequest()
+    private function validateRequest()
     {
         return request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:8'],
+            'name' => ['required', 'string', 'max:255','unique:employees,name'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:employees,email'],
+            'phoneNumber' => 'required',
+            'job' => 'required',
+            'state' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'address' => ['required', 'string'],
         ]);
     }
 }

@@ -17,9 +17,11 @@ class CreateEmployeesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('name');
+            $table->string('email')->unique();
+            $table->string('phoneNumber');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
