@@ -149,6 +149,7 @@
                                 </div>
                                 <div class="card-body">
                                     <form action="{{ route('employees.store') }}" method="post">
+                                        @csrf
                                         <div class="form-row">
                                             <label>الاسم </label>
                                             <span class="required">*</span>

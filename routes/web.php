@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //------------------------ center -------------
 Route::resource('centers','CentersController');
 
-//--------------------------- center's admins ------------------
+//--------------------------- employees ------------------
 Route::resource('employees','EmployeeController');
 
 // --------------------- students --------------------
