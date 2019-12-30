@@ -138,86 +138,94 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-                <div class="row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-8">
-                        <div class="card mb-4">
-                            <div class="card-header text-primary">
-                                اضافه ادمن
-
-                            </div>
-                            <div class="card-body">
-                                <form method="post" action="{{ route('employees.store') }}">
-                                    @csrf
-
-                                    <div class="form-row">
-
-                                        <div class="col-sm-8 form-group">
-
-                                            <label for="validationCustom01">اسم الموظف</label>
-                                            <input type="text" class="form-control"   value="{{ old('name') }}"  name="name">
-                                            <span id="test_name_error"></span>
+            <section>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header text-primary">
+                                    تسجيل بيانات الموظفين
+                                </div>
+                                <div class="card-body">
+                                    <form action="{{ route('employees.store') }}" method="post">
+                                        @csrf
+                                        <div class="form-row">
+                                            <label>الاسم </label>
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" name="name" placeholder="الاسم " value="{{ old('name') }}">
                                             <div>{{ $errors->first('name') }}</div>
                                         </div>
-                                    </div>
-
-                                    <div class="form-row">
-
-                                        <div class="col-sm-8 form-group">
-
-                                            <label for="validationCustom02">ايميل الموظف</label>
-                                            <input type="text" class="form-control"   value="{{ old('email') }}"  name="email">
-                                            <span id="test_name_error"></span>
+                                        <div class="form-row">
+                                            <label>الايميل</label>
+                                            <span class="required">*</span>
+                                            <input type="text" name="email" class="form-control" placeholder="الايميل" value="{{ old('email') }}">
                                             <div>{{ $errors->first('email') }}</div>
                                         </div>
-                                    </div>
+
+                                        <div class=" form-row">
+                                            <div class="col-6">
+                                                <label>رقم التليفون المحمول</label>
+                                                <input type="text" name="phoneNumber" placeholder="ادخل رقم التليفون المحمول  "
+                                                       class="form-control" value="{{ old('phoneNumber') }}">
+                                                <div>{{ $errors->first('phoneNumber') }}</div>
+                                            </div>
 
 
-                                    <div class="form-row">
+                                            <div class="col-6">
+                                                <label>الوظيفه </label>
+                                                <select name="job" class="form-control">
+                                                    <option value="0">اختار وظيفة</option>
+                                                    @foreach($jobs as $job)
+                                                        <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 
-                                        <div class="col-sm-8 form-group">
-
-                                            <label for="validationCustom03">كلمة السر</label>
-                                            <input type="password" class="form-control"   value="{{ old('password') }}"  name="password">
-                                            <span id="test_name_error"></span>
-                                            <div>{{ $errors->first('password') }}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-
-                                        <div class="col-sm-8 form-group ">
-                                            <label for="">الصلاحيات</label>
-                                            <select name="role" class="form-control" id="exampleFormControlSelect1">
-                                                @foreach(App\Employee::employeeRoles() as $role)
-                                                    <option>{{ $role }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row save">
-
-                                        <div class="col-sm-6 mx-auto" style="width: 200px;">
-                                            <br>
-                                            <button class="btn btn-primary" type="submit" id="submit"><i class="glyphicon glyphicon-ok-sign"></i> اضافه</button>
-                                            <button class="btn  btn-danger" type="reset"><i class="glyphicon glyphicon-repeat"></i> الغاء</button>
                                         </div>
 
-                                    </div>
-                                </form>
 
+                                        <div class="form-row">
 
+                                            <div class="col ">
+                                                <label>البلد </label>
+                                                <input name="state" type="text" placeholder="البلد" value="{{ old('state') }}" class="form-control">
+                                                <div>{{ $errors->first('state') }}</div>
+                                                <div></div>
+
+                                            </div>
+
+                                            <div class="col ">
+                                                <label >المدينه </label>
+                                                <input name="city" type="text" placeholder="المدينه" value="{{ old('city') }}" class="form-control">
+                                                <div>{{ $errors->first('city') }}</div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class=" form-row">
+                                            <label>العنوان</label>
+                                            <textarea name="address" placeholder="ادخل العنوان " rows="3"
+                                                      class="form-control">{{ old('address') }}</textarea>
+                                            <div>{{ $errors->first('address') }}</div>
+                                        </div>
+                                        <br>
+                                        <div class="form-row save">
+                                            <div class="col-sm-6 mx-auto text-center">
+                                                <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
+                                                <button class="btn  btn-danger" type="reset"> الغاء</button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-                    <!-- /.container-fluid -->
                 </div>
-            </div>
+                <!-- /.container-fluid -->
+            </section>
+
             <!-- End of Main Content -->
 
             <!-- Footer -->

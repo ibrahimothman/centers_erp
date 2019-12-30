@@ -39,6 +39,11 @@ class Student extends Model
         ];
     }
 
+    public function address()
+    {
+        return $this->morphOne(Address::class,'addressable');
+    }
+
     public function centers()
     {
         return $this->belongsToMany(\App\Center::class)->withTimestamps();

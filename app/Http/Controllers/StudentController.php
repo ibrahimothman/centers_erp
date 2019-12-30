@@ -86,9 +86,24 @@ class StudentController extends Controller
         // check if user has rights to add a new student
 
 //        $this->authorize('create',Student::class);
+        $data = $this->validateRequest('');
+
+        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
-        $student = Student::create($this->validateRequest(''));
+
+        // create a new student
+        $student = Student::create(array_except($data,['state','city','address']));
+
+        // attach student with center
         $center->students()->syncWithoutDetaching($student);
+
+        // create address
+        $student->address()->create([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
         return redirect("/students/$student->id");
 
     }
