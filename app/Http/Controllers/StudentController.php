@@ -160,7 +160,7 @@ class StudentController extends Controller
     {
 
         //policy
-        $this->authorize('delete',$student);
+//        $this->authorize('delete',$student);
         // delete from pivot
         $center = Center::findOrFail(Session('center_id'));
         $center->students()->detach($student);
