@@ -45,22 +45,22 @@ class EmployeeController extends Controller
 //        $user = User::create($this->validateRequest());
 
         // 2) create an employee related to that user
-        $date = $this->validateRequest();
+        $data = $this->validateRequest();
         $employee = Employee::create([
-            'name' => $date['name'],
-            'email' => $date['email'],
-            'phoneNumber' => $date['phoneNumber'],
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phoneNumber' => $data['phoneNumber'],
         ]);
 
         // create address
         $employee->address()->create([
-            'state' => $date['state'],
-            'city' => $date['city'],
-            'address' => $date['address'],
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
         ]);
 
         // save job
-        $employee->jobs()->syncWithoutDetaching($date['job']);
+        $employee->jobs()->syncWithoutDetaching($data['job']);
         dd('ok');
     }
 
