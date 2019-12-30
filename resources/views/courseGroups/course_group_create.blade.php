@@ -55,6 +55,7 @@
                                                 <div class="col-sm-6 form-group">
                                                     <label for="instructor-name">اسم الدوره</label>
                                                     <select class="form-control" id="course-name" required>
+                                                        <option value="0">اختار كورس</option>
                                                         @foreach($courses as $course)
                                                             <option value="{{ $course->id }}">{{ $course->name }}</option>
                                                         @endforeach
