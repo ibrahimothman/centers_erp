@@ -35,6 +35,7 @@ class SideBarLinks
     {
         return[
             self::$baseUrl.'courses/create' => 'اضافه بيانات الكورس',
+            self::$baseUrl.'course_groups/create' => 'اضافة دوره جديده ',
         ];
     }
 

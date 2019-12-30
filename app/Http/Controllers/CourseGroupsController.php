@@ -27,7 +27,7 @@ class CourseGroupsController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $courses = $center->courses;
-        return view('courseGroups/course_group_create');
+        return view('courseGroups/course_group_create', compact('courses'));
     }
 
     /**
