@@ -121,14 +121,14 @@ class CoursesController extends Controller
 
     private function getValidation(){
         return request()->validate([
-                'name'=>'required',
-                'code'=>'required',
+                'name'=>'required|unique:courses',
+                'code'=>'required|unique:courses',
                 'duration'=>'required|regex:/^[0-9]+$/',
                 'cost'=>'required',
                 'teamCost'=>'nullable',
                 'instructor_id'=>'required',
                 'description'=>'required',
-                'content'=>'required'
+//                'content'=>'required'
             ]);
 
 

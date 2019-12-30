@@ -40,7 +40,7 @@
                                         </div>
                                     </header>
                                     <div class="card-body">
-                                        <form enctype="multipart/form-data">
+                                        <form enctype="multipart/form-data" id="form">
                                             @csrf
                                             <div class="form-row image-upload">
                                                 <div class="col-sm-8">
@@ -75,20 +75,20 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-name">اسم الدورة</label>
-                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="" name="course-name" required>
+                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="" name="name" required>
                                                     <span id="test_course-name_error"></span>
                                                     <div></div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-id">كود الدورة</label>
-                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="" name="course-id" required>
+                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="" name="code" required>
                                                     <span id="test_course-id_error"></span>
                                                     <div></div>
                                                 </div>
                                             </div>
                                             <div class=" form-row">
                                                 <label for="course-description">وصف الدورة</label>
-                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="course-description" required></textarea>
+                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="description" required></textarea>
                                                 <div></div>
                                             </div>
                                             <fieldset>
@@ -123,7 +123,7 @@
                                                         </div>
                                                         <div class="col-sm-6 form-group">
                                                             <label for="course-duration">مدة الدورة</label>
-                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="course-duration" required>
+                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="duration" required>
                                                             <span id="test_course-duration_error"></span>
                                                             <div></div>
                                                         </div>
@@ -131,7 +131,7 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-cost">تكلفة الدورة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="" name="course-cost" required>
+                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="" name="cost" required>
                                                     <span id="test_course-cost_error"></span>
                                                     <div></div>
                                                 </div>
@@ -172,34 +172,7 @@
                                                 </div>
                                             </div>
                                         </div>
-<!--
-                                            <div class="form-row">
-                                                <header class="col-sm-12">
-                                                    <label class="full-width">مرافق المنشأة</label>
-                                                </header>
-                                                <div class="col-sm-4 form-group">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck1" checked="">
-                                                    <label class="custom-control-label" for="customCheck1">شاشة عرض</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck2" checked="">
-                                                    <label class="custom-control-label" for="customCheck2">قاعة مكيفة</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck3" checked="">
-                                                    <label class="custom-control-label" for="customCheck3">انترنت</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck4" checked="">
-                                                    <label class="custom-control-label" for="customCheck4">أجهزة حاسب ألي</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck5" checked="">
-                                                    <label class="custom-control-label" for="customCheck5">سبورة</label>
-                                                </div>
-                                            </div>
-                                            </div> -->
+
                                             <div class="form-row save">
 
                                                 <div class="col-sm-6 mx-auto" style="width: 200px;">
@@ -271,10 +244,22 @@
                         dataType: "json",
                         success: function (data) {
                             // console.log(data);
+                            document.getElementById('form').reset();
                             alert(data);
                         },
-                        error: function (xhr, textStatus, error) {
-                            alert(">> " +xhr.statusText);
+                        error: function(error) {
+                            if(error.status == 422) {// validation
+
+                                // loop through the errors and show them to the user
+                                $.each(error.responseJSON.errors, function (i, error) {
+                                    // error is message
+                                    // i is element's name
+                                    console.log(error);
+                                    var element = $(document).find('[name="'+i+'"]');
+                                    element.after($('<span style="color: red;">'+error[0]+'</span>'));
+                                });
+                            }
+
                         }
 
                     });
