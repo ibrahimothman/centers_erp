@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use App\Employee;
 use App\User;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Session;
 
 class EmployeeController extends Controller
 {
@@ -26,7 +28,9 @@ class EmployeeController extends Controller
     public function create()
     {
         //
-        return view('employee.create');
+        $center = Center::findOrFail(Session('center_id'));
+        $jobs = $center->jobs;
+        return view('employee.create', compact('jobs'));
     }
 
     /**
@@ -37,11 +41,27 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        // 1) create user account for this employee
-        $user = User::create($this->validateRequest());
+        // todo 1) create user account for this employee
+//        $user = User::create($this->validateRequest());
 
         // 2) create an employee related to that user
-        Employee::create(['name' => $user->name, 'user_id' => $user->id]);
+        $data = $this->validateRequest();
+        $employee = Employee::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phoneNumber' => $data['phoneNumber'],
+        ]);
+
+        // create address
+        $employee->address()->create([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
+        // save job
+        $employee->jobs()->syncWithoutDetaching($data['job']);
+        dd('ok');
     }
 
     /**
@@ -89,12 +109,16 @@ class EmployeeController extends Controller
         //
     }
 
-    public function validateRequest()
+    private function validateRequest()
     {
         return request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:8'],
+            'name' => ['required', 'string', 'max:255','unique:employees,name'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:employees,email'],
+            'phoneNumber' => 'required',
+            'job' => 'required',
+            'state' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'address' => ['required', 'string'],
         ]);
     }
 }

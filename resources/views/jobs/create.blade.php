@@ -44,12 +44,12 @@
                                         </div>
                                     @endfor
 
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col">--}}
-{{--                                            <input type="checkbox" onClick="selectall(this)">--}}
-{{--                                            <label>تحديد الكل</label>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="checkbox" onClick="selectall(this)">
+                                            <label>تحديد الكل</label>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
             for (var i = 0; i < checkBoxes.length; i++) {
                 // And stick the checked ones onto an array...
                 if (checkBoxes[i].checked) {
-                    // console.log(checkBoxes[i].value);
+                    console.log(checkBoxes[i].value);
                     selected_roles_ids.push(checkBoxes[i].value);
                 }
             }
