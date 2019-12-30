@@ -97,20 +97,29 @@
                                             <fieldset>
                                                 <div class="form-row">
                                                 <legend class="full-width"> محتوى الدورة <i class="fas fa-plus-circle" id='add-more' style="color:green; cursor:pointer"></i></legend>
-                                                    <div class="col-sm-12 input-group input-chapter">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text" id="basic-addon1">باب  1</span>
+
+                                                    @php($someArray = json_decode($course->content, true))
+                                                    @for ($i=0;$i<count($someArray);$i++)
+                                                        <div class="col-sm-12 input-group input-chapter">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="basic-addon1">باب  {{$i+1}}</span>
+                                                            </div>
+                                                            <input type="text" class="form-control" id="course-chapter-1"
+                                                                   placeholder="محتوى الدورة " value="{{$someArray[$i]['name']}}" name="course-chapter-1" required>
+                                                            <span id="test_course-chapter-1_error"></span>
+                                                            <div></div>
                                                         </div>
-                                                        <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="" name="course-chapter-1" required>
-                                                        <span id="test_course-chapter-1_error"></span>
-                                                        <div></div>
-                                                    </div>
                                                 </div>
                                                 <div class="form-row">
-                                                    <label for="chapter-1-desc">عن باب 1</label>
-                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc" name="chapter-1-desc"></textarea>
+                                                    <label for="chapter-1-desc">عن باب {{$i+1}}</label>
+                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc"
+                                                              name="chapter-1-desc">{{$someArray[$i]['description']}}</textarea>
                                                     <div></div>
+
+                                                        @endfor
+
                                                 </div>
+
                                             </fieldset>
                                             <div class="form-row">
                                                         <div class="col-sm-6 form-group">
@@ -273,7 +282,7 @@
                         method: "PUT",
                         data: {name:courseName,code:courseCode,description:courseDescription,
                             duration:courseDuration,cost:courseCost, content:JSON.stringify(chapters),
-                            teamCost:teamCost,center_id:1,
+                            teamCost:teamCost,
                             instructor_id:1,_token: "{{ csrf_token() }}"},
                         dataType: "json",
                         success: function (data) {
