@@ -7,6 +7,7 @@ use App\CourseMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use mysql_xdevapi\Session;
 use Psy\Exception\Exception;
 
 class CoursesController extends Controller
@@ -52,7 +53,8 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        Course::create($this->getValidation());
+        $course = Course::create($this->getValidation());
+        $course->update(['center_id' => Session('center_id')]);
 //
         return json_encode( "course added successfully");
 
@@ -117,17 +119,6 @@ class CoursesController extends Controller
         //
     }
 
-    public function createCourse(Request $request){
-
-        //echo $request->input('instructor_id');
-        $request['instructor_id']=(int)$request['instructor_id']['0'];
-        $request['center_id']=Auth::user()->center->id;
-
-        Course::create($this->getValidation());
-
-        return json_encode( "course added successfully");
-    }
-
     private function getValidation(){
         return request()->validate([
                 'name'=>'required',
@@ -136,7 +127,6 @@ class CoursesController extends Controller
                 'cost'=>'required',
                 'teamCost'=>'nullable',
                 'instructor_id'=>'required',
-                'center_id'=>'required',
                 'description'=>'required',
                 'content'=>'required'
             ]);

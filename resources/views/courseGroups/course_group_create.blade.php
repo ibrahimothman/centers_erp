@@ -14,7 +14,7 @@
             <!-- Custom fonts for this template-->
             <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
             <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-            
+
             <!-- Custom styles for this template-->
             <link href="/../../../css/sb-admin-rtl.css" rel="stylesheet">
             <link href="/../../../css/styles.css" rel="stylesheet">
@@ -22,8 +22,8 @@
 
             <!-- Latest compiled and minified JavaScript -->
             <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
-            <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>    
-            
+            <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
+
 
 
     <!-- Latest compiled and minified JavaScript -->
@@ -49,19 +49,25 @@
                                     </header>
                                     <div class="card-body">
                                         <form action="">
-                                        
+
                                             <div class="form-row">
+
                                                 <div class="col-sm-6 form-group">
-                                                    <label for="course-location">مكان الدورة</label>
-                                                    <input type="text" class="form-control" id="course-location" placeholder="مكان الدورة " value="" name="course-location" required>
-                                                    <span id="test_course-location_error"></span>
+                                                    <label for="instructor-name">اسم الدوره</label>
+                                                    <select class="form-control" id="course-name" required>
+                                                        @foreach($courses as $course)
+                                                            <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span id="test_course-teacher_error"></span>
                                                     <div></div>
                                                 </div>
+
                                                 <div class='col-sm-6'>
                                                     <div class="form-group">
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
                                                         <div class='input-group date'>
-                                                            
+
                                                             <input id="datetimepicker"  class="form-control" type="text" >
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -93,7 +99,7 @@
                                                         <span id="test_course-group-room_error"></span>
                                                         <div></div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <fieldset>
                                             <div class="form-row days">
                                                 <header class="full-width"><h4> ايام الدورة <i class="fas fa-plus-circle" id='add-more-days' style="color:green; cursor:pointer"></i></h4></header>
@@ -171,14 +177,14 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div>     
+                            </div>
                         <!-- /.container-fluid -->
                         </div>
                     </div>
                     @include('footer')
                 </div>
             </div>
-        
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="{{url('vendor/jquery/jquery.min.js')}}"></script>

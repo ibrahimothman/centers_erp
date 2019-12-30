@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Session;
 
 class CourseGroupsController extends Controller
 {
@@ -23,6 +25,8 @@ class CourseGroupsController extends Controller
      */
     public function create()
     {
+        $center = Center::findOrFail(Session('center_id'));
+        $courses = $center->courses;
         return view('courseGroups/course_group_create');
     }
 
