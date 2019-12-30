@@ -15,6 +15,11 @@ class Employee extends Model
         ];
     }
 
+    public function address()
+    {
+        return $this->morphOne(Address::class,'addressable');
+    }
+
     public function centers()
     {
         return $this->belongsToMany(Center::class);
