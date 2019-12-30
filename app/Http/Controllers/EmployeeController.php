@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use App\Employee;
 use App\User;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Session;
 
 class EmployeeController extends Controller
 {
@@ -26,7 +28,9 @@ class EmployeeController extends Controller
     public function create()
     {
         //
-        return view('employee.create');
+        $center = Center::findOrFail(Session('center_id'));
+        $jobs = $center->jobs;
+        return view('employee.create', compact('jobs'));
     }
 
     /**
