@@ -26,7 +26,7 @@ class courseGroupDay implements Rule
     public function passes($attribute, $value)
     {
         //
-        return count(array_unique($value)) != 1;
+        return count($value) == count(array_unique($value)) ;
     }
 
     /**

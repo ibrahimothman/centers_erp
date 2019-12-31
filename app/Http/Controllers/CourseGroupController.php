@@ -10,6 +10,7 @@ use App\Time;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Session;
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
 
 class CourseGroupController extends Controller
@@ -47,7 +48,6 @@ class CourseGroupController extends Controller
 
         // fetch validated date
         $data = $this->validateCourseGroup();
-
 //        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
         // create a new course group
