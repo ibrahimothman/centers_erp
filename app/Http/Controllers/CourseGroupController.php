@@ -43,10 +43,10 @@ class CourseGroupController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
+
         // fetch validated date
         $data = $this->validateCourseGroup();
-        // fetch center from session
+//        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
         // create a new course group
         $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
@@ -55,14 +55,7 @@ class CourseGroupController extends Controller
         ]);
 
         // create a new time
-        $time = Time::create([
-            'day' => $data['day'],
-            'begin' => $data['begin'],
-            'end' => $data['end'],
-        ]);
-
-        // attach group to time
-        $course_group->times()->syncWithoutDetaching($time);
+        $times = $this->addGroupTimes($course_group, $data['course-day'],$data['course-begin'],$data['course-end']);
         dd($course_group);
     }
 
@@ -75,8 +68,8 @@ class CourseGroupController extends Controller
     public function show(CourseGroup $courseGroup)
     {
         //
-        $time = $courseGroup->times->first();
-        return view('courseGroups/show', compact('time'));
+        $times = $courseGroup->times;
+        return view('courseGroups/show', compact('times'));
     }
 
     /**
@@ -120,9 +113,23 @@ class CourseGroupController extends Controller
             'name' => 'required|unique:course_groups,name',
             'start_at' => "required|date|after_or_equal:$today_date",
             'course' => 'required',
-            'begin' => 'required|unique:times,begin',
-            'end' => 'required|unique:times,end',
-            'day' => 'required|unique:times,day',
+            'course-begin' => 'required|array',
+            'course-end' => 'required|array',
+            'course-day' => 'required|array',
         ]);
+    }
+
+    private function addGroupTimes($course_group, $days, $begins, $ends)
+    {
+        for ($i = 0; $i < count($days); $i++){
+            $time = Time::create([
+                'day' => $days[$i],
+                'begin' => $begins[$i],
+                'end' => $ends[$i],
+            ]);
+
+            // attach time to course group
+            $course_group->times()->syncWithoutDetaching($time);
+        }
     }
 }
