@@ -3,22 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Center;
-use App\Role;
-use App\StudentDetail;
-use App\User;
-use Illuminate\Database\QueryException;
+use App\QueryFilter\Sort;
+use App\QueryFilter\SortElse;
 use Illuminate\Http\Request;
 use App\Student;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use mysql_xdevapi\Session;
-use phpDocumentor\Reflection\Types\Null_;
-use const http\Client\Curl\AUTH_ANY;
 
 
 class StudentController extends Controller
@@ -38,9 +30,17 @@ class StudentController extends Controller
     {
 
 //        $this->authorize('viewAny',Student::class);
-        $center = Auth::user()->centers->first();
-        $students = $center->students;
+        $center = Center::findOrFail(Session('center_id'));
 
+        $students = app(Pipeline::class)
+            ->send($center->students)
+            ->through([
+                Sort::class,
+            ])
+            ->thenReturn()
+            ->get();
+
+//        dd($students->get());
         return view('students.all')->with('students',$students);
     }
 
@@ -130,6 +130,7 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
 //        $this->authorize('update',$student);
+
         return view('students.studentEdit',compact('student'));
     }
 
@@ -146,7 +147,18 @@ class StudentController extends Controller
 
         // todo delete prev image from profiles dir
 
-        $student->update($this->validateRequest($student->id));
+        $data = $this->validateRequest($student->id);
+
+        // create a new student
+        $student->update(array_except($data,['state','city','address']));
+
+        // update address
+        $student->address()->update([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
         return redirect("/students/$student->id")->with('success','updated');
     }
 
