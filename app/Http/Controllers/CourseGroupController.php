@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
+use App\Course;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Session;
 
-class CourseGroupsController extends Controller
+
+class CourseGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +28,9 @@ class CourseGroupsController extends Controller
      */
     public function create()
     {
-        return view('courseGroups/course_group_create');
+        $center = Center::findOrFail(Session('center_id'));
+        $courses = $center->courses;
+        return view('courseGroups/course_group_create', compact('courses'));
     }
 
     /**
@@ -34,7 +41,17 @@ class CourseGroupsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request->all());
+        // fetch validated date
+        $data = $this->validateCourseGroup();
+        // fetch center from session
+        $center = Center::findOrFail(Session('center_id'));
+        // create a new course group
+        $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
+            'name' => $data['name'],
+            'start_at' => $data['start_at'],
+        ]);
+        dd($course_group);
     }
 
     /**
@@ -81,5 +98,15 @@ class CourseGroupsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function validateCourseGroup()
+    {
+        $today_date = Carbon::now()->toDateString();
+        return request()->validate([
+            'name' => 'required|unique:course_groups,name',
+            'start_at' => "required|date|after_or_equal:$today_date",
+            'course' => 'required',
+        ]);
     }
 }
