@@ -57,7 +57,7 @@ class CourseGroupController extends Controller
         ]);
 
         // create a new time
-        $times = $this->addGroupTimes($course_group, $data['course-day'],$data['course-begin'],$data['course-end']);
+        $this->addGroupTimes($course_group, $data['course-day'],$data['course-begin'],$data['course-end']);
         dd($course_group);
     }
 
@@ -124,13 +124,17 @@ class CourseGroupController extends Controller
 
     private function addGroupTimes($course_group, $days, $begins, $ends)
     {
+//        $times= [];
         for ($i = 0; $i < count($days); $i++){
-            $time = Time::create([
+            $time = Time::firstOrCreate([
                 'day' => $days[$i],
                 'begin' => $begins[$i],
                 'end' => $ends[$i],
+                'busy' => 1,
+
             ]);
 
+//            echo json_encode($times);
             // attach time to course group
             $course_group->times()->syncWithoutDetaching($time);
         }
