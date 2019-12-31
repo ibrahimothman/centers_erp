@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\Course;
+use App\CourseGroup;
+use App\Time;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Session;
@@ -51,6 +53,16 @@ class CourseGroupController extends Controller
             'name' => $data['name'],
             'start_at' => $data['start_at'],
         ]);
+
+        // create a new time
+        $time = Time::create([
+            'day' => $data['day'],
+            'begin' => $data['begin'],
+            'end' => $data['end'],
+        ]);
+
+        // attach group to time
+        $course_group->times()->syncWithoutDetaching($time);
         dd($course_group);
     }
 
@@ -60,10 +72,11 @@ class CourseGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CourseGroup $courseGroup)
     {
         //
-        return view('courseGroups/course_group_students');
+        $time = $courseGroup->times->first();
+        return view('courseGroups/show', compact('time'));
     }
 
     /**
@@ -107,6 +120,9 @@ class CourseGroupController extends Controller
             'name' => 'required|unique:course_groups,name',
             'start_at' => "required|date|after_or_equal:$today_date",
             'course' => 'required',
+            'begin' => 'required|unique:times,begin',
+            'end' => 'required|unique:times,end',
+            'day' => 'required|unique:times,day',
         ]);
     }
 }

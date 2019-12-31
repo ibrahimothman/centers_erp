@@ -101,21 +101,17 @@
                                                 <header class="full-width"><h4> ايام الدورة <i class="fas fa-plus-circle" id='add-more-days' style="color:green; cursor:pointer"></i></h4></header>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1">يوم 1</label>
-                                                    <select class="form-control" id="course-day-1" required>
-                                                        <option value="1">السبت</option>
-                                                        <option value="2">الاحد</option>
-                                                        <option value="3">الاتنين</option>
-                                                        <option value="4">الثلاثاء</option>
-                                                        <option value="5">الاربعاء</option>
-                                                        <option value="6">الخميس</option>
-                                                        <option value="7">الجمعة</option>
+                                                    <select class="form-control" id="course-day-1" name="day" required>
+                                                        @foreach(\App\Time::days() as $key=>$value)
+                                                            <option value="{{ $key }}">{{ $value }}</option>
+                                                        @endforeach
                                                     </select>
                                                         <span id="test_course-day-1_error"></span>
-                                                        <div></div>
+                                                        <div>{{ $errors->first('day') }}</div>
                                                 </div>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1-begin"> بداية المحاضرة</label>
-                                                    <select class="form-control" id="course-day-1-begin" required>
+                                                    <select class="form-control" id="course-day-1-begin" name="begin" required>
                                                         <option value="7">07:00</option>
                                                         <option value="8">08:00</option>
                                                         <option value="9">09:00</option>
@@ -134,11 +130,11 @@
                                                         <option value="22">22:00</option>
                                                     </select>
                                                         <span id="test_course-day-1-begin_error"></span>
-                                                        <div></div>
+                                                    <div>{{ $errors->first('begin') }}</div>
                                                 </div>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1-end"> نهاية المحاضرة</label>
-                                                    <select class="form-control" id="course-day-1-end" required>
+                                                    <select class="form-control" id="course-day-1-end" name="end" required>
                                                         <option value="9">09:00</option>
                                                         <option value="10">10:00</option>
                                                         <option value="11">11:00</option>
@@ -157,7 +153,7 @@
                                                         <option value="24">24:00</option>
                                                     </select>
                                                         <span id="test_course-day-1-end_error"></span>
-                                                        <div></div>
+                                                    <div>{{ $errors->first('end') }}</div>
                                                 </div>
                                             </div>
                                             </fieldset>
