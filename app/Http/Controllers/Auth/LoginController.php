@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Session;
 
 class LoginController extends Controller
 {
@@ -39,8 +42,10 @@ class LoginController extends Controller
 //
     }
 
-//    protected function authenticated(Request $request, $user)
-//    {
-//        if($user->center_id == 0) return redirect()->route('centers.create');
-//    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        // try to save center in session
+        Session(['center_id' => Auth::user()->centers->first()->id]);
+    }
 }

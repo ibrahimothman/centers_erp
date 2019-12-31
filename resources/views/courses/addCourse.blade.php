@@ -40,8 +40,8 @@
                                         </div>
                                     </header>
                                     <div class="card-body">
-                                        <form method="post" action="http://127.0.0.1:8000/courses/create">
-                                            <input type="hidden" name="_token" value="caqpERLciLTWzphyYqgtuefVDYgZucHbTa3nnb9Z">
+                                        <form enctype="multipart/form-data" id="form">
+                                            @csrf
                                             <div class="form-row image-upload">
                                                 <div class="col-sm-8">
                                                     <div class="custom-file">
@@ -75,20 +75,20 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-name">اسم الدورة</label>
-                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="" name="course-name" required>
+                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="" name="name" required>
                                                     <span id="test_course-name_error"></span>
                                                     <div></div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-id">كود الدورة</label>
-                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="" name="course-id" required>
+                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="" name="code" required>
                                                     <span id="test_course-id_error"></span>
                                                     <div></div>
                                                 </div>
                                             </div>
                                             <div class=" form-row">
                                                 <label for="course-description">وصف الدورة</label>
-                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="course-description" required></textarea>
+                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="description" required></textarea>
                                                 <div></div>
                                             </div>
                                             <fieldset>
@@ -113,17 +113,17 @@
                                                         <div class="col-sm-6 form-group">
                                                         <label for="instructor-name">اسم المدرس</label>
                                                         <select class="form-control" id="instructor-name" multiple required>
-                                                            @foreach($instructors as $instructor)
-                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
+{{--                                                            @foreach($instructors as $instructor)--}}
+{{--                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
 
-                                                            @endforeach
+{{--                                                            @endforeach--}}
                                                         </select>
                                                             <span id="test_course-teacher_error"></span>
                                                             <div></div>
                                                         </div>
                                                         <div class="col-sm-6 form-group">
                                                             <label for="course-duration">مدة الدورة</label>
-                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="course-duration" required>
+                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="duration" required>
                                                             <span id="test_course-duration_error"></span>
                                                             <div></div>
                                                         </div>
@@ -131,7 +131,7 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-cost">تكلفة الدورة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="" name="course-cost" required>
+                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="" name="cost" required>
                                                     <span id="test_course-cost_error"></span>
                                                     <div></div>
                                                 </div>
@@ -172,34 +172,7 @@
                                                 </div>
                                             </div>
                                         </div>
-<!--
-                                            <div class="form-row">
-                                                <header class="col-sm-12">
-                                                    <label class="full-width">مرافق المنشأة</label>
-                                                </header>
-                                                <div class="col-sm-4 form-group">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck1" checked="">
-                                                    <label class="custom-control-label" for="customCheck1">شاشة عرض</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck2" checked="">
-                                                    <label class="custom-control-label" for="customCheck2">قاعة مكيفة</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck3" checked="">
-                                                    <label class="custom-control-label" for="customCheck3">انترنت</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck4" checked="">
-                                                    <label class="custom-control-label" for="customCheck4">أجهزة حاسب ألي</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="retake" id="customCheck5" checked="">
-                                                    <label class="custom-control-label" for="customCheck5">سبورة</label>
-                                                </div>
-                                            </div>
-                                            </div> -->
+
                                             <div class="form-row save">
 
                                                 <div class="col-sm-6 mx-auto" style="width: 200px;">
@@ -243,7 +216,7 @@
                     var courseDuration = $("#course-duration").val();
                     var courseCost = $("#course-cost").val();
                     var teamCost = $("#course-group-cost").val();
-                    var instructorId = $("#instructor-name").val();
+                    // var instructorId = $("#instructor-name").val();
                     var courseChapter = $("#course-chapter-1").val();
                     var chapterDesc = $("#chapter-1-desc").val();
 
@@ -260,20 +233,33 @@
                     });
 
 
+
                     $.ajax({
-                        url: "/create_course",
+                        url: "/courses",
                         method: "POST",
                         data: {name:courseName,code:courseCode,description:courseDescription,
                             duration:courseDuration,cost:courseCost, content:JSON.stringify(chapters),
                             teamCost:teamCost,
-                            instructor_id:instructorId,_token: "{{ csrf_token() }}"},
+                            instructor_id:1 ,_token: "{{ csrf_token() }}"},
                         dataType: "json",
                         success: function (data) {
                             // console.log(data);
+                            document.getElementById('form').reset();
                             alert(data);
                         },
-                        error: function (xhr, textStatus, error) {
-                            alert(">> " +xhr.statusText);
+                        error: function(error) {
+                            if(error.status == 422) {// validation
+
+                                // loop through the errors and show them to the user
+                                $.each(error.responseJSON.errors, function (i, error) {
+                                    // error is message
+                                    // i is element's name
+                                    console.log(error);
+                                    var element = $(document).find('[name="'+i+'"]');
+                                    element.after($('<span style="color: red;">'+error[0]+'</span>'));
+                                });
+                            }
+
                         }
 
                     });

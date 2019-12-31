@@ -25,9 +25,6 @@ class CreateStudentsTable extends Migration
             $table->string('skillCardNumber')->nullable();
             $table->string('image')->nullable();
             $table->string('idImage')->nullable();
-            $table->string('state')->nullable();
-            $table->string('city')->nullable();
-            $table->string('address')->nullable();
             $table->string('degree')->nullable();
             $table->string('faculty')->nullable();
             $table->timestamps();

@@ -6,28 +6,52 @@ namespace App\helper;
 
 class SideBarLinks
 {
-//    public  $baseUrl = 'http://127.0.0.1:8000/';
+    public static $baseUrl = 'http://127.0.0.1:8000/';
     public static function studentLinks ()
     {
         return [
-            'http://127.0.0.1:8000/'.'students/create' =>'تسجيل الطلاب',
-            'http://127.0.0.1:8000/'.'students' => 'عرض/تعديل بيانات الطلاب'
+            self::$baseUrl.'students/create' =>'تسجيل الطلاب',
+            self::$baseUrl.'students' => 'عرض/تعديل بيانات الطلاب'
         ];
     }
 
     public static function testLinks()
     {
         return[
-            'http://127.0.0.1:8000/tests/create' => 'اضافه بيانات الامتحانات',
-            'http://127.0.0.1:8000/tests' => 'عرض/تعديل بيانات الامتحانات',
-            'http://127.0.0.1:8000/test-groups/create' => 'تسجيل الامتحانات',
-            'http://127.0.0.1:8000/test-groups' => 'عرض مواعيد المتحانات',
-            'http://127.0.0.1:8000/test-enrollments/create' => 'تسجيل الطلاب علي المتحانات',
-            'http://127.0.0.1:8000/test-enrollments' => 'عرض الطلاب المسجلين',
-            'http://127.0.0.1:8000/test-takes/create' => 'تسجيل حضور الامتحان',
-            'http://127.0.0.1:8000/test-results/create' => 'تسجيل نتيجة الامتحان',
-            'http://127.0.0.1:8000/test-results' => 'نتيجة الامتحانات',
-            'http://127.0.0.1:8000//test-statements/create' => 'اضافه افاده',
+            self::$baseUrl.'tests/create' => 'اضافه بيانات الامتحانات',
+            self::$baseUrl.'tests' => 'عرض/تعديل بيانات الامتحانات',
+            self::$baseUrl.'test-groups/create' => 'تسجيل الامتحانات',
+            self::$baseUrl.'test-groups' => 'عرض مواعيد المتحانات',
+            self::$baseUrl.'test-enrollments/create' => 'تسجيل الطلاب علي المتحانات',
+            self::$baseUrl.'test-enrollments' => 'عرض الطلاب المسجلين',
+            self::$baseUrl.'test-takes/create' => 'تسجيل حضور الامتحان',
+            self::$baseUrl.'test-results/create' => 'تسجيل نتيجة الامتحان',
+            self::$baseUrl.'test-results' => 'نتيجة الامتحانات',
+            self::$baseUrl.'test-statements/create' => 'اضافه افاده',
+        ];
+    }
+
+    public static function courseLinks()
+    {
+        return[
+            self::$baseUrl.'courses/create' => 'اضافه بيانات الكورس',
+            self::$baseUrl.'course_groups/create' => 'اضافة دوره جديده ',
+        ];
+    }
+
+    public static function employeeLinks()
+    {
+        return [
+            self::$baseUrl.'employees/create' =>'تسجيل موظف',
+            self::$baseUrl.'employees' => 'عرض/تعديل بيانات موظف'
+        ];
+    }
+
+    public static function jobLinks()
+    {
+        return [
+            self::$baseUrl.'jobs/create' =>'تسجيل وظيفة جديده',
+            self::$baseUrl.'jobs' => 'عرض/تعديل بيانات الوظيفه'
         ];
     }
 

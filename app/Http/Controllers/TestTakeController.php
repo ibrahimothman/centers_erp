@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use App\Student;
 use App\Test;
 use App\TestTake;
@@ -41,16 +42,17 @@ class TestTakeController extends Controller
         // todo paginate
 
 
+        $center = Center::findOrFail(Session('center_id'));
         $utility=new Utility();
         $today=$utility->getCurrentDay();
         $testGroups=DB::table('test_groups')
             ->join("tests",'test_groups.test_id','=','tests.id')
-            ->where('tests.center_id','=',auth()->user()->center->id)
+            ->where('tests.center_id','=',$center->id)
             ->get();
         if (Input::get('test')!=null)
             $testGroups=DB::table('test_groups')
                 ->join("tests",'test_groups.test_id','=','tests.id')
-                ->where('tests.center_id','=',auth()->user()->center->id)
+                ->where('tests.center_id','=',$center->id)
                 ->where('tests.id','=',Input::get('test'))
                 ->get();
         foreach ($testGroups as $testGroup){
@@ -58,7 +60,7 @@ class TestTakeController extends Controller
                 ->join("students",'student_test_group.student_id','=','students.id')
                 ->join("tests",'student_test_group.test_group_id','=','tests.id')
                 ->where('student_test_group.test_group_id','=',$testGroup->id)
-                ->where('tests.center_id','=',auth()->user()->center->id)
+                ->where('tests.center_id','=',$center->id)
                 ->select(['students.*' ,'student_test_group.id','student_test_group.take'])
                 ->get();
         }
@@ -131,11 +133,6 @@ class TestTakeController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function confirmTestAttendance(){
-
-        return "attendence confirmed";
     }
 
     public function uploadImage(Request $request,$key){

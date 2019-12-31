@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 //------------------------ center -------------
 Route::resource('centers','CentersController');
 
+//--------------------------- employees ------------------
+Route::resource('employees','EmployeeController');
+
 // --------------------- students --------------------
 Route::get('/', 'StudentController@create' );
 Route::resource('students','StudentController');
@@ -50,26 +53,27 @@ Route::resource('test-results','TestResultController');
 Route::resource('test-statements','TestStatementController');
 Route::get('test-statements-preview/{statement}/{student}','TestStatementController@previewStatement');
 
-//-------------settings -----
-Route::get('settings/profile','settingsController@showProfileSettings');
-Route::post('settings/profile/update','settingsController@updateProfileSettings');
+
 
 //----------- courses ---------------
 Route::resource('courses','CoursesController');
-Route::post('create_course','CoursesController@createCourse');
-Route::resource('course_groups','CourseGroupsController');
+Route::resource('course_groups','CourseGroupController');
 Route::resource('course_enrollment','CourseEntrollmentsController');
 Route::resource('rooms','RoomsController');
 
+//-------------------- jobs ---------------------
+Route::resource('jobs','jobController');
+
 Route::get('set_role',function (){
-    $roles = [
-        'test-group.edit','test-group.delete','test-group.view',
-        'test-enrollment.add','test-enrollment.edit','test-enrollment.delete','test-enrollment.view',
+    $roles = ['student.add','student.view','student.update','student.delete',
+        'test.add','test.view','test.update','test.delete',
+        'test-group.add','test-group.view','test-group.update','test-group.delete',
+        'test-enrollment.add','test-enrollment.view','test-enrollment.update','test-enrollment.delete',
     ];
     foreach ($roles as $role) {
         Role::create(['name' => $role]);
     }
 });
 
-Auth::routes();
+Auth::routes(['register' => true]);
 

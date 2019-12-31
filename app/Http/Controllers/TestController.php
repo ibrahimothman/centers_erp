@@ -23,8 +23,9 @@ class TestController extends Controller
     public function index()
     {
 
-        $this->authorize('viewAny',Test::class);
-        $tests = auth()->user()->center->tests()->orderBy('created_at','desc')->get();
+//        $this->authorize('viewAny',Test::class);
+        $center = Center::findOrFail(Session('center_id'));
+        $tests = $center->tests()->orderBy('created_at','desc')->get();
         return view('test.index',compact('tests'));
     }
 
@@ -36,7 +37,7 @@ class TestController extends Controller
     public function create()
     {
         //check if auth user has rights to view create_test_form
-        $this->authorize('create',Test::class);
+//        $this->authorize('create',Test::class);
         return view('test.create');
     }
 
@@ -49,8 +50,8 @@ class TestController extends Controller
     public function store()
     {
         // check if auth user has rights to add a new test
-        $this->authorize('create',Test::class);
-        $center = auth()->user()->center;
+//        $this->authorize('create',Test::class);
+        $center = Center::findOrFail(Session('center_id'));
         $test = $center->tests()->create($this->validateRequest(''));
         $this->setRetake($test);
 
@@ -69,7 +70,7 @@ class TestController extends Controller
     {
         //
 
-        $this->authorize('view',$test);
+//        $this->authorize('view',$test);
 
         $testGroups=DB::table('test_groups')
             ->leftJoin('student_test_group','test_groups.id','=','student_test_group.test_group_id')
@@ -103,7 +104,7 @@ class TestController extends Controller
     public function edit(Test $test)
     {
         //
-        $this->authorize('update',$test);
+//        $this->authorize('update',$test);
         return view('test.edit')->with('test',$test);
 
     }
@@ -118,7 +119,7 @@ class TestController extends Controller
     public function update(Test $test)
     {
 
-        $this->authorize('update',$test);
+//        $this->authorize('update',$test);
         $test->update($this->validateRequest($test->id));
         $this->setRetake($test);
         return redirect('/tests')->with('success','test updated');
@@ -134,7 +135,7 @@ class TestController extends Controller
     public function destroy(Test $test)
     {
 
-        $this->authorize('delete',$test);
+//        $this->authorize('delete',$test);
         $test->delete();
         return redirect('/tests')->with('success','test is deleted');
     }

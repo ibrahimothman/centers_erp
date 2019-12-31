@@ -2,15 +2,38 @@
 
 namespace App;
 
+use App\Events\NewCenterHasCreated;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Session;
 
 class Center extends Model
 {
     protected $guarded = [];
 
-    public function users()
+    // once center is created save it in session
+    protected static function boot()
     {
-        return $this->hasMany(User::class);
+        parent::boot();
+        static::created(function ($center)
+        {
+            Session(['center_id' => $center->id]);
+        });
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class);
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
     }
 
     public function students()
@@ -31,7 +54,4 @@ class Center extends Model
         return $this->belongsToMany(Instructor::class);
     }
 
-//    public function instructor_center(){
-//        return $this->belongsTo(Instructor_center::class);
-//    }
 }

@@ -16,13 +16,13 @@
 
 
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- students -->
     <li class="nav-item {{str_contains(Request::url(),'students') ? 'active' : ''}}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#studentCollapse" aria-expanded="true" aria-controls="studentCollapse">
             <i class="fas fa-users-cog"></i>
             <span>الطلاب</span>
         </a>
-        <div id="collapseTwo" class="{{str_contains(Request::url(),'students') ? "collapse show" : "collapse"}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="studentCollapse" class="{{str_contains(Request::url(),'students') ? "collapse show" : "collapse"}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 @foreach(\App\helper\SideBarLinks::studentLinks() as $linkKey => $linkValue)
                     <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
@@ -32,13 +32,13 @@
         </div>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
+    <!-- tests -->
     <li class="nav-item {{str_contains(Request::url(),'tests' )? 'active' : ''}}"  >
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#testCollapse" aria-expanded="true" aria-controls="testCollapse">
             <i class="fas fa-fw fa-wrench"></i>
             <span>الامتحانات</span>
         </a>
-        <div id="collapseUtilities" class="{{str_contains(Request::url(),'test' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="testCollapse" class="{{str_contains(Request::url(),'test' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
 
                 @foreach(\App\helper\SideBarLinks::testLinks() as $linkKey => $linkValue)
@@ -48,20 +48,56 @@
             </div>
         </div>
     </li>
-    <!-- Nav Item - Utilities Collapse Menu -->
-{{--    <li class="nav-item">--}}
-{{--        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">--}}
-{{--            <i class="fas fa-fw fa-wrench"></i>--}}
-{{--            <span>الدورات</span>--}}
-{{--        </a>--}}
-{{--        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">--}}
-{{--            <div class="bg-white py-2 collapse-inner rounded">--}}
-{{--                <a class="collapse-item" href="">تسجيل الدورات</a>--}}
 
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </li>--}}
+    <!-- courses -->
+    <li class="nav-item {{str_contains(Request::url(),'courses' )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#courseCollapse" aria-expanded="true" aria-controls="courseCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>الكورسات</span>
+        </a>
+        <div id="courseCollapse" class="{{str_contains(Request::url(),'courses' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
 
+                @foreach(\App\helper\SideBarLinks::courseLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
+
+    <!-- employees -->
+    <li class="nav-item {{str_contains(Request::url(),'employees') ? 'active' : ''}}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#employeeCollapse" aria-expanded="true" aria-controls="employeeCollapse">
+            <i class="fas fa-users-cog"></i>
+            <span>الموظفين</span>
+        </a>
+        <div id="employeeCollapse" class="{{str_contains(Request::url(),'employees') ? "collapse show" : "collapse"}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                @foreach(\App\helper\SideBarLinks::employeeLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
+
+    <!-- jobs -->
+    <li class="nav-item {{str_contains(Request::url(),'jobs' )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#jobCollapse" aria-expanded="true" aria-controls="jobCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>الوظائف</span>
+        </a>
+        <div id="jobCollapse" class="{{str_contains(Request::url(),'jobs' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                @foreach(\App\helper\SideBarLinks::jobLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
 
