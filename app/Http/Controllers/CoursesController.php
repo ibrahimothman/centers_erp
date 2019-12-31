@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use App\Course;
 use App\CourseMedia;
 use Illuminate\Http\Request;
@@ -53,8 +54,8 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        $course = Course::create($this->getValidation());
-        $course->update(['center_id' => Session('center_id')]);
+        $center = Center::findOrFail(Session('center_id'));
+        $center->courses()->create($this->getValidation());
 //
         return json_encode( "course added successfully");
 
