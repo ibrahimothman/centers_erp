@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\Course;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Session;
 
@@ -101,9 +102,10 @@ class CourseGroupController extends Controller
 
     private function validateCourseGroup()
     {
+        $today_date = Carbon::now()->toDateString();
         return request()->validate([
             'name' => 'required|unique:course_groups,name',
-            'start_at' => 'required|date',
+            'start_at' => "required|date|after_or_equal:$today_date",
             'course' => 'required',
         ]);
     }
