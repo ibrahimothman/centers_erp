@@ -260,21 +260,21 @@
                                         </div>
                                         <div class="col-sm-6 form-group ">
                                             <label for="">البلد </label>
-                                            <input name="state" type="text" placeholder="البلد" value="{{ old('state') ?? $student->state}}" class="form-control">
+                                            <input name="state" type="text" placeholder="البلد" value="{{ old('state') ?? $student->address->state}}" class="form-control">
                                             <div>{{ $errors->first('state') }}</div>
 
                                         </div>
 
                                         <div class="col-sm-6 form-group ">
                                             <label for="">المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="{{ old('city') ?? $student->city }}" class="form-control">
+                                            <input name="city" type="text" placeholder="المدينه" value="{{ old('city') ?? $student->address->city }}" class="form-control">
                                             <div>{{ $errors->first('city') }}</div>
                                         </div>
                                     </div>
 
                                     <div class=" form-row">
                                         <label>العنوان</label>
-                                        <textarea name="address"  placeholder=""  rows="3" class="form-control">{{ old('address') ?? $student->address }}</textarea>
+                                        <textarea name="address"  placeholder=""  rows="3" class="form-control">{{ old('address') ?? $student->address->address }}</textarea>
                                         <div>{{ $errors->first('address') }}</div>
                                     </div>
 
