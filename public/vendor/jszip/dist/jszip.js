@@ -8689,7 +8689,7 @@ function pqdownheap(s, tree, k)
     s.heap[k] = s.heap[j];
     k = j;
 
-    /* And continue down the tree, setting j to the left son of k */
+    /* And continue down the tree, center j to the left son of k */
     j <<= 1;
   }
   s.heap[k] = v;

@@ -7,6 +7,7 @@ use App\User;
 use App\Student;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class StudentPolicy
 {
@@ -42,7 +43,7 @@ class StudentPolicy
          * */
         $role = Role::where('name','student.view')->first();
         foreach ($student->centers as $center){
-            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
+            if(Session::get('center')->employess->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
                 return true;
         }
 //
@@ -57,6 +58,7 @@ class StudentPolicy
      */
     public function create(User $user)
     {
+
         $role = Role::where('name','student.add')->first();
         return Auth::user()->roles->contains($role->id);
 
@@ -72,13 +74,13 @@ class StudentPolicy
     public function update(User $user, Student $student)
     {
         //
-        $role = Role::where('name','student.update')->first();
-        foreach ($student->centers as $center){
-            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
-                return true;
-        }
-
-        return false;
+//        $role = Role::where('name','student.update')->first();
+//        foreach ($student->centers as $center){
+//            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
+//                return true;
+//        }
+//
+//        return false;
     }
 
     /**

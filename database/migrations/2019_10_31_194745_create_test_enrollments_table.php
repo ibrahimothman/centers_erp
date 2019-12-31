@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStudentTestGroupsEnrollmentTable extends Migration
+class CreateTestEnrollmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -21,8 +21,8 @@ class CreateStudentTestGroupsEnrollmentTable extends Migration
             $table->integer('result')->nullable();
             $table->timestamps();
 
-//            $table->foreign('student_id')->references('id')->on('students');
-//            $table->foreign('test_group_id')->references('id')->on('test-groups');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('test_group_id')->references('id')->on('test_groups')->onDelete('cascade');
         });
     }
 
@@ -33,6 +33,6 @@ class CreateStudentTestGroupsEnrollmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('student_testgroup');
+        Schema::dropIfExists('Student_TestGroup');
     }
 }

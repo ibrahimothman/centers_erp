@@ -24,7 +24,8 @@ class CreateTestsTable extends Migration
             $table->unsignedBigInteger('center_id')->index();
             $table->timestamps();
 
-
+            $table->foreign('center_id')->references('id')->on('centers')
+                ->onDelete('cascade');
         });
     }
 

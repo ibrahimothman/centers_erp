@@ -10,6 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     /**
@@ -37,14 +38,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-    public function center()
+    public function centers()
     {
-        return $this->belongsTo(Center::class);
+        return $this->hasMany(Center::class);
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class)->withTimestamps();
-    }
 }

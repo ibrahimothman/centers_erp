@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use mysql_xdevapi\Session;
 use phpDocumentor\Reflection\Types\Null_;
 use const http\Client\Curl\AUTH_ANY;
 
@@ -36,8 +37,8 @@ class StudentController extends Controller
     public function index()
     {
 
-        $this->authorize('viewAny',Student::class);
-        $center = Auth::user()->center;
+//        $this->authorize('viewAny',Student::class);
+        $center = Auth::user()->centers->first();
         $students = $center->students;
 
         return view('students.all')->with('students',$students);
@@ -68,7 +69,7 @@ class StudentController extends Controller
     public function create()
     {
         //check if user has rights to view create_student_form
-        $this->authorize('create',Student::class);
+//        $this->authorize('create',Student::class);
         $student = new Student();
         return view('students.studentCreate',compact('student'));
     }
@@ -84,10 +85,25 @@ class StudentController extends Controller
         // todo : attach student to the center
         // check if user has rights to add a new student
 
-        $this->authorize('create',Student::class);
-        $center = Auth::user()->center;
-        $student = Student::create($this->validateRequest(''));
+//        $this->authorize('create',Student::class);
+        $data = $this->validateRequest('');
+
+        // fetch center from session
+        $center = Center::findOrFail(Session('center_id'));
+
+        // create a new student
+        $student = Student::create(array_except($data,['state','city','address']));
+
+        // attach student with center
         $center->students()->syncWithoutDetaching($student);
+
+        // create address
+        $student->address()->create([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
         return redirect("/students/$student->id");
 
     }
@@ -101,7 +117,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        $this->authorize('view',$student);
+//        $this->authorize('view',$student);
         return view('students.show',compact('student'));
     }
 
@@ -113,7 +129,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        $this->authorize('update',$student);
+//        $this->authorize('update',$student);
         return view('students.studentEdit',compact('student'));
     }
 
@@ -126,7 +142,7 @@ class StudentController extends Controller
      */
     public function update(Student $student)
     {
-        $this->authorize('update',$student);
+//        $this->authorize('update',$student);
 
         // todo delete prev image from profiles dir
 
@@ -144,9 +160,9 @@ class StudentController extends Controller
     {
 
         //policy
-        $this->authorize('delete',$student);
+//        $this->authorize('delete',$student);
         // delete from pivot
-        $center = Auth::user()->center;
+        $center = Center::findOrFail(Session('center_id'));
         $center->students()->detach($student);
 
         // delete images
@@ -182,7 +198,7 @@ class StudentController extends Controller
 
     public function searchByName(){
         // search for only auth center
-        $center = Auth::user()->center;
+        $center = Session::get('center');
         if(request()->ajax()){
             $query = request()->get('query');
             if($query != ''){

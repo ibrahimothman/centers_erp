@@ -10,7 +10,7 @@ class Course extends Model
     protected $guarded = [];
 
 
-    public function centers(){
+    public function center(){
         return $this->belongsTo(Center::class);
     }
 
@@ -18,9 +18,9 @@ class Course extends Model
         return $this->belongsToMany(Center::class);
     }
 
-    public function courses()
+    public function groups()
     {
-        return $this->belongsToMany(Student::class);
+        return $this->hasMany(CourseGroup::class);
     }
 
 

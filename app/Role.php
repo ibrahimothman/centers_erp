@@ -8,10 +8,12 @@ class Role extends Model
 {
     protected $guarded = [];
 
-    public function users()
+    public function jobs()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(Job::class)->withTimestamps();
     }
+
+
 
 
 

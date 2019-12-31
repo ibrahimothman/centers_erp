@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
+use App\Job;
+use App\Role;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Session;
 
-class CourseGroupsController extends Controller
+class jobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +27,9 @@ class CourseGroupsController extends Controller
      */
     public function create()
     {
-        return view('courseGroups/course_group_create');
+        //
+        $roles = Role::all();
+        return view('jobs.create', compact('roles'));
     }
 
     /**
@@ -34,7 +40,12 @@ class CourseGroupsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $center = Center::findOrFail(Session('center_id'));
+        $job = $center->jobs()->create(['name' => $request->job_name]);
+        $job->roles()->syncWithoutDetaching($request->roles_ids);
+
+        return "job has successfully added";
+
     }
 
     /**
@@ -46,7 +57,6 @@ class CourseGroupsController extends Controller
     public function show($id)
     {
         //
-        return view('courseGroups/course_group_students');
     }
 
     /**

@@ -304,7 +304,7 @@
 <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="{{url('js/sb-admin-2.min.js')}}"></script>
+<script src="{{url('employee')}}"></script>
 <!-- Page level plugins -->
 <script src="{{url('vendor/datatables/datatables.min.js')}}"></script>
 <!-- Page level custom scripts -->
