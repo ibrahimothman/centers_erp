@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CourseEntrollmentsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +29,10 @@ class CourseEntrollmentsController extends Controller
      */
     public function create()
     {
-        return view("courseEnrollment\course_group_students");
+        $student=Auth::user()->center->students;
+
+        return view("courseEnrollment\course_group_enrollment")
+            ->with('students',$student);
 
     }
 

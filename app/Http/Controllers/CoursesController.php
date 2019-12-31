@@ -36,7 +36,7 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        $instructors= Session::get('center_id');
+        $instructors= Session::get('center');
         dd($instructors);
 
         //echo Auth::user()->center->courses;
