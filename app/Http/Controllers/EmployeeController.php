@@ -17,7 +17,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -61,6 +61,9 @@ class EmployeeController extends Controller
 
         // save job
         $employee->jobs()->syncWithoutDetaching($data['job']);
+
+        // attach employee to center
+        $employee->centers()->syncWithoutDetaching(Center::findOrFail(Session('center_id')));
         dd('ok');
     }
 
