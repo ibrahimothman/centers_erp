@@ -48,52 +48,52 @@
                                        </div>
                                     </header>
                                     <div class="card-body">
-                                        <form action="" enctype="multipart/form-data">
+                                        <form action="{{ route('course_groups.store') }}" method="post" enctype="multipart/form-data">
                                             @csrf
 
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
-                                                    <label for="course-location">اسم الدورة</label>
-                                                    <input type="text" class="form-control" id="course-location" placeholder="اسم الدورة " value="{{ old('name') }}" name="course-location" required>
-                                                    <span id="test_course-location_error"></span>
-                                                    <div></div>
+                                                    <label for="name">اسم الدورة</label>
+                                                    <input type="text" class="form-control" id="name" placeholder="اسم الدورة " value="{{ old('name') }}" name="name" required>
+                                                    <span id="test_course-name_error"></span>
+                                                    <div>{{ $errors->first('name') }}</div>
                                                 </div>
                                                 <div class='col-sm-6'>
                                                     <div class="form-group">
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
                                                         <div class='input-group date'>
 
-                                                            <input id="datetimepicker"  class="form-control" type="text" >
+                                                            <input id="datetimepicker" name="start_at"  class="form-control" type="text" >
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
                                                         </div>
                                                     </div>
+                                                    <div>{{ $errors->first('start_at') }}</div>
                                                 </div>
                                             </div>
 
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
-                                                    <label for="instructor-name">اختار كورس</label>
+                                                    <label for="course">اختار كورس</label>
                                                     <select class="form-control" name="course" id="course" required>
-                                                        <option value="0">اختار كورس</option>
                                                         @foreach($courses as $course)
                                                             <option value="{{ $course->id }}">{{ $course->name }}</option>
                                                         @endforeach
                                                     </select>
                                                     <span id="test_course-teacher_error"></span>
-                                                    <div></div>
+                                                    <div>{{ $errors->first('course') }}</div>
                                                 </div>
 
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-group-room">قاعة الدورة</label>
-                                                    <select class="form-control" id="course-group-room" required>
+                                                    <select class="form-control" id="course-group-room" name="room" required>
                                                         <option value="1">قاعة رقم 1</option>
                                                         <option value="2">قاعة رقم 2</option>
                                                         <option value="3">قاعة رقم 3</option>
                                                     </select>
                                                         <span id="test_course-group-room_error"></span>
-                                                        <div></div>
+                                                    <div>{{ $errors->first('room') }}</div>
                                                 </div>
                                             </div>
                                             <fieldset>

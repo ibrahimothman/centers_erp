@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Center;
+use App\Course;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Session;
 
-class CourseGroupsController extends Controller
+
+class CourseGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,7 +40,17 @@ class CourseGroupsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request->all());
+        // fetch validated date
+        $data = $this->validateCourseGroup();
+        // fetch center from session
+        $center = Center::findOrFail(Session('center_id'));
+        // create a new course group
+        $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
+            'name' => $data['name'],
+            'start_at' => $data['start_at'],
+        ]);
+        dd($course_group);
     }
 
     /**
@@ -85,5 +97,14 @@ class CourseGroupsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function validateCourseGroup()
+    {
+        return request()->validate([
+            'name' => 'required|unique:course_groups,name',
+            'start_at' => 'required|date',
+            'course' => 'required',
+        ]);
     }
 }

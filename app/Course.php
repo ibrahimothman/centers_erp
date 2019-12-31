@@ -18,6 +18,11 @@ class Course extends Model
         return $this->belongsToMany(Center::class);
     }
 
+    public function groups()
+    {
+        return $this->hasMany(CourseGroup::class);
+    }
+
 
 
 }

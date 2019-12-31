@@ -16,10 +16,13 @@ class CreateCourseGroupsTable extends Migration
         Schema::create('course_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('course_id');
+            $table->string('name');
+//            $table->unsignedBigInteger('room_id');
+            $table->dateTime('start_at');
             $table->timestamps();
+
+            $table->foreign('course_id')->references('id')->on('courses')
+                    ->onDelete('cascade');
         });
     }
 
