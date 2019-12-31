@@ -9,9 +9,10 @@ class Time extends Model
     //
 
     protected $guarded = [];
+
     public function course_groups()
     {
-        return $this->morphedByMany(CourseGroup::class,'timeable');
+        return $this->belongsToMany(CourseGroup::class);
     }
 
     public function getDayAttribute($value)

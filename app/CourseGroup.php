@@ -16,6 +16,8 @@ class CourseGroup extends Model
 
     public function times()
     {
-        return $this->morphToMany(Time::class,'timeable');
+        return $this->belongsToMany(Time::class);
     }
+
+
 }

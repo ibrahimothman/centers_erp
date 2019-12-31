@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\Course;
 use App\CourseGroup;
+use App\Employee;
 use App\Rules\courseGroupDay;
 use App\Time;
 use Carbon\Carbon;
@@ -23,6 +24,7 @@ class CourseGroupController extends Controller
     public function index()
     {
         //
+//
     }
 
     /**
@@ -70,8 +72,7 @@ class CourseGroupController extends Controller
     public function show(CourseGroup $courseGroup)
     {
         //
-        $times = $courseGroup->times;
-        return view('courseGroups/show', compact('times'));
+       
     }
 
     /**
