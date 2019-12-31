@@ -72,7 +72,7 @@ class CourseGroupController extends Controller
     public function show(CourseGroup $courseGroup)
     {
         //
-       
+
     }
 
     /**
