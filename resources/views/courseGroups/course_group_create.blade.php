@@ -101,7 +101,7 @@
                                                 <header class="full-width"><h4> ايام الدورة <i class="fas fa-plus-circle" id='add-more-days' style="color:green; cursor:pointer"></i></h4></header>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1">يوم 1</label>
-                                                    <select class="form-control" id="course-day-1" name="day" required>
+                                                    <select class="form-control" id="course-day-1" name="course-day[]" required>
                                                         @foreach(\App\Time::days() as $key=>$value)
                                                             <option value="{{ $key }}">{{ $value }}</option>
                                                         @endforeach
@@ -111,7 +111,7 @@
                                                 </div>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1-begin"> بداية المحاضرة</label>
-                                                    <select class="form-control" id="course-day-1-begin" name="begin" required>
+                                                    <select class="form-control" id="course-day-1-begin" name="course-begin[]" required>
                                                         <option value="7">07:00</option>
                                                         <option value="8">08:00</option>
                                                         <option value="9">09:00</option>
@@ -134,7 +134,7 @@
                                                 </div>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1-end"> نهاية المحاضرة</label>
-                                                    <select class="form-control" id="course-day-1-end" name="end" required>
+                                                    <select class="form-control" id="course-day-1-end" name="course-end[]" required>
                                                         <option value="9">09:00</option>
                                                         <option value="10">10:00</option>
                                                         <option value="11">11:00</option>

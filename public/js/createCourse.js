@@ -27,7 +27,7 @@ function addDayInCourse(num) {
     <hr/>
     <div class="col-sm-4 form-group">
         <label for="course-day-${num}">يوم ${num}</label>
-        <select class="form-control" id="course-day-${num}" required>
+        <select class="form-control" id="course-day-${num}" name="course-day[]" required>
             <option value="1">السبت</option>
             <option value="2">الاحد</option>
             <option value="3">الاتنين</option>
@@ -41,7 +41,7 @@ function addDayInCourse(num) {
     </div>
     <div class="col-sm-4 form-group">
         <label for="course-day-${num}-begin"> بداية المحاضرة</label>
-        <select class="form-control" id="course-day-${num}-begin" required>
+        <select class="form-control" id="course-day-${num}-begin"  name="course-begin[]" required>
             <option value="7">07:00</option>
             <option value="8">08:00</option>
             <option value="9">09:00</option>
@@ -64,7 +64,7 @@ function addDayInCourse(num) {
     </div>
     <div class="col-sm-4 form-group">
         <label for="course-day-${num}-end"> نهاية المحاضرة</label>
-        <select class="form-control" id="course-day-${num}-end" required>
+        <select class="form-control" id="course-day-${num}-end" name="course-end[]" required>
             <option value="9">09:00</option>
             <option value="10">10:00</option>
             <option value="11">11:00</option>
@@ -102,6 +102,7 @@ $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(fu
 })
 
 $('#add-more-days').click(function () {
+    console.log('add more days');
     courseDayNom++;
     $(this).parent().parent().parent()
         .append(
