@@ -21,8 +21,8 @@ class CreateTestEnrollmentsTable extends Migration
             $table->integer('result')->nullable();
             $table->timestamps();
 
-//            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-//            $table->foreign('test_group_id')->references('id')->on('test-groups')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('test_group_id')->references('id')->on('test_groups')->onDelete('cascade');
         });
     }
 
