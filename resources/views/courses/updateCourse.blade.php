@@ -259,7 +259,7 @@
                         method: "PUT",
                         data: {name:courseName,code:courseCode,description:courseDescription,
                             duration:courseDuration,cost:courseCost, content:courseContent,
-                            teamCost:teamCost,center_id:1,
+                            teamCost:teamCost,
                             instructor_id:1,_token: "{{ csrf_token() }}"},
                         dataType: "json",
                         success: function (data) {
