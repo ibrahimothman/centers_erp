@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\Course;
 use App\CourseGroup;
+use App\Rules\courseGroupDay;
 use App\Time;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -46,6 +47,7 @@ class CourseGroupController extends Controller
 
         // fetch validated date
         $data = $this->validateCourseGroup();
+
 //        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
         // create a new course group
@@ -108,6 +110,7 @@ class CourseGroupController extends Controller
 
     private function validateCourseGroup()
     {
+
         $today_date = Carbon::now()->toDateString();
         return request()->validate([
             'name' => 'required|unique:course_groups,name',
@@ -115,7 +118,7 @@ class CourseGroupController extends Controller
             'course' => 'required',
             'course-begin' => 'required|array',
             'course-end' => 'required|array',
-            'course-day' => 'required|array',
+            'course-day' => ['required','array',new courseGroupDay],
         ]);
     }
 
