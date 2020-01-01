@@ -202,7 +202,7 @@ class StudentController extends Controller
 
     public function searchByName(){
         // search for only auth center
-        $center = Session::get('center');
+        $center = Center::findOrFail(Session('center_id'));
         if(request()->ajax()){
             $query = request()->get('query');
             if($query != ''){

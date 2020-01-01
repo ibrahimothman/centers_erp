@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Session;
 
-class CourseEntrollmentsController extends Controller
+class CourseEnrollmentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +31,10 @@ class CourseEntrollmentsController extends Controller
      */
     public function create()
     {
-        return view("courseEnrollment\course_group_students");
+        $center = Center::findOrFail(Session('center_id'));
+        $student = $center->students;
+        return view("courseEnrollment\course_group_enrollment")
+            ->with('students',$student);
 
     }
 

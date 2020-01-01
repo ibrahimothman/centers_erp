@@ -58,7 +58,7 @@ Route::get('test-statements-preview/{statement}/{student}','TestStatementControl
 //----------- courses ---------------
 Route::resource('courses','CoursesController');
 Route::resource('course_groups','CourseGroupController');
-Route::resource('course_enrollment','CourseEntrollmentsController');
+Route::resource('course_enrollment','CourseEnrollmentController');
 Route::resource('rooms','RoomsController');
 
 //-------------------- jobs ---------------------
