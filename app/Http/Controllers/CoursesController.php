@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\Course;
-use App\CourseMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
+
 use Illuminate\Support\Str;
-use Psy\Exception\Exception;
-use Illuminate\Support\Facades\Session;
+use mysql_xdevapi\Session;
 
 class CoursesController extends Controller
 {
@@ -27,8 +24,10 @@ class CoursesController extends Controller
 
     public function index()
     {
-        $courses=Course::all();
+        $center = Center::findOrFail(Session('center_id'));
+        $courses=$center->courses;
 
+//        dd(Course::with('images')->get());
         return view('courses/viewCourses')
             ->with('courses',$courses);
     }
@@ -43,7 +42,6 @@ class CoursesController extends Controller
 //        $instructors= Session::get('center');
 //        dd($instructors);
 
-        //echo Auth::user()->center->courses;
         return view('courses/addCourse');
 
 
