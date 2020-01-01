@@ -1,8 +1,9 @@
 <?php
 
+use App\Instructor;
 use Illuminate\Database\Seeder;
 
-class CenterTableSeeder extends Seeder
+class InstructorTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,7 @@ class CenterTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Center::class)->create();
+        //
+        factory(Instructor::class)->create();
     }
 }
