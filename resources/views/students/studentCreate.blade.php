@@ -218,14 +218,14 @@
                                         <div class="col-sm-6" >
 
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="image" id="customFile" src="{{ old('image') }}" >
+                                                <input type="file" class="custom-file-input" name="image" id="customFile1" src="{{ old('image') }}" >
                                                 <label class="custom-file-label" for="customFile">صوره الشخصيه</label>
                                                 <div>{{ $errors->first('image') }}</div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 ">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="idPicture" src="{{ old('idPicture') }}" id="customFile">
+                                                <input type="file" class="custom-file-input" name="idPicture" src="{{ old('idPicture') }}" id="customFile2">
                                                 <label class="custom-file-label" for="customFile">صوره  البطاقه </label>
                                                 <div>{{ $errors->first('idPicture') }}</div>
                                             </div>
@@ -275,7 +275,7 @@
                                         <div class="col-sm-6 form-group ">
                                             <label for="">الكليه </label>
 
-                                            <select name="faculty" class="form-control" id="exampleFormControlSelect1">
+                                            <select name="faculty" class="form-control" id="exampleFormControlSelect2">
                                                 @foreach($student->facultyOptions() as $faculty)
                                                     <option>{{ $faculty }}</option>
                                                 @endforeach

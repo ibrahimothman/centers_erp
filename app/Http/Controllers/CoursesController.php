@@ -6,10 +6,13 @@ use App\Center;
 use App\Course;
 use App\CourseMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
 use Psy\Exception\Exception;
 use Illuminate\Support\Facades\Session;
+
 class CoursesController extends Controller
 {
     /**
@@ -37,12 +40,11 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        $instructors= Session::get('center');
-        dd($instructors);
+//        $instructors= Session::get('center');
+//        dd($instructors);
 
         //echo Auth::user()->center->courses;
-        return view('courses/addCourse')
-            ->with('',$instructors);
+        return view('courses/addCourse');
 
 
     }
@@ -55,8 +57,10 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
-        $center->courses()->create($this->getValidation());
+        $course = $center->courses()->create($this->getValidation($request));
+        $this->uploadImages($request,$course);
         return json_encode( "course added successfully");
 
     }
@@ -103,10 +107,26 @@ class CoursesController extends Controller
 
     }
 
-    public function uploadImage(Request $request){
-        $file = Input::file('images');
-        $imageName = time().'.'.$file->getClientOriginalExtension();
-        return $file->move(public_path('uploads'), $imageName);
+    public function uploadImages(Request $request, $course){
+
+        // create courses dir if not existed
+        if(! is_dir(public_path('/uploads/courses'))){
+            mkdir(public_path('/uploads/courses'));
+        }
+
+        // fetch images from request and wrap them into collection
+        $images = Collection::wrap($request->file('image'));
+
+        // loop through images, move it to courses dir then save it into db
+        $images->each(function ($image) use ($course){
+            $basename = Str::random();
+            $original = $basename.'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('/uploads/courses'), $original);
+            $course->images()->create([
+                'url' => $original
+            ]);
+        });
+
     }
 
     /**
@@ -121,6 +141,7 @@ class CoursesController extends Controller
     }
 
     private function getValidation(Request $request){
+
         $request['instructor_id']=(int)$request['instructor_id']['0'];
         $request['center_id']=Session('center_id');
         return $this->validate($request,

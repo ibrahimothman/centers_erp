@@ -45,9 +45,9 @@
                                             <div class="form-row image-upload">
                                                 <div class="col-sm-8">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" accept="image/*" name="image1" id="customFile1" src="" onchange="readURL(this, 1);" required>
-                                                        <input type="file" class="custom-file-input" accept="image/*" name="image2" id="customFile2" src="" onchange="readURL(this, 2);">
-                                                        <input type="file" class="custom-file-input" accept="image/*" name="image3" id="customFile3" src="" onchange="readURL(this, 3);">
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile2" src="" onchange="readURL(this, 2);">
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile3" src="" onchange="readURL(this, 3);">
                                                         <input type="file" accept="video/*" class="custom-file-input" name="video" id="customFile4" src="" onchange="readURL(this, 4);">
                                                         <label class="custom-file-label" for="customFile">صوره الدورة</label>
                                                         <div></div>
@@ -75,20 +75,20 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-name">اسم الدورة</label>
-                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="" name="name" required>
+                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="asd" name="name" required>
                                                     <span id="test_course-name_error"></span>
                                                     <div></div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-id">كود الدورة</label>
-                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="" name="code" required>
+                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="asd" name="code" required>
                                                     <span id="test_course-id_error"></span>
                                                     <div></div>
                                                 </div>
                                             </div>
                                             <div class=" form-row">
                                                 <label for="course-description">وصف الدورة</label>
-                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="description" required></textarea>
+                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="description" required>asd</textarea>
                                                 <div></div>
                                             </div>
                                             <fieldset>
@@ -98,21 +98,21 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" id="basic-addon1">باب  1</span>
                                                         </div>
-                                                        <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="" name="course-chapter-1" required>
+                                                        <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="asd" name="course-chapter-1" required>
                                                         <span id="test_course-chapter-1_error"></span>
                                                         <div></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
                                                     <label for="chapter-1-desc">عن باب 1</label>
-                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc" name="chapter-1-desc"></textarea>
+                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc" name="chapter-1-desc">asd</textarea>
                                                     <div></div>
                                                 </div>
                                             </fieldset>
                                             <div class="form-row">
                                                         <div class="col-sm-6 form-group">
                                                         <label for="instructor-name">اسم المدرس</label>
-                                                        <select class="form-control" id="instructor-name" multiple required>
+                                                        <select class="form-control" id="instructor-name" multiple >
 {{--                                                            @foreach($instructors as $instructor)--}}
 {{--                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
 
@@ -123,7 +123,7 @@
                                                         </div>
                                                         <div class="col-sm-6 form-group">
                                                             <label for="course-duration">مدة الدورة</label>
-                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="" name="duration" required>
+                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="12" name="duration" required>
                                                             <span id="test_course-duration_error"></span>
                                                             <div></div>
                                                         </div>
@@ -131,13 +131,13 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-cost">تكلفة الدورة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="" name="cost" required>
+                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="12" name="cost" required>
                                                     <span id="test_course-cost_error"></span>
                                                     <div></div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-group-cost">تكلفة الدورة المجمعة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-group-cost" placeholder="تكلفة الدورة المجمعة " value="" name="course-group-cost" required>
+                                                    <input type="number" min='0' class="form-control" id="course-group-cost" placeholder="تكلفة الدورة المجمعة " value="12" name="course-group-cost" required>
                                                     <span id="test_course-group-cost_error"></span>
                                                     <div></div>
                                                 </div>
@@ -149,18 +149,18 @@
                                                     <input type="checkbox" class="custom-control-input part-of-diploma" name="retake" id="customCheck1">
                                                     <label class="custom-control-label" for="customCheck1">هذه الدورة جزء من دبلومة</label>
                                                 </div>
-                                                <div class="shown-if-checked">
-                                                    <div>
-                                                        <label for="diploma-name">اسم الدبلومة</label>
-                                                        <input type="text" class="form-control" id="diploma-name" placeholder="اسم الدبلومة " value="" name="diploma-name" required>
-                                                        <span id="test_diploma-name_error"></span>
-                                                        <div></div>
-                                                        <label for="diploma-course-num"> ترتيب الدورة بالدبلومة</label>
-                                                        <input type="number" class="form-control" id="diploma-course-num" placeholder=" ترتيب الدورة بالدبلومة " value="" name="diploma-course-num" required>
-                                                        <span id="test_diploma-course-num_error"></span>
-                                                        <div></div>
-                                                    </div>
-                                                </div>
+{{--                                                <div class="shown-if-checked">--}}
+{{--                                                    <div>--}}
+{{--                                                        <label for="diploma-name">اسم الدبلومة</label>--}}
+{{--                                                        <input type="text" class="form-control" id="diploma-name" placeholder="اسم الدبلومة " value="" name="diploma-name" required>--}}
+{{--                                                        <span id="test_diploma-name_error"></span>--}}
+{{--                                                        <div></div>--}}
+{{--                                                        <label for="diploma-course-num"> ترتيب الدورة بالدبلومة</label>--}}
+{{--                                                        <input type="number" class="form-control" id="diploma-course-num" placeholder=" ترتيب الدورة بالدبلومة " value="" name="diploma-course-num" required>--}}
+{{--                                                        <span id="test_diploma-course-num_error"></span>--}}
+{{--                                                        <div></div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
 
 
                                         </div>
@@ -209,7 +209,8 @@
         <script >
             $(document).ready(function() {
 
-                $("#submit").click(function() {
+                $("#form").submit(function(e) {
+                    e.preventDefault();
                     var courseName = $("#course-name").val();
                     var courseCode = $("#course-id").val();
                     var courseDescription = $("#course-description").val();
@@ -233,14 +234,22 @@
                     });
 
 
+                    var form_data = new FormData(this);
+                    form_data.append('content',JSON.stringify(chapters));
+                    form_data.append('name',courseName);
+                    form_data.append('code',courseCode);
+                    form_data.append('duration',courseDuration);
+                    form_data.append('cost',courseCost);
+                    form_data.append('teamCost',teamCost);
+                    form_data.append('instructor_id',1);
+
 
                     $.ajax({
                         url: "/courses",
                         method: "POST",
-                        data: {name:courseName,code:courseCode,description:courseDescription,
-                            duration:courseDuration,cost:courseCost, content:JSON.stringify(chapters),
-                            teamCost:teamCost,
-                            instructor_id:1 ,_token: "{{ csrf_token() }}"},
+                        data : form_data,
+                        processData : false,
+                        contentType : false,
                         dataType: "json",
                         success: function (data) {
                             // console.log(data);
