@@ -23,6 +23,11 @@ class Course extends Model
         return $this->hasMany(CourseGroup::class);
     }
 
+    public function images()
+    {
+        return $this->morphMany(Image::class,'imageable');
+    }
+
 
 
 }
