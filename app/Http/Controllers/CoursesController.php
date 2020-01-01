@@ -143,8 +143,8 @@ class CoursesController extends Controller
         $request['instructor_id']=(int)$request['instructor_id']['0'];
         $request['center_id']=Session('center_id');
         return $this->validate($request,
-            ['name'=>'required',
-                'code'=>'required',
+            ['name'=>'required|unique:courses,name',
+                'code'=>'required|unique:courses,code',
                 'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',

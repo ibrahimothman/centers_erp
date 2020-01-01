@@ -75,20 +75,20 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-name">اسم الدورة</label>
-                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="asd" name="name" required>
+                                                    <input type="text" class="form-control" id="course-name" placeholder="اسم الدورة " value="{{old('name')}}" name="name" required>
                                                     <span id="test_course-name_error"></span>
-                                                    <div></div>
+                                                    <div>{{ $errors->first('name') }}</div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-id">كود الدورة</label>
-                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="asd" name="code" required>
+                                                    <input type="text" class="form-control" id="course-id" placeholder="كود الدورة " value="{{old('code')}}" name="code" required>
                                                     <span id="test_course-id_error"></span>
-                                                    <div></div>
+                                                    <div>{{ $errors->first('code') }}</div>
                                                 </div>
                                             </div>
                                             <div class=" form-row">
                                                 <label for="course-description">وصف الدورة</label>
-                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="description" required>asd</textarea>
+                                                <textarea placeholder="وصف الدورة" rows="2" class="form-control" id="course-description" name="description" required>{{old('description')}}</textarea>
                                                 <div></div>
                                             </div>
                                             <fieldset>
@@ -98,14 +98,14 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" id="basic-addon1">باب  1</span>
                                                         </div>
-                                                        <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="asd" name="course-chapter-1" required>
+                                                        <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="{{old('course-chapter-1')}}" name="course-chapter-1" required>
                                                         <span id="test_course-chapter-1_error"></span>
                                                         <div></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
                                                     <label for="chapter-1-desc">عن باب 1</label>
-                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc" name="chapter-1-desc">asd</textarea>
+                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc" name="chapter-1-desc">{{old('')}}</textarea>
                                                     <div></div>
                                                 </div>
                                             </fieldset>
@@ -123,7 +123,7 @@
                                                         </div>
                                                         <div class="col-sm-6 form-group">
                                                             <label for="course-duration">مدة الدورة</label>
-                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="12" name="duration" required>
+                                                            <input type="number" min='0' class="form-control" id="course-duration" placeholder="مدة الدورة " value="{{ old('duration') }}" name="duration" required>
                                                             <span id="test_course-duration_error"></span>
                                                             <div></div>
                                                         </div>
@@ -131,13 +131,13 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-cost">تكلفة الدورة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="12" name="cost" required>
+                                                    <input type="number" min='0' class="form-control" id="course-cost" placeholder="تكلفة الدورة " value="{{ old('cost') }}" name="cost" required>
                                                     <span id="test_course-cost_error"></span>
                                                     <div></div>
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-group-cost">تكلفة الدورة المجمعة</label>
-                                                    <input type="number" min='0' class="form-control" id="course-group-cost" placeholder="تكلفة الدورة المجمعة " value="12" name="course-group-cost" required>
+                                                    <input type="number" min='0' class="form-control"  id="course-group-cost" placeholder="تكلفة الدورة المجمعة " value="{{ old('course-group-cost') }}" name="course-group-cost" required>
                                                     <span id="test_course-group-cost_error"></span>
                                                     <div></div>
                                                 </div>
