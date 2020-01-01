@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Input;
 
 class CourseMedia extends Model
 {
-    public $timestamps = false;
+    protected $guarded = [];
 
     public function courses(){
-        $this->hasMany(Course::class);
+        $this->belongsTo(Course::class);
     }
 
     public function uploadImage(Request $request){

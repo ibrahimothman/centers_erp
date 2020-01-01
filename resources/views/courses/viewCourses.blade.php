@@ -46,16 +46,16 @@
                                         <article class="course">
                                                 <div id="jj" class="carousel slide" data-ride="carousel" data-interval="false">
                                                     <div class="carousel-inner">
-                                                        <div class="carousel-item active">
-                                                        <img class="d-block w-100" src="https://img-cdn.majarah.com/post/6916910457805268_4055220074079483_711907441144118_4332190458952274_Majarah_tech_.jpg" alt="First slide">
-                                                        </div>
-                                                        <div class="carousel-item">
-                                                        <img class="d-block w-100" src="https://1ook.com/wp-content/uploads/2017/11/php-1.jpg" alt="Second slide">
-                                                        </div>
-                                                        <div class="carousel-item">
-                                                        <img class="d-block w-100" src="https://www.fortunetechnologyindia.com/wp-content/uploads/2019/06/PHP_1_1.jpg" alt="Third slide">
-                                                        </div>
+                                                        @php($i = 0)
+                                                        @foreach($course->images as $image)
+                                                            <div class="carousel-item {{$i == 0 ? 'active' : ''}}">
+                                                                <img class="d-block w-100" src="/uploads/courses/{{ $image->url }}" alt="First slide">
+                                                            </div>
+                                                            @php($i++)
+                                                        @endforeach
+
                                                     </div>
+
                                                     <a class="carousel-control-prev" href="#jj" role="button" data-slide="prev">
                                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                         <span class="sr-only">Previous</span>
