@@ -98,6 +98,7 @@ $('#add-more').click(function () {
 
 $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(function () {
     let photoNum = this.id[this.id.length - 1];
+    console.log(photoNum);
     $(`#customFile${photoNum}`).trigger('click');
 })
 
