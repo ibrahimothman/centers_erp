@@ -31,21 +31,13 @@ class StudentController extends Controller
 
 //        $this->authorize('viewAny',Student::class);
         $center = Center::findOrFail(Session('center_id'));
-
-        $students = app(Pipeline::class)
-            ->send($center->students)
-            ->through([
-                Sort::class,
-            ])
-            ->thenReturn()
-            ->get();
-
-//        dd($students->get());
+        $students = Student::allStudents($center);
         return view('students.all')->with('students',$students);
     }
 
     public function viewAll(){
-        $students = Auth::user()->center->students;
+        $center = Center::findOrFail(Session('center_id'));
+        $students = Student::allStudents($center);
         return response()->json($students);
     }
 
@@ -56,8 +48,8 @@ class StudentController extends Controller
      */
     public function showTable()
     {
-
-        $students = Auth::user()->center->students;
+        $center = Center::findOrFail(Session('center_id'));
+        $students = Student::allStudents($center);
         return view('students.all-table')->with('students', $students);
     }
 
