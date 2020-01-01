@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
+use App\CourseGroupStudents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,10 +31,15 @@ class CourseEntrollmentsController extends Controller
      */
     public function create()
     {
-        $student=Auth::user()->center->students;
+        $center=Center::find(Session("center_id"));
+        $student=$center->students;
+
+        $groups=$center->courses;
+
 
         return view("courseEnrollment\course_group_enrollment")
-            ->with('students',$student);
+            ->with('students',$student)
+            ->with('groups',$groups);
 
     }
 
@@ -44,7 +51,13 @@ class CourseEntrollmentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //CourseGroupStudents::Create($this->getValidation($request));
+        $courseGroupStudents=new CourseGroupStudents();
+        $courseGroupStudents->student_id=$request->student_id;
+        $courseGroupStudents->group_id=$request->group_id;
+        $courseGroupStudents->save;
+
+        return json_encode("student was enrolled successfully ".$courseGroupStudents->student_id);
     }
 
     /**
@@ -89,6 +102,13 @@ class CourseEntrollmentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    private function getValidation(Request $request){
+        return $this->validate($request,[
+        "student_id"=>"required",
+        "group_id"=>"required"
+        ]);
     }
 }

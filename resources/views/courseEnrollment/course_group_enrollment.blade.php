@@ -48,23 +48,24 @@
                                                 <div class="col-sm-5 form-group">
                                                         <label for="course-id">الدورة</label>
                                                         <select class="form-control" id="course-id" required>
-                                                            <option value="1">هياكل بيانات</option>
-                                                            <option value="2">تصميم شبكات</option>
-                                                            <option value="3">تحليل بيانات</option>
+                                                            <option value="1"> choose</option>
+                                                            @foreach($groups as $group)
+                                                            <option value="{{$group->id}}">{{$group->name}}</option>
+                                                            @endforeach
                                                         </select>
                                                             <span id="test_course-id_error"></span>
                                                             <div></div>
                                                     </div>
                                                     <div class="col-sm-5 form-group">
                                                         <label for="student-id"> الطالب</label>
-                                                        <input type="text" placeholder="اسم الطالب" class="form-control" id="student-id" required>
+                                                        <input type="text"  placeholder="اسم الطالب" class="form-control" id="student-id" required>
                                                         <div class="list-gpfrm-list" id="studentsList"></div>
 
                                                         <span id="test_student-id_error"></span>
                                                             <div></div>
                                                     </div>
                                                     <div class="col-sm-2 form-group align-end">
-                                                    <a href="/courses/create"><button type="button" class="btn btn-success">أضف</button></a>
+                                                    <a href="/courses/create"><button id="enroll" type="button" class="btn btn-success">أضف</button></a>
                                                     </div>
                                                 </div>
                                         </form>
@@ -127,11 +128,12 @@
                         dataType: "json",
                         success: function (data) {
                              console.log(data);
+                            $('#studentsList').show();
                             var output='<ul class="dropdown-menu" style="display:block; position:relative">';
 
                             $.each(data, function (i, v) {
                                  console.log(i+" --> "+v.nameAr);
-                                 output+=" <li><a href=\"#\">"+v.nameAr+"</a></li>"
+                                 output+=" <li><a href=''>"+v.nameAr+"</a></li>"
 
                             });
                             $("#studentsList").html(output);
@@ -147,7 +149,37 @@
                 $(document).on('click', 'li', function(){
                     $('#student-id').val($(this).text());
                     $('#studentsList').fadeOut();
+                    return false;
                 });
+
+
+                var studentId=$('#student-id').val();
+                var groupId=$('#course-id').val();
+
+
+                $("#enroll").click(function(){
+                    console.log(studentId+"  "+groupId );
+
+                    $.ajax({
+                        url: "/course_enrollment",
+                        method: "POST",
+                        data: {student_id:studentId,group_id:groupId, _token: "{{ csrf_token() }}"},
+                        dataType: "text",
+                        success: function (data) {
+                            console.log(data);
+
+                        },
+                        error: function (res) {
+                            console.log(res.data);
+                            console.log(error);
+
+                        }
+
+                    });
+                    return false;
+
+                });
+
 
             });
         </script>
