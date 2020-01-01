@@ -57,12 +57,10 @@
                                                     </div>
                                                     <div class="col-sm-5 form-group">
                                                         <label for="student-id"> الطالب</label>
-                                                        <select class="form-control" id="student-id" required>
-                                                        <option value="1">سامح محفوظ</option>
-                                                            <option value="2">علي علاء</option>
-                                                            <option value="3">سامي مصباح</option>
-                                                        </select>
-                                                            <span id="test_student-id_error"></span>
+                                                        <input type="text" placeholder="اسم الطالب"  class="form-control" id="student-id" required>
+                                                        <div class="list-gpfrm-list" id="studentsList"></div>
+
+                                                        <span id="test_student-id_error"></span>
                                                             <div></div>
                                                     </div>
                                                     <div class="col-sm-2 form-group align-end">
@@ -111,7 +109,54 @@
         <!-- Custom scripts for all pages-->
         <script src="{{url('js/sb-admin-2.min.js')}}"></script>
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
-    </body>
+
+        <script >
+            $(document).ready(function() {
+                //alert("/*/**");
+
+                $('#student-id').keyup(function () {
+                    var query=$(this).val();
+                    console.log(query);
+                    if (query===""){
+                        $('#studentsList').html("");
+                        return;
+                    }
+                    $.ajax({
+                        url: "/search_student_by_name",
+                        method: "GET",
+                        data: {query:query, _token: "{{ csrf_token() }}"},
+                        dataType: "json",
+                        success: function (data) {
+                             // console.log(data);
+                            var output='<ul class="dropdown-menu" style="display:block; position:relative">';
+
+                            $.each(data, function (i, v) {
+                                 console.log(i+" --> "+v.nameAr);
+                                 output+=" <li><a href=\"#\">"+v.nameAr+"</a></li>"
+
+                            });
+                            output += '</ul>';
+                            $("#studentsList").fadeIn();
+                            $("#studentsList").html(output);
+
+                        },
+                        error: function (res) {
+                            alert(res.data);
+                        }
+
+                    });
+                });
+
+                $(document).on('click', 'li', function(){
+                    $('#student-id').val($(this).text());
+                    $('#studentsList').fadeOut();
+                });
+
+            });
+        </script>
+
+
+        </body>
 
 </html>
 
