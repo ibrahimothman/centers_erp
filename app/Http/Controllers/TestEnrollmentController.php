@@ -59,20 +59,20 @@ class TestEnrollmentController extends Controller
     public function store()
     {
         if(request()->ajax()){
-            $stu_name = request()->get('stu_name');
+            $stu_id = request()->get('stu_id');
             $test_id = request()->get('test_id');
             $group_id = request()->get('group_id');
         }
 
-        if($this->checkTestEnrollmentValidation($stu_name,$test_id)){
+        if($this->checkTestEnrollmentValidation($stu_id,$test_id)){
             return 'student has already enrolled in this test';
         }else{
             $date = TestGroup::find($group_id)->group_date;
-            if($this->checkEnrollmentTimeValidation($stu_name, $date)){
+            if($this->checkEnrollmentTimeValidation($stu_id, $date)){
                 return 'student has already enrolled in a test at this time';
             }
             else{
-                Student::findOrFail($stu_name)->testsEnrolling()->syncWithoutDetaching($group_id);
+                Student::findOrFail($stu_id)->testsEnrolling()->syncWithoutDetaching($group_id);
                 return 'student has successfully enrolled in this test';
             }
         }

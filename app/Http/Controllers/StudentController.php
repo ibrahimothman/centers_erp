@@ -74,7 +74,6 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         // todo : attach student to the center
         // check if user has rights to add a new student
 

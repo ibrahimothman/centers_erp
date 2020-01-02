@@ -7,6 +7,7 @@ use App\Course;
 use App\CourseGroup;
 use App\Employee;
 use App\Rules\courseGroupDay;
+use App\Test;
 use App\Time;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -139,5 +140,11 @@ class CourseGroupController extends Controller
             // attach time to course group
             $course_group->times()->syncWithoutDetaching($time);
         }
+    }
+
+    public function getCourseGroups()
+    {
+        $course_id  = request()->get('course_id');
+        return Course::with('groups')->findOrFail($course_id)->groups;
     }
 }

@@ -32,4 +32,11 @@ class settingsController extends Controller
 
         return redirect('settings/profile');
     }
+
+    public function instructorSettings(){
+        return view("instructor/setting_instructor");
+    }
+    public function instructorPassReset(){
+        return view("instructor/change_password_instructor");
+    }
 }

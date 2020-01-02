@@ -8,11 +8,9 @@ class Instructor extends Model
 {
 
 
-    public function instructor_center(){
-        return $this->belongsTo(Instructor_center::class);
-    }
+    protected $guarded = [];
 
-    public function center(){
-        return $this->belongsToMany(Instructor::class);
+    public function centers(){
+        return $this->belongsToMany(Center::class);
     }
 }
