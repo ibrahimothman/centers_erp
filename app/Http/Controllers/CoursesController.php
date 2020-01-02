@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use App\Course;
 use App\CourseMedia;
 use Illuminate\Http\Request;
@@ -36,8 +37,8 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        $instructors= Session::get('center');
-
+        $center=Center::find(Session("center_id"));
+            $instructors= $center->instructor;
         //echo Auth::user()->center->courses;
         return view('courses/addCourse')
             ->with('instructors',$instructors);
@@ -130,7 +131,8 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Course::where('id',$id)->delete();
+        return redirect("/courses");
     }
 
     public function createCourse(Request $request){
