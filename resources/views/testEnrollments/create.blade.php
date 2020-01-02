@@ -106,20 +106,28 @@
 
 <div class="form-row">
         <!--stu-name-->
+    <div class="col-sm-5 form-group">
+        <label for="student-id"> الطالب</label>
+        <input type="text"  placeholder="اسم الطالب" name="student" class="form-control" id="student-id" required>
+        <div class="list-gpfrm-list" id="studentsList"></div>
 
-    <div class="col-md-6 form-group">
-        <label >اسم الطالب</label>
-        <select  class="form-control "  placeholder="اختار طالب" id="stud" name="std" required>
-            <option value='0'>اختر طالب</option>
-            @foreach($students as $student)
-                <option value={{ $student->id }}>{{ $student->nameAr}}</option>
-            @endforeach
-        </select>
         <span id="stuselector_error"></span>
-
-
-
+        <div></div>
     </div>
+
+{{--    <div class="col-md-6 form-group">--}}
+{{--        <label >اسم الطالب</label>--}}
+{{--        <select  class="form-control "  placeholder="اختار طالب" id="stud" name="std" required>--}}
+{{--            <option value='0'>اختر طالب</option>--}}
+{{--            @foreach($students as $student)--}}
+{{--                <option value={{ $student->id }}>{{ $student->nameAr}}</option>--}}
+{{--            @endforeach--}}
+{{--        </select>--}}
+{{--        <span id="stuselector_error"></span>--}}
+
+
+
+{{--    </div>--}}
 </div>
 
         <!--test-name-->
@@ -198,8 +206,7 @@
             // check if all fields if filled
             var test_id = $('#testselector').val();
             var group_id = $('#time').val();
-            var stu_name = $('#stud').val();
-            console.log(stu_name);
+            var stu_id = $('#student-id').val();
 
             if(test_id !== 0 && group_id !==0 && stu_name !== 0) {
                 // remove errors
@@ -214,7 +221,7 @@
                 $.ajax({
                    url : '{{ route('test-enrollments.store') }}',
                     method : 'post',
-                    data : {stu_name : stu_name, test_id : test_id,group_id : group_id, _token: "{{csrf_token()}}"},
+                    data : {stu_id : stu_id, test_id : test_id,group_id : group_id, _token: "{{csrf_token()}}"},
                     success : function (res) {
                         alert(res);
                     }
@@ -230,7 +237,7 @@
                     $('#dateselector_error').html("<lable class = 'text-danger'>choose a date</lable>");
                     $('#dateselector_error').addClass('has-error');
                 }
-                if(stu_name == 0) {
+                if(stu_id == 0) {
                     $('#stuselector_error').html("<lable class = 'text-danger'>choose a students</lable>");
                     $('#stuselector_error').addClass('has-error');
                 }
@@ -249,12 +256,47 @@
             $('#dateselector_error').removeClass('has-error');
         });
 
-        $('#stud').change(function () {
+        $('#student-id').change(function () {
             $('#stuselector_error').html("<lable class = 'text-success'></lable>");
             $('#stuselector_error').removeClass('has-error');
         });
 
         $(document).ready(function(){
+
+            $('#student-id').keyup(function () {
+                var query=$(this).val();
+                console.log(query);
+                if (query===""){
+                    $('#studentsList').html("");
+                    return;
+                }
+                $.ajax({
+                    url: "/search_student_by_name",
+                    method: "GET",
+                    data: {query:query, _token: "{{ csrf_token() }}"},
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        $('#studentsList').show();
+                        var output='<ul class="dropdown-menu" style="display:block; position:relative">';
+
+                        $.each(data, function (i, v) {
+                            console.log(i+" --> "+v.nameAr);
+                            output+=" <li><a href=''>"+v.nameAr+"</a></li>"
+
+                        });
+                        output += '</ul>';
+                        $("#studentsList").fadeIn();
+                        $("#studentsList").html(output);
+
+                    },
+                    error: function (res) {
+                        alert(res.data);
+                    }
+
+                });
+            });
+
             $('#testselector').change(function() {
                 var test = $(this).val();
                 $('#time').empty();

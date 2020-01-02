@@ -58,11 +58,16 @@ Route::get('test-statements-preview/{statement}/{student}','TestStatementControl
 //----------- courses ---------------
 Route::resource('courses','CoursesController');
 Route::resource('course_groups','CourseGroupController');
+Route::get('/get_course_groups','CourseGroupController@getCourseGroups');
 Route::resource('course_enrollment','CourseEnrollmentController');
 Route::resource('rooms','RoomsController');
-
+// -------------------instructor----------------
+Route::resource('instructor','InstructorsController');
 //-------------------- jobs ---------------------
 Route::resource('jobs','jobController');
+//-------------------- settings ---------------------
+Route::get('settings/instructorSettings','settingsController@instructorSettings');
+Route::get('settings/instructorPassReset','settingsController@instructorPassReset');
 
 Route::get('set_role',function (){
     $roles = ['student.add','student.view','student.update','student.delete',

@@ -50,7 +50,7 @@ class Center extends Model
         return $this->hasMany(Course::class);
     }
 
-    public function instructor(){
+    public function instructors(){
         return $this->belongsToMany(Instructor::class);
     }
 

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Center;
+use App\Student;
+use App\Test;
+use App\TestGroup;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use mysql_xdevapi\Session;
 
 class CourseEnrollmentController extends Controller
@@ -32,9 +34,16 @@ class CourseEnrollmentController extends Controller
     public function create()
     {
         $center = Center::findOrFail(Session('center_id'));
-        $student = $center->students;
+        $students=$center->students;
+        $courses=$center->courses;
+        foreach ($courses as $course){
+            $course->groups;
+        }
+
+//        echo json_encode($courses);
         return view("courseEnrollment\course_group_enrollment")
-            ->with('students',$student);
+            ->with('students',$students)
+            ->with('courses',$courses);
 
     }
 
@@ -46,8 +55,38 @@ class CourseEnrollmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //CourseGroupStudents::Create($this->getValidation($request));
+        if(request()->ajax()){
+            $stu_name = request()->get('stu_name');
+            $course_id = request()->get('course_id');
+            $group_id = request()->get('group_id');
+        }
+
+        Student::where('nameAr',$stu_name)->first()->courses()->syncWithoutDetaching($group_id);
+        return 'student has successfully enrolled in this course';
+//        if($this->checkCourseEnrollmentValidation($stu_name,$course_id)){
+//            return 'student has already enrolled in this test';
+//        }
+//            else{
+//                Student::where('nameEn',$stu_name)->courses()->syncWithoutDetaching($group_id);
+//                return 'student has successfully enrolled in this test';
+//            }
+
+//        return json_encode("student was enrolled successfully ".$courseGroupStudents->student_id);
     }
+
+    // check if a students has already enrolled in a test or not
+    public function checkCourseEnrollmentValidation($stu_name, $course_id){
+        $groups =  Course::findOrFail($course_id)->groups;
+        foreach ($groups as $group){
+            if($group->joiners->contains($stu_name)){
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 
     /**
      * Display the specified resource.
@@ -91,6 +130,13 @@ class CourseEnrollmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    private function getValidation(Request $request){
+        return $this->validate($request,[
+        "student_id"=>"required",
+        "group_id"=>"required"
+        ]);
     }
 }

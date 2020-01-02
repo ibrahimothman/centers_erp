@@ -20,4 +20,7 @@ class CourseGroup extends Model
     }
 
 
+    public function joiners(){
+        return $this->belongsToMany(Student::class);
+    }
 }

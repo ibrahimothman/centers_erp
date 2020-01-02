@@ -13,13 +13,14 @@ class Student extends Model
 
     public static function allStudents($center)
     {
-        return app(Pipeline::class)
-            ->send($center->students)
-            ->through([
-                Sort::class,
-            ])
-            ->thenReturn()
-            ->get();
+        return $center->students;
+//        return app(Pipeline::class)
+//            ->send($center->students)
+//            ->through([
+//                Sort::class,
+//            ])
+//            ->thenReturn()
+//            ->get();
     }
 
     public function profileImage()
@@ -67,9 +68,9 @@ class Student extends Model
         return $this->belongsToMany(TestGroup::class)->withPivot(['take','result'])->withTimestamps();
     }
 
-    public function courses()
-    {
-        return $this->belongsToMany(Course::class)->withTimestamps();
+
+    public function courses(){
+        return $this->belongsToMany(CourseGroup::class);
     }
 
     protected static function boot()

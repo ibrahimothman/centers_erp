@@ -47,24 +47,38 @@
                                             <div class="form-row">
                                                 <div class="col-sm-5 form-group">
                                                         <label for="course-id">الدورة</label>
-                                                        <select class="form-control" id="course-id" required>
-                                                            <option value="1">هياكل بيانات</option>
-                                                            <option value="2">تصميم شبكات</option>
-                                                            <option value="3">تحليل بيانات</option>
+                                                        <select class="form-control" id="course_id" required>
+                                                            <option value="1"> choose</option>
+                                                            @foreach($courses as $course)
+                                                            <option value="{{$course->id}}">{{$course->name}}</option>
+                                                            @endforeach
                                                         </select>
-                                                            <span id="test_course-id_error"></span>
+                                                            <span id="course_error"></span>
                                                             <div></div>
                                                     </div>
-                                                    <div class="col-sm-5 form-group">
+
+                                                <div class="col-sm-5 form-group">
+                                                    <label >مواعيد الكورس</label>
+
+                                                    <select  class="form-control "  placeholder="اختار ميعاد الامتحان" id="time" name="time" required>
+                                                    </select>
+                                                    <span id="dateselector_error"></span>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+
+                                                <div class="col-sm-5 form-group">
                                                         <label for="student-id"> الطالب</label>
-                                                        <input type="text" placeholder="اسم الطالب"  class="form-control" id="student-id" required>
+                                                        <input type="text"  placeholder="اسم الطالب" class="form-control" id="student-id" required>
                                                         <div class="list-gpfrm-list" id="studentsList"></div>
 
                                                         <span id="test_student-id_error"></span>
                                                             <div></div>
                                                     </div>
                                                     <div class="col-sm-2 form-group align-end">
-                                                    <a href="/courses/create"><button type="button" class="btn btn-success">أضف</button></a>
+                                                    <a href="#"><button id="enroll" type="button" class="btn btn-success">أضف</button></a>
                                                     </div>
                                                 </div>
                                         </form>
@@ -114,6 +128,128 @@
             $(document).ready(function() {
                 //alert("/*/**");
 
+                $('#enroll').on('click', function(e) {
+                    // check if all fields if filled
+                    var course_id = $('#course_id').val();
+                    var group_id = $('#time').val();
+                    var stu_id = $('#student-id').val();
+                    console.log(course_id+" / "+group_id+" / "+stu_id);
+                    if(course_id !== 0 && group_id !==0 && stu_id !== 0) {
+                        // remove errors
+                        $('#course_error').html("<lable class = 'text-success'></lable>");
+                        $('#course_error').removeClass('has-error');
+                        $('#dateselector_error').html("<lable class = 'text-success'></lable>");
+                        $('#dateselector_error').removeClass('has-error');
+                        $('#stuselector_error').html("<lable class = 'text-success'></lable>");
+                        $('#stuselector_error').removeClass('has-error');
+
+
+                        $.ajax({
+                            url : '{{ route('course_enrollment.store') }}',
+                            method : 'post',
+                            data : {stu_name : stu_id, course_id : course_id,group_id : group_id, _token: "{{csrf_token()}}"},
+                            success : function (res) {
+                                alert(res);
+                            }
+                        });
+
+
+                    }
+                    if(course_id == 0) {
+                        $('#course_error').html("<lable class = 'text-danger'>choose a test</lable>");
+                        $('#course_error').addClass('has-error');
+                    }
+                    if(group_id == 0) {
+                        $('#dateselector_error').html("<lable class = 'text-danger'>choose a date</lable>");
+                        $('#dateselector_error').addClass('has-error');
+                    }
+                    if(stu_id == 0) {
+                        $('#stuselector_error').html("<lable class = 'text-danger'>choose a students</lable>");
+                        $('#stuselector_error').addClass('has-error');
+                    }
+
+
+
+                });
+
+                $('#course_error').change(function () {
+                    $('#course_error').html("<lable class = 'text-success'></lable>");
+                    $('#course_error').removeClass('has-error');
+                });
+
+                $('#time').change(function () {
+                    $('#dateselector_error').html("<lable class = 'text-success'></lable>");
+                    $('#dateselector_error').removeClass('has-error');
+                });
+
+                $('#student-id').change(function () {
+                    $('#stuselector_error').html("<lable class = 'text-success'></lable>");
+                    $('#stuselector_error').removeClass('has-error');
+                });
+
+
+                    $('#student-id').keyup(function () {
+                        var query=$(this).val();
+                        console.log(query);
+                        if (query===""){
+                            $('#studentsList').html("");
+                            return;
+                        }
+                        $.ajax({
+                            url: "/search_student_by_name",
+                            method: "GET",
+                            data: {query:query, _token: "{{ csrf_token() }}"},
+                            dataType: "json",
+                            success: function (data) {
+                                console.log(data);
+                                $('#studentsList').show();
+                                var output='<ul class="dropdown-menu" style="display:block; position:relative">';
+
+                                $.each(data, function (i, v) {
+                                    console.log(i+" --> "+v.nameAr);
+                                    output+=" <li><a href=''>"+v.nameAr+"</a></li>"
+
+                                });
+                                output += '</ul>';
+                                $("#studentsList").fadeIn();
+                                $("#studentsList").html(output);
+
+                            },
+                            error: function (res) {
+                                alert(res.data);
+                            }
+
+                        });
+                    });
+
+                    $('#course_id').change(function() {
+                        var course_id = $(this).val();
+                        console.log(course_id);
+                        $('#time').empty();
+                        $('#time').append('<option value="0">اختر ميعادا</option>');
+                        if ($(this).val() !== "") {
+                            $.ajax({
+                                url: "/get_course_groups",
+                                method: "GET",
+                                data: {course_id: course_id, _token: "{{ csrf_token() }}"},
+                                dataType: "json",
+                                success: function (data) {
+                                    // console.log(data);
+                                    $.each(data, function (i, v) {
+                                        // console.log(group.id)
+                                        $('#time').append('<option value="' + v.id + '">' + v.start_at + '</option>');
+                                    });
+
+                                },
+                                error: function (res) {
+                                    alert(res.data);
+                                }
+
+                            });
+                        }
+
+                    });
+
                 $('#student-id').keyup(function () {
                     var query=$(this).val();
                     console.log(query);
@@ -127,12 +263,13 @@
                         data: {query:query, _token: "{{ csrf_token() }}"},
                         dataType: "json",
                         success: function (data) {
-                             // console.log(data);
+                             console.log(data);
+                            $('#studentsList').show();
                             var output='<ul class="dropdown-menu" style="display:block; position:relative">';
 
                             $.each(data, function (i, v) {
                                  console.log(i+" --> "+v.nameAr);
-                                 output+=" <li><a href=\"#\">"+v.nameAr+"</a></li>"
+                                 output+=" <li><a href=''>"+v.nameAr+"</a></li>"
 
                             });
                             output += '</ul>';
@@ -150,7 +287,9 @@
                 $(document).on('click', 'li', function(){
                     $('#student-id').val($(this).text());
                     $('#studentsList').fadeOut();
+                    return false;
                 });
+
 
             });
         </script>

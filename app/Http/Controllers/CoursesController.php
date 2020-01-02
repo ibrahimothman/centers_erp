@@ -39,10 +39,11 @@ class CoursesController extends Controller
      */
     public function create()
     {
-//        $instructors= Session::get('center');
-//        dd($instructors);
-
-        return view('courses/addCourse');
+        $center=Center::findOrFail(Session("center_id"));
+        $instructors= $center->instructor;
+        //echo Auth::user()->center->courses;
+        return view('courses/addCourse')
+            ->with('instructors',$instructors);
 
 
     }
@@ -135,7 +136,8 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Course::where('id',$id)->delete();
+        return redirect("/courses");
     }
 
     private function getValidation(Request $request){
