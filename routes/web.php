@@ -64,6 +64,9 @@ Route::resource('rooms','RoomsController');
 Route::resource('instructor','InstructorsController');
 //-------------------- jobs ---------------------
 Route::resource('jobs','jobController');
+//-------------------- settings ---------------------
+Route::get('settings/instructorSettings','settingsController@instructorSettings');
+Route::get('settings/instructorPassReset','settingsController@instructorPassReset');
 
 Route::get('set_role',function (){
     $roles = ['student.add','student.view','student.update','student.delete',
