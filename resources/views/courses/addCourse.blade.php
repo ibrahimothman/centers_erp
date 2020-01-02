@@ -113,10 +113,10 @@
                                                         <div class="col-sm-6 form-group">
                                                         <label for="instructor-name">اسم المدرس</label>
                                                         <select class="form-control" id="instructor-name" multiple required>
-{{--                                                            @foreach($instructors as $instructor)--}}
-{{--                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
+                                                            @foreach($instructors as $instructor)
+                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
 
-{{--                                                            @endforeach--}}
+                                                            @endforeach
                                                         </select>
                                                             <span id="test_course-teacher_error"></span>
                                                             <div></div>

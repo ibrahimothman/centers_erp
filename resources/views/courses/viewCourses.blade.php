@@ -76,7 +76,11 @@
                                                    </div>
                                                    <div class="view-course-action-buttons">
                                                        <button type="button" class="btn btn-primary btn-sm">تعديل</button>
-                                                       <button type="button" class="btn btn-danger btn-sm">حذف</button>
+                                                       <form action="courses/{{$course->id}}" method="post">
+                                                        @csrf
+                                                           <input type="hidden" name="_method" value="delete" />
+                                                       <button id="delete" type="submit" class="btn btn-danger btn-sm">حذف</button>                                                       </form>
+
                                                    </div>
                                             </article>
                                                 @endforeach
@@ -109,6 +113,8 @@
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
         <script>
             // $('.carousel').carousel()
+
+
         </script>
     </body>
 
