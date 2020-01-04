@@ -36,7 +36,7 @@ class StudentController extends Controller
     public function index()
     {
 
-        $this->authorize('viewAny',Student::class);
+        // $this->authorize('viewAny',Student::class);
         $center = Auth::user()->center;
         $students = $center->students;
 
@@ -68,7 +68,7 @@ class StudentController extends Controller
     public function create()
     {
         //check if user has rights to view create_student_form
-        $this->authorize('create',Student::class);
+        // $this->authorize('create',Student::class);
         $student = new Student();
         return view('students.studentCreate',compact('student'));
     }
@@ -84,7 +84,7 @@ class StudentController extends Controller
         // todo : attach student to the center
         // check if user has rights to add a new student
 
-        $this->authorize('create',Student::class);
+        // $this->authorize('create',Student::class);
         $center = Auth::user()->center;
         $student = Student::create($this->validateRequest(''));
         $center->students()->syncWithoutDetaching($student);
@@ -101,7 +101,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        $this->authorize('view',$student);
+        // $this->authorize('view',$student);
         return view('students.show',compact('student'));
     }
 
@@ -113,7 +113,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        $this->authorize('update',$student);
+        // $this->authorize('update',$student);
         return view('students.studentEdit',compact('student'));
     }
 
@@ -126,7 +126,7 @@ class StudentController extends Controller
      */
     public function update(Student $student)
     {
-        $this->authorize('update',$student);
+        // $this->authorize('update',$student);
 
         // todo delete prev image from profiles dir
 
@@ -144,7 +144,7 @@ class StudentController extends Controller
     {
 
         //policy
-        $this->authorize('delete',$student);
+        // $this->authorize('delete',$student);
         // delete from pivot
         $center = Auth::user()->center;
         $center->students()->detach($student);

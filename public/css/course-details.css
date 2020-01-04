@@ -1,0 +1,192 @@
+.course-wrapper{
+    padding: 0!important;
+}
+
+.course-header{
+    position: relative;
+}
+
+.course-header h4{
+    position: absolute;
+    text-align: center;
+    margin: 10px;
+    font-weight: bold;
+    font-size: 2em;
+    background: white;
+    padding: 10px 15px 10px 50px;
+    left: 0;
+    bottom: 22px;
+    margin-left: 0;
+    color: #266fc2;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.course-header> div > div{
+    height: 400px;
+}
+
+.course-header> div > div > img{
+    height: 100%;
+    object-fit: cover;
+}
+
+.important-details-wrapper{
+display: flex;
+flex-wrap: wrap;
+}
+
+.course-teacher-wrapper{
+    width:47%;
+    margin:2.5%;
+    border: 1px solid #dfdfdf;
+}
+
+.course-teacher-wrapper header{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.course-teacher-wrapper header h5 {
+    font-weight: bold;
+}
+
+.course-teachers, .course-logistics{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5% 5% 2% 0;
+}
+
+.teacher, .logistic-element{
+    width:26.6%;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.teacher img , .logistic-element img{
+    max-width: 100%;
+    height:100px;
+    padding: 5px;
+    border: 1px solid #dfdfdf;
+    object-fit: cover;
+}
+
+.teacher p , .logistic-element p{
+    align-self: center;
+}
+
+.course-logistics{
+    justify-content: space-between;
+    padding: 8%;
+}
+
+.logistics{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logistic-element{
+    width:30%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    text-align: center;
+}
+
+.logistic-element img{
+    border:0;
+    padding: 0;
+    height: 150px;
+    object-fit: fill;
+}
+
+.logistic-element p{
+    align-self: center;
+}
+
+.logistic-element p:first-of-type{
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+.about-course{
+    padding: 2.5%;
+    width: 45%;
+}
+
+.about-course h5{
+    font-weight: bold;
+}
+
+#accordion{
+    padding: 5%;
+}
+
+#accordion h3{
+    border: 1px solid #dfdfdf;
+    margin: 0;
+}
+
+#accordion h3:after{
+    content: " ▼";
+}
+
+#accordion h3.ui-accordion-header-active.ui-state-active:after{
+    content: " -";
+}
+.ui-accordion .ui-accordion-content{
+    border: 1px solid #dfdfdf;
+}
+
+h3.ui-accordion-header-active.ui-state-active{
+    background: #dfdfdf;
+    font-weight: bold;
+}
+
+article{
+    margin-bottom: 20px;
+}
+
+.testmonials .rounded-img{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+.testmonials .course-logistics{
+    margin-bottom: 4% ;
+    padding-bottom: 0;
+}
+
+.testmonials .gold-star{
+    color: gold;
+}
+
+.fa-star{
+    color: #dfdfdf;
+}
+
+@media only screen and (max-width: 850px) {
+    .logistic-element{
+        width: 100%;
+    }
+
+    .about-course{
+        width:95%;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .course-teacher-wrapper{
+        width: 95%;
+    }
+}
