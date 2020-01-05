@@ -74,6 +74,7 @@ class CoursesController extends Controller
     {
 //        $courses = Course::all();
 //        return view('courses/viewCourses', compact('courses'));
+        return view('courses/courseDetails');
         //
     }
 

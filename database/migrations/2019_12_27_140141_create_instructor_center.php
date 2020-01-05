@@ -26,6 +26,7 @@ class CreateInstructorCenter extends Migration
                 ->references("id")
                 ->on("centers")
                 ->onDelete('cascade');
+           
 
             $table->timestamps();
         });
