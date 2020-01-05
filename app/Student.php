@@ -13,14 +13,13 @@ class Student extends Model
 
     public static function allStudents($center)
     {
-        return $center->students;
-//        return app(Pipeline::class)
-//            ->send($center->students)
-//            ->through([
-//                Sort::class,
-//            ])
-//            ->thenReturn()
-//            ->get();
+        return app(Pipeline::class)
+            ->send($center->students)
+            ->through([
+                Sort::class,
+            ])
+            ->thenReturn()
+            ->get();
     }
 
     public function profileImage()

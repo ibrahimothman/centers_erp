@@ -13,11 +13,11 @@ class Sort
     {
 
         if(! request()->has('sort')){
-            return $next($request);
+            return $next(...$request);
         }
 
         $builder = $next(...$request);
-        return $builder->orderBy(request('sort_by'),request('sort'));
+        return $builder->orderBy('nameAr',request('sort'));
     }
 
 }
