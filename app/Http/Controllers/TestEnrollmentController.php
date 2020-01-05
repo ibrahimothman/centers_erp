@@ -65,15 +65,15 @@ class TestEnrollmentController extends Controller
         }
 
         if($this->checkTestEnrollmentValidation($stu_id,$test_id)){
-            return 'student has already enrolled in this test';
+            return response('student has already enrolled in this test');
         }else{
             $date = TestGroup::find($group_id)->group_date;
             if($this->checkEnrollmentTimeValidation($stu_id, $date)){
-                return 'student has already enrolled in a test at this time';
+                return response('student has already enrolled in a test at this time');
             }
             else{
                 Student::findOrFail($stu_id)->testsEnrolling()->syncWithoutDetaching($group_id);
-                return 'student has successfully enrolled in this test';
+                return response('student has successfully enrolled in this test');
             }
         }
 
