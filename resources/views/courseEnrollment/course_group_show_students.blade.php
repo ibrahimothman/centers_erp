@@ -225,7 +225,7 @@
                 lines += "<td>"+ group.start_at +"</td>";
                 lines += "<td>" + student.id + "</td>";
                 lines += "<td>" + student.nameAr + "</td>";
-                lines += "<td><button onclick='deleteEnrollment("+ student.id +","+ group.id +");'  class='btn btn-outline-danger  btn-sm '><i class='fas fa-trash-alt'></i> </button></td>";
+                lines += "<td><button onclick='deleteEnrollment("+ student.id +","+ group.id +","+ course.id +");'  class='btn btn-outline-danger  btn-sm '><i class='fas fa-trash-alt'></i> </button></td>";
                 lines += "</tr>";
             });
         });
@@ -266,16 +266,17 @@
         });
     }
 
-    function deleteEnrollment(student_id, course_group_id) {
+    function deleteEnrollment(student_id, course_group_id, course_id) {
         console.log(student_id+','+course_group_id);
         $.ajax({
-            url:'/delete-course-enrollments',
+            url:'/course_enrollment/'+1,
             type:'DELETE',
-            data : {student_id : student_id, test_group_id : course_group_id, _token : '{{ csrf_token() }}'},
+            data : {student_id : student_id, course_group_id : course_group_id, _token : '{{ csrf_token() }}'},
 
             success: function (data) {
                 // console.log(data);
-                window.location = 'course_enrollment';
+                getCourseEnrollments(course_id);
+                // window.location = 'course_enrollment';
             }
         });
     }
