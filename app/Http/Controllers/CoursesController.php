@@ -72,9 +72,9 @@ class CoursesController extends Controller
      */
     public function show(Course $course)
     {
-//        $courses = Course::all();
 //        return view('courses/viewCourses', compact('courses'));
-        return view('courses/courseDetails');
+//        echo json_encode($course);
+        return view('courses/courseDetails', compact('course'));
         //
     }
 

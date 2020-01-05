@@ -11,6 +11,10 @@ class Course extends Model
     public $timestamps = false;
     protected $guarded = [];
 
+    protected $casts = [
+        'content' => 'array'
+    ];
+
     public static function allCourses($center)
     {
         return app(Pipeline::class)

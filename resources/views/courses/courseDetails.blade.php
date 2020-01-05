@@ -14,7 +14,7 @@
             <!-- Custom fonts for this template-->
             <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
             <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-            
+
             <!-- Custom styles for this template-->
             <link href="/../../../css/sb-admin-rtl.css" rel="stylesheet">
             <link href="/../../../css/course-details.css" rel="stylesheet">
@@ -39,15 +39,14 @@
                                         <article>
                                             <div id="course-header" class="carousel slide course-header" data-ride="carousel" data-interval="false">
                                                 <div class="carousel-inner">
-                                                    <div class="carousel-item active">
-                                                    <img class="d-block w-100" src="https://img-cdn.majarah.com/post/6916910457805268_4055220074079483_711907441144118_4332190458952274_Majarah_tech_.jpg" alt="First slide">
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                    <img class="d-block w-100" src="https://1ook.com/wp-content/uploads/2017/11/php-1.jpg" alt="Second slide">
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                    <img class="d-block w-100" src="https://www.fortunetechnologyindia.com/wp-content/uploads/2019/06/PHP_1_1.jpg" alt="Third slide">
-                                                    </div>
+                                                    @php($i = 0)
+                                                    @foreach($course->images as $image)
+                                                        <div class="carousel-item {{$i == 0 ? 'active' : ''}}">
+                                                            <img class="d-block w-100" src="/uploads/courses/{{ $image->url }}" alt="First slide">
+                                                        </div>
+                                                        @php($i++)
+                                                    @endforeach
+
                                                 </div>
                                                 <a class="carousel-control-prev" href="#course-header" role="button" data-slide="prev">
                                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -69,25 +68,20 @@
                                                     <div class="logistic-element">
                                                         <img src="{{url('img/money.svg')}}" alt="">
                                                         <p>التكلفة</p>
-                                                        <p>400 جنيه</p>
+                                                        <p>{{ $course->cost }}</p>
                                                     </div>
                                                     <div class="logistic-element">
                                                         <img src="{{url('img/startdate.svg')}}" alt="">
                                                         <p>المدة</p>
-                                                        <p>3 شهور - 40 ساعة</p>
+                                                        <p>{{ $course->duration }}</p>
                                                     </div>
                                                 </div>
                                             </section>
                                             <div class="important-details-wrapper">
                                             <section class="about-course">
                                                 <h5>عن الدورة</h5>
-                                                <p>
-                                                لوريم إيبسوم(Lorem Ipsum) هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق "ليتراسيت" (Letraset) البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل "ألدوس بايج مايكر" (Aldus PageMaker) والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.
-                                                </p>
-                                                <p>
-                                                لوريم إيبسوم(Lorem Ipsum) هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص  والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق "ليتراسيت" (Letraset) البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل "ألدوس بايج مايكر" (Aldus PageMaker) والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.
-                                                </p>
-                                                
+                                                <p>{{ $course->description }}</p>
+
                                             </section>
                                             <section class="course-teacher-wrapper">
                                                 <header>
@@ -120,36 +114,16 @@
                                                     </div>
                                                 </div>
                                                 <div id="accordion">
-                                                    <h3>الباب الاول</h3>
-                                                    <div>
-                                                        <p>يتكلم هذا الباب عن البتاع ده اسمه ايه الله اعلم والله 
-                                                            بس هو باب مهم يعني لازم نذاكره عشان ننجح و نتفوق و نسود
-                                                            الامم و كاس الامم و كل الحمم اللي في البركان اللي كان 
-                                                            من زمان بتاع عدنان و سابه لعجمان و اخوه الجبان وقف يتفرج
-                                                            ساكتان
-                                                        </p>
-                                                    </div>
-                                                    <h3>الباب الثاني</h3>
-                                                    <div>
-                                                        <p>يتكلم هذا الباب عن البتاع ده اسمه ايه الله اعلم والله 
-                                                            بس هو باب مهم يعني لازم نذاكره عشان ننجح و نتفوق و نسود
-                                                            الامم و كاس الامم و كل الحمم اللي في البركان اللي كان 
-                                                            من زمان بتاع عدنان و سابه لعجمان و اخوه الجبان وقف يتفرج
-                                                            ساكتان</p>
-                                                    </div>
-                                                    <h3>الباب الثالث</h3>
-                                                    <div>
-                                                        <p>يتكلم هذا الباب عن البتاع ده اسمه ايه الله اعلم والله 
-                                                            بس هو باب مهم يعني لازم نذاكره عشان ننجح و نتفوق و نسود
-                                                            الامم و كاس الامم و كل الحمم اللي في البركان اللي كان 
-                                                            من زمان بتاع عدنان و سابه لعجمان و اخوه الجبان وقف يتفرج
-                                                            ساكتان</p>
-                                                        <ul>
-                                                        <li>قال يعني النقطة دي مهمة</li>
-                                                        <li>دي بقى اهم</li>
-                                                        <li>اقول ايه بس</li>
-                                                        </ul>
-                                                    </div>
+                                                    @php($i = 1)
+                                                    @foreach($course->content as $content)
+                                                        <h3>الباب رقم {{ $i }} </h3>
+                                                        <div>
+                                                            <p>{{ $content['description'] }}</p>
+                                                        </div>
+                                                        @php($i++)
+                                                    @endforeach
+
+
                                                 </div>
                                             </section>
                                             </div>
@@ -207,14 +181,14 @@
                                         </article>
                                     </div>
                                 </div>
-                            </div>     
+                            </div>
                         <!-- /.container-fluid -->
                         </div>
                     </div>
                     @include('footer')
                 </div>
             </div>
-        
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="{{url('vendor/jquery/jquery.min.js')}}"></script>
