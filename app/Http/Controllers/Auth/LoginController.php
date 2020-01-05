@@ -46,6 +46,12 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         // try to save center in session
-        Session(['center_id' => Auth::user()->centers->first()->id]);
+        if(Auth::user()->center){
+            // user has already created a center
+            Session(['center_id' => Auth::user()->center->id]);
+        }else {
+            // redirect user to centers.create
+            return redirect('centers/create');
+        }
     }
 }

@@ -29,6 +29,7 @@ class StudentController extends Controller
     public function index()
     {
 
+
 //        $this->authorize('viewAny',Student::class);
         $center = Center::findOrFail(Session('center_id'));
         $students = Student::allStudents($center);
@@ -62,6 +63,7 @@ class StudentController extends Controller
     {
         //check if user has rights to view create_student_form
 //        $this->authorize('create',Student::class);
+//        dd(Session('center_id'));
         $student = new Student();
         return view('students.studentCreate',compact('student'));
     }
