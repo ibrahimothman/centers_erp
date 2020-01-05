@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Center;
+use App\Course;
 use App\Student;
 use App\Test;
 use App\TestGroup;
@@ -55,19 +56,18 @@ class CourseEnrollmentController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        //CourseGroupStudents::Create($this->getValidation($request));
-//        if(request()->ajax()){
-//            $stu_name = request()->get('stu_name');
-//            $course_id = request()->get('course_id');
-//            $group_id = request()->get('group_id');
-//        }
+//        dd($request->all());
+        if(request()->ajax()){
+            $student_id = request()->get('student_id');
+            $course_id = request()->get('course_id');
+            $group_id = request()->get('group_id');
+        }
 
-//        Student::where('nameAr',$stu_name)->first()->courses()->syncWithoutDetaching($group_id);
-//        return 'student has successfully enrolled in this course';
-//        if($this->checkCourseEnrollmentValidation($stu_name,$course_id)){
-//            return 'student has already enrolled in this test';
-//        }
+        if($this->checkCourseEnrollmentValidation($student_id,$course_id)){
+            return response('student has already enrolled in this course');
+        }
+        Student::findOrFail($student_id)->courses()->syncWithoutDetaching($group_id);
+        return response('student has successfully enrolled in this course');
 //            else{
 //                Student::where('nameEn',$stu_name)->courses()->syncWithoutDetaching($group_id);
 //                return 'student has successfully enrolled in this test';
@@ -77,13 +77,12 @@ class CourseEnrollmentController extends Controller
     }
 
     // check if a students has already enrolled in a test or not
-    public function checkCourseEnrollmentValidation($stu_name, $course_id){
+    public function checkCourseEnrollmentValidation($student_id, $course_id){
         $groups =  Course::findOrFail($course_id)->groups;
         foreach ($groups as $group){
-            if($group->joiners->contains($stu_name)){
+            if($group->joiners->contains($student_id)){
                 return true;
             }
-
         }
         return false;
     }
