@@ -81,7 +81,6 @@
                     <label for="validationCustom01"> اسم الامتحان </label>
 
                         <select class="form-control "  placeholder="اختار الامتحان" id="testselector" name="test" required>
-                          <option value="0">اختار الامتحان</option>
                                 @foreach($tests as $test)
                                     <option value={{$test->id}}>{{$test->name}}</option>
                                 @endforeach
@@ -115,19 +114,7 @@
         <div></div>
     </div>
 
-{{--    <div class="col-md-6 form-group">--}}
-{{--        <label >اسم الطالب</label>--}}
-{{--        <select  class="form-control "  placeholder="اختار طالب" id="stud" name="std" required>--}}
-{{--            <option value='0'>اختر طالب</option>--}}
-{{--            @foreach($students as $student)--}}
-{{--                <option value={{ $student->id }}>{{ $student->nameAr}}</option>--}}
-{{--            @endforeach--}}
-{{--        </select>--}}
-{{--        <span id="stuselector_error"></span>--}}
 
-
-
-{{--    </div>--}}
 </div>
 
         <!--test-name-->
@@ -204,6 +191,7 @@
 
         $(document).ready(function(){
 
+            getGroupsDate($('#testselector').val());
             var student_id = 0;
 
             $('#student-id').keyup(function () {
@@ -248,14 +236,18 @@
             });
 
             $('#testselector').change(function() {
-                var test = $(this).val();
+                var test_id = $(this).val();
+                if(test_id != 0) getGroupsDate(test_id);
+
+            });
+
+            function getGroupsDate(test_id){
                 $('#time').empty();
                 $('#time').append('<option value="0">اختر ميعادا</option>');
-                if ($(this).val() != "") {
                     $.ajax({
                         url: "/get_test_groups",
                         method: "GET",
-                        data: {test: test, _token: "{{ csrf_token() }}"},
+                        data: {test: test_id, _token: "{{ csrf_token() }}"},
                         dataType: "json",
                         success: function (data) {
                             // console.log(data);
@@ -270,9 +262,8 @@
                         }
 
                     });
-                }
 
-            });
+            }
 
         $(document).on('click', 'form button[type=button]', function(e) {
             // check if all fields if filled
