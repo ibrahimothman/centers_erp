@@ -39,8 +39,6 @@ class TestEnrollmentController extends Controller
      */
     public function create()
     {
-
-        // todo center
         $center = Center::findOrFail(Session('center_id'));
         $students = $center->students;
         $tests = $center->tests;

@@ -201,7 +201,8 @@
         lines+="<div class='col-md-12'>";
         lines+="<div class='card card  card-sh  border-primary p-3 test-view'>";
         lines+= "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";
-        lines+="<span class='float-right'><a href='{{ route('course_enrollment.create') }}' class='btn btn-outline-success'>";
+        lines+="<span class='float-right'>";
+        lines += "<a href="+"'course_enrollment/create?course_id=" +course.id + "'class='btn btn-outline-success'>";
         lines+="<i class='fas fa-plus'></i> <SPAN> اضافه طالب</SPAN> </a></span>";
         lines+="<span  class='float-left'>الطلاب المسجلين على الكورسات "+ course.name +"</span> </div>";
         lines+= "<div class='card-body'>";
@@ -246,7 +247,8 @@
     // if user choose a test to display its group enrollment
     $('#course_selector').change(function () {
         var course_id = $(this).val();
-        getCourseEnrollments(course_id);
+        if(course_id != 0)
+            getCourseEnrollments(course_id);
 
     });
     function getCourseEnrollments(course_id) {

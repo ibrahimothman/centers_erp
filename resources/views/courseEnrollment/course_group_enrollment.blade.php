@@ -48,7 +48,6 @@
                                                 <div class="col-sm-5 form-group">
                                                         <label for="course-id">الدورة</label>
                                                         <select class="form-control" id="course_id" required>
-                                                            <option value="0"> choose</option>
                                                             @foreach($courses as $course)
                                                             <option value="{{$course->id}}">{{$course->name}}</option>
                                                             @endforeach
@@ -61,7 +60,6 @@
                                                     <label >مواعيد الكورس</label>
 
                                                     <select  class="form-control "  placeholder="اختار ميعاد الامتحان" id="time" name="time" required>
-                                                        <option value="0">اختر ميعادا</option>
                                                     </select>
                                                     <span id="dateselector_error"></span>
                                                     <div></div>
@@ -127,6 +125,7 @@
         <script >
             $(document).ready(function() {
                 //alert("/*/**");
+                getGroups_date($('#course_id').val());
                 var student_id = 0;
 
                 // autocomplete students
@@ -175,31 +174,34 @@
                 $('#course_id').change(function() {
                     var course_id = $(this).val();
                     console.log(course_id);
-                    $('#time').empty();
-                    if ($(this).val() != 0) {
-                        $.ajax({
-                            url: "/get_course_groups",
-                            method: "GET",
-                            data: {course_id: course_id, _token: "{{ csrf_token() }}"},
-                            dataType: "json",
-                            success: function (data) {
-                                // console.log(data);
-                                $.each(data, function (i, v) {
-                                    // console.log(group.id)
-                                    $('#time').append('<option value="' + v.id + '">' + v.start_at + '</option>');
-                                });
-
-                            },
-                            error: function (res) {
-                                alert(res.data);
-                            }
-
-                        });
-                    }
+                    if(course_id != 0) getGroups_date(course_id);
 
                 });
 
 
+                function getGroups_date(course_id){
+                    $('#time').empty();
+                    $('#time').append('<option value="0">اختر ميعادا</option>');
+                    $.ajax({
+                        url: "/get_course_groups",
+                        method: "GET",
+                        data: {course_id: course_id, _token: "{{ csrf_token() }}"},
+                        dataType: "json",
+                        success: function (data) {
+                            // console.log(data);
+                            $.each(data, function (i, v) {
+                                // console.log(group.id)
+                                $('#time').append('<option value="' + v.id + '">' + v.start_at + '</option>');
+                            });
+
+                        },
+                        error: function (res) {
+                            alert(res.data);
+                        }
+
+                    });
+
+                }
                 // enroll in course group
 
                 $('#enroll').on('click', function(e) {
@@ -250,6 +252,10 @@
                 $('#course_id').change(function () {
                     $('#course_error').html("<lable class = 'text-success'></lable>");
                     $('#course_error').removeClass('has-error');
+
+                });
+
+                $('#time').change(function () {
                     $('#dateselector_error').html("<lable class = 'text-success'></lable>");
                     $('#dateselector_error').removeClass('has-error');
                 });
