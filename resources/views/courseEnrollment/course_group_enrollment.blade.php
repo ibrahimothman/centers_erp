@@ -48,7 +48,7 @@
                                                 <div class="col-sm-5 form-group">
                                                         <label for="course-id">الدورة</label>
                                                         <select class="form-control" id="course_id" required>
-                                                            <option value="1"> choose</option>
+                                                            <option value="0"> choose</option>
                                                             @foreach($courses as $course)
                                                             <option value="{{$course->id}}">{{$course->name}}</option>
                                                             @endforeach
@@ -61,6 +61,7 @@
                                                     <label >مواعيد الكورس</label>
 
                                                     <select  class="form-control "  placeholder="اختار ميعاد الامتحان" id="time" name="time" required>
+                                                        <option value="0">اختر ميعادا</option>
                                                     </select>
                                                     <span id="dateselector_error"></span>
                                                     <div></div>
@@ -73,7 +74,7 @@
                                                         <label for="student-id"> الطالب</label>
                                                         <input type="text"  placeholder="اسم الطالب" class="form-control" id="student-id" required>
                                                         <div class="list-gpfrm-list" id="studentsList"></div>
-                                                        <span id="test_student-id_error"></span>
+                                                        <span id="stuselector_error"></span>
                                                             <div></div>
                                                     </div>
                                                     <div class="col-sm-2 form-group align-end">
@@ -126,7 +127,7 @@
         <script >
             $(document).ready(function() {
                 //alert("/*/**");
-                var student_id;
+                var student_id = 0;
 
                 // autocomplete students
                 $('#student-id').keyup(function () {
@@ -175,8 +176,7 @@
                     var course_id = $(this).val();
                     console.log(course_id);
                     $('#time').empty();
-                    $('#time').append('<option value="0">اختر ميعادا</option>');
-                    if ($(this).val() !== "") {
+                    if ($(this).val() != 0) {
                         $.ajax({
                             url: "/get_course_groups",
                             method: "GET",
@@ -206,8 +206,9 @@
                     // check if all fields if filled
                     var course_id = $('#course_id').val();
                     var group_id = $('#time').val();
+                    var student_input = $('#student-id').val();
                     console.log(course_id+" / "+group_id+" / "+student_id);
-                    if(course_id !== 0 && group_id !==0 && student_id !== 0) {
+                    if(course_id != 0 && group_id != 0 && student_input ) {
                         // remove errors
                         $('#course_error').html("<lable class = 'text-success'></lable>");
                         $('#course_error').removeClass('has-error');
@@ -231,12 +232,13 @@
                     if(course_id == 0) {
                         $('#course_error').html("<lable class = 'text-danger'>choose a test</lable>");
                         $('#course_error').addClass('has-error');
+
                     }
                     if(group_id == 0) {
                         $('#dateselector_error').html("<lable class = 'text-danger'>choose a date</lable>");
                         $('#dateselector_error').addClass('has-error');
                     }
-                    if(student_id == 0) {
+                    if(!student_input) {
                         $('#stuselector_error').html("<lable class = 'text-danger'>choose a students</lable>");
                         $('#stuselector_error').addClass('has-error');
                     }
@@ -245,15 +247,13 @@
 
                 });
 
-                $('#course_error').change(function () {
+                $('#course_id').change(function () {
                     $('#course_error').html("<lable class = 'text-success'></lable>");
                     $('#course_error').removeClass('has-error');
-                });
-
-                $('#time').change(function () {
                     $('#dateselector_error').html("<lable class = 'text-success'></lable>");
                     $('#dateselector_error').removeClass('has-error');
                 });
+
 
                 $('#student-id').change(function () {
                     $('#stuselector_error').html("<lable class = 'text-success'></lable>");
