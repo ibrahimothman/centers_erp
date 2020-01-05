@@ -55,15 +55,16 @@ class CourseEnrollmentController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         //CourseGroupStudents::Create($this->getValidation($request));
-        if(request()->ajax()){
-            $stu_name = request()->get('stu_name');
-            $course_id = request()->get('course_id');
-            $group_id = request()->get('group_id');
-        }
+//        if(request()->ajax()){
+//            $stu_name = request()->get('stu_name');
+//            $course_id = request()->get('course_id');
+//            $group_id = request()->get('group_id');
+//        }
 
-        Student::where('nameAr',$stu_name)->first()->courses()->syncWithoutDetaching($group_id);
-        return 'student has successfully enrolled in this course';
+//        Student::where('nameAr',$stu_name)->first()->courses()->syncWithoutDetaching($group_id);
+//        return 'student has successfully enrolled in this course';
 //        if($this->checkCourseEnrollmentValidation($stu_name,$course_id)){
 //            return 'student has already enrolled in this test';
 //        }
