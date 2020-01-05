@@ -38,6 +38,7 @@ class SideBarLinks
             self::$baseUrl.'courses' => 'عرض/تعديل بيانات الكورسات',
             self::$baseUrl.'course_groups/create' => 'تسجيل مواعيد الكورسات',
             self::$baseUrl.'course_enrollment/create' => 'تسجيل الطلاب علي الكورسات',
+            self::$baseUrl.'course_enrollment' => 'عرض الطلاب المسجلين',
         ];
     }
 

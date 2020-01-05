@@ -60,7 +60,10 @@ Route::resource('courses','CoursesController');
 Route::resource('course_groups','CourseGroupController');
 Route::get('/get_course_groups','CourseGroupController@getCourseGroups');
 Route::resource('course_enrollment','CourseEnrollmentController');
+Route::get('get_course_enrollments','CourseEnrollmentController@getCourseEnrollments');
 Route::resource('rooms','RoomsController');
+
+
 // -------------------instructor----------------
 Route::resource('instructor','InstructorsController');
 //-------------------- jobs ---------------------

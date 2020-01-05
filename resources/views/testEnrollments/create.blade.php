@@ -202,13 +202,85 @@
 
     <script>
 
+        $(document).ready(function(){
+
+            var student_id = 0;
+
+            $('#student-id').keyup(function () {
+                var query=$(this).val();
+                console.log(query);
+                if (query===""){
+                    $('#studentsList').html("");
+                    return;
+                }
+                $.ajax({
+                    url: "/search_student_by_name",
+                    method: "GET",
+                    data: {query:query, _token: "{{ csrf_token() }}"},
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        $('#studentsList').show();
+                        var output='<ul class="dropdown-menu" style="display:block; position:relative">';
+
+                        $.each(data, function (i, v) {
+                            console.log(i+" --> "+v.nameAr);
+                            output+=" <li value="+ v.id +"><a href=''>"+v.nameAr+"</a></li>"
+
+                        });
+                        output += '</ul>';
+                        $("#studentsList").fadeIn();
+                        $("#studentsList").html(output);
+
+                    },
+                    error: function (res) {
+                        alert(res.data);
+                    }
+
+                });
+            });
+
+            $(document).on('click', 'li', function(){
+                student_id = $(this).val();
+                $('#student-id').val($(this).text());
+                $('#studentsList').fadeOut();
+                return false;
+            });
+
+            $('#testselector').change(function() {
+                var test = $(this).val();
+                $('#time').empty();
+                $('#time').append('<option value="0">اختر ميعادا</option>');
+                if ($(this).val() != "") {
+                    $.ajax({
+                        url: "/get_test_groups",
+                        method: "GET",
+                        data: {test: test, _token: "{{ csrf_token() }}"},
+                        dataType: "json",
+                        success: function (data) {
+                            // console.log(data);
+                            $.each(data, function (i, v) {
+                                // console.log(group.id)
+                                $('#time').append('<option value="' + v.id + '">' + v.group_date + '</option>');
+                            });
+
+                        },
+                        error: function (res) {
+                            alert(res.data);
+                        }
+
+                    });
+                }
+
+            });
+
         $(document).on('click', 'form button[type=button]', function(e) {
             // check if all fields if filled
             var test_id = $('#testselector').val();
             var group_id = $('#time').val();
-            var stu_id = $('#student-id').val();
+            var student_input = $('#student-id').val();
 
-            if(test_id !== 0 && group_id !==0 && stu_name !== 0) {
+            if(test_id !== 0 && group_id !==0 && student_input) {
                 // remove errors
                 $('#testselector_error').html("<lable class = 'text-success'></lable>");
                 $('#testselector_error').removeClass('has-error');
@@ -221,7 +293,7 @@
                 $.ajax({
                    url : '{{ route('test-enrollments.store') }}',
                     method : 'post',
-                    data : {stu_id : stu_id, test_id : test_id,group_id : group_id, _token: "{{csrf_token()}}"},
+                    data : {stu_id : student_id, test_id : test_id,group_id : group_id, _token: "{{csrf_token()}}"},
                     success : function (res) {
                         alert(res);
                     }
@@ -237,7 +309,7 @@
                     $('#dateselector_error').html("<lable class = 'text-danger'>choose a date</lable>");
                     $('#dateselector_error').addClass('has-error');
                 }
-                if(stu_id == 0) {
+                if(!student_input) {
                     $('#stuselector_error').html("<lable class = 'text-danger'>choose a students</lable>");
                     $('#stuselector_error').addClass('has-error');
                 }
@@ -261,68 +333,9 @@
             $('#stuselector_error').removeClass('has-error');
         });
 
-        $(document).ready(function(){
 
-            $('#student-id').keyup(function () {
-                var query=$(this).val();
-                console.log(query);
-                if (query===""){
-                    $('#studentsList').html("");
-                    return;
-                }
-                $.ajax({
-                    url: "/search_student_by_name",
-                    method: "GET",
-                    data: {query:query, _token: "{{ csrf_token() }}"},
-                    dataType: "json",
-                    success: function (data) {
-                        console.log(data);
-                        $('#studentsList').show();
-                        var output='<ul class="dropdown-menu" style="display:block; position:relative">';
 
-                        $.each(data, function (i, v) {
-                            console.log(i+" --> "+v.nameAr);
-                            output+=" <li><a href=''>"+v.nameAr+"</a></li>"
 
-                        });
-                        output += '</ul>';
-                        $("#studentsList").fadeIn();
-                        $("#studentsList").html(output);
-
-                    },
-                    error: function (res) {
-                        alert(res.data);
-                    }
-
-                });
-            });
-
-            $('#testselector').change(function() {
-                var test = $(this).val();
-                $('#time').empty();
-                $('#time').append('<option value="0">اختر ميعادا</option>');
-                if ($(this).val() !== "") {
-                $.ajax({
-                    url: "/get_test_groups",
-                    method: "GET",
-                    data: {test: test, _token: "{{ csrf_token() }}"},
-                    dataType: "json",
-                    success: function (data) {
-                        // console.log(data);
-                        $.each(data, function (i, v) {
-                            // console.log(group.id)
-                            $('#time').append('<option value="' + v.id + '">' + v.group_date + '</option>');
-                        });
-
-                    },
-                    error: function (res) {
-                        alert(res.data);
-                    }
-
-                });
-            }
-
-            });
         });
     </script>
 

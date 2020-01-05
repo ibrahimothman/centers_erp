@@ -24,7 +24,10 @@ class CourseEnrollmentController extends Controller
      */
     public function index()
     {
-        return view("courseEnrollment.course_group_show_students");
+
+        $center = Center::findOrFail(Session('center_id'));
+        $courses = $center->courses;
+        return view("courseEnrollment.course_group_show_students", compact('courses'));
     }
 
     /**
@@ -138,5 +141,21 @@ class CourseEnrollmentController extends Controller
         "student_id"=>"required",
         "group_id"=>"required"
         ]);
+    }
+
+    public function getCourseEnrollments()
+    {
+
+        if(request()->ajax()){
+            $course_id = request()->get('course_id');
+        }
+        $center = Center::findOrFail(Session('center_id'));
+        $course = $center->courses()->with('groups')->findOrFail($course_id);
+        foreach ($course->groups as $group){
+            $group->joiners;
+        }
+
+        return $course ;
+
     }
 }
