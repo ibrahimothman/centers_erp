@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
+    <link href="{{url('css/sb-admin-rtl.css')}}" rel="stylesheet">
     <link href="{{url('employee')}}" rel="stylesheet">
     <link
         rel="stylesheet"
@@ -166,9 +167,9 @@
                                         </div></hr><br>
                                         <p>تاريخ الاضافه : {{$student->created_at}}</p>
 
-                                        @can('update',$student)
-                                            <a href="{{ route('students.edit', ['student' => $student]) }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> تعديل الملف الشخصى  </a>
-                                        @endcan
+
+                                        <a href="{{ route('students.edit', ['student' => $student]) }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> تعديل الملف الشخصى  </a>
+
                                         <br>
                                         <div class="card  border-info mb-3 user-course">
                                             <div class="card-header">courses <i class="fa fa-link fa-1x"></i></div>
@@ -281,9 +282,9 @@
 
                                                             <td>العنوان</td>
                                                             <td colspan="2">
-                                                                <span>{{$student->state}} - </span>
-                                                                <span>ا{{$student->city}} - </span>
-                                                                <span>{{$student->address}}</span>
+                                                                <span>{{$student->address->state}} - </span>
+                                                                <span>ا{{$student->address->city}} - </span>
+                                                                <span>{{$student->address->address}}</span>
                                                         </tr>
 
                                                         <tr>

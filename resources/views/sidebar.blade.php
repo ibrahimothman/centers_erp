@@ -33,7 +33,7 @@
     </li>
 
     <!-- tests -->
-    <li class="nav-item {{str_contains(Request::url(),'tests' )? 'active' : ''}}"  >
+    <li class="nav-item {{str_contains(Request::url(),'test' )? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#testCollapse" aria-expanded="true" aria-controls="testCollapse">
             <i class="fas fa-fw fa-wrench"></i>
             <span>الامتحانات</span>
@@ -50,7 +50,7 @@
     </li>
 
     <!-- courses -->
-    <li class="nav-item {{str_contains(Request::url(),'courses' )? 'active' : ''}}"  >
+    <li class="nav-item {{str_contains(Request::url(),'course' )? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#courseCollapse" aria-expanded="true" aria-controls="courseCollapse">
             <i class="fas fa-fw fa-wrench"></i>
             <span>الكورسات</span>

@@ -31,7 +31,7 @@
 <script src="{{url('js/jquery.min.js')}}"></script>
 </head>
 
-<body id="page-top">a
+<body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -185,7 +185,7 @@
 <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
 <!-- Custom scripts for alwl pages-->
-<script src="{{url('employee')}}"></script>
+{{--<script src="{{url('employee')}}"></script>--}}
 
     <script>
 
