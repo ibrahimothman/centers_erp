@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCentersTable extends Migration
+class CreateTimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class CreateCentersTable extends Migration
      */
     public function up()
     {
-        Schema::create('centers', function (Blueprint $table) {
+        Schema::create('times', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('manager_name');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
-
+            $table->unsignedSmallInteger('day');
+            $table->unsignedSmallInteger('begin');
+            $table->unsignedSmallInteger('end');
+            $table->unsignedSmallInteger('busy')->default(1); // 1 -> busy , 0 -> free
             $table->timestamps();
-
         });
     }
 
@@ -34,6 +30,6 @@ class CreateCentersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('centers');
+        Schema::dropIfExists('times');
     }
 }
