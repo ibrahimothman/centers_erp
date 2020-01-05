@@ -55,7 +55,7 @@
             <i class="fas fa-fw fa-wrench"></i>
             <span>الكورسات</span>
         </a>
-        <div id="courseCollapse" class="{{str_contains(Request::url(),'courses' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="courseCollapse" class="{{str_contains(Request::url(),'course' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
 
                 @foreach(\App\helper\SideBarLinks::courseLinks() as $linkKey => $linkValue)
