@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\Course;
+use App\CourseGroup;
 use App\Student;
 use App\Test;
 use App\TestGroup;
@@ -131,8 +132,15 @@ class CourseEnrollmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
+//        dd(request()->all());
+        $course_group_id = request('course_group_id');
+        $student_id = request('student_id');
+
+        CourseGroup::findOrFail($course_group_id)->joiners()->detach($student_id);
+        return response('successfully deleted');
+
 
     }
 
