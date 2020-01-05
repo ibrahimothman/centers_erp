@@ -7,15 +7,15 @@ namespace App\QueryFilter;
 use App\Course;
 use Closure;
 
-class CourseId
+class ById
 {
     public function handle($request, Closure $next)
     {
-        if(! request()->has('course_id')){
+        if(! request()->has('id')){
             return $next(...$request);
         }
         $builder = $next(...$request);
-        return $builder->where('id', request('course_id'));
+        return $builder->where('id', request('id'));
     }
 
 }

@@ -41,7 +41,7 @@ class TestEnrollmentController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $students = $center->students;
-        $tests = $center->tests;
+        $tests = Test::allTests($center);
 
         return view('testEnrollments.create')
             ->with('students',$students)

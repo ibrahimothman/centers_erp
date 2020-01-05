@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\QueryFilter\CourseId;
+use App\QueryFilter\ById;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
@@ -16,7 +16,7 @@ class Course extends Model
         return app(Pipeline::class)
             ->send($center->courses)
             ->through([
-                CourseId::class
+                ById::class
             ])
             ->thenReturn()
             ->get();

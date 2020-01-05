@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\Course;
 use App\CourseGroup;
-use App\QueryFilter\CourseId;
+use App\QueryFilter\ById;
 use App\Student;
 use App\Test;
 use App\TestGroup;
