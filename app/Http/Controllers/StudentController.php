@@ -184,13 +184,13 @@ class StudentController extends Controller
     private function validateRequest($user_id)
     {
         return request()->validate([
-            'nameAr' => 'required',
-            'nameEn' => 'required',
+            'nameAr' => 'required|unique:students,nameAr,'.$user_id,
+            'nameEn' => 'required|unique:students,nameEn,'.$user_id,
             'email' => 'required|unique:students,email,'.$user_id,
-            'idNumber' => 'required|digits:14',
+            'idNumber' => 'required|digits:14|unique:students,idNumber,'.$user_id,
             'image' => ' required|image|file | max:10000',
             'idImage' => 'sometimes|image|file | max:10000',
-            'phoneNumber' => 'required|regex:/(01)[0-9]{9}/',
+            'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber,'.$user_id,
             //'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
             'passportNumber' => 'sometimes',
             'state' => 'required',
@@ -198,6 +198,7 @@ class StudentController extends Controller
             'address' => 'required',
             'degree' => 'required',
             'faculty' => 'required',
+            'skillCardNumber' => 'required|unique:students,skillCardNumber,'.$user_id,
         ]);
     }
 
