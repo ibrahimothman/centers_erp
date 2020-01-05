@@ -2,19 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Center;
-use App\CourseGroupStudents;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use mysql_xdevapi\Session;
 
-class CourseEnrollmentController extends Controller
+class InstructorsController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +13,8 @@ class CourseEnrollmentController extends Controller
      */
     public function index()
     {
-        return view("courseEnrollment.course_group_show_students");
+        return view("instructor/overview_instructor");
+
     }
 
     /**
@@ -32,18 +24,7 @@ class CourseEnrollmentController extends Controller
      */
     public function create()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $student = $center->students;
-        $center=Center::find(Session("center_id"));
-        $student=$center->students;
-
-        $groups=$center->courses;
-
-
-        return view("courseEnrollment\course_group_enrollment")
-            ->with('students',$student)
-            ->with('groups',$groups);
-
+        return view('instructor/register_instructor');
     }
 
     /**
@@ -54,13 +35,7 @@ class CourseEnrollmentController extends Controller
      */
     public function store(Request $request)
     {
-        //CourseGroupStudents::Create($this->getValidation($request));
-        $courseGroupStudents=new CourseGroupStudents();
-        $courseGroupStudents->student_id=$request->student_id;
-        $courseGroupStudents->group_id=$request->group_id;
-        $courseGroupStudents->save;
 
-        return json_encode("student was enrolled successfully ".$courseGroupStudents->student_id);
     }
 
     /**
@@ -71,7 +46,6 @@ class CourseEnrollmentController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -82,7 +56,7 @@ class CourseEnrollmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("instructor/update_instructor");
     }
 
     /**
@@ -106,12 +80,5 @@ class CourseEnrollmentController extends Controller
     public function destroy($id)
     {
 
-    }
-
-    private function getValidation(Request $request){
-        return $this->validate($request,[
-        "student_id"=>"required",
-        "group_id"=>"required"
-        ]);
     }
 }

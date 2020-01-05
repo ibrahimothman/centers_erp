@@ -20,4 +20,7 @@ class CourseGroup extends Model
     }
 
 
+    public function CourseGroupStudents(){
+        return $this->belongsToMany(CourseGroupStudents::class);
+    }
 }
