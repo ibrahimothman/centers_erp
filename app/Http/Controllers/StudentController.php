@@ -28,8 +28,6 @@ class StudentController extends Controller
      */
     public function index()
     {
-
-
 //        $this->authorize('viewAny',Student::class);
         $center = Center::findOrFail(Session('center_id'));
         $students = Student::allStudents($center);
@@ -62,8 +60,8 @@ class StudentController extends Controller
     public function create()
     {
         //check if user has rights to view create_student_form
-//        $this->authorize('create',Student::class);
-//        dd(Session('center_id'));
+
+        // $this->authorize('create',Student::class);
         $student = new Student();
         return view('students.studentCreate',compact('student'));
     }
@@ -89,6 +87,7 @@ class StudentController extends Controller
         $student = Student::create(array_except($data,['state','city','address']));
 
         // attach student with center
+
         $center->students()->syncWithoutDetaching($student);
 
         // create address
@@ -124,7 +123,6 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
 //        $this->authorize('update',$student);
-
         return view('students.studentEdit',compact('student'));
     }
 
@@ -164,7 +162,6 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-
         //policy
 //        $this->authorize('delete',$student);
         // delete from pivot

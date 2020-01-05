@@ -121,6 +121,7 @@ class CourseGroupController extends Controller
             'course-begin' => 'required|array',
             'course-end' => 'required|array',
             'course-day' => ['required','array',new courseGroupDay],
+
         ]);
     }
 
