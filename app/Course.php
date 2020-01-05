@@ -2,12 +2,25 @@
 
 namespace App;
 
+use App\QueryFilter\CourseId;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 
 class Course extends Model
 {
     public $timestamps = false;
     protected $guarded = [];
+
+    public static function allCourses($center)
+    {
+        return app(Pipeline::class)
+            ->send($center->courses)
+            ->through([
+                CourseId::class
+            ])
+            ->thenReturn()
+            ->get();
+    }
 
     public function courseImages()
     {
