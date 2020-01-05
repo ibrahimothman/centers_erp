@@ -46,6 +46,8 @@ class InstructorsController extends Controller
      */
     public function show($id)
     {
+        return view("instructor/instructor_profile");
+
     }
 
     /**
