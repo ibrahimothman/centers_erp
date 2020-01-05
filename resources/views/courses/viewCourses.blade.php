@@ -66,7 +66,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="main-info">
-                                                    <a href="">{{$course->name}}</a>
+                                                    <a href="{{ route('courses.show',[$course->id]) }}">{{$course->name}}</a>
                                                     <div class="time-and-money">
                                                     <p>{{$course->cost}} <i class="fas fa-coins" style="color:gold"></i> {{$course->duration}} <i class="far fa-clock" style="color:grey"></i></p>
                                                     </div>
