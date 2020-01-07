@@ -42,31 +42,32 @@
                                     </header>
                                     <div class="card-body">
                                         <section class="courses-wrap">
+                                            @php($j = 0)
                                             @foreach($courses as $course)
                                         <article class="course">
-                                                <div id="jj" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                <div id="jj{{$j}}" class="carousel slide" data-ride="carousel" data-interval="false">
                                                     <div class="carousel-inner">
-                                                        <div class="carousel-item active">
-                                                        <img class="d-block w-100" src="https://img-cdn.majarah.com/post/6916910457805268_4055220074079483_711907441144118_4332190458952274_Majarah_tech_.jpg" alt="First slide">
-                                                        </div>
-                                                        <div class="carousel-item">
-                                                        <img class="d-block w-100" src="https://1ook.com/wp-content/uploads/2017/11/php-1.jpg" alt="Second slide">
-                                                        </div>
-                                                        <div class="carousel-item">
-                                                        <img class="d-block w-100" src="https://www.fortunetechnologyindia.com/wp-content/uploads/2019/06/PHP_1_1.jpg" alt="Third slide">
-                                                        </div>
+                                                        @php($i = 0)
+                                                        @foreach($course->images as $image)
+                                                            <div class="carousel-item {{$i == 0 ? 'active' : ''}}">
+                                                                <img class="d-block w-100" src="/uploads/courses/{{ $image->url }}" alt="First slide">
+                                                            </div>
+                                                            @php($i++)
+                                                        @endforeach
+
                                                     </div>
-                                                    <a class="carousel-control-prev" href="#jj" role="button" data-slide="prev">
+
+                                                    <a class="carousel-control-prev" href="#jj{{ $j }}" role="button" data-slide="prev">
                                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                         <span class="sr-only">Previous</span>
                                                     </a>
-                                                    <a class="carousel-control-next" href="#jj" role="button" data-slide="next">
+                                                    <a class="carousel-control-next" href="#jj{{ $j }}" role="button" data-slide="next">
                                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                         <span class="sr-only">Next</span>
                                                     </a>
                                                 </div>
                                                 <div class="main-info">
-                                                    <a href="">{{$course->name}}</a>
+                                                    <a href="{{ route('courses.show',[$course->id]) }}">{{$course->name}}</a>
                                                     <div class="time-and-money">
                                                     <p>{{$course->cost}} <i class="fas fa-coins" style="color:gold"></i> {{$course->duration}} <i class="far fa-clock" style="color:grey"></i></p>
                                                     </div>
@@ -75,14 +76,17 @@
                                                     <p class="about">{{$course->description}}</p>
                                                    </div>
                                                    <div class="view-course-action-buttons">
-                                                       <button type="button" class="btn btn-primary btn-sm">تعديل</button>
-                                                       <form action="courses/{{$course->id}}" method="post">
-                                                        @csrf
+                                                       <td class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}">تعديل</a></td>
+{{--                                                       <button  type="button" class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}"></a> تعديل</button>--}}
+                                                       <form action="{{ route('courses.destroy',[$course->id]) }}" method="post">
+                                                           @csrf
+                                                           @method('delete')
                                                            <input type="hidden" name="_method" value="delete" />
-                                                       <button id="delete" type="submit" class="btn btn-danger btn-sm">حذف</button>                                                       </form>
+                                                       <button  type="submit" class="btn btn-danger btn-sm">حذف</button>                                                       </form>
 
                                                    </div>
                                             </article>
+                                                @php($j++)
                                                 @endforeach
 
                                         </section>
@@ -112,7 +116,6 @@
         <script src="{{url('js/sb-admin-2.min.js')}}"></script>
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
         <script>
-            // $('.carousel').carousel()
 
 
         </script>

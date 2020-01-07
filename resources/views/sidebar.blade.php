@@ -22,7 +22,7 @@
             <i class="fas fa-users-cog"></i>
             <span>الطلاب</span>
         </a>
-        <div id="studentCollapse" class="{{str_contains(Request::url(),'students') ? "collapse show" : "collapse"}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="studentCollapse" class="{{str_contains(Request::url(),'students') ? "collapse show" : 'collapse'}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 @foreach(\App\helper\SideBarLinks::studentLinks() as $linkKey => $linkValue)
                     <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
@@ -33,7 +33,7 @@
     </li>
 
     <!-- tests -->
-    <li class="nav-item {{str_contains(Request::url(),'tests' )? 'active' : ''}}"  >
+    <li class="nav-item {{str_contains(Request::url(),'test' )? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#testCollapse" aria-expanded="true" aria-controls="testCollapse">
             <i class="fas fa-fw fa-wrench"></i>
             <span>الامتحانات</span>
@@ -50,12 +50,12 @@
     </li>
 
     <!-- courses -->
-    <li class="nav-item {{str_contains(Request::url(),'courses' )? 'active' : ''}}"  >
+    <li class="nav-item {{str_contains(Request::url(),'course' )? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#courseCollapse" aria-expanded="true" aria-controls="courseCollapse">
             <i class="fas fa-fw fa-wrench"></i>
             <span>الكورسات</span>
         </a>
-        <div id="courseCollapse" class="{{str_contains(Request::url(),'courses' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="courseCollapse" class="{{str_contains(Request::url(),'course' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
 
                 @foreach(\App\helper\SideBarLinks::courseLinks() as $linkKey => $linkValue)

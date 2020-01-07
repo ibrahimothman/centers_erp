@@ -31,7 +31,7 @@
 <script src="{{url('js/jquery.min.js')}}"></script>
 </head>
 
-<body id="page-top">a
+<body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -81,7 +81,6 @@
                     <label for="validationCustom01"> اسم الامتحان </label>
 
                         <select class="form-control "  placeholder="اختار الامتحان" id="testselector" name="test" required>
-                          <option value="0">اختار الامتحان</option>
                                 @foreach($tests as $test)
                                     <option value={{$test->id}}>{{$test->name}}</option>
                                 @endforeach
@@ -106,20 +105,16 @@
 
 <div class="form-row">
         <!--stu-name-->
+    <div class="col-sm-5 form-group">
+        <label for="student-id"> الطالب</label>
+        <input type="text"  placeholder="اسم الطالب" name="student" class="form-control" id="student-id" required>
+        <div class="list-gpfrm-list" id="studentsList"></div>
 
-    <div class="col-md-6 form-group">
-        <label >اسم الطالب</label>
-        <select  class="form-control "  placeholder="اختار طالب" id="stud" name="std" required>
-            <option value='0'>اختر طالب</option>
-            @foreach($students as $student)
-                <option value={{ $student->id }}>{{ $student->nameAr}}</option>
-            @endforeach
-        </select>
         <span id="stuselector_error"></span>
-
-
-
+        <div></div>
     </div>
+
+
 </div>
 
         <!--test-name-->
@@ -190,18 +185,93 @@
 <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
 <!-- Custom scripts for alwl pages-->
-<script src="{{url('employee')}}"></script>
+{{--<script src="{{url('employee')}}"></script>--}}
 
     <script>
+
+        $(document).ready(function(){
+
+            getGroupsDate($('#testselector').val());
+            var student_id = 0;
+
+            $('#student-id').keyup(function () {
+                var query=$(this).val();
+                console.log(query);
+                if (query===""){
+                    $('#studentsList').html("");
+                    return;
+                }
+                $.ajax({
+                    url: "/search_student_by_name",
+                    method: "GET",
+                    data: {query:query, _token: "{{ csrf_token() }}"},
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        $('#studentsList').show();
+                        var output='<ul class="dropdown-menu" style="display:block; position:relative">';
+
+                        $.each(data, function (i, v) {
+                            console.log(i+" --> "+v.nameAr);
+                            output+=" <li value="+ v.id +"><a href=''>"+v.nameAr+"</a></li>"
+
+                        });
+                        output += '</ul>';
+                        $("#studentsList").fadeIn();
+                        $("#studentsList").html(output);
+
+                    },
+                    error: function (res) {
+                        alert(res.data);
+                    }
+
+                });
+            });
+
+            $(document).on('click', 'li', function(){
+                student_id = $(this).val();
+                $('#student-id').val($(this).text());
+                $('#studentsList').fadeOut();
+                return false;
+            });
+
+            $('#testselector').change(function() {
+                var test_id = $(this).val();
+                if(test_id != 0) getGroupsDate(test_id);
+
+            });
+
+            function getGroupsDate(test_id){
+                $('#time').empty();
+                $('#time').append('<option value="0">اختر ميعادا</option>');
+                    $.ajax({
+                        url: "/get_test_groups",
+                        method: "GET",
+                        data: {test: test_id, _token: "{{ csrf_token() }}"},
+                        dataType: "json",
+                        success: function (data) {
+                            // console.log(data);
+                            $.each(data, function (i, v) {
+                                // console.log(group.id)
+                                $('#time').append('<option value="' + v.id + '">' + v.group_date + '</option>');
+                            });
+
+                        },
+                        error: function (res) {
+                            alert(res.data);
+                        }
+
+                    });
+
+            }
 
         $(document).on('click', 'form button[type=button]', function(e) {
             // check if all fields if filled
             var test_id = $('#testselector').val();
             var group_id = $('#time').val();
-            var stu_name = $('#stud').val();
-            console.log(stu_name);
+            var student_input = $('#student-id').val();
 
-            if(test_id !== 0 && group_id !==0 && stu_name !== 0) {
+            if(test_id !== 0 && group_id !==0 && student_input) {
                 // remove errors
                 $('#testselector_error').html("<lable class = 'text-success'></lable>");
                 $('#testselector_error').removeClass('has-error');
@@ -214,7 +284,7 @@
                 $.ajax({
                    url : '{{ route('test-enrollments.store') }}',
                     method : 'post',
-                    data : {stu_name : stu_name, test_id : test_id,group_id : group_id, _token: "{{csrf_token()}}"},
+                    data : {stu_id : student_id, test_id : test_id,group_id : group_id, _token: "{{csrf_token()}}"},
                     success : function (res) {
                         alert(res);
                     }
@@ -230,7 +300,7 @@
                     $('#dateselector_error').html("<lable class = 'text-danger'>choose a date</lable>");
                     $('#dateselector_error').addClass('has-error');
                 }
-                if(stu_name == 0) {
+                if(!student_input) {
                     $('#stuselector_error').html("<lable class = 'text-danger'>choose a students</lable>");
                     $('#stuselector_error').addClass('has-error');
                 }
@@ -249,38 +319,14 @@
             $('#dateselector_error').removeClass('has-error');
         });
 
-        $('#stud').change(function () {
+        $('#student-id').change(function () {
             $('#stuselector_error').html("<lable class = 'text-success'></lable>");
             $('#stuselector_error').removeClass('has-error');
         });
 
-        $(document).ready(function(){
-            $('#testselector').change(function() {
-                var test = $(this).val();
-                $('#time').empty();
-                $('#time').append('<option value="0">اختر ميعادا</option>');
-                if ($(this).val() !== "") {
-                $.ajax({
-                    url: "/get_test_groups",
-                    method: "GET",
-                    data: {test: test, _token: "{{ csrf_token() }}"},
-                    dataType: "json",
-                    success: function (data) {
-                        // console.log(data);
-                        $.each(data, function (i, v) {
-                            // console.log(group.id)
-                            $('#time').append('<option value="' + v.id + '">' + v.group_date + '</option>');
-                        });
 
-                    },
-                    error: function (res) {
-                        alert(res.data);
-                    }
 
-                });
-            }
 
-            });
         });
     </script>
 

@@ -38,9 +38,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function centers()
+    public function center()
     {
-        return $this->hasMany(Center::class);
+        return $this->hasOne(Center::class);
     }
 
 }

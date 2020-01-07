@@ -15,7 +15,7 @@ class CreateCourseMediaTable extends Migration
     {
         Schema::create('course_media', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->text('src');
+            $table->string('original');
             $table->bigInteger('course_id')->unsigned();
             $table->foreign('course_id')->references('id')->on('courses');
             $table->timestamp('date');

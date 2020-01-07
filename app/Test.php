@@ -2,11 +2,24 @@
 
 namespace App;
 
+use App\QueryFilter\ById;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 
 class Test extends Model
 {
     protected $guarded  = [];
+
+    public static function allTests($center)
+    {
+        return app(Pipeline::class)
+            ->send($center->tests)
+            ->through([
+                ById::class
+            ])
+            ->thenReturn()
+            ->get();
+    }
 
     public function center()
     {

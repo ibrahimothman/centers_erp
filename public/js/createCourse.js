@@ -10,14 +10,14 @@ function addChapterInput(num) {
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon${num}">باب  ${num}</span>
             </div>
-            <input type="text" class="form-control" id="course-chapter-${num}" placeholder="محتوى الدورة " value="" name="course-chapter-${num}" >
+            <input type="text" class="form-control" id="course-chapter-${num}" placeholder="محتوى الدورة " value="" name="course-chapter[]" >
             <span id="test_course-chapter-${num}_error"></span>
             <div></div>
         </div>
     </div>
     <div class="form-row">
         <label for="chapter-${num}-desc">عن باب ${num}</label>
-        <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-${num}-desc" name="chapter-${num}-desc"></textarea>
+        <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-${num}-desc" name="chapter-desc[]"></textarea>
         <div></div>
     </div>`;
 }
@@ -27,7 +27,7 @@ function addDayInCourse(num) {
     <hr/>
     <div class="col-sm-4 form-group">
         <label for="course-day-${num}">يوم ${num}</label>
-        <select class="form-control" id="course-day-${num}" required>
+        <select class="form-control" id="course-day-${num}" name="course-day[]" required>
             <option value="1">السبت</option>
             <option value="2">الاحد</option>
             <option value="3">الاتنين</option>
@@ -41,7 +41,7 @@ function addDayInCourse(num) {
     </div>
     <div class="col-sm-4 form-group">
         <label for="course-day-${num}-begin"> بداية المحاضرة</label>
-        <select class="form-control" id="course-day-${num}-begin" required>
+        <select class="form-control" id="course-day-${num}-begin"  name="course-begin[]" required>
             <option value="7">07:00</option>
             <option value="8">08:00</option>
             <option value="9">09:00</option>
@@ -64,7 +64,7 @@ function addDayInCourse(num) {
     </div>
     <div class="col-sm-4 form-group">
         <label for="course-day-${num}-end"> نهاية المحاضرة</label>
-        <select class="form-control" id="course-day-${num}-end" required>
+        <select class="form-control" id="course-day-${num}-end" name="course-end[]" required>
             <option value="9">09:00</option>
             <option value="10">10:00</option>
             <option value="11">11:00</option>
@@ -98,10 +98,12 @@ $('#add-more').click(function () {
 
 $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(function () {
     let photoNum = this.id[this.id.length - 1];
+    console.log(photoNum);
     $(`#customFile${photoNum}`).trigger('click');
 })
 
 $('#add-more-days').click(function () {
+    console.log('add more days');
     courseDayNom++;
     $(this).parent().parent().parent()
         .append(

@@ -14,7 +14,13 @@ class CourseGroup extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function CourseGroupStudents(){
-        return $this->belongsToMany(CourseGroupStudents::class);
+    public function times()
+    {
+        return $this->belongsToMany(Time::class);
+    }
+
+
+    public function joiners(){
+        return $this->belongsToMany(Student::class);
     }
 }

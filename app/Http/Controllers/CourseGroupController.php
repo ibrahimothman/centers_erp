@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\Course;
+use App\CourseGroup;
+use App\Employee;
+use App\Rules\courseGroupDay;
+use App\Test;
+use App\Time;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Session;
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
 
 class CourseGroupController extends Controller
@@ -19,6 +25,7 @@ class CourseGroupController extends Controller
     public function index()
     {
         //
+//
     }
 
     /**
@@ -41,16 +48,19 @@ class CourseGroupController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
+
         // fetch validated date
         $data = $this->validateCourseGroup();
-        // fetch center from session
+//        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
         // create a new course group
         $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
             'name' => $data['name'],
             'start_at' => $data['start_at'],
         ]);
+
+        // create a new time
+        $this->addGroupTimes($course_group, $data['course-day'],$data['course-begin'],$data['course-end']);
         dd($course_group);
     }
 
@@ -60,10 +70,10 @@ class CourseGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CourseGroup $courseGroup)
     {
         //
-        return view('courseGroups/course_group_students');
+
     }
 
     /**
@@ -102,11 +112,40 @@ class CourseGroupController extends Controller
 
     private function validateCourseGroup()
     {
+
         $today_date = Carbon::now()->toDateString();
         return request()->validate([
             'name' => 'required|unique:course_groups,name',
             'start_at' => "required|date|after_or_equal:$today_date",
             'course' => 'required',
+            'course-begin' => 'required|array',
+            'course-end' => 'required|array',
+            'course-day' => ['required','array',new courseGroupDay],
+
         ]);
+    }
+
+    private function addGroupTimes($course_group, $days, $begins, $ends)
+    {
+//        $times= [];
+        for ($i = 0; $i < count($days); $i++){
+            $time = Time::firstOrCreate([
+                'day' => $days[$i],
+                'begin' => $begins[$i],
+                'end' => $ends[$i],
+                'busy' => 1,
+
+            ]);
+
+//            echo json_encode($times);
+            // attach time to course group
+            $course_group->times()->syncWithoutDetaching($time);
+        }
+    }
+
+    public function getCourseGroups()
+    {
+        $course_id  = request()->get('course_id');
+        return Course::with('groups')->findOrFail($course_id)->groups;
     }
 }

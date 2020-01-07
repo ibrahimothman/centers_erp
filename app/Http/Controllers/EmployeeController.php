@@ -17,7 +17,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-
+//        (Employee::findOrFail(1)->delete();
+//        dd'deleted');
     }
 
     /**

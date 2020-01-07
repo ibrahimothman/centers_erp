@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCourseGroupsStudentsTable extends Migration
+class CreateCourseGroupsTimesPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateCourseGroupsStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_group_student', function (Blueprint $table) {
+        Schema::create('course_group_time', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('student_id');
-            $table->foreign('student_id')
-                ->references('id')
-                ->on('students');
-
+            $table->unsignedBigInteger('time_id');
             $table->unsignedBigInteger('course_group_id');
-            $table->foreign('course_group_id')
-                ->references('id')
-                ->on('course_groups');
             $table->timestamps();
+
+            $table->foreign('time_id')->references('id')
+                ->on('times')->onDelete('cascade');
+
+            $table->foreign('course_group_id')->references('id')
+                ->on('course_groups')->onDelete('cascade');
         });
     }
 
@@ -35,6 +34,6 @@ class CreateCourseGroupsStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_groups_students');
+        Schema::dropIfExists('course_group_time');
     }
 }

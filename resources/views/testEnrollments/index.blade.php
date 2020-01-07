@@ -197,25 +197,26 @@ $('#datatable-responsive').DataTable( {
 
   function displayTestsEnrollments(test) {
       var lines ="";
-          lines += "<div class='row cont-det' >";
-          lines+="<div class='col-md-12'>";
-          lines+="<div class='card card  card-sh  border-primary p-3 test-view'>";
-          lines+= "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";
-          lines+="<span class='float-right'><a href='{{ route('test-enrollments.create') }}' class='btn btn-outline-success'>";
-          lines+="<i class='fas fa-plus'></i> <SPAN> اضافه طالب</SPAN> </a></span>";
+      lines += "<div class='row cont-det' >";
+      lines+="<div class='col-md-12'>";
+      lines+="<div class='card card  card-sh  border-primary p-3 test-view'>";
+      lines+= "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";
+      lines+="<span class='float-right'>";
+      lines += "<a href="+"'test-enrollments/create?id=" +test.id + "'class='btn btn-outline-success'>";
+      lines+="<i class='fas fa-plus'></i> <SPAN> اضافه طالب</SPAN> </a></span>";
       lines+="<span  class='float-left'>الطلاب المسجلين على امتحان "+ test.name +"</span> </div>";
-          lines+= "<div class='card-body'>";
-          lines+="<table id='datatable-buttons_wrapper' class='table table-striped table-bordered display  hover'>";
-          lines+="<thead>";
-          lines+= "<tr class='w-100'>";
-          lines+= '<th class="w-10">امتحان</th>';
-          lines+= '<th class="w-30">ميعاد الامتحان</th>';
-          lines+='<th class="w-30">رقم الطالب</th>';
-          lines+='<th class="w-30">اسم الطالب</th>';
-          lines+='<th class="w-10"></th>';
-          lines+= '</tr>';
-          lines+= '</thead>';
-          lines+="<tbody>";
+      lines+= "<div class='card-body'>";
+      lines+="<table id='datatable-buttons_wrapper' class='table table-striped table-bordered display  hover'>";
+      lines+="<thead>";
+      lines+= "<tr class='w-100'>";
+      lines+= '<th class="w-10">امتحان</th>';
+      lines+= '<th class="w-30">ميعاد الامتحان</th>';
+      lines+='<th class="w-30">رقم الطالب</th>';
+      lines+='<th class="w-30">اسم الطالب</th>';
+      lines+='<th class="w-10"></th>';
+      lines+= '</tr>';
+      lines+= '</thead>';
+      lines+="<tbody>";
 
       test.groups.forEach(function (group) {
           console.log('group '+group.id);
@@ -225,7 +226,7 @@ $('#datatable-responsive').DataTable( {
               lines += "<td>"+ group.group_date +"</td>";
               lines += "<td>" + student.id + "</td>";
               lines += "<td>" + student.nameAr + "</td>";
-              lines += "<td><button onclick='deleteEnrollment("+ student.pivot.student_id +","+ student.pivot.test_group_id +");'  class='btn btn-outline-danger  btn-sm '><i class='fas fa-trash-alt'></i> </button></td>";
+              lines += "<td><button onclick='deleteEnrollment("+ student.id +","+ group.id +","+ test.id +");'  class='btn btn-outline-danger  btn-sm '><i class='fas fa-trash-alt'></i> </button></td>";
               lines += "</tr>";
           });
       });
@@ -266,7 +267,7 @@ function getTestEnrollments(test_id) {
     });
 }
 
-    function deleteEnrollment(student_id, test_group_id) {
+    function deleteEnrollment(student_id, test_group_id, test_id) {
         console.log(student_id+','+test_group_id);
         $.ajax({
             url:'/delete-test-enrollments',
@@ -275,7 +276,8 @@ function getTestEnrollments(test_id) {
 
             success: function (data) {
                 // console.log(data);
-                window.location = 'test-enrollments';
+                getTestEnrollments(test_id);
+                // window.location = 'test-enrollments';
             }
         });
     }
