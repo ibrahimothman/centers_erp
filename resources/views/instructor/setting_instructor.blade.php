@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+
 
     <title>setting instructor</title>
     <style>
@@ -145,15 +145,17 @@
 
                                 </div>
                             </div>
+
                             <div class="form-row form-group">
                                 <div class="col-2 ">العنوان</div>
 
                                 <div class="col-10">
-                                            <textarea name="address" placeholder="ادخل العنوان " rows="2"
-                                                      class="form-control" value=" "></textarea>
+                                    <textarea name="address" placeholder="ادخل العنوان " rows="2"
+                                              class="form-control" value=" "></textarea>
                                 </div>
                                 <hr>
                             </div>
+
                             <div class="form-row form-group">
                                 <div class="col-2 ">نبذه عن</div>
 
@@ -173,8 +175,10 @@
                                 </div>
                             </div>
                             <br>
+
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -189,7 +193,6 @@
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-
 
 </body>
 </html>
