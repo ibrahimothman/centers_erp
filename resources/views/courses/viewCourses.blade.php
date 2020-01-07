@@ -42,9 +42,10 @@
                                     </header>
                                     <div class="card-body">
                                         <section class="courses-wrap">
+                                            @php($j = 0)
                                             @foreach($courses as $course)
                                         <article class="course">
-                                                <div id="jj" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                <div id="jj{{$j}}" class="carousel slide" data-ride="carousel" data-interval="false">
                                                     <div class="carousel-inner">
                                                         @php($i = 0)
                                                         @foreach($course->images as $image)
@@ -56,11 +57,11 @@
 
                                                     </div>
 
-                                                    <a class="carousel-control-prev" href="#jj" role="button" data-slide="prev">
+                                                    <a class="carousel-control-prev" href="#jj{{ $j }}" role="button" data-slide="prev">
                                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                         <span class="sr-only">Previous</span>
                                                     </a>
-                                                    <a class="carousel-control-next" href="#jj" role="button" data-slide="next">
+                                                    <a class="carousel-control-next" href="#jj{{ $j }}" role="button" data-slide="next">
                                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                         <span class="sr-only">Next</span>
                                                     </a>
@@ -75,14 +76,17 @@
                                                     <p class="about">{{$course->description}}</p>
                                                    </div>
                                                    <div class="view-course-action-buttons">
-                                                       <button type="button" class="btn btn-primary btn-sm">تعديل</button>
-                                                       <form action="courses/{{$course->id}}" method="post">
-                                                        @csrf
+                                                       <td class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}">تعديل</a></td>
+{{--                                                       <button  type="button" class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}"></a> تعديل</button>--}}
+                                                       <form action="{{ route('courses.destroy',[$course->id]) }}" method="post">
+                                                           @csrf
+                                                           @method('delete')
                                                            <input type="hidden" name="_method" value="delete" />
-                                                       <button id="delete" type="submit" class="btn btn-danger btn-sm">حذف</button>                                                       </form>
+                                                       <button  type="submit" class="btn btn-danger btn-sm">حذف</button>                                                       </form>
 
                                                    </div>
                                             </article>
+                                                @php($j++)
                                                 @endforeach
 
                                         </section>
@@ -112,7 +116,6 @@
         <script src="{{url('js/sb-admin-2.min.js')}}"></script>
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
         <script>
-            // $('.carousel').carousel()
 
 
         </script>

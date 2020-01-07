@@ -40,12 +40,18 @@
                                             <div id="course-header" class="carousel slide course-header" data-ride="carousel" data-interval="false">
                                                 <div class="carousel-inner">
                                                     @php($i = 0)
-                                                    @foreach($course->images as $image)
-                                                        <div class="carousel-item {{$i == 0 ? 'active' : ''}}">
-                                                            <img class="d-block w-100" src="/uploads/courses/{{ $image->url }}" alt="First slide">
+                                                    @if($course->images->isEmpty())
+                                                        <div class="carousel-item active" >
+                                                            <img class="d-block w-100" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="First slide">
                                                         </div>
-                                                        @php($i++)
-                                                    @endforeach
+                                                    @else
+                                                        @foreach($course->images as $image)
+                                                            <div class="carousel-item {{$i == 0 ? 'active' : ''}}">
+                                                                <img class="d-block w-100" src="/uploads/courses/{{ $image->url }}" alt="First slide">
+                                                            </div>
+                                                            @php($i++)
+                                                        @endforeach
+                                                     @endif
 
                                                 </div>
                                                 <a class="carousel-control-prev" href="#course-header" role="button" data-slide="prev">
@@ -90,32 +96,13 @@
                                                 <div class="course-teachers">
                                                     <div class="teacher">
                                                         <img src="https://i.pinimg.com/originals/1a/2b/60/1a2b603573771c3fe4bed74198cc5c88.jpg" alt="">
-                                                        <p>د.عماد</p>
+                                                        <a href="#">{{ $course->instructor->name }}</a>
                                                     </div>
-                                                    <div class="teacher">
-                                                        <img src="https://i.pinimg.com/originals/1a/2b/60/1a2b603573771c3fe4bed74198cc5c88.jpg" alt="">
-                                                        <p>د.عماد</p>
-                                                    </div>
-                                                    <div class="teacher">
-                                                        <img src="https://i.pinimg.com/originals/1a/2b/60/1a2b603573771c3fe4bed74198cc5c88.jpg" alt="">
-                                                        <p>د.عماد</p>
-                                                    </div>
-                                                    <div class="teacher">
-                                                        <img src="https://i.pinimg.com/originals/1a/2b/60/1a2b603573771c3fe4bed74198cc5c88.jpg" alt="">
-                                                        <p>د.عماد</p>
-                                                    </div>
-                                                    <div class="teacher">
-                                                        <img src="https://i.pinimg.com/originals/1a/2b/60/1a2b603573771c3fe4bed74198cc5c88.jpg" alt="">
-                                                        <p>د.عماد</p>
-                                                    </div>
-                                                    <div class="teacher">
-                                                        <img src="https://i.pinimg.com/originals/1a/2b/60/1a2b603573771c3fe4bed74198cc5c88.jpg" alt="">
-                                                        <p>د.عماد</p>
-                                                    </div>
+
                                                 </div>
                                                 <div id="accordion">
                                                     @php($i = 1)
-                                                    @foreach($course->content as $content)
+                                                    @foreach(json_decode($course->content, true) as $content)
                                                         <h3>الباب رقم {{ $i }} </h3>
                                                         <div>
                                                             <p>{{ $content['description'] }}</p>

@@ -40,17 +40,17 @@
                                         </div>
                                     </header>
                                     <div class="card-body">
-                                        <form enctype="multipart/form-data" id="form">
+                                        <form enctype="multipart/form-data" id="form" action="{{ route("courses.store") }}" method="post">
                                             @csrf
                                             <div class="form-row image-upload">
                                                 <div class="col-sm-8">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile1" src="" onchange="readURL(this, 1);" required>
-                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile2" src="" onchange="readURL(this, 2);">
-                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile3" src="" onchange="readURL(this, 3);">
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile1" src="{{ old('image.0') }}" onchange="readURL(this, 1);" >
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile2" src="{{ old('image.0') }}" onchange="readURL(this, 2);">
+                                                        <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile3" src="{{ old('image.0') }}" onchange="readURL(this, 3);">
                                                         <input type="file" accept="video/*" class="custom-file-input" name="video" id="customFile4" src="" onchange="readURL(this, 4);">
                                                         <label class="custom-file-label" for="customFile">صوره الدورة</label>
-                                                        <div></div>
+                                                        <div>{{ $errors->first('image[]') }}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -58,6 +58,7 @@
                                                 <div class="course-image-input">
                                                     <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
                                                     <p>صورة الدورة</p>
+
                                                 </div>
                                                 <div class="course-image-input">
                                                     <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
@@ -98,27 +99,24 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" id="basic-addon1">باب  1</span>
                                                         </div>
-                                                        <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="{{old('course-chapter-1')}}" name="course-chapter-1" required>
+                                                        <input type="text" class="form-control" id="course-chapter-1" placeholder="محتوى الدورة " value="{{old('course-chapter.0')}}" name="course-chapter[]" required>
                                                         <span id="test_course-chapter-1_error"></span>
-                                                        <div></div>
+                                                        <div>{{ $errors->first('course-chapter[]') }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
                                                     <label for="chapter-1-desc">عن باب 1</label>
-                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc" name="chapter-1-desc">{{old('')}}</textarea>
-                                                    <div></div>
+                                                    <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc" name="chapter-desc[]">{{old('chapter-desc.0')}}</textarea>
+                                                    <div>{{ $errors->first('chapter-desc[]') }}</div>
                                                 </div>
                                             </fieldset>
                                             <div class="form-row">
                                                         <div class="col-sm-6 form-group">
                                                         <label for="instructor-name">اسم المدرس</label>
-{{--                                                        <select class="form-control" id="instructor-name" multiple >--}}
-{{--                                                            @foreach($instructors as $instructor)--}}
-{{--                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
-                                                        <select class="form-control" id="instructor-name" multiple >
-{{--                                                            @foreach($instructors as $instructor)--}}
-{{--                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
-{{--                                                            @endforeach--}}
+                                                        <select class="form-control" id="instructor-name"  name="instructor_id" multiple required >
+                                                            @foreach($instructors as $instructor)
+                                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
+                                                            @endforeach
                                                         </select>
                                                             <span id="test_course-teacher_error"></span>
                                                             <div></div>
@@ -139,7 +137,7 @@
                                                 </div>
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-group-cost">تكلفة الدورة المجمعة</label>
-                                                    <input type="number" min='0' class="form-control"  id="course-group-cost" placeholder="تكلفة الدورة المجمعة " value="{{ old('course-group-cost') }}" name="course-group-cost" required>
+                                                    <input type="number" min='0' class="form-control"  id="course-group-cost" placeholder="تكلفة الدورة المجمعة " value="{{ old('teamCost') }}" name="teamCost" required>
                                                     <span id="test_course-group-cost_error"></span>
                                                     <div></div>
                                                 </div>
@@ -211,71 +209,72 @@
         <script >
             $(document).ready(function() {
 
-                $("#form").submit(function(e) {
-                    e.preventDefault();
-                    var courseName = $("#course-name").val();
-                    var courseCode = $("#course-id").val();
-                    var courseDescription = $("#course-description").val();
-                    var courseDuration = $("#course-duration").val();
-                    var courseCost = $("#course-cost").val();
-                    var teamCost = $("#course-group-cost").val();
-                    // var instructorId = $("#instructor-name").val();
-                    var courseChapter = $("#course-chapter-1").val();
-                    var chapterDesc = $("#chapter-1-desc").val();
-
-                    let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
-                    let chapterDescription = [...$('fieldset textarea')];
-                    let chapterName = [...$('fieldset input')];
-
-                    chapterName.forEach(function(chapter,chapterIndex){
-                        let chapterInfo = {};
-                        chapterInfo.name = chapterName[chapterIndex].value;
-                        chapterInfo.description = chapterDescription[chapterIndex].value;
-
-                        chapters.push(chapterInfo);
-                    });
-
-
-                    var form_data = new FormData(this);
-                    form_data.append('content',JSON.stringify(chapters));
-                    form_data.append('name',courseName);
-                    form_data.append('code',courseCode);
-                    form_data.append('duration',courseDuration);
-                    form_data.append('cost',courseCost);
-                    form_data.append('teamCost',teamCost);
-                    form_data.append('instructor_id',1);
-
-
-                    $.ajax({
-                        url: "/courses",
-                        method: "POST",
-                        data : form_data,
-                        processData : false,
-                        contentType : false,
-                        dataType: "json",
-                        success: function (data) {
-                            // console.log(data);
-                            document.getElementById('form').reset();
-                            alert(data);
-                        },
-                        error: function(error) {
-                            if(error.status == 422) {// validation
-
-                                // loop through the errors and show them to the user
-                                $.each(error.responseJSON.errors, function (i, error) {
-                                    // error is message
-                                    // i is element's name
-                                    console.log(error);
-                                    var element = $(document).find('[name="'+i+'"]');
-                                    element.after($('<span style="color: red;">'+error[0]+'</span>'));
-                                });
-                            }
-
-                        }
-
-                    });
-
-                });
+                // $("#form").submit(function(e) {
+                //     e.preventDefault();
+                //     var courseName = $("#course-name").val();
+                //     var courseCode = $("#course-id").val();
+                //     var courseDescription = $("#course-description").val();
+                //     var courseDuration = $("#course-duration").val();
+                //     var courseCost = $("#course-cost").val();
+                //     var teamCost = $("#course-group-cost").val();
+                //     // var instructorId = $("#instructor-name").val();
+                //     var courseChapter = $("#course-chapter-1").val();
+                //     var chapterDesc = $("#chapter-1-desc").val();
+                //
+                //     let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+                //     let chapterDescription = [...$('fieldset textarea')];
+                //     let chapterName = [...$('fieldset input')];
+                //
+                //     chapterName.forEach(function(chapter,chapterIndex){
+                //         let chapterInfo = {};
+                //         chapterInfo.name = chapterName[chapterIndex].value;
+                //         chapterInfo.description = chapterDescription[chapterIndex].value;
+                //
+                //         chapters.push(chapterInfo);
+                //     });
+                //
+                //
+                //     var form_data = new FormData(this);
+                //     form_data.append('content',JSON.stringify(chapters));
+                //     form_data.append('name',courseName);
+                //     form_data.append('code',courseCode);
+                //     form_data.append('duration',courseDuration);
+                //     form_data.append('cost',courseCost);
+                //     form_data.append('teamCost',teamCost);
+                //     form_data.append('instructor_id',1);
+                //
+                //
+                //
+                //     $.ajax({
+                //         url: "/courses",
+                //         method: "POST",
+                //         data : form_data,
+                //         processData : false,
+                //         contentType : false,
+                //         dataType: "json",
+                //         success: function (data) {
+                //             // console.log(data);
+                //             document.getElementById('form').reset();
+                //             alert(data);
+                //         },
+                //         error: function(error) {
+                //             if(error.status == 422) {// validation
+                //
+                //                 // loop through the errors and show them to the user
+                //                 $.each(error.responseJSON.errors, function (i, error) {
+                //                     // error is message
+                //                     // i is element's name
+                //                     console.log(error);
+                //                     var element = $(document).find('[name="'+i+'"]');
+                //                     element.after($('<span style="color: red;">'+error[0]+'</span>'));
+                //                 });
+                //             }
+                //
+                //         }
+                //
+                //     });
+                //
+                // });
             });
 
         </script>
