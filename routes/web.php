@@ -58,8 +58,12 @@ Route::get('test-statements-preview/{statement}/{student}','TestStatementControl
 //----------- courses ---------------
 Route::resource('courses','CoursesController');
 Route::resource('course_groups','CourseGroupController');
-Route::resource('course_enrollment','CourseEntrollmentsController');
+Route::get('/get_course_groups','CourseGroupController@getCourseGroups');
+Route::resource('course_enrollment','CourseEnrollmentController');
+Route::get('get_course_enrollments','CourseEnrollmentController@getCourseEnrollments');
 Route::resource('rooms','RoomsController');
+
+
 // -------------------instructor----------------
 Route::resource('instructor','InstructorsController');
 //-------------------- jobs ---------------------
