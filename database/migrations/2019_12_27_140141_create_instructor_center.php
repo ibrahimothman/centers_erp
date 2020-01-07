@@ -15,17 +15,15 @@ class CreateInstructorCenter extends Migration
     {
         Schema::create('center_instructor', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('instructor_id');
-            $table->foreign('instructor_id')
+            $table->unsignedBigInteger('instructorId');
+            $table->foreign('instructorId')
                 ->references("id")
-                ->on("instructors")
-                ->onDelete('cascade');
+                ->on("instructor");
 
-            $table->unsignedBigInteger('center_id');
-            $table->foreign('center_id')
+            $table->unsignedBigInteger('centerId');
+            $table->foreign('centerId')
                 ->references("id")
-                ->on("centers")
-                ->onDelete('cascade');
+                ->on("centers");
 
             $table->timestamps();
         });
