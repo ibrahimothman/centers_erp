@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
-
     <title>register instructor</title>
     <style>
         body {
@@ -85,21 +83,23 @@
 
 
                             <div class=" form-row form-group">
-
-                                <label>البريد الالكترونى </label>
-                                <span class="required">*</span>
-                                <input type="text" name="email" placeholder="ادخل البريد الالكترونى "
-                                       class="form-control" value="">
+                                <div class="col">
+                                    <label>البريد الالكترونى </label>
+                                    <span class="required">*</span>
+                                    <input type="text" name="email" placeholder="ادخل البريد الالكترونى "
+                                           class="form-control" value="">
+                                </div>
                             </div>
 
 
                             <div class=" form-row form-group">
-                                <div class="col-sm-6 ">
+                                <div class="col-sm-6  ">
                                     <label>رقم التليفون المحمول</label>
                                     <input type="text" name="phoneNumber"
-                                           placeholder="ادخل رقم التليفون المحمول" class="form-control" value="">
+                                           placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="">
                                 </div>
-                                <div class="col-sm-6 ">
+
+                                <div class="col-sm-6">
                                     <label>تليفون اخر </label>
                                     <input type="text" name="phoneNumberSec" placeholder="ادخل رقم التليفون" value=""
                                            class="form-control">
@@ -107,25 +107,25 @@
 
                             </div>
 
-                            <div class=" form-row">
-                                <div class="col-sm-6">
+                            <div class=" form-row form-group">
+                                <div class="col-sm-6 ">
                                     <label>الرقم القومى </label>
                                     <input type="text" name="idNumber" value=""
-                                           placeholder="ادخل الرقم القومى " class="form-control">
+                                           placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
                                 </div>
                                 <div class="col-sm-6">
                                     <label>رقم جواز السفر</label>
                                     <input name="passportNum" type="text" placeholder="ادخل رقم جواز السفر" value=""
-                                           class="form-control">
+                                           class="form-control ">
                                 </div>
                             </div>
-                            <br>
 
 
                             <div class="form-row form-group">
                                 <div class="col-sm-6  ">
                                     <label>البلد </label>
-                                    <input name="state" type="text" placeholder="البلد" value="" class="form-control">
+                                    <input name="state" type="text" placeholder="البلد" value=""
+                                           class="form-control mb-1">
                                 </div>
 
                                 <div class="col-sm-6  ">
@@ -147,13 +147,13 @@
                             <div class="form-row form-group ">
                                 <div class="col-sm-6 ">
                                     <label>المؤهل الدراسى </label>
-                                    <select name="degree" class="form-control">
+                                    <select name="degree" class="form-control  mb-1">
                                         <option>طالب</option>
                                         <option>خريج</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 ">
-                                    <label for="">الكليه </label>
+                                    <label>الكليه </label>
                                     <select name="faculty" class="form-control">
                                         <option>هندسه</option>
                                         <option>تجاره</option>
@@ -189,7 +189,7 @@
                                     <p>صورة البطاقه</p>
                                 </div>
                                 <div class="course-image-input">
-                                    <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                    <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                          alt="your image"/>
                                     <p>الصوره الشخصيه</p>
                                 </div>
@@ -221,7 +221,6 @@
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-
 <!-- photo js-->
 
 

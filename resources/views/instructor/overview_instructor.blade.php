@@ -32,6 +32,7 @@
             font-family: 'GESSTwoLight-Light' !important;
         }
 
+        /*-- //card --*/
 
         .g1 {
             position: relative;
@@ -81,17 +82,13 @@
             }
         }
 
-        /*-- //clients --*/
-
 
     </style>
 </head>
 <body class="bg-light">
-
-
 <!-- Begin Page Content -->
 <section>
-
+    <!-- data -->
     <div class="container  text-right" style="background-color: #fff;">
         <br>
         <div class="row">
@@ -129,18 +126,15 @@
             </div>
         </div>
         <hr>
+        <!-- start courses -->
         <div class="row">
             <div class="col">
                 <h2 class="text-primary">الكورسات </h2>
             </div>
         </div>
-
-        <!-- motion -->
-
-        <!-- dishes -->
-
+        <!-- start cards  -->
+        <!-- first card  -->
         <div class="spldishes-grids">
-            <!-- Owl-Carousel -->
             <div class="row pb-4">
                 <div class="col-lg-4">
                     <div id="owl-demo" class="owl-carousel text-center agileinfo-gallery-row">
@@ -158,8 +152,9 @@
                     </div>
                     <br>
                 </div>
+                <!-- end card -->
                 <div class="col-lg-4">
-                    <div id="owl-demo" class="owl-carousel text-center agileinfo-gallery-row">
+                    <div class="owl-carousel text-center agileinfo-gallery-row">
                         <div class="item g1">
                             <img src="\img\working-in-a-group-6224.jpg" style="height:400px;width: 100%"
                                  class="lazyOwl">
@@ -176,7 +171,7 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div id="owl-demo" class="owl-carousel text-center agileinfo-gallery-row"
+                    <div class="owl-carousel text-center agileinfo-gallery-row"
                          style="padding-bottom: 30px;">
                         <div class="item g1">
                             <img src="\img\working-in-a-group-6224.jpg" style="height:400px;width: 100%;  ">
@@ -196,7 +191,7 @@
 
             <div class="row pb-4">
                 <div class="col-lg-4">
-                    <div id="owl-demo" class="owl-carousel text-center agileinfo-gallery-row">
+                    <div class="owl-carousel text-center agileinfo-gallery-row">
                         <div class="item g1">
                             <img src="\img\man-in-black-holding-phone-618613.jpg" style="height:400px;width: 100%"
                                  class="lazyOwl">
@@ -212,7 +207,7 @@
                     <br>
                 </div>
                 <div class="col-lg-4">
-                    <div id="owl-demo" class="owl-carousel text-center agileinfo-gallery-row">
+                    <div class="owl-carousel text-center agileinfo-gallery-row">
                         <div class="item g1">
                             <img src="\img\man-in-black-holding-phone-618613.jpg" style="height:400px;width: 100%"
                                  class="lazyOwl">
@@ -228,8 +223,9 @@
                     <br>
                 </div>
 
+
                 <div class="col-lg-4">
-                    <div id="owl-demo" class="owl-carousel text-center agileinfo-gallery-row">
+                    <div class="owl-carousel text-center agileinfo-gallery-row">
                         <div class="item g1">
                             <img src="\img\man-in-black-holding-phone-618613.jpg" style="height:400px;width: 100%;  ">
                             <div class="agile-dish-caption">
@@ -244,16 +240,12 @@
                 </div>
                 <br>
             </div>
-
-
         </div>
-
+        <!-- end cards  -->
     </div>
 
-
+    <!-- end container  -->
 </section>
-<!-- //dishes -->
-
 <script type="text/javascipt" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/jquery-3.3.1.min.js"></script>
