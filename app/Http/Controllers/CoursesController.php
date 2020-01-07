@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\Course;
+use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 use Illuminate\Support\Str;
@@ -12,11 +14,7 @@ use mysql_xdevapi\Session;
 
 class CoursesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -26,136 +24,112 @@ class CoursesController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $courses=$center->courses;
-
-//        dd(Course::with('images')->get());
         return view('courses/viewCourses')
             ->with('courses',$courses);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $center=Center::findOrFail(Session("center_id"));
-        $instructors= $center->instructor;
-        //echo Auth::user()->center->courses;
+        $instructors= $center->instructors;
         return view('courses/addCourse')
             ->with('instructors',$instructors);
 
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-//        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
-        $course = $center->courses()->create($this->getValidation($request));
+        $course = $center->courses()->create($this->getValidatedCourseData(''));
         $this->uploadImages($request,$course);
-        return json_encode( "course added successfully");
-
+        return redirect('courses');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Course $course)
     {
-//        return view('courses/viewCourses', compact('courses'));
-//        echo json_encode($course);
         return view('courses/courseDetails', compact('course'));
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Course $course)
     {
-//        $instructors= Auth::user()->center->instructor;
         return view('courses/updateCourse')
             ->with("course",$course);
-
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Course $course)
     {
         // todo handle validation with ajax
-        $course->update($this->getValidation($request));
-        return json_encode( "course successfully updated ");
+        // delete all course's image from db and files
+        if($request->hasFile('image')) {
+            Image::deleteImages("/uploads/courses", $course->images);
+            $course->images()->delete();
+        }
+
+        $course->update($this->getValidatedCourseData($course->id));
+        $this->uploadImages($request,$course);
+        return redirect("courses/$course->id");
 
     }
 
     public function uploadImages(Request $request, $course){
 
-        // create courses dir if not existed
-        if(! is_dir(public_path('/uploads/courses'))){
-            mkdir(public_path('/uploads/courses'));
+        if($request->hasFile('image')) {
+            $images = Collection::wrap($request->file('image'));
+            foreach ($images as $image) {
+
+                $original = Image::saveImage('/uploads/courses', $image);
+                $course->images()->create([
+                    'url' => $original
+                ]);
+            }
         }
-
-        // fetch images from request and wrap them into collection
-        $images = Collection::wrap($request->file('image'));
-
-        // loop through images, move it to courses dir then save it into db
-        $images->each(function ($image) use ($course){
-            $basename = Str::random();
-            $original = $basename.'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('/uploads/courses'), $original);
-            $course->images()->create([
-                'url' => $original
-            ]);
-        });
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(Course $course)
     {
-        Course::where('id',$id)->delete();
+        //delete course's images from file
+        Image::deleteImages('/uploads/courses',$course->images);
+        //delete course's images from db
+        $course->images()->delete();
+//        //delete course
+        $course->delete();
         return redirect("/courses");
     }
 
-    private function getValidation(Request $request){
-
-        $request['instructor_id']=(int)$request['instructor_id']['0'];
-        $request['center_id']=Session('center_id');
-        return $this->validate($request,
-            ['name'=>'required|unique:courses,name',
-                'code'=>'required|unique:courses,code',
+    private function getValidatedCourseData($course_id){
+        $data = request()->validate([
+                'name'=>'required|unique:courses,name,'.$course_id,
+                'code'=>'required|unique:courses,code,'.$course_id,
                 'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',
                 'instructor_id'=>'required',
-                'center_id'=>'required',
                 'description'=>'required',
-                'content'=>'required'
+                'course-chapter'=>'required|array',
+                'chapter-desc'=>'required|array'
             ]);
 
+        $data['content'] = $this->setContent($data['course-chapter'], $data['chapter-desc']);
+        $data = Arr::except($data,['course-chapter','chapter-desc']);
+        return $data;
+
+    }
+
+    private function setContent($course_chapters, $chapters_description){
+        $content = array();
+        for ($i = 0; $i < count($course_chapters); $i++){
+            $temp = array();
+            $temp['name'] = $course_chapters[$i];
+            $temp['description'] = $chapters_description[$i];
+
+            $content[] = $temp;
+        }
+
+        return json_encode($content);
     }
 }

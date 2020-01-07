@@ -11,10 +11,6 @@ class Course extends Model
     public $timestamps = false;
     protected $guarded = [];
 
-    protected $casts = [
-        'content' => 'array'
-    ];
-
     public static function allCourses($center)
     {
         return app(Pipeline::class)
@@ -37,7 +33,7 @@ class Course extends Model
     }
 
     public function instructor(){
-        return $this->belongsToMany(Center::class);
+        return $this->belongsTo(Instructor::class);
     }
 
     public function groups()

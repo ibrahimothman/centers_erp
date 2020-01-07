@@ -142,6 +142,7 @@ class StudentController extends Controller
         $data = $this->validateRequest($student->id);
 
         // create a new student
+        $this->deleteImage($student->image);
         $student->update(array_except($data,['state','city','address']));
 
         // update address
