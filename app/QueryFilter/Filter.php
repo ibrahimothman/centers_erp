@@ -5,15 +5,14 @@ namespace App\QueryFilter;
 
 
 use Closure;
+use Illuminate\Support\Str;
 
 abstract class Filter
 {
     public function handle($request, Closure $next)
     {
-
-//        dd(request('sort_by'));
-        if(! request()->has(class_basename($this))){
-            return $next(...$request);
+        if(! request()->has(str::snake(class_basename($this)))){
+            return $next($request);
         }
 
         $builder = $next(...$request);

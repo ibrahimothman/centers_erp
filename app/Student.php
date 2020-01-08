@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\QueryFilter\Name;
 use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
@@ -17,6 +18,7 @@ class Student extends Model
             ->send($center->students)
             ->through([
                 Sort::class,
+                Name::class
             ])
             ->thenReturn()
             ->get();

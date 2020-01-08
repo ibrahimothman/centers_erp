@@ -46,9 +46,15 @@
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile1" src="" onchange="readURL(this, 1);" >
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile2" src="" onchange="readURL(this, 2);">
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile3" src="" onchange="readURL(this, 3);">
+                                            @php($k = 1)
+                                            @foreach($course->images as $image)
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFil{{$k}}" value="{{$image->url}}" src="" onchange="readURL(this, 1);" >
+
+                                                @php($k++)
+                                            @endforeach
+                                        @for($i = $k; $i <= 3 ; $i++)
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile{{$k}}" src="" onchange="readURL(this, 2);">
+                                            @endfor
                                             <input type="file" accept="video/*" class="custom-file-input" name="video" id="customFile4" src="" onchange="readURL(this, 4);">
                                             <label class="custom-file-label" for="customFile">صوره الدورة</label>
                                             <div></div>
@@ -56,15 +62,17 @@
                                     </div>
                                 </div>
                                 <div class="d-flex  justify-content-center">
+                                    @php($j = 1)
                                     @foreach($course->images as $image)
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded1" src="/uploads/courses/{{$image->url}}" alt="your image"  />
+                                        <div class="course-image-input selected">
+                                            <img id="imageUploaded{{$j}}" src="/uploads/courses/{{$image->url}}" alt="your image"  />
                                             <p>صورة الدورة</p>
                                         </div>
+                                        @php($j++)
                                     @endforeach
-                                    @for($i = 0; $i < 3 - count($course->images); $i++)
+                                    @for($i = $j; $i <= 3 ; $i++)
                                         <div class="course-image-input">
-                                            <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
+                                            <img id="imageUploaded{{$j}}" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="your image" />
                                             <p>صورة الدورة</p>
                                         </div>
                                     @endfor
