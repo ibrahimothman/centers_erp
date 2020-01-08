@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Center;
+use App\QueryFilter\Name;
 use App\QueryFilter\Sort;
 use App\QueryFilter\SortElse;
 use Illuminate\Http\Request;
@@ -29,15 +30,13 @@ class StudentController extends Controller
     public function index()
     {
 //        $this->authorize('viewAny',Student::class);
-        $center = Center::findOrFail(Session('center_id'));
-        $students = Student::allStudents($center);
-        return view('students.all')->with('students',$students);
+        return view('students.all')->with('students',$this->getStudents());
     }
 
-    public function viewAll(){
+    public function getStudents(){
         $center = Center::findOrFail(Session('center_id'));
-        $students = Student::allStudents($center);
-        return response()->json($students);
+        return Student::allStudents($center);
+
     }
 
     /**
@@ -202,18 +201,7 @@ class StudentController extends Controller
 
 
     public function searchByName(){
-        // search for only auth center
-        $center = Center::findOrFail(Session('center_id'));
-        if(request()->ajax()){
-            $query = request()->get('query');
-            if($query != ''){
-                $students = $center->students()->where('nameEn', 'like', '%' . $query . '%')->get();
-            }else{
-                $students = $center->students;
-            }
-
-        }
-        return response()->json($students);
+        return response()->json($this->getStudents());
     }
 
     private function deleteImage($image)

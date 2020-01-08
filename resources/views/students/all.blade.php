@@ -395,24 +395,18 @@
                     var z;
                     for(z = 0; z <3 && z < size; z++,m++){
                         lines += "<div class='card card-sh border-primary mb-3' style='max-width:18rem'>";
-                        lines += "<div class=card-header bg-transparent border-primary>"+response[m].nameAr+"</div>";
+                        lines += "<div class='card-header bg-transparent border-primary'>"+response[m].nameAr+"</div>";
                         lines += "<div class='card-body'";
                         lines += "<p class='card-text'>";
-                        if(response[m].picture == null){
-                            lines +=  "<img src='/img/user.png' alt='' class='rounded-circle img-profile-contact float-right img-responsive'>";
-
-                        }else{
-                            lines +=  "<img src='"+response[m].picture+"' alt='' class='rounded-circle img-profile-contact float-right img-responsive'>";
-                        }
-
+                        lines +=  "<img src="+"'/uploads/profiles/"+response[m].image+"' alt='' class='rounded-circle img-profile-contact float-right img-responsive'>";
                         lines+= "<ul class='list-unstyled contact-det'>";
-                        lines+=  "<li><i class='fas fa-envelope btn-circle'></i> البريد الالكترونى <br>"+response[m].email+"</li>";
-                        lines+=  "<li> <i class='fa fa-phone btn-circle'></i> التليفون: <span>"+response[m].phoneNumber+"</span> </li>";
-                        lines += "<li class='gray'> تاريخ الاضافه  : "+response[m].created_at+"</li> </ul> </p> </div>";
-                        lines+="<div class='card-footer border-primary'>";
+                        lines+=  "<li><i class='fas fa-envelope btn-circle'></i>البريد الالكترونى<br>"+response[m].email+"</li>";
+                        lines+=  "<li><i class='fa fa-phone btn-circle'></i>التليفون:<span>"+response[m].phoneNumber+"</span></li>";
+                        lines += "<li class='gray'> تاريخ الاضافه  :"+response[m].created_at+"</li></ul></p></div>";
+                        lines+="<form class='card-footer border-primary'>";
                         lines += "<button type='button' onclick='deleteStudent("+response[m].id+")' class='btn btn-success btn-xs'><i class='fas fa-trash-alt'></i> </button>";
-                        lines += "<a href='students/"+response[m].id+ "'class='btn btn-primary btn-xs'><i class='fa fa-user'> </i> الملف الشخصى </a></div>";
-                        lines += "</div>";
+                        lines += " <a href='students/"+response[m].id+ "' class='btn btn-primary btn-xs'><i class='fa fa-user'></i>الملف الشخصي</a></div>";
+                        lines += "</form>";
 
                     }
                     size -= 3;
@@ -448,11 +442,13 @@
     }
 
     function searchForStudents(query = '') {
+        loc = $('<a>', { href: window.location })[0];
+        var data = "name="+query;
         console.log(query);
         $.ajax({
             url:"/search_student_by_name",
             type:'GET',
-            data:{query:query},
+            data:data,
 
             success:function (response) {
                 view(response);
