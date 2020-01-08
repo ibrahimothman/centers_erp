@@ -20,8 +20,8 @@ class Student extends Model
                 Sort::class,
                 Name::class
             ])
-            ->thenReturn()
-            ->get();
+            ->thenReturn();
+
     }
 
     public function profileImage()
