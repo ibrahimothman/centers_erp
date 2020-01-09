@@ -47,18 +47,32 @@ class CoursesController extends Controller
         return redirect('courses');
     }
 
-    public function show(Course $course)
-    {
-        $courses = Course::all();
+//    public function show(Course $course)
+//    {
+//        //$courses = Course::all();
+//
+//
+//
+//        return view('courses/courseDetails')
+//            ->with("course",$course);
+//    }
 
-        return view('courses/courseDetails', compact('course'));
+    public function show( $id)
+    {
+        $course=Course::find($id);
+        $center=Center::find(Session("center_id"));
+        return view('courses/courseDetails')
+            ->with("course",$course)
+            ->with("center",$center);
     }
+
 
     public function edit(Course $course)
     {
         return view('courses/updateCourse')
             ->with("course",$course);
     }
+
 
 
     public function update(Request $request, Course $course)

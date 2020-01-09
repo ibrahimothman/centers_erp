@@ -22,11 +22,6 @@ class CreateCoursesTable extends Migration
             $table->decimal('cost');
             $table->decimal('teamCost');
             $table->longText('content');
-            $table->unsignedBigInteger('instructor_id');
-             $table->foreign('instructor_id')
-                 ->references("id")
-                 ->on("instructors");
-
             $table->unsignedBigInteger('center_id');
              $table->foreign('center_id')
                  ->references("id")

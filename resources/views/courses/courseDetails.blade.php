@@ -25,6 +25,7 @@
             <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
             <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
         </head>
+        @inject('Constants', 'App\helper\Constants')
 
         <body>
             <div id="wrapper">
@@ -69,7 +70,7 @@
                                                     <div class="logistic-element">
                                                         <img src="{{url('img/location.svg')}}" alt="">
                                                         <p>المكان</p>
-                                                        <p>المنصورة الدور التاني</p>
+                                                        <p>{{$center->name}}</p>
                                                     </div>
                                                     <div class="logistic-element">
                                                         <img src="{{url('img/money.svg')}}" alt="">
@@ -79,7 +80,7 @@
                                                     <div class="logistic-element">
                                                         <img src="{{url('img/startdate.svg')}}" alt="">
                                                         <p>المدة</p>
-                                                        <p>{{ $course->duration }}</p>
+                                                        <p>{{ $course->duration }}ساعه </p>
                                                     </div>
                                                 </div>
                                             </section>
@@ -94,11 +95,13 @@
                                                 <h5> المدرسون و المحتوى</h5>
                                                 </header>
                                                 <div class="course-teachers">
+                                                @foreach($course->instructors as $instructor)
                                                     <div class="teacher">
-                                                        <img src="https://i.pinimg.com/originals/1a/2b/60/1a2b603573771c3fe4bed74198cc5c88.jpg" alt="">
-                                                        <a href="#">{{ $course->instructor->name }}</a>
+                                                        <img src="{{$instructor->profile_img==null?$Constants->getInstructorPlaceholderImage():$instructor->profile_img}}" alt="">
+                                                        <a href="#"></a>
                                                     </div>
 
+                                                    @endforeach
                                                 </div>
                                                 <div id="accordion">
                                                     @php($i = 1)
