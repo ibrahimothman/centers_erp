@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\helper\Constants;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -47,7 +48,10 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception->getStatusCode() == 404) {
-        return response()->view('errors/404',[],404);
+            $message=Constants::getDefaultErrorMessage();
+            if ($exception->getMessage()!=null)
+                $message=$exception->getMessage();
+        return response()->view('errors/404',['message'=>$message],404);
     }
         return parent::render($request, $exception);
     }

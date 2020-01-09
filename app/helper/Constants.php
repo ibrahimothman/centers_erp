@@ -20,6 +20,10 @@ private $course_placeholder_image="https://i1.wp.com/alaakriedy.net/wp-content/u
         return $this->course_placeholder_image;
     }
 
+    public static function getDefaultErrorMessage(){
+        return "Oops Something went wrong";
+    }
+
 
 
 
