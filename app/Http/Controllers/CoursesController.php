@@ -64,6 +64,8 @@ class CoursesController extends Controller
     {
         $course=Course::find($id);
         $center=Center::find(Session("center_id"));
+        if ($course==null)
+            abort(404);
         return view('courses/courseDetails')
             ->with("course",$course)
             ->with("center",$center);
