@@ -43,7 +43,7 @@
                                                     @php($i = 0)
                                                     @if($course->images->isEmpty())
                                                         <div class="carousel-item active" >
-                                                            <img class="d-block w-100" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="First slide">
+                                                            <img class="d-block w-100" src="{{$Constants->getCoursePlaceholderImage()}}" alt="First slide">
                                                         </div>
                                                     @else
                                                         @foreach($course->images as $image)
