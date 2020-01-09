@@ -41,8 +41,11 @@ class CoursesController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->get('instructor_id'));
         $center = Center::findOrFail(Session('center_id'));
-        $course = $center->courses()->create($this->getValidatedCourseData(''));
+        $course = $center->courses()
+            ->create($this->getValidatedCourseData(''));
+        $course->instructors()->attach($request->get("instructor_id"));
         $this->uploadImages($request,$course);
         return redirect('courses');
     }
@@ -124,7 +127,6 @@ class CoursesController extends Controller
                 'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',
-                'instructor_id'=>'required',
                 'description'=>'required',
                 'course-chapter'=>'required|array',
                 'chapter-desc'=>'required|array'
