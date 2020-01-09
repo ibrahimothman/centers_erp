@@ -23,10 +23,11 @@
     <div class="agile-info">
         <h3>SORRY</h3>
         <h2>4<img src="/../../../img/confused.gif" alt="image" />4</h2>
-        <p>An error Occurred in the Application And Your Page could not be Served.</p>
+        <p>{{$message}}</p>
         <a href="/">go back</a>
     </div>
 </div>
+
 <div class="footer-w3l">
 
 </div>
