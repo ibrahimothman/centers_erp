@@ -72,8 +72,11 @@ class CoursesController extends Controller
     }
 
 
-    public function edit(Course $course)
+    public function edit($id )
     {
+        $course=Course::find($id);
+        if ($course==null)
+            abort(404,"Course was not found");
         return view('courses/updateCourse')
             ->with("course",$course);
     }
@@ -82,6 +85,7 @@ class CoursesController extends Controller
 
     public function update(Request $request, Course $course)
     {
+
         // todo handle validation with ajax
         // delete all course's image from db and files
         if($request->hasFile('image')) {
