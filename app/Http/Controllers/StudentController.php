@@ -111,7 +111,6 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-
 //        $this->authorize('view',$student);
         return view('students.show',compact('student'));
     }

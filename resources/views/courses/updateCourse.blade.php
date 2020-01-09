@@ -126,7 +126,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="instructor-name">اسم المدرس</label>
                                         <select class="form-control" id="instructor-name" name="instructor_id" multiple >
-                                            <option value="{{ $course->instructor->id }}" selected>{{ $course->instructor->name }}</option>
+                                            <option value="{{ $course->id }}" selected>{{ $course->name }}</option>
 {{--                                        @foreach($course->instructor as $instructor)--}}
 {{--                                            <option {{$instructor->id==$course->instructor_id?"selected":""}} value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
 {{--                                            @endforeach--}}

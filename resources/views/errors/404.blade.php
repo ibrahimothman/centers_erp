@@ -15,6 +15,8 @@
     <link href="//fonts.googleapis.com/css?family=Ropa+Sans:400,400i&amp;subset=latin-ext" rel="stylesheet" />
     <!--//online-fonts -->
 </head>
+
+@inject('Constants',"App\helper\Constants")
 <body background="/../../../img/confused.gif">
 <div class="header">
     <h1>there is nothing here</h1>
@@ -23,7 +25,7 @@
     <div class="agile-info">
         <h3>SORRY</h3>
         <h2>4<img src="/../../../img/confused.gif" alt="image" />4</h2>
-        <p>{{$message}}</p>
+        <p>{{isset($message)?$message:$Constants->getDefaultErrorMessage()}}</p>
         <a href="/">go back</a>
     </div>
 </div>
