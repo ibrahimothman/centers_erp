@@ -46,15 +46,9 @@
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
-                                            @php($k = 1)
-                                            @foreach($course->images as $image)
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFil{{$k}}" value="{{$image->url}}" src="" onchange="readURL(this, 1);" >
-
-                                                @php($k++)
-                                            @endforeach
-                                        @for($i = $k; $i <= 3 ; $i++)
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile{{$k}}" src="" onchange="readURL(this, 2);">
-                                            @endfor
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile1"  src="" onchange="readURL(this, 1);" >
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile2"  src="" onchange="readURL(this, 2);" >
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile3" src="" onchange="readURL(this, 3);">
                                             <input type="file" accept="video/*" class="custom-file-input" name="video" id="customFile4" src="" onchange="readURL(this, 4);">
                                             <label class="custom-file-label" for="customFile">صوره الدورة</label>
                                             <div></div>
