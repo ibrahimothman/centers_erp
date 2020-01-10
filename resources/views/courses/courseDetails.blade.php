@@ -48,7 +48,7 @@
                                                     @else
                                                         @foreach($course->images as $image)
                                                             <div class="carousel-item {{$i == 0 ? 'active' : ''}}">
-                                                                <img class="d-block w-100" src="/uploads/courses/{{ $image->url }}" alt="First slide">
+                                                                <img class="d-block w-100" src="{{ $image->url }}" alt="First slide">
                                                             </div>
                                                             @php($i++)
                                                         @endforeach

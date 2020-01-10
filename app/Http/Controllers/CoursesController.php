@@ -98,7 +98,7 @@ class CoursesController extends Controller
 
                 $original = Image::saveImage('/uploads/courses', $image);
                 $course->images()->create([
-                    'url' => $original
+                    'url' => url("/uploads/courses/".$original)
                 ]);
             }
         }
