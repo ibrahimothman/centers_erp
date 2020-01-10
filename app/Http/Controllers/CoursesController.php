@@ -41,22 +41,37 @@ class CoursesController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->get('instructor_id'));
         $center = Center::findOrFail(Session('center_id'));
-        $course = $center->courses()->create($this->getValidatedCourseData(''));
+        $course = $center->courses()
+            ->create($this->getValidatedCourseData(''));
+        $course->instructors()->attach($request->get("instructor_id"));
         $this->uploadImages($request,$course);
         return redirect('courses');
     }
 
-    public function show(Course $course)
+
+    public function show( $id)
     {
-        return view('courses/courseDetails', compact('course'));
+        $course=Course::find($id);
+        $center=Center::find(Session("center_id"));
+        if ($course==null)
+            abort(404,"Course was not found");
+        return view('courses/courseDetails')
+            ->with("course",$course)
+            ->with("center",$center);
     }
 
-    public function edit(Course $course)
+
+    public function edit($id )
     {
+        $course=Course::find($id);
+        if ($course==null)
+            abort(404,"Course was not found");
         return view('courses/updateCourse')
             ->with("course",$course);
     }
+
 
 
     public function update(Request $request, Course $course)
@@ -109,7 +124,6 @@ class CoursesController extends Controller
                 'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',
-                'instructor_id'=>'required',
                 'description'=>'required',
                 'course-chapter'=>'required|array',
                 'chapter-desc'=>'required|array'
