@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>test-result-add</title>
+<title> تسجيل نتيجه الامتحانات</title>
 
 <!-- Custom fonts for this template-->
 <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -81,7 +81,7 @@
 
 
                                     <div class="form-row col-md-12 ">
-                                        <label for="validationCustom01"> اسم الامتحان </label>
+                                        <label for="testselector"> اسم الامتحان </label>
                                             <select   id="testselector"   class="form-control ">
                                                 <option value="0">select</option>
                                                 @foreach($tests as $test)
