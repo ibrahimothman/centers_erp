@@ -83,7 +83,7 @@
                                     <div class="form-row col-md-12 ">
                                         <label for="validationCustom01"> اسم الامتحان </label>
                                             <select   id="testselector"   class="form-control ">
-                                                <option value="0"></option>
+                                                <option value="0">select</option>
                                                 @foreach($tests as $test)
                                                     <option value="{{ $test->id }}">{{ $test->name }}</option>
                                                 @endforeach
@@ -169,6 +169,8 @@
 <script src="/../../../vendor/datatables/datatables.min.js"></script>
 <!-- Page level custom scripts -->
 <script src="/../../../js/demo/datatables-demo.js"></script>
+<script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
+
 <script>
 
 $('#datatable-responsive').DataTable( {
@@ -230,10 +232,23 @@ function getGroupsStudents(test_id) {
                 type:'post',
                 data:{student_id : studentId, group_id : groupId,result : result, _token: "{{ csrf_token() }}"},
                 success: function (data) {
-                    alert(data);
+                    data=data.replace(/\r?\n|\r/, '');
+                    $.notify(data, {
+                            position:"bottom left",
+                            style: 'successful-process',
+                            className: 'done',
+                            // autoHideDelay: 500000
+                        });
                 }
             })
-        }else alert('الدرجه النهائيه لهذا الامتحان هي '+full_mark);
+        }else{
+            $.notify('الدرجه النهائيه لهذا الامتحان هي '+full_mark, {
+                position:"bottom left",
+                style: 'successful-process',
+                className: 'notDone',
+                // autoHideDelay: 500000
+            });
+        }
     }
 
 
@@ -329,7 +344,7 @@ function getGroupsStudents(test_id) {
         $(function() {
             $('#testselector').change(function(){
 
-                if($(this).val()=="test")
+                if($(this).val()==="test")
            {
                $('.cont-det').show();
            }
@@ -342,6 +357,60 @@ function getGroupsStudents(test_id) {
           });
 
         </script>
+
+<script>
+    $.notify.addStyle('successful-process', {
+        html: `<div>
+                            <span data-notify-text/>
+                            <i class="fas fa-times-circle"
+                            style="
+                                    color:white;
+                                    opacity:0.7;
+                                    position: relative;
+                                    top: 0px;
+                                    left: -28px;
+                                  "
+                            ></i>
+                        </div>`,
+        classes: {
+            base: {
+                "white-space": "nowrap",
+                "background-color": "green",
+                "padding": "15px",
+                "padding-left": "35px",
+                "border-radius": "3px"
+            },
+            done: {
+                "color": "white",
+                "background-color": "#28a745",
+                "font-weight":"bold"
+            },
+            notDone:{
+                "color": "white",
+                "background-color": "#dc3545",
+                "font-weight":"bold"
+            }
+        }
+    });
+
+    $('.btn').click(function(){
+
+        $.notify('تمت العملية بنجاح', {
+            position:"bottom left",
+            style: 'successful-process',
+            className: 'done',
+            // autoHideDelay: 500000
+        });
+
+    });
+
+    // $.notify('فشلت العملية', {
+    // position:"bottom left",
+    // style: 'successful-process',
+    // className: 'notDone',
+    // });
+
+</script>
 
 </body>
 </body>
