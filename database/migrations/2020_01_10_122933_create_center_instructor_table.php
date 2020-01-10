@@ -13,7 +13,7 @@ class CreateCenterInstructorTable extends Migration
      */
     public function up()
     {
-        Schema::create('centers_instructors', function (Blueprint $table) {
+        Schema::create('center_instructor', function (Blueprint $table) {
             $table->unsignedBigInteger('instructor_id');
             $table->foreign('instructor_id')
                 ->references("id")

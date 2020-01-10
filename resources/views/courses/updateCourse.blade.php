@@ -59,7 +59,7 @@
                                     @php($j = 1)
                                     @foreach($course->images as $image)
                                         <div class="course-image-input selected">
-                                            <img id="imageUploaded{{$j}}" src="/uploads/courses/{{$image->url}}" alt="your image"  />
+                                            <img id="imageUploaded{{$j}}" src="{{$image->url}}" alt="your image"  />
                                             <p>صورة الدورة</p>
                                         </div>
                                         @php($j++)
