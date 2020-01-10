@@ -11,6 +11,12 @@ use App\Student;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use phpDocumentor\Reflection\Types\Null_;
+use const http\Client\Curl\AUTH_ANY;
 use mysql_xdevapi\Session;
 
 
@@ -29,6 +35,7 @@ class StudentController extends Controller
      */
     public function index()
     {
+
 //        $this->authorize('viewAny',Student::class);
         return view('students.all')->with('students',$this->getStudents());
     }
@@ -59,6 +66,7 @@ class StudentController extends Controller
     public function create()
     {
         //check if user has rights to view create_student_form
+        //$this->authorize('create',Student::class);
 
         // $this->authorize('create',Student::class);
         $student = new Student();
@@ -76,6 +84,7 @@ class StudentController extends Controller
         // todo : attach student to the center
         // check if user has rights to add a new student
 
+
 //        $this->authorize('create',Student::class);
         $data = $this->validateRequest('');
 
@@ -88,14 +97,6 @@ class StudentController extends Controller
         // attach student with center
 
         $center->students()->syncWithoutDetaching($student);
-
-        // create address
-        $student->address()->create([
-            'state' => $data['state'],
-            'city' => $data['city'],
-            'address' => $data['address'],
-        ]);
-
         return redirect("/students/$student->id");
 
     }
@@ -121,6 +122,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
+
 //        $this->authorize('update',$student);
         return view('students.studentEdit',compact('student'));
     }
@@ -134,6 +136,7 @@ class StudentController extends Controller
      */
     public function update(Student $student)
     {
+
 //        $this->authorize('update',$student);
 
         // todo delete prev image from profiles dir
@@ -163,9 +166,10 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //policy
-//        $this->authorize('delete',$student);
+        $this->authorize('delete',$student);
+
         // delete from pivot
-        $center = Center::findOrFail(Session('center_id'));
+        $center = Auth::user()->center;
         $center->students()->detach($student);
 
         // delete images
@@ -202,6 +206,7 @@ class StudentController extends Controller
 
     public function searchByName(){
         return response()->json($this->getStudents());
+
     }
 
     private function deleteImage($image)

@@ -32,8 +32,8 @@ class Course extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function instructor(){
-        return $this->belongsTo(Instructor::class);
+    public function instructors(){
+        return $this->belongsToMany(Instructor::class);
     }
 
     public function groups()
