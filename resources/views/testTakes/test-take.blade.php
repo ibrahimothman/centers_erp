@@ -169,6 +169,8 @@
 <script src="{{url('vendor/datatables/datatables.min.js')}}"></script>
 <!-- Page level custom scripts -->
 <script src="{{url('js/demo/datatables-demo.js')}}"></script>
+<script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
+
 <script>
     $(document).ready( function () {
         $('#DataTable').DataTable();
@@ -321,7 +323,18 @@
             type:'post',
             data:{student_id : student_id, group_id : group_id, take : take, _token: "{{ csrf_token() }}"},
             success: function (data) {
-                alert(data);
+            data=data.replace(/\r?\n|\r/, '');
+            var className;
+            if (take===1)className='done';
+                    else className='notDone';
+
+            $.notify(data, {
+                    position:"bottom left",
+                    style: 'successful-process',
+                    className: className,
+                    // autoHideDelay: 500000
+                });
+
             }
         })
 
@@ -334,6 +347,12 @@
             data:{group_id : group_id,  _token: "{{ csrf_token() }}"},
             success: function (data) {
                 alert(data);
+                $.notify(data, {
+                    position:"bottom left",
+                    style: 'successful-process',
+                    className: className,
+                    // autoHideDelay: 500000
+                });
                 $('#closeGroupBtn').text('الامتحان مغلق');
 
             }
@@ -341,6 +360,56 @@
     }
 </script>
 
+
+<script>
+    $.notify.addStyle('successful-process', {
+        html: `<div>
+                            <span data-notify-text/>
+                            <i class="fas fa-times-circle"
+                            style="
+                                    color:white;
+                                    opacity:0.7;
+                                    position: relative;
+                                    top: 0px;
+                                    left: -28px;
+                                  "
+                            ></i>
+                        </div>`,
+        classes: {
+            base: {
+                "white-space": "nowrap",
+                "background-color": "green",
+                "padding": "15px",
+                "padding-left": "35px",
+                "border-radius": "3px"
+            },
+            done: {
+                "color": "white",
+                "background-color": "#28a745",
+                "font-weight":"bold"
+            },
+            notDone:{
+                "color": "white",
+                "background-color": "#dc3545",
+                "font-weight":"bold"
+            }
+        }
+    });
+
+    $('.btn').click(function(){
+
+        $.notify('تمت العملية بنجاح', {
+            position:"bottom left",
+            style: 'successful-process',
+            className: 'done',
+            // autoHideDelay: 500000
+        });
+
+    });
+
+
+
+</script>
 
 </body>
 </body>

@@ -86,7 +86,8 @@ class TestTakeController extends Controller
 
         Student::findOrFail($student_id)->testsEnrolling()->updateExistingPivot($group_id,array('take' => $take));
 
-        return 'successfully updated';
+        $take==1?$message="Student take was recorded":$message="Student take was removed";
+        return $message;
 
      }
 
