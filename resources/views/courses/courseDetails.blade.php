@@ -62,7 +62,7 @@
                                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Next</span>
                                                 </a>
-                                                <h4>اسم الدورة</h4>
+                                                <h4>{{ $course->name }}</h4>
                                             </div>
                                             <section class="logistics">
                                                 <div class="course-logistics">
