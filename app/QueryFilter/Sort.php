@@ -3,18 +3,22 @@
 namespace App\QueryFilter;
 use Closure;
 
-class Sort
+class Sort extends Filter
 {
 
-    public function handle($request, Closure $next)
+//    public function handle($request, Closure $next)
+//    {
+//        if(! request()->has('sort')){
+//            return $next($request);
+//        }
+//
+//        $builder = $next(...$request);
+//    }
+
+
+    protected function applyFilter($builder)
     {
-        if(! request()->has('sort')){
-            return $next($request);
-        }
-
-        $builder = $next(...$request);
-        return $builder->orderBy('nameAr',request('sort'))->get();
+        // TODO: Implement applyFilter() method.
+        return $builder->orderBy('nameAr',request('sort'));
     }
-
-
 }
