@@ -96,6 +96,12 @@ class StudentController extends Controller
 
         // attach student with center
 
+        $student->address()->create([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
         $center->students()->syncWithoutDetaching($student);
         return redirect("/students/$student->id");
 
