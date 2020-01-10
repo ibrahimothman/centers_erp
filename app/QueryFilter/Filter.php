@@ -15,7 +15,7 @@ abstract class Filter
             return $next($request);
         }
 
-        $builder = $next($request);
+        $builder = $next(...$request);
         return $this->applyFilter($builder);
     }
     protected abstract function applyFilter($builder);

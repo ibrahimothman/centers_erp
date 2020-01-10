@@ -77,7 +77,7 @@
                                                    </div>
                                                    <div class="view-course-action-buttons">
                                                        <td class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}">تعديل</a></td>
-{{--                                                       <button  type="button" class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}"></a> تعديل</button>--}}
+{{--                                                       <button  type="button" class="btn btn-primary btn-sm"> <a href="courses/{{ $course->id }}/edit"></a> تعديل</button>--}}
                                                        <form action="{{ route('courses.destroy',[$course->id]) }}" method="post">
                                                            @csrf
                                                            @method('delete')
