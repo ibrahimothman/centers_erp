@@ -16,7 +16,7 @@ class Name
             return $next($request);
         }
 
-        $builder = $next(...$request);
+        $builder = $next($request);
         return $builder->where('nameAr','like', '%' . request('name') . '%')
             ->orWhere('nameEn','like', '%' . request('name') . '%')->get();
     }
