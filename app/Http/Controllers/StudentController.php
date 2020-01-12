@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Center;
+use App\helper\Uploader;
 use App\QueryFilter\Name;
 use App\QueryFilter\Sort;
 use App\QueryFilter\SortElse;
@@ -83,6 +84,8 @@ class StudentController extends Controller
     {
         // todo : attach student to the center
         // check if user has rights to add a new student
+        //dd($request->file('image'));
+
 
 
 //        $this->authorize('create',Student::class);
@@ -93,6 +96,10 @@ class StudentController extends Controller
 
         // create a new student
         $student = Student::create(array_except($data,['state','city','address']));
+        $idPicture=$request->file('idPicture');
+        if ($idPicture==null)
+        Uploader::uploadImage($idPicture,Uploader::$public_path);
+
 
         // attach student with center
 
