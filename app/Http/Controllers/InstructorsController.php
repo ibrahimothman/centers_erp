@@ -37,6 +37,7 @@ class InstructorsController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $this->validateRequest('');
 
         // fetch center from session
@@ -105,9 +106,9 @@ class InstructorsController extends Controller
             'email' => 'required',
             'idNumber' => 'required|digits:14',
             'image' => ' nullable|image|file | max:10000',
-            'idImage' => 'sometimes|image|file | max:10000',
+            'idImage' => 'nullable|image|file | max:10000',
             'phoneNumber' => 'required|regex:/(01)[0-9]{9}/',
-            //'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
+            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
             'passportNumber' => 'sometimes',
             'state' => 'required',
             'city' => 'required',
