@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
+use App\Instructor;
 use Illuminate\Http\Request;
 
 class InstructorsController extends Controller
@@ -35,7 +37,20 @@ class InstructorsController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $this->validateRequest('');
 
+        // fetch center from session
+        $center = Center::findOrFail(Session('center_id'));
+
+        $instructor=Instructor::create(array_except($data,['state','city','address']));
+        $instructor->address()->create([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
+        $center->instructors()->syncWithoutDetaching($instructor);
+        return $this->create();
     }
 
     /**
@@ -80,5 +95,23 @@ class InstructorsController extends Controller
     public function destroy($id)
     {
 
+    }
+
+    private function validateRequest($user_id)
+    {
+        return request()->validate([
+            'nameAr' => 'required',
+            'nameEn' => 'required',
+            'email' => 'required',
+            'idNumber' => 'required|digits:14',
+            'image' => ' nullable|image|file | max:10000',
+            'idImage' => 'sometimes|image|file | max:10000',
+            'phoneNumber' => 'required|regex:/(01)[0-9]{9}/',
+            //'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
+            'passportNumber' => 'sometimes',
+            'state' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+        ]);
     }
 }
