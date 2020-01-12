@@ -64,7 +64,7 @@
 </head>
 <body class="bg-light">
 
-
+{{$errors}}
 <!-- Begin Page Content -->
 <section>
 
@@ -78,19 +78,20 @@
                         تسجيل بيانات المدرب
                     </div>
                     <div class="card-body">
-                        <form action="" method="post">
+                        <form action="{{url('/instructor')}}" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-row form-group">
                                 <div class="col-sm-12 ">
                                     <label>الاسم باللغه العربيه</label>
                                     <span class="required">*</span>
-                                    <input type="text" class="form-control" name=""
+                                    <input type="text" class="form-control" name="nameAr"
                                            placeholder="بالاسم باللغه العربيه " value="">
                                 </div>
                             </div>
                             <div class="form-row form-group">
                                 <div class="col">
                                     <label>الاسم باللغه الانجليزيه</label>
-                                    <input type="text" name="" class="form-control"
+                                    <input type="text" name="nameEn" class="form-control"
                                            placeholder="الاسم باللغه الانجليزيه" value="">
                                 </div>
                             </div>
@@ -136,7 +137,7 @@
                             <div class=" form-row  form-group">
                                 <div class="col-6">
                                     <div class='file-input'>
-                                        <input type='file'>
+                                        <input name="image"  type='file'>
                                         <span class='button'>Browse</span>
                                         <span class='label'>الصوره الشخصيه</span>
                                     </div>
@@ -144,7 +145,7 @@
 
                                 <div class="col-6 ">
                                     <div class='file-input'>
-                                        <input type='file'>
+                                        <input name="idImage" type='file'>
                                         <span class='button'>Browse</span>
                                         <span class='label'>صوره البطاقه</span>
                                     </div>
@@ -174,30 +175,7 @@
                             </div>
 
 
-                            <div class="form-row form-group ">
-                                <div class="col-sm-6 ">
-                                    <label>المؤهل الدراسى </label>
-                                    <select name="degree" class="form-control">
-                                        <option>طالب</option>
-                                        <option>خريج</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label for="">الكليه </label>
-                                    <select name="faculty" class="form-control">
-                                        <option>هندسه</option>
-                                        <option>تجاره</option>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class=" form-row  form-group">
-                                <label>نبذه عن</label>
-                                <span class="required">*</span>
-
-                                <textarea name="about" placeholder="نبذه عن " rows="3"
-                                          class="form-control" style="  overflow-scrolling:auto; "></textarea>
-                            </div>
                             <div class="form-row save">
                                 <div class="col-sm-6 mx-auto text-center">
                                     <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
@@ -225,9 +203,9 @@
 <!-- script-->
 <script type="text/javascipt" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<script src="{{url('js/jquery-3.3.1.min.js')}}"></script>
+<script src="/../../../js/popper.min.js"></script>
+<script src="/../../../js/bootstrap.min.js"></script>
 
 
 </body>

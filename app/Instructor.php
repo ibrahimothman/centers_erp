@@ -18,4 +18,9 @@ class Instructor extends Model
     {
         return $this->belongsToMany(Course::class);
     }
+    public function address()
+    {
+        return $this->morphOne(Address::class,'addressable');
+    }
+
 }
