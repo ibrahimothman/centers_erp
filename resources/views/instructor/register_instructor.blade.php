@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
-    <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    @include('library')
     <title>register instructor</title>
     <style>
         body {
             direction: rtl;
-            margin-top: 50px;
             font-family: 'GESSTwoLight-Light' !important;
         }
 
@@ -52,6 +48,10 @@
 
 
 <!-- Begin Page Content -->
+<div id="wrapper">
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+        @include('operationBar')
 <section>
 
     <div class="container-fluid   text-right">
@@ -215,12 +215,12 @@
     </div>
     <!-- /.container-fluid -->
 </section>
+        @include('footer')
+    </div>
+</div>
 <!-- script-->
-<script type="text/javascipt" src="/js/jQuery.js"></script>
-<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+
+@include('script')
 <!-- photo js-->
 
 

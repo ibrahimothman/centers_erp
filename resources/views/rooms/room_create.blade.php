@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
     <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    @include('library')
     <link rel="stylesheet" href="/css/room_style.css">
     <title> room create</title>
 
 </head>
 <body class="bg-light">
 <!-- Begin Page Content -->
+<div id="wrapper">
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+        @include('operationBar')
 <section>
     <div class="container-fluid   text-right ">
         <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-lg-8">
                 <div class="card mb-4">
-                    <div class="card-header text-primary">
+                    <div class="card-header text-primary form-title">
                         اضافه غرفه جديده
                     </div>
                     <div class="card-body">
@@ -103,12 +105,14 @@
         </div>
     </div>
     <!-- /.container-fluid -->
+
 </section>
+        @include('footer')
+    </div>
+</div>
 <!-- script-->
-<script type="text/javascipt" src="/js/jQuery.js"></script>
-<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+
+@include('script')
+
 </body>
 </html>
