@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <!--//fonts-->
+    @include('library')
     <title>overview instructor</title>
     <style>
         img[class="profilePhoto"] {
@@ -26,8 +21,6 @@
         }
 
         body {
-
-            margin-top: 50px;
             direction: rtl;
             font-family: 'GESSTwoLight-Light' !important;
         }
@@ -86,6 +79,10 @@
     </style>
 </head>
 <body class="bg-light">
+<div id="wrapper">
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+    @include('operationBar')
 <!-- Begin Page Content -->
 <section>
     <!-- data -->
@@ -246,11 +243,12 @@
 
     <!-- end container  -->
 </section>
-<script type="text/javascipt" src="/js/jQuery.js"></script>
-<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+        @include('footer')
+    </div>
+</div>
+<!-- script-->
+
+@include('script')
 </body>
 
 </html>

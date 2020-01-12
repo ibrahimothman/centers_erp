@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
+
     <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-
+    @include('library')
     <title> view instructors </title>
     <style>
         body {
             direction: rtl;
-            margin-top: 50px;
             font-family: 'GESSTwoLight-Light' !important;
         }
 
         .container {
             background-color: #fff;
-            padding-top: 50px;
         }
 
         input {
@@ -124,33 +119,21 @@
 </head>
 <body class="bg-light">
 <!-- Begin Page Content -->
-
-
-<div class="container  ">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse  " id="navbarSupportedContent">
-
-
-            <form class="form-inline my-2 my-lg-0   ">
-
-                <input type="search" placeholder="بحث">
-                <button class="btn btn-primary  mx-2 px-4 my-5 my-sm-0" type="submit">بحث</button>
-
-            </form>
-
-        </div>
-    </nav>
-</div>
+<div id="wrapper">
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+        @include('operationBar')
 
 <!-- container -->
 <div class="container  ">
     <nav class="navbar navbar-expand-lg navbar-light ">
+
+        <form class="form-inline my-2 my-lg-0   ">
+
+            <input type="search" placeholder="بحث">
+            <button class="btn btn-primary  mx-2 px-4 my-5 my-sm-0" type="submit">بحث</button>
+
+        </form>
 
         <ul class="navbar-nav text-right">
 
@@ -183,17 +166,7 @@
                 </ul>
             </li>
             <br>
-            <li class=" nav-item  dropdown ">
-                <button data-toggle="dropdown" class="dropdown-toggle btn-primary py-1">
-                    المستوي <b class="caret"></b>
-                </button>
-                <ul class=" dropdown-menu text-right">
-                    <li><label class="checkbox"><input type="checkbox">المستوي الاول</label></li>
-                    <li><label class="checkbox"><input type="checkbox"> المستوي الثاني</label></li>
 
-
-                </ul>
-            </li>
         </ul>
 
     </nav>
@@ -345,11 +318,11 @@
         </div>
     </div>
 </div>
+        @include('footer')
+    </div>
+</div>
+<!-- script-->
 
-<script type="text/javascipt" src="/js/jQuery.js"></script>
-<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+@include('script')
 </body>
 </html>
