@@ -20,15 +20,15 @@ class Student extends Model
                 Sort::class,
                 Name::class
             ])
-            ->thenReturn()
-            ->get();
+            ->thenReturn();
+            //->get();
 
     }
 
     public function profileImage()
     {
         $imagePath = ($this->image) ? $this->image : 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
-        return '/uploads/profiles/' . $imagePath;
+        return url('/uploads/profiles/' . $imagePath);
     }
 
     // save image before center it to db
@@ -43,6 +43,21 @@ class Student extends Model
         $this->attributes['image'] = $original;
 //        dd($image);
     }
+
+    public function setIdImageAttribute($idimage){
+        if(! is_dir(public_path('/uploads/profiles'))){
+            mkdir(public_path('/uploads/profiles'));
+        }
+        $basename = Str::random();
+        $original = $basename.'.'.$idimage->getClientOriginalExtension();
+        $idimage->move(public_path('/uploads/profiles'), $original);
+
+        $this->attributes['idImage'] = $original;
+//        dd($image);
+    }
+
+
+
     public function degreeOptions(){
         return [
           'طالب','خريج'
