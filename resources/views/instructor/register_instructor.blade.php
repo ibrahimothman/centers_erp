@@ -2,47 +2,10 @@
 <html lang="ar">
 <head>
     @include('library')
+    <link rel="stylesheet" href="/css/instructor_style.css">
+
     <title>register instructor</title>
-    <style>
-        body {
-            direction: rtl;
-            font-family: 'GESSTwoLight-Light' !important;
-        }
 
-
-        .image-upload {
-            height: 200px;
-            width: 100%;
-            position: relative;
-            display: none !important;
-        }
-
-        .image-upload input, .image-upload label {
-            display: none;
-        }
-
-        .image-upload + div {
-            text-align: center;
-        }
-
-        .course-image-input {
-            width: calc(33% - 10px);
-            margin-left: 5px;
-            margin-right: 5px;
-        }
-
-        .image-upload + div img {
-            width: 100%;
-            height: 100px;
-            cursor: pointer;
-            top: 13px;
-            border: 1px solid #ced4da;
-            padding: 9px;
-            border-radius: 3px;
-            align-self: center;
-        }
-
-    </style>
 </head>
 <body class="bg-light">
 

@@ -4,15 +4,8 @@
 
     <!-- Bootstrap CSS & js -->
     @include('library')
-
-
+    <link rel="stylesheet" href="/css/instructor_style.css">
     <title>setting instructor</title>
-    <style>
-        body {
-            direction: rtl;
-            font-family: 'GESSTwoLight-Light' !important;
-        }
-    </style>
 </head>
 <body class="bg-light">
 <div id="wrapper">
