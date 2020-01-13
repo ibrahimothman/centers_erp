@@ -3,35 +3,8 @@
 <head>
     @include('library')
     <link rel="stylesheet" href="/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="/css/instructor_style.css">
     <title> instructor data</title>
-    <style>
-        body {
-            direction: rtl;
-            font-family: 'GESSTwoLight-Light' !important;
-        }
-
-        .container {
-            background-color: #fff;
-        }
-
-        .instructorHeader, .headerInstructor {
-            color: #007bff;
-
-        }
-
-        span.type {
-            font-size: 20px;
-            color: #005cbf;
-        }
-
-        .header {
-
-            background-color: rgba(0, 0, 0, .09);
-            padding-top: 5px;
-        }
-
-    </style>
 </head>
 <body class="bg-light">
 <div id="wrapper">

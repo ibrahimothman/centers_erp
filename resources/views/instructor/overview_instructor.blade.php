@@ -2,79 +2,10 @@
 <html lang="ar">
 <head>
     @include('library')
+    <link rel="stylesheet" href="/css/instructor_style.css">
+
     <title>overview instructor</title>
     <style>
-        img[class="profilePhoto"] {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: double 4px transparent;
-            background-image: linear-gradient(white, white), radial-gradient(circle at top left, #007bff, #fff);
-            background-origin: border-box;
-            background-clip: content-box, border-box;
-
-        }
-
-        a:hover {
-            text-decoration: none;
-        }
-
-        body {
-            direction: rtl;
-            font-family: 'GESSTwoLight-Light' !important;
-        }
-
-        /*-- //card --*/
-
-        .g1 {
-            position: relative;
-            display: block;
-        }
-
-        .agile-dish-caption {
-            position: absolute;
-            width: 100%;
-            bottom: 0px;
-            z-index: 999;
-            background: rgba(5, 5, 3, 0.78);
-            padding: 2em 2em;
-            transition: all 0.8s;
-            -webkit-transition: all 0.8s;
-            -moz-transition: all 0.8s;
-            -o-transition: all 0.8s;
-            -ms-transition: all 0.8s;
-            transform-style: preserve-3d;
-            -webkit-transform: scale(0);
-            -moz-transform: scale(0);
-            -o-transform: scale(0);
-            -ms-transform: scale(0);
-            transform: scale(0);
-        }
-
-        .g1:hover .agile-dish-caption {
-            display: block;
-            -webkit-transform: scale(1);
-            -moz-transform: scale(1);
-            -o-transform: scale(1);
-            -ms-transform: scale(1);
-            transform: scale(1);
-        }
-
-        #owl-demo .item img {
-            width: 100%;
-        }
-
-        @media (max-width: 480px) {
-            .agile-dish-caption {
-                padding: 0.5em;
-            }
-
-            .agile-dish-caption span {
-                font-size: 0.8em;
-            }
-        }
-
 
     </style>
 </head>
