@@ -79,7 +79,7 @@
             <div class="image-flip">
                 <div class="mainflip">
                     <div class="frontside">
-                        <div class="card">
+                        <div class="card motionCard">
                             <div class="card-body text-center">
                                 <p><img class="img-fluid rounded-circle  " src="\img\portfoliopic_0.jpg" width="100"
                                         height="100" alt="card image"></p>
@@ -99,7 +99,7 @@
             <div class="image-flip">
                 <div class="mainflip">
                     <div class="frontside">
-                        <div class="card">
+                        <div class="card motionCard">
                             <div class="card-body text-center">
                                 <p><img class="img-fluid rounded-circle  " src="\img\portfoliopic_0.jpg" width="100"
                                         height="100" alt="card image"></p>
@@ -119,7 +119,7 @@
             <div class="image-flip">
                 <div class="mainflip">
                     <div class="frontside">
-                        <div class="card">
+                        <div class="card motionCard">
                             <div class="card-body text-center">
                                 <p><img class="img-fluid rounded-circle  " src="\img\portfoliopic_0.jpg" width="100"
                                         height="100" alt="card image"></p>
@@ -144,7 +144,7 @@
             <div class="image-flip">
                 <div class="mainflip">
                     <div class="frontside">
-                        <div class="card">
+                        <div class="card motionCard">
                             <div class="card-body text-center">
                                 <p><img class="img-fluid rounded-circle  " src="\img\portfoliopic_0.jpg" width="100"
                                         height="100" alt="card image"></p>
@@ -166,7 +166,7 @@
             <div class="image-flip">
                 <div class="mainflip">
                     <div class="frontside">
-                        <div class="card">
+                        <div class="card motionCard">
                             <div class="card-body text-center">
                                 <p><img class="img-fluid rounded-circle  " src="\img\portfoliopic_0.jpg" width="100"
                                         height="100" alt="card image"></p>
@@ -188,7 +188,7 @@
             <div class="image-flip">
                 <div class="mainflip">
                     <div class="frontside">
-                        <div class="card">
+                        <div class="card motionCard">
                             <div class="card-body text-center">
                                 <p><img class="img-fluid rounded-circle  " src="\img\portfoliopic_0.jpg" width="100"
                                         height="100" alt="card image"></p>
