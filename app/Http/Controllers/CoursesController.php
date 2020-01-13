@@ -76,7 +76,7 @@ class CoursesController extends Controller
 
     public function update(Request $request, Course $course)
     {
-        dd($request->all());
+        //dd($request->all());
         // todo handle validation with ajax
         // delete all course's image from db and files
         if($request->hasFile('image')) {

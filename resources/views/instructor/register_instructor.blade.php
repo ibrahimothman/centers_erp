@@ -174,6 +174,13 @@
                                           class="form-control"></textarea>
                             </div>
 
+                            <div class=" form-row  form-group">
+                                <label>نبذه عن</label>
+                                <span class="required">*</span>
+
+                                <textarea name="bio" placeholder="نبذه عن " rows="3"
+                                          class="form-control" style="  overflow-scrolling:auto; "></textarea>
+                            </div>
 
 
                             <div class="form-row save">
