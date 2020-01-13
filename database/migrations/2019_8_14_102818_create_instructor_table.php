@@ -15,8 +15,8 @@ class CreateInstructorTable extends Migration
     {
         Schema::create('instructors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nameAr')->unique();
-            $table->string('nameEn')->unique();
+            $table->string('nameAr');
+            $table->string('nameEn');
             $table->string('email')->unique();
             $table->string('phoneNumber')->unique();
             $table->string('idNumber')->unique();
@@ -24,6 +24,8 @@ class CreateInstructorTable extends Migration
             $table->string('passportNumber')->nullable();
             $table->string('image')->nullable();
             $table->string('idImage')->nullable();
+            $table->string('idImage')->nullable();
+            $table->string('bio')->nullable();
 
 
             $table->timestamps();
