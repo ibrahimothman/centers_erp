@@ -42,6 +42,14 @@ class SideBarLinks
         ];
     }
 
+    public static function RoomLinks()
+    {
+        return[
+            self::$baseUrl.'rooms/create' => 'اضافه غرفه جديده',
+            self::$baseUrl.'rooms' => 'عرض/تعديل بيانات الغرف',
+        ];
+    }
+
     public static function employeeLinks()
     {
         return [
