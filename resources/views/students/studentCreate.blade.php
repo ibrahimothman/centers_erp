@@ -10,7 +10,8 @@
     <meta name="author" content="">
 
     <title>register a student</title>
-
+<!-- photo -->
+    <link href="/../../../css/styles.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
 
     <link href="{{url('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -168,7 +169,7 @@
 
                                     <div class="form-row">
 
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12 form-group">
                                             <label for="validationCustom03">الاسم باللغه الانجليزيه</label>
                                             <input type="text" name= "nameEn" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('nameEn') }}" >
                                             <div>{{ $errors->first('nameEn') }}</div>
@@ -178,13 +179,14 @@
                                     </div>
 
 
-                                    <div class=" form-row">
+                                    <div class=" form-row ">
+                                        <div class="col-sm-12 form-group">
                                         <label for="validationCustom05">البريد الالكترونى </label>
                                         <input type="text" name="email" id="validationCustom05" placeholder="ادخل البريد الالكترونى " class="form-control" value="{{ old('email') }}">
                                         <div>{{ $errors->first('email') }}</div>
                                     </div>
 
-
+                                    </div>
                                     <div class=" form-row">
                                         <div class="col-sm-6 ">
                                             <label>رقم التليفون المحمول</label>
@@ -214,7 +216,8 @@
 
                                     </div>
                                     <br>
-                                    <div class=" form-row ">
+
+                                  {{--  <div class=" form-row ">
                                         <div class="col-sm-6" >
 
                                             <div class="custom-file">
@@ -232,6 +235,7 @@
                                         </div>
 
                                     </div>
+                                  --}}
                                     <div class="form-row">
                                         <div class="col-sm-12  ">
 
@@ -250,7 +254,7 @@
                                         </div>
                                     </div>
 
-                                    <div class=" form-row">
+                                    <div class=" form-row form-group">
                                         <label>العنوان</label>
                                         <span class="required">*</span>
 
@@ -259,11 +263,8 @@
                                     </div>
 
 
-                                    <div class="form-row">
-                                        <div class="col-sm-12  ">
-
-                                        </div>
-                                        <div class="col-sm-6 form-group ">
+                                    <div class="form-row form-group">
+                                        <div class="col-sm-6  ">
                                             <label for="">المؤهل الدراسى </label>
                                             <select name="degree" class="form-control" id="exampleFormControlSelect1">
                                                 @foreach($student->degreeOptions() as $degree)
@@ -272,7 +273,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-sm-6 form-group ">
+                                        <div class="col-sm-6  ">
                                             <label for="">الكليه </label>
 
                                             <select name="faculty" class="form-control" id="exampleFormControlSelect2">
@@ -283,7 +284,7 @@
                                         </div>
                                     </div>
                                     <div class=" form-row">
-                                        <div class="col-sm-6 form-group ">
+                                        <div class="col-sm-12 form-group ">
                                             <label>skill card</label>
                                             <span class="required">*</span>
 
@@ -292,8 +293,35 @@
                                         </div>
 
                                     </div>
+                                   <!-- photo -->
+
+                                    <div class="form-row image-upload">
+                                        <div class="col-sm-8">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" accept="image/*" name="image1"
+                                                       id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                <input type="file" class="custom-file-input" accept="image/*" name="image2"
+                                                       id="customFile2" src="" onchange="readURL(this, 2);" required>
 
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center  ">
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                 alt="your image"/>
+                                            <p>صورة البطاقه</p>
+                                        </div>
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                 alt="your image"/>
+                                            <p>الصوره الشخصيه</p>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- end photo -->
 
                                     <div class="form-row save">
                                         <div class="col-sm-3  form-group">
@@ -358,6 +386,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{url('vendor/jquery/jquery.min.js')}}"></script>
@@ -380,5 +409,39 @@
             $(#phone).unmask();
         });
     </script>
+
+<!-- photo -->
+        <script>
+
+
+            $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(function () {
+                let photoNum = this.id[this.id.length - 1];
+                $(`#customFile${photoNum}`).trigger('click');
+            })
+
+
+            //code for the image uploaded to be shown
+            function readURL(input, num) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        if (num > 3) {
+                            $(`#imageUploaded${num}`)
+                                .attr('src', 'https://icon-library.net/images/done-icon/done-icon-5.jpg')
+
+                        } else {
+                            $(`#imageUploaded${num}`)
+                                .attr('src', e.target.result)
+                        }
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+        </script>
+
 </body>
 </html>

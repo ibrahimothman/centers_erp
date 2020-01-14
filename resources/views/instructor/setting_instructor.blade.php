@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+
 
     <title>setting instructor</title>
     <style>
         body {
             direction: rtl;
             margin-top: 50px;
-            font-family:Aharoni;
+            font-family: 'GESSTwoLight-Light' !important;
         }
     </style>
 </head>
@@ -32,19 +32,19 @@
                     </div>
                     <div class="card-body">
                         <form action="" method="post">
-                                <div class="row">
-                                    <div class="col-sm text-center ">
-                                        <h5> email@email.com</h5>
-                                    </div>
+                            <div class="row">
+                                <div class="col-sm text-center ">
+                                    <h5> email@email.com</h5>
                                 </div>
-                                <hr>
+                            </div>
+                            <hr>
                             <div class="form-row form-group">
                                 <div class=" col-sm-6   ">
                                     <div class="form-row form-group">
-                                        <div class="col-4 ">الاسم باللغه العربيه </div>
+                                        <div class="col-4 ">الاسم باللغه العربيه</div>
 
-                                        <div class="col-8 " >
-                                            <input type="text"   name=""  value=" ندي " class='form-control'>
+                                        <div class="col-8 ">
+                                            <input type="text" name="" value=" ندي " class='form-control'>
                                         </div>
                                     </div>
                                     <hr>
@@ -52,10 +52,10 @@
                                 </div>
                                 <div class=" col-sm-6 ">
                                     <div class="form-row form-group">
-                                        <div class="col-4 ">الاسم باللغه الانجليزيه </div>
+                                        <div class="col-4 ">الاسم باللغه الانجليزيه</div>
 
-                                        <div class="col-8 " >
-                                            <input type="text"   name=""  value="nada " class='form-control'>
+                                        <div class="col-8 ">
+                                            <input type="text" name="" value="nada " class='form-control'>
                                         </div>
                                     </div>
                                     <hr>
@@ -65,9 +65,9 @@
                             <div class="form-row form-group">
                                 <div class="col-sm-6 ">
                                     <div class="form-row form-group">
-                                        <div class="col-4 ">المؤهل الدراسى </div>
+                                        <div class="col-4 ">المؤهل الدراسى</div>
 
-                                        <div class="col-8 " >
+                                        <div class="col-8 ">
                                             <select name="degree" class="form-control">
                                                 <option>طالب</option>
                                                 <option>خريج</option>
@@ -79,9 +79,9 @@
                                 </div>
                                 <div class="col-sm-6 ">
                                     <div class="form-row form-group">
-                                        <div class="col-4 ">الكليه </div>
+                                        <div class="col-4 ">الكليه</div>
 
-                                        <div class="col-8 " >
+                                        <div class="col-8 ">
                                             <select name="faculty" class="form-control">
                                                 <option>هندسه</option>
                                                 <option>تجاره</option>
@@ -99,8 +99,8 @@
                                     <div class="form-row form-group">
                                         <div class="col-4 "> رقم التليفون المحمول</div>
 
-                                        <div class="col-8 " >
-                                            <input type="text"   name=""  value="  " class='form-control'>
+                                        <div class="col-8 ">
+                                            <input type="text" name="" value="  " class='form-control'>
                                         </div>
                                     </div>
                                     <hr>
@@ -110,8 +110,8 @@
                                     <div class="form-row form-group">
                                         <div class="col-4 "> تليفون اخر</div>
 
-                                        <div class="col-8 " >
-                                            <input type="text"   name=""  value="  " class='form-control'>
+                                        <div class="col-8 ">
+                                            <input type="text" name="" value="  " class='form-control'>
                                         </div>
                                     </div>
                                     <hr>
@@ -126,8 +126,8 @@
                                     <div class="form-row form-group">
                                         <div class="col-4 "> البلد</div>
 
-                                        <div class="col-8 " >
-                                            <input type="text"   name=""  value="  " class='form-control'>
+                                        <div class="col-8 ">
+                                            <input type="text" name="" value="  " class='form-control'>
                                         </div>
                                     </div>
                                     <hr>
@@ -137,68 +137,53 @@
                                     <div class="form-row form-group">
                                         <div class="col-4 ">المدينه</div>
 
-                                        <div class="col-8 " >
-                                            <input type="text"   name=""  value=" " class='form-control'>
+                                        <div class="col-8 ">
+                                            <input type="text" name="" value=" " class='form-control'>
                                         </div>
                                     </div>
                                     <hr>
 
                                 </div>
                             </div>
-                            <div class="form-row form-group">
-                                        <div class="col-2 ">العنوان </div>
 
-                                        <div class="col-10" >
-                                            <textarea name="address" placeholder="ادخل العنوان " rows="2"
-                                                      class="form-control" value=" "></textarea>
-                                        </div>
-                                    <hr>
+                            <div class="form-row form-group">
+                                <div class="col-2 ">العنوان</div>
+
+                                <div class="col-10">
+                                    <textarea name="address" placeholder="ادخل العنوان " rows="2"
+                                              class="form-control" value=" "></textarea>
+                                </div>
+                                <hr>
                             </div>
-                            <div class="form-row form-group">
-                                <div class="col-2 ">نبذه عن </div>
 
-                                <div class="col-10" >
+                            <div class="form-row form-group">
+                                <div class="col-2 ">نبذه عن</div>
+
+                                <div class="col-10">
                                             <textarea name="about" placeholder="نبذه عن " rows="3"
-                                                      class="form-control" style="  overflow-scrolling:auto; "></textarea>
+                                                      class="form-control"
+                                                      style="  overflow-scrolling:auto; "></textarea>
                                 </div>
                                 <hr>
                             </div>
 
 
+                            <div class="form-row save">
+                                <div class="col-sm-6 mx-auto text-center">
+                                    <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
+                                    <button class="btn  btn-danger" type="reset"> الغاء</button>
+                                </div>
+                            </div>
+                            <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    <div class="form-row save">
-                                        <div class="col-sm-6 mx-auto text-center">
-                                            <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
-                                            <button class="btn  btn-danger" type="reset"> الغاء</button>
-                                        </div>
-                                    </div>
-                                    <br>
                         </form>
                     </div>
+
                 </div>
             </div>
-</div>
+        </div>
     </div>
-                    <!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 
 
 </section>
@@ -208,7 +193,6 @@
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-
 
 </body>
 </html>
