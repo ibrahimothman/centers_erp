@@ -25,6 +25,7 @@
             <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
             <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
         </head>
+        @inject('Constants', 'App\helper\Constants')
 
         <body>
             <div id="wrapper">
@@ -42,12 +43,12 @@
                                                     @php($i = 0)
                                                     @if($course->images->isEmpty())
                                                         <div class="carousel-item active" >
-                                                            <img class="d-block w-100" src="http://simpleicon.com/wp-content/uploads/camera-2.svg" alt="First slide">
+                                                            <img class="d-block w-100" src="{{$Constants->getCoursePlaceholderImage()}}" alt="First slide">
                                                         </div>
                                                     @else
                                                         @foreach($course->images as $image)
                                                             <div class="carousel-item {{$i == 0 ? 'active' : ''}}">
-                                                                <img class="d-block w-100" src="/uploads/courses/{{ $image->url }}" alt="First slide">
+                                                                <img class="d-block w-100" src="{{ $image->url }}" alt="First slide">
                                                             </div>
                                                             @php($i++)
                                                         @endforeach
@@ -62,14 +63,14 @@
                                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Next</span>
                                                 </a>
-                                                <h4>{{ $course->name }}</h4>
+                                                <h4>{{$course->name}}</h4>
                                             </div>
                                             <section class="logistics">
                                                 <div class="course-logistics">
                                                     <div class="logistic-element">
                                                         <img src="{{url('img/location.svg')}}" alt="">
                                                         <p>المكان</p>
-                                                        <p>المنصورة الدور التاني</p>
+                                                        <p>{{$center->name}}</p>
                                                     </div>
                                                     <div class="logistic-element">
                                                         <img src="{{url('img/money.svg')}}" alt="">
@@ -79,7 +80,7 @@
                                                     <div class="logistic-element">
                                                         <img src="{{url('img/startdate.svg')}}" alt="">
                                                         <p>المدة</p>
-                                                        <p>{{ $course->duration }}</p>
+                                                        <p>{{ $course->duration }}ساعه </p>
                                                     </div>
                                                 </div>
                                             </section>
@@ -94,16 +95,18 @@
                                                 <h5> المدرسون و المحتوى</h5>
                                                 </header>
                                                 <div class="course-teachers">
+                                                @foreach($course->instructors as $instructor)
                                                     <div class="teacher">
-                                                        <img src="https://i.pinimg.com/originals/1a/2b/60/1a2b603573771c3fe4bed74198cc5c88.jpg" alt="">
-                                                        <a href="#">{{ $course->instructor->name }}</a>
+                                                        <img src="{{$instructor->profile_img==null?$Constants->getInstructorPlaceholderImage():$instructor->profile_img}}" alt="">
+                                                        <a href="#"></a>
                                                     </div>
 
+                                                    @endforeach
                                                 </div>
                                                 <div id="accordion">
                                                     @php($i = 1)
                                                     @foreach(json_decode($course->content, true) as $content)
-                                                        <h3>الباب رقم {{ $i }} </h3>
+                                                        <h3>{{ $content['name'] }} </h3>
                                                         <div>
                                                             <p>{{ $content['description'] }}</p>
                                                         </div>
@@ -186,6 +189,67 @@
         <!-- Custom scripts for all pages-->
         <script src="{{url('js/sb-admin-2.min.js')}}"></script>
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+
+
+        <script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
+        <script>
+            $.notify.addStyle('successful-process', {
+                html: `<div>
+                            <span data-notify-text/>
+                            <i class="fas fa-times-circle"
+                            style="
+                                    color:white;
+                                    opacity:0.7;
+                                    position: relative;
+                                    top: 0px;
+                                    left: -28px;
+                                  "
+                            ></i>
+                        </div>`,
+                classes: {
+                    base: {
+                    "white-space": "nowrap",
+                    "background-color": "green",
+                    "padding": "15px",
+                    "padding-left": "35px",
+                    "border-radius": "3px"
+                    },
+                    done: {
+                    "color": "white",
+                    "background-color": "#28a745",
+                    "font-weight":"bold"
+                    },
+                    notDone:{
+                        "color": "white",
+                        "background-color": "#dc3545",
+                        "font-weight":"bold"
+                    }
+                }
+                });
+
+                $('.btn').click(function(){
+
+                    $.notify('تمت العملية بنجاح', {
+                            position:"bottom left",
+                            style: 'successful-process',
+                            className: 'done',
+                // autoHideDelay: 500000
+                });
+
+                });
+
+                // $.notify('فشلت العملية', {
+                // position:"bottom left",
+                // style: 'successful-process',
+                // className: 'notDone',
+                // });
+
+        </script>
+
+
+
+
+
         <script>
             $('.carousel').carousel()
         </script>
