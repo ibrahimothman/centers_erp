@@ -15,6 +15,11 @@ class Time extends Model
         return $this->belongsToMany(CourseGroup::class);
     }
 
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class)->withTimestamps();
+    }
+
     public function getDayAttribute($value)
     {
         return self::days()[$value];

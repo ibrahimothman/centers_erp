@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
-
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    @include('library')
     <link rel="stylesheet" href="/css/room_style.css">
     <link rel="stylesheet" href="/css/calendar.css">
     <title>room calendar</title>
   </head>
 <body class="bg-light">
+<div id="wrapper">
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+    @include('operationBar')
 <!-- Begin Page Content -->
 <div class="container text-center ">
     <div class="row">
         <div class=" col">
-            <div class="card text-center">
+            <div class="card  motionCard text-center">
                 <div class="card-body">
                     <a class="add btn btn-outline-primary" href="#" type="button"> حجز موعد جديد</a>
                 </div>
@@ -36,7 +37,13 @@
     </div>
 </div>
 <br>
-<!-- script -->
+
+        @include('footer')
+    </div>
+</div>
+<!-- script-->
+
+@include('script')
 <script src="/js/calendar.js"></script>
 </body>
 </html>

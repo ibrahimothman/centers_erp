@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
+
     <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    @include('library')
     <link rel="stylesheet" href="/css/room_style.css">
     <title> room reservation</title>
 </head>
 <body class="bg-light">
+
 <!-- Begin Page Content -->
+<div id="wrapper">
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+        @include('operationBar')
 <div class="container-fluid   text-right ">
     <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
             <div class="card mb-4">
-                <div class="card-header text-primary">
+                <div class="card-header text-primary form-title">
                     حجز موعد جديد
                 </div>
                 <div class="card-body">
@@ -68,7 +72,7 @@
                         <div class="form-row form-group">
                             <h6>ايام حجز الكورس</h6>
                         </div>
-                        <div class="row mr-5">
+                        <div class="row mr-4">
                             <div class="col-md-2  ">
                                 <input name="check" type="checkbox">
                                 <label>السبت</label>
@@ -81,6 +85,7 @@
                                 <input name="check" type="checkbox">
                                 <label>الاثنين</label>
                             </div>
+
                             <div class="col-md-2  ">
                                 <input name="check" type="checkbox">
                                 <label>الثلاثاء</label>
@@ -89,10 +94,11 @@
                                 <input name="check" type="checkbox">
                                 <label>الاربعاء</label>
                             </div>
-                            <div class="col-md-2  ">
+                            <div class="col-md-2 ">
                                 <input name="check" type="checkbox">
-                                <label>الخميس</label>
+                                <label>الخمس</label>
                             </div>
+
                         </div>
                         <br>
                         <div class="form-row save">
@@ -107,11 +113,13 @@
         </div>
     </div>
 </div>
+
+        @include('footer')
+    </div>
+</div>
 <!-- script-->
-<script type="text/javascipt" src="/js/jQuery.js"></script>
-<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+
+@include('script')
+<!-- photo js-->
 </body>
 </html>

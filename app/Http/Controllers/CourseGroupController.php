@@ -6,6 +6,7 @@ use App\Center;
 use App\Course;
 use App\CourseGroup;
 use App\Employee;
+use App\Room;
 use App\Rules\courseGroupDay;
 use App\Test;
 use App\Time;
@@ -51,18 +52,18 @@ class CourseGroupController extends Controller
     {
 
         // fetch validated date
+//        dd($request->all());
         $data = $this->validateCourseGroupData();
 //        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
         // create a new course group
-        $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
-            'name' => $data['name'],
-            'start_at' => $data['start_at'],
-        ]);
+//        $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
+//            'name' => $data['name'],
+//            'start_at' => $data['start_at'],
+//        ]);
 
         // create a new time
-        $this->addGroupTimes($course_group, $data['course-day'],$data['course-begin'],$data['course-end']);
-        dd($course_group);
+        $this->addGroupTimes( $data['room'], $data['course-day'],$data['course-begin'],$data['course-end']);
     }
 
     /**
@@ -127,9 +128,9 @@ class CourseGroupController extends Controller
         ]);
     }
 
-    private function addGroupTimes($course_group, $days, $begins, $ends)
+    private function addGroupTimes($room_id, $days, $begins, $ends)
     {
-//        $times= [];
+        $room = Room::findOrFail($room_id);
         for ($i = 0; $i < count($days); $i++){
             $time = Time::firstOrCreate([
                 'day' => $days[$i],
@@ -138,10 +139,13 @@ class CourseGroupController extends Controller
                 'busy' => 1,
 
             ]);
+            if(! $room->times->contains($time->id)){
+                $room->times()->syncwithoutDetaching($time);
+            }
 
 //            echo json_encode($times);
             // attach time to course group
-            $course_group->times()->syncWithoutDetaching($time);
+//            $course_group->times()->syncWithoutDetaching($time);
         }
     }
 
