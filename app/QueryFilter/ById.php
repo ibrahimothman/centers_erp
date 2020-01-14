@@ -4,7 +4,6 @@
 namespace App\QueryFilter;
 
 
-use App\Course;
 use Closure;
 
 class ById

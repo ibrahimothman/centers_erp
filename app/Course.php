@@ -13,13 +13,14 @@ class Course extends Model
 
     public static function allCourses($center)
     {
-        return app(Pipeline::class)
-            ->send($center->courses)
-            ->through([
-                ById::class
-            ])
-            ->thenReturn()
-            ->get();
+        return $center->courses;
+//        return app(Pipeline::class)
+//            ->send($center->courses)
+//            ->through([
+//                ById::class
+//            ])
+//            ->thenReturn()
+//            ->get();
     }
 
     public function courseImages()
