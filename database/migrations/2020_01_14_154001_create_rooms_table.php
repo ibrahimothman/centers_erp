@@ -18,7 +18,7 @@ class CreateRoomsTable extends Migration
             $table->string('name');
             $table->string('location');
             $table->longText('details');
-            $table->longText('including')->nullable();
+            $table->longText('extras')->nullable();
             $table->unsignedBigInteger('center_id');
             $table->timestamps();
 
