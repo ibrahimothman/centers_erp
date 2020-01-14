@@ -56,14 +56,17 @@ class CourseGroupController extends Controller
         $data = $this->validateCourseGroupData();
 //        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
-        // create a new course group
-//        $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
-//            'name' => $data['name'],
-//            'start_at' => $data['start_at'],
-//        ]);
 
         // create a new time
-        $this->addGroupTimes( $data['room'], $data['course-day'],$data['course-begin'],$data['course-end']);
+        $times = $this->addGroupTimes($data['course-day'],$data['course-begin'],$data['course-end']);
+        if($this->checkIfRoomIsAvailableForSelectedTimes(Room::findOrFail($data['room']) ,$times)){
+            // create a new course group
+            $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
+                'name' => $data['name'],
+                'start_at' => $data['start_at'],
+            ]);
+
+        }
     }
 
     /**
@@ -128,9 +131,9 @@ class CourseGroupController extends Controller
         ]);
     }
 
-    private function addGroupTimes($room_id, $days, $begins, $ends)
+    private function addGroupTimes($days, $begins, $ends)
     {
-        $room = Room::findOrFail($room_id);
+        $times = array();
         for ($i = 0; $i < count($days); $i++){
             $time = Time::firstOrCreate([
                 'day' => $days[$i],
@@ -139,19 +142,27 @@ class CourseGroupController extends Controller
                 'busy' => 1,
 
             ]);
-            if(! $room->times->contains($time->id)){
-                $room->times()->syncwithoutDetaching($time);
-            }
 
-//            echo json_encode($times);
-            // attach time to course group
-//            $course_group->times()->syncWithoutDetaching($time);
+            $times[] = $time;
         }
+        return $times;
     }
 
     public function getCourseGroups()
     {
         $course_id  = request()->get('course_id');
         return Course::with('groups')->findOrFail($course_id)->groups;
+    }
+
+    private function checkIfRoomIsAvailableForSelectedTimes(Room $room, array $times)
+    {
+        foreach ($times as $time){
+            if($room->times->contains($time['id'])){
+                return false;
+            }
+            // book room for this time
+            $room->times()->syncWithoutDetaching($time);
+        }
+        return true;
     }
 }
