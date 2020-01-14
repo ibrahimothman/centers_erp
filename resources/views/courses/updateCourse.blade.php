@@ -122,16 +122,14 @@
                                         @endforeach
 
                                     </div>
-
                                 </fieldset>
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <label for="instructor-name">اسم المدرس</label>
                                         <select class="form-control" id="instructor-name" name="instructor_id" multiple >
-                                            <option value="{{ $course->id }}" selected>{{ $course->name }}</option>
-{{--                                        @foreach($course->instructor as $instructor)--}}
-{{--                                            <option {{$instructor->id==$course->instructor_id?"selected":""}} value="{{$instructor->id}}">{{$instructor->name}}</option>--}}
-{{--                                            @endforeach--}}
+                                        @foreach($course->instructors as $instructor)
+                                            <option {{$instructor->id==$course->instructor_id?"selected":""}} value="{{$instructor->id}}">{{$instructor->nameAr}}</option>
+                                            @endforeach
                                         </select>
                                         <span id="test_course-teacher_error"></span>
                                         <div></div>
@@ -161,14 +159,14 @@
                                     </div>
                                 </div>
 
-                                <div class="form-row">
+                                <div class="form-row" hidden>
                                     <div class="col-sm-6 form-group">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input part-of-diploma" name="retake" id="customCheck1">
                                             <label class="custom-control-label" for="customCheck1">هذه الدورة جزء من دبلومة</label>
                                         </div>
                                         <div class="shown-if-checked">
-                                            <div>
+                                            <div >
                                                 <label for="diploma-name">اسم الدبلومة</label>
                                                 <input type="text" class="form-control" id="diploma-name" placeholder="اسم الدبلومة " value="" name="diploma-name" >
                                                 <span id="test_diploma-name_error"></span>

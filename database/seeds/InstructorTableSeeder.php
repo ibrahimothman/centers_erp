@@ -13,6 +13,7 @@ class InstructorTableSeeder extends Seeder
     public function run()
     {
         //
+
         factory(Instructor::class)->create();
     }
 }
