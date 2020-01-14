@@ -220,6 +220,7 @@ class StudentController extends Controller
     public function searchByName(){
         return response()->json($this->getStudents());
 
+
     }
 
     private function deleteImage($image)

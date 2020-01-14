@@ -70,7 +70,15 @@
 
                                                 <div class="col-sm-5 form-group">
                                                         <label for="student-id"> الطالب</label>
+<<<<<<< HEAD
                                                         <input type="text"  placeholder="اسم الطالب" class="form-control" id="student-id" required>
+=======
+<<<<<<< HEAD
+                                                        <input type="text" placeholder="اسم الطالب"  class="form-control" id="student-id" required>
+=======
+                                                        <input type="text"  placeholder="اسم الطالب" class="form-control" id="student-id" required>
+>>>>>>> bff76b7d4f828a794a77c91e478e03f709f9412d
+>>>>>>> 699cb82816c466ffc3189083fe91628666fa0bc2
                                                         <div class="list-gpfrm-list" id="studentsList"></div>
                                                         <span id="stuselector_error"></span>
                                                             <div></div>
@@ -147,6 +155,7 @@
                         success: function (data) {
                             console.log(data);
                             $('#studentsList').show();
+
                             var output='<ul class="dropdown-menu" style="display:block; position:relative">';
 
                             $.each(data, function (i, v) {

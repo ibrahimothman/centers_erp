@@ -6,13 +6,12 @@
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
     <title>change password instructor</title>
     <style>
         body {
             direction: rtl;
             margin-top: 50px;
-            font-family:Aharoni;
+            font-family: 'GESSTwoLight-Light' !important;
         }
     </style>
 </head>
@@ -38,36 +37,34 @@
                                 </div>
                             </div>
                             <hr>
-                                    <div class="form-row form-group">
-                                        <div class="col-4 ">كلمه السر القديمه</div>
-
-                                        <div class="col-8 ">
-                                            <input type="text" name=""  class='form-control' placeholder='ادخل كلمه السر القديمه'>
-                                        </div>
-                                    </div>
-                                    <hr>
-
-
-
-
-                                <div class="form-row form-group">
-                                    <div class="col-4 ">كلمه السر الجديده</div>
-
-                                    <div class="col-8 ">
-                                        <input type="text" name=""  class='form-control' placeholder='ادخل كلمه السر الجديده'>
-                                    </div>
-                                </div>
-                                <hr>
                             <div class="form-row form-group">
-                                <div class="col-4 ">تاكيد كلمه السر</div>
+                                <div class="col-4 ">كلمه السر القديمه</div>
 
                                 <div class="col-8 ">
-                                    <input type="text" name=""  class='form-control' placeholder="تاكيد كلمه السر" >
+                                    <input type="text" name="" class='form-control'
+                                           placeholder='ادخل كلمه السر القديمه'>
                                 </div>
                             </div>
                             <hr>
 
 
+                            <div class="form-row form-group">
+                                <div class="col-4 ">كلمه السر الجديده</div>
+
+                                <div class="col-8 ">
+                                    <input type="text" name="" class='form-control'
+                                           placeholder='ادخل كلمه السر الجديده'>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-row form-group">
+                                <div class="col-4 ">تاكيد كلمه السر</div>
+
+                                <div class="col-8 ">
+                                    <input type="text" name="" class='form-control' placeholder="تاكيد كلمه السر">
+                                </div>
+                            </div>
+                            <hr>
 
 
                             <div class="form-row save">
@@ -93,7 +90,6 @@
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-
 
 </body>
 </html>

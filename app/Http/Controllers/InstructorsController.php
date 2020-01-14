@@ -62,11 +62,11 @@ class InstructorsController extends Controller
      */
     public function show($id)
     {
-        $center=Center::find(Session('center_id'));
         $instructor=Instructor::find($id);
 
         return view('instructor/overview_instructor')
             ->with('instructor',$instructor);
+
     }
 
     /**

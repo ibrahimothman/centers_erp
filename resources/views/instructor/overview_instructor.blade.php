@@ -1,15 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <link href="/css/style.css" rel="stylesheet"  />
-        <!--//fonts-->
+    <!--//fonts-->
     <title>overview instructor</title>
     <style>
         img[class="profilePhoto"] {
@@ -28,25 +25,71 @@
             text-decoration: none;
         }
 
-
-
         body {
 
             margin-top: 50px;
             direction: rtl;
-
-            font-family:Aharoni;
+            font-family: 'GESSTwoLight-Light' !important;
         }
+
+        /*-- //card --*/
+
+        .g1 {
+            position: relative;
+            display: block;
+        }
+
+        .agile-dish-caption {
+            position: absolute;
+            width: 100%;
+            bottom: 0px;
+            z-index: 999;
+            background: rgba(5, 5, 3, 0.78);
+            padding: 2em 2em;
+            transition: all 0.8s;
+            -webkit-transition: all 0.8s;
+            -moz-transition: all 0.8s;
+            -o-transition: all 0.8s;
+            -ms-transition: all 0.8s;
+            transform-style: preserve-3d;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+        }
+
+        .g1:hover .agile-dish-caption {
+            display: block;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
+
+        #owl-demo .item img {
+            width: 100%;
+        }
+
+        @media (max-width: 480px) {
+            .agile-dish-caption {
+                padding: 0.5em;
+            }
+
+            .agile-dish-caption span {
+                font-size: 0.8em;
+            }
+        }
+
 
     </style>
 </head>
 @inject('Constants', 'App\helper\Constants')
 <body class="bg-light">
-
-
 <!-- Begin Page Content -->
-<section >
-
+<section>
+    <!-- data -->
     <div class="container  text-right" style="background-color: #fff;">
         <br>
         <div class="row">
@@ -65,18 +108,22 @@
         <hr>
         <div class="row">
             <div class="col">
+
             <h2 class="text-primary">نبذه عن</h2>
             <p>{{$instructor->bio}}</p>
 
-        </div>
+
+            </div>
         </div>
 
         <hr>
+        <!-- start courses -->
         <div class="row">
             <div class="col">
-            <h2 class="text-primary">الكورسات </h2>
+                <h2 class="text-primary">الكورسات </h2>
+            </div>
         </div>
-        </div>
+<<<<<<< HEAD
 
 <!-- motion -->
 
@@ -98,7 +145,7 @@
                             <img src="{{count($courses[$j]->images)>0?$courses[$j]->images[0]->url:$Constants->getCoursePlaceholderImage()}}" style="height:400px;width: 100%" class="lazyOwl">
                             <div class="agile-dish-caption">
                                 <h5 style="color: #007bff">{{$courses[$j]->name}} </h5>
-                                <p style="height:100px; width: 100%; color: #000">
+                                <p style="height:100px; width: 100%; color: #fff">
                                     {{$courses[$j]->description}}
                                 </p>
                                 <a href="/courses/{{$courses[$j]->id}}">قراءه المزيد</a>
@@ -115,25 +162,15 @@
                     </div>
                         @endfor
 
-
-
-
-
-
-
-
-
-
-
-
                 </div>
-
+                <br>
             </div>
+        </div>
+        <!-- end cards  -->
+    </div>
 
-
+    <!-- end container  -->
 </section>
-    <!-- //dishes -->
-
 <script type="text/javascipt" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/jquery-3.3.1.min.js"></script>
