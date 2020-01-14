@@ -39,21 +39,24 @@
                         اضافه غرفه جديده
                     </div>
                     <div class="card-body">
-                        <form action="" method="post">
+                        <form action="{{ route('rooms.store') }}" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-row form-group">
                                 <div class="col-3 ">اسم الغرفه</div>
                                 <div class="col-9 ">
-                                    <input type="text" name="" class='form-control'
+                                    <input type="text" name="name" class='form-control'
                                            placeholder='ادخل اسم الغرفه'>
+                                    <div>{{ $errors->first('name') }}</div>
                                 </div>
                             </div>
                             <hr>
                             <div class="form-row form-group">
                                 <div class="col-3 ">الموقع</div>
                                 <div class="col-9 ">
-                                    <input type="text" name="" class='form-control'
-                                           placeholder='ادخل الموقع'>
+                                    <input type="text" name="location" class='form-control' placeholder='ادخل الموقع'>
+                                    <div>{{ $errors->first('location') }}</div>
                                 </div>
+
                             </div>
                             <h6>تفاصيل مساحه الغرفه</h6>
                             <div class="card ">
@@ -61,30 +64,30 @@
                                     <div class="form-row form-group">
                                         <div class="col-3 ">مساحه الغرفه</div>
                                         <div class="col-9 ">
-                                            <select>
-                                                <option value="volvo">12متر مربع</option>
-                                                <option value="saab">30 متر مربع</option>
-                                            </select>
+                                            <input type="number" name="area" class='form-control' placeholder='المساحه بالمتر المربع'>
+                                            <div>{{ $errors->first('area') }}</div>
                                         </div>
                                     </div>
                                     <div class="form-row form-group">
                                         <div class="col-3 ">عدد الكراسي</div>
                                         <div class="col-9 ">
-                                            <input type="text" name="" class='form-control'
+                                            <input type="number" name="no_of_chairs" class='form-control'
                                                    placeholder='ادخل عدد الكراسي'>
+                                            <div>{{ $errors->first('no_of_chairs') }}</div>
                                         </div>
                                     </div>
                                     <div class="form-row form-group">
                                         <div class="col-3 ">عدد الكمبيوتر</div>
                                         <div class="col-9 ">
-                                            <input type="text" name="" class='form-control'
+                                            <input type="number" name="no_of_computers" class='form-control'
                                                    placeholder='ادخل عدد الكمبيوتر'>
+                                            <div>{{ $errors->first('no_of_computers') }}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <br>
-                            <h6>اضافات</h6>
+                            <h6>محتويات الغرفه</h6>
                             <div class="card ">
                                 <div class="card-body">
                                     <div class="row ">
@@ -101,7 +104,7 @@
                                             <label>دتاشو</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="checkbox" onClick="selectall(this)">
+                                            <input type="checkbox" onClick="selectAll(this)">
                                             <label>تحديد الكل</label>
                                         </div>
                                     </div>
@@ -123,10 +126,19 @@
     <!-- /.container-fluid -->
 </section>
 <!-- script-->
-<script type="text/javascipt" src="/js/jQuery.js"></script>
-<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<script type="text/javascipt" src="{{url('js/jQuery.js')}}"></script>
+<script type="text/javascript" src="{{url('js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{url('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{url('js/popper.min.js')}}"></script>
+<script src="{{url('js/bootstrap.min.js')}}"></script>
+
+<script>
+    function selectAll(source) {
+        var checkboxes = document.getElementsByName('check');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
 </body>
 </html>
