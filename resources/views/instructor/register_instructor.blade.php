@@ -113,25 +113,6 @@
                                           class="form-control"></textarea>
                             </div>
 
-
-
-                            <div class="form-row form-group ">
-                                <div class="col-sm-6 ">
-                                    <label>المؤهل الدراسى </label>
-                                    <select name="degree" class="form-control  mb-1">
-                                        <option>طالب</option>
-                                        <option>خريج</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label>الكليه </label>
-                                    <select name="faculty" class="form-control">
-                                        <option>هندسه</option>
-                                        <option>تجاره</option>
-                                    </select>
-                                </div>
-                            </div>
-
                             <div class=" form-row  form-group">
                                 <label>نبذه عن</label>
                                 <span class="required">*</span>

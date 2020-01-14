@@ -15,7 +15,9 @@ class InstructorsController extends Controller
      */
     public function index()
     {
-        return view("instructor/overview_instructor");
+        $instructors=Instructor::paginate(5);
+        return view("instructor/view_all_instructors")
+            ->with('instructors',$instructors);
 
     }
 
