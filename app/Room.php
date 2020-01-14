@@ -23,4 +23,9 @@ class Room extends Model
     {
         return $this->belongsTo(Center::class);
     }
+
+    public function times()
+    {
+        return $this->belongsToMany(Time::class)->withTimestamps();
+    }
 }
