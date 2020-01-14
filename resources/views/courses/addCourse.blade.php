@@ -63,7 +63,6 @@
                                             <label class="custom-file-label" for="customFile">صوره الدورة</label>
                                             <div></div>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="d-flex  justify-content-center">
@@ -268,128 +267,153 @@
 <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
 
 <!-- script multi select-->
-<script src="/js/multiSelect.js"></script>
+
 <script type="text/javascript" src="js/jQuery.js"></script>
 <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 <script src="static/js/jquery-3.3.1.min.js"></script>
 <script src="static/js/popper.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
 <!--  end script-->
-{{--<script>--}}
-{{--    $(document).ready(function () {--}}
+<script>
+    {{--
+    $(document).ready(function () {
 
-{{--        $("#submit").click(function () {--}}
-{{--            var courseName = $("#course-name").val();--}}
-{{--            var courseCode = $("#course-id").val();--}}
-{{--            var courseDescription = $("#course-description").val();--}}
-{{--            var courseDuration = $("#course-duration").val();--}}
-{{--            var courseCost = $("#course-cost").val();--}}
-{{--            var teamCost = $("#course-group-cost").val();--}}
-{{--            // var instructorId = $("#instructor-name").val();--}}
-{{--            var courseChapter = $("#course-chapter-1").val();--}}
-{{--            var chapterDesc = $("#chapter-1-desc").val();--}}
+        $("#submit").click(function () {
+            var courseName = $("#course-name").val();
+            var courseCode = $("#course-id").val();
+            var courseDescription = $("#course-description").val();
+            var courseDuration = $("#course-duration").val();
+            var courseCost = $("#course-cost").val();
+            var teamCost = $("#course-group-cost").val();
+            // var instructorId = $("#instructor-name").val();
+            var courseChapter = $("#course-chapter-1").val();
+            var chapterDesc = $("#chapter-1-desc").val();
 
-{{--            let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]--}}
-{{--            let chapterDescription = [...$('fieldset textarea')];--}}
-{{--            let chapterName = [...$('fieldset input')];--}}
+            let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+            let chapterDescription = [...$('fieldset textarea')];
+            let chapterName = [...$('fieldset input')];
 
-{{--            chapterName.forEach(function (chapter, chapterIndex) {--}}
-{{--                let chapterInfo = {};--}}
-{{--                chapterInfo.name = chapterName[chapterIndex].value;--}}
-{{--                chapterInfo.description = chapterDescription[chapterIndex].value;--}}
+            chapterName.forEach(function (chapter, chapterIndex) {
+                let chapterInfo = {};
+                chapterInfo.name = chapterName[chapterIndex].value;
+                chapterInfo.description = chapterDescription[chapterIndex].value;
 
-{{--                chapters.push(chapterInfo);--}}
-{{--            });--}}
-{{--</script>--}}
-
-        <!-- Bootstrap core JavaScript-->
-        <script src="{{url('vendor/jquery/jquery.min.js')}}"></script>
-        <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-        <!-- Custom scripts for all pages-->
-        <script src="{{url('js/sb-admin-2.min.js')}}"></script>
-        <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+                chapters.push(chapterInfo);
+            });
 
 
-        <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
+            $.ajax({
+                url: "/courses",
+                method: "POST",
+                data: {
+                    name: courseName, code: courseCode, description: courseDescription,
+                    duration: courseDuration, cost: courseCost, content: JSON.stringify(chapters),
+                    teamCost: teamCost,
+                    instructor_id: 1, _token: "{{ csrf_token() }}"
+                },
+                dataType: "json",
+                success: function (data) {
+                    // console.log(data);
+                    document.getElementById('form').reset();
+                    alert(data);
+                },
+                error: function (error) {
+                    if (error.status == 422) {// validation
 
-        <script >
-            //$(document).ready(function() {
+                        // loop through the errors and show them to the user
+                        $.each(error.responseJSON.errors, function (i, error) {
+                            // error is message
+                            // i is element's name
+                            console.log(error);
+                            var element = $(document).find('[name="' + i + '"]');
+                            element.after($('<span style="color: red;">' + error[0] + '</span>'));
+                        });
+                    }
 
-                // $("#form").submit(function(e) {
-                //     e.preventDefault();
-                //     var courseName = $("#course-name").val();
-                //     var courseCode = $("#course-id").val();
-                //     var courseDescription = $("#course-description").val();
-                //     var courseDuration = $("#course-duration").val();
-                //     var courseCost = $("#course-cost").val();
-                //     var teamCost = $("#course-group-cost").val();
-                //     // var instructorId = $("#instructor-name").val();
-                //     var courseChapter = $("#course-chapter-1").val();
-                //     var chapterDesc = $("#chapter-1-desc").val();
-                //
-                //     let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
-                //     let chapterDescription = [...$('fieldset textarea')];
-                //     let chapterName = [...$('fieldset input')];
-                //
-                //     chapterName.forEach(function(chapter,chapterIndex){
-                //         let chapterInfo = {};
-                //         chapterInfo.name = chapterName[chapterIndex].value;
-                //         chapterInfo.description = chapterDescription[chapterIndex].value;
-                //
-                //         chapters.push(chapterInfo);
-                //     });
-                //
-                //
-                //     var form_data = new FormData(this);
-                //     form_data.append('content',JSON.stringify(chapters));
-                //     form_data.append('name',courseName);
-                //     form_data.append('code',courseCode);
-                //     form_data.append('duration',courseDuration);
-                //     form_data.append('cost',courseCost);
-                //     form_data.append('teamCost',teamCost);
-                //     form_data.append('instructor_id',1);
-                //
-                //
-                //
-                //     $.ajax({
-                //         url: "/courses",
-                //         method: "POST",
-                //         data : form_data,
-                //         processData : false,
-                //         contentType : false,
-                //         dataType: "json",
-                //         success: function (data) {
-                //             // console.log(data);
-                //             document.getElementById('form').reset();
-                //             alert(data);
-                //         },
-                //         error: function(error) {
-                //             if(error.status == 422) {// validation
-                //
-                //                 // loop through the errors and show them to the user
-                //                 $.each(error.responseJSON.errors, function (i, error) {
-                //                     // error is message
-                //                     // i is element's name
-                //                     console.log(error);
-                //                     var element = $(document).find('[name="'+i+'"]');
-                //                     element.after($('<span style="color: red;">'+error[0]+'</span>'));
-                //                 });
-                //             }
-                //
-                //         }
-                //
-                //     });
-                //
-                // });
+                }
+
+            });
+
+        });
+    });
+--}}
+</script>
+
+<script >
+    //$(document).ready(function() {
+
+    // $("#form").submit(function(e) {
+    //     e.preventDefault();
+    //     var courseName = $("#course-name").val();
+    //     var courseCode = $("#course-id").val();
+    //     var courseDescription = $("#course-description").val();
+    //     var courseDuration = $("#course-duration").val();
+    //     var courseCost = $("#course-cost").val();
+    //     var teamCost = $("#course-group-cost").val();
+    //     // var instructorId = $("#instructor-name").val();
+    //     var courseChapter = $("#course-chapter-1").val();
+    //     var chapterDesc = $("#chapter-1-desc").val();
+    //
+    //     let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+    //     let chapterDescription = [...$('fieldset textarea')];
+    //     let chapterName = [...$('fieldset input')];
+    //
+    //     chapterName.forEach(function(chapter,chapterIndex){
+    //         let chapterInfo = {};
+    //         chapterInfo.name = chapterName[chapterIndex].value;
+    //         chapterInfo.description = chapterDescription[chapterIndex].value;
+    //
+    //         chapters.push(chapterInfo);
+    //     });
+    //
+    //
+    //     var form_data = new FormData(this);
+    //     form_data.append('content',JSON.stringify(chapters));
+    //     form_data.append('name',courseName);
+    //     form_data.append('code',courseCode);
+    //     form_data.append('duration',courseDuration);
+    //     form_data.append('cost',courseCost);
+    //     form_data.append('teamCost',teamCost);
+    //     form_data.append('instructor_id',1);
+    //
+    //
+    //
+    //     $.ajax({
+    //         url: "/courses",
+    //         method: "POST",
+    //         data : form_data,
+    //         processData : false,
+    //         contentType : false,
+    //         dataType: "json",
+    //         success: function (data) {
+    //             // console.log(data);
+    //             document.getElementById('form').reset();
+    //             alert(data);
+    //         },
+    //         error: function(error) {
+    //             if(error.status == 422) {// validation
+    //
+    //                 // loop through the errors and show them to the user
+    //                 $.each(error.responseJSON.errors, function (i, error) {
+    //                     // error is message
+    //                     // i is element's name
+    //                     console.log(error);
+    //                     var element = $(document).find('[name="'+i+'"]');
+    //                     element.after($('<span style="color: red;">'+error[0]+'</span>'));
+    //                 });
+    //             }
+    //
+    //         }
+    //
+    //     });
+    //
+    // });
 
     //
     //     });
     // });
 
 </script>
-
 </body>
 
 </html>
