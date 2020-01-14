@@ -37,7 +37,8 @@ class CourseGroupController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $courses = $center->courses;
-        return view('courseGroups/course_group_create', compact('courses'));
+        $rooms = $center->rooms;
+        return view('courseGroups/course_group_create', compact('courses','rooms'));
     }
 
     /**
@@ -50,7 +51,7 @@ class CourseGroupController extends Controller
     {
 
         // fetch validated date
-        $data = $this->validateCourseGroup();
+        $data = $this->validateCourseGroupData();
 //        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
         // create a new course group
@@ -110,7 +111,7 @@ class CourseGroupController extends Controller
         //
     }
 
-    private function validateCourseGroup()
+    private function validateCourseGroupData()
     {
 
         $today_date = Carbon::now()->toDateString();
@@ -118,6 +119,7 @@ class CourseGroupController extends Controller
             'name' => 'required|unique:course_groups,name',
             'start_at' => "required|date|after_or_equal:$today_date",
             'course' => 'required',
+            'room' => 'required',
             'course-begin' => 'required|array',
             'course-end' => 'required|array',
             'course-day' => ['required','array',new courseGroupDay],
