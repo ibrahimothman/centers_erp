@@ -5,12 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\Course;
 use App\CourseGroup;
-use App\QueryFilter\ById;
 use App\Student;
-use App\Test;
-use App\TestGroup;
-use Illuminate\Http\Request;
-use Illuminate\Pipeline\Pipeline;
 use mysql_xdevapi\Session;
 
 class CourseEnrollmentController extends Controller
@@ -43,7 +38,7 @@ class CourseEnrollmentController extends Controller
         $center = Center::findOrFail(Session('center_id'));
         $courses = Course::allCourses($center);
         $students=$center->students;
-//        echo json_encode($courses);
+
         return view("courseEnrollment\course_group_enrollment")
             ->with('students',$students)
             ->with('courses',$courses);

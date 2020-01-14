@@ -145,7 +145,6 @@
                         data: data,
                         dataType: "json",
                         success: function (data) {
-                            console.log(data);
                             $('#studentsList').show();
                             var output='<ul class="dropdown-menu" style="display:block; position:relative">';
 

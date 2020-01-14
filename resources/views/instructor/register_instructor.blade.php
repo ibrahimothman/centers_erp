@@ -5,61 +5,47 @@
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
-
     <title>register instructor</title>
     <style>
         body {
             direction: rtl;
             margin-top: 50px;
-            font-family:Aharoni;
+            font-family: 'GESSTwoLight-Light' !important;
         }
 
-        .file-input {
-            display: inline-block;
-            text-align: left;
-            background: #fff;
+
+        .image-upload {
+            height: 200px;
+            width: 100%;
             position: relative;
-            border-radius: 3px;
-            direction: ltr;
+            display: none !important;
+        }
+
+        .image-upload input, .image-upload label {
+            display: none;
+        }
+
+        .image-upload + div {
+            text-align: center;
+        }
+
+        .course-image-input {
+            width: calc(33% - 10px);
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .image-upload + div img {
+            width: 100%;
+            height: 100px;
+            cursor: pointer;
+            top: 13px;
             border: 1px solid #ced4da;
-            height: calc(2.25rem + 2px);
-            width: 100%;
+            padding: 9px;
+            border-radius: 3px;
+            align-self: center;
         }
 
-        .file-input > [type='file'] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            z-index: 10;
-            cursor: pointer;
-        }
-
-        .file-input > .button {
-            display: inline-block;
-            cursor: pointer;
-            background: #eee;
-            padding: 6px 16px;
-            border-radius: 2px;
-
-        }
-
-        .file-input:hover > .button {
-            background: dodgerblue;
-            color: white;
-        }
-
-        .file-input > .label {
-            color: #495057;
-            opacity: .8;
-            float: right;
-            padding-right: 10px;
-            padding-top: 5px
-
-        }
     </style>
 </head>
 <body class="bg-light">
@@ -97,21 +83,23 @@
 
 
                             <div class=" form-row form-group">
-
-                                <label>البريد الالكترونى </label>
-                                <span class="required">*</span>
-                                <input type="text" name="email" placeholder="ادخل البريد الالكترونى "
-                                       class="form-control" value="">
+                                <div class="col">
+                                    <label>البريد الالكترونى </label>
+                                    <span class="required">*</span>
+                                    <input type="text" name="email" placeholder="ادخل البريد الالكترونى "
+                                           class="form-control" value="">
+                                </div>
                             </div>
 
 
                             <div class=" form-row form-group">
-                                <div class="col-sm-6 ">
+                                <div class="col-sm-6  ">
                                     <label>رقم التليفون المحمول</label>
                                     <input type="text" name="phoneNumber"
-                                           placeholder="ادخل رقم التليفون المحمول" class="form-control" value="">
+                                           placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="">
                                 </div>
-                                <div class="col-sm-6 ">
+
+                                <div class="col-sm-6">
                                     <label>تليفون اخر </label>
                                     <input type="text" name="phoneNumberSec" placeholder="ادخل رقم التليفون" value=""
                                            class="form-control">
@@ -119,43 +107,25 @@
 
                             </div>
 
-                            <div class=" form-row">
-                                <div class="col-sm-6">
+                            <div class=" form-row form-group">
+                                <div class="col-sm-6 ">
                                     <label>الرقم القومى </label>
                                     <input type="text" name="idNumber" value=""
-                                           placeholder="ادخل الرقم القومى " class="form-control">
+                                           placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
                                 </div>
                                 <div class="col-sm-6">
                                     <label>رقم جواز السفر</label>
                                     <input name="passportNum" type="text" placeholder="ادخل رقم جواز السفر" value=""
-                                           class="form-control">
+                                           class="form-control ">
                                 </div>
                             </div>
-                            <br>
 
-                            <div class=" form-row  form-group">
-                                <div class="col-6">
-                                    <div class='file-input'>
-                                        <input type='file'>
-                                        <span class='button'>Browse</span>
-                                        <span class='label'>الصوره الشخصيه</span>
-                                    </div>
-                                </div>
 
-                                <div class="col-6 ">
-                                    <div class='file-input'>
-                                        <input type='file'>
-                                        <span class='button'>Browse</span>
-                                        <span class='label'>صوره البطاقه</span>
-                                    </div>
-
-                                </div>
-
-                            </div>
                             <div class="form-row form-group">
                                 <div class="col-sm-6  ">
                                     <label>البلد </label>
-                                    <input name="state" type="text" placeholder="البلد" value="" class="form-control">
+                                    <input name="state" type="text" placeholder="البلد" value=""
+                                           class="form-control mb-1">
                                 </div>
 
                                 <div class="col-sm-6  ">
@@ -177,13 +147,13 @@
                             <div class="form-row form-group ">
                                 <div class="col-sm-6 ">
                                     <label>المؤهل الدراسى </label>
-                                    <select name="degree" class="form-control">
+                                    <select name="degree" class="form-control  mb-1">
                                         <option>طالب</option>
                                         <option>خريج</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 ">
-                                    <label for="">الكليه </label>
+                                    <label>الكليه </label>
                                     <select name="faculty" class="form-control">
                                         <option>هندسه</option>
                                         <option>تجاره</option>
@@ -198,6 +168,33 @@
                                 <textarea name="about" placeholder="نبذه عن " rows="3"
                                           class="form-control" style="  overflow-scrolling:auto; "></textarea>
                             </div>
+
+
+                            <div class="form-row image-upload">
+                                <div class="col-sm-8">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" accept="image/*" name="image1"
+                                               id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                        <input type="file" class="custom-file-input" accept="image/*" name="image2"
+                                               id="customFile2" src="" onchange="readURL(this, 2);" required>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center  ">
+                                <div class="course-image-input">
+                                    <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                         alt="your image"/>
+                                    <p>صورة البطاقه</p>
+                                </div>
+                                <div class="course-image-input">
+                                    <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                         alt="your image"/>
+                                    <p>الصوره الشخصيه</p>
+                                </div>
+                            </div>
+                            <br>
                             <div class="form-row save">
                                 <div class="col-sm-6 mx-auto text-center">
                                     <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
@@ -216,11 +213,7 @@
 
         </div>
     </div>
-
-
     <!-- /.container-fluid -->
-
-
 </section>
 <!-- script-->
 <script type="text/javascipt" src="/js/jQuery.js"></script>
@@ -228,6 +221,40 @@
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<!-- photo js-->
+
+
+<script>
+
+
+    $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(function () {
+        let photoNum = this.id[this.id.length - 1];
+        $(`#customFile${photoNum}`).trigger('click');
+    })
+
+
+    //code for the image uploaded to be shown
+    function readURL(input, num) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                if (num > 3) {
+                    $(`#imageUploaded${num}`)
+                        .attr('src', 'https://icon-library.net/images/done-icon/done-icon-5.jpg')
+
+                } else {
+                    $(`#imageUploaded${num}`)
+                        .attr('src', e.target.result)
+                }
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+</script>
 
 
 </body>
