@@ -14,8 +14,8 @@ class RoomsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
 
+        $this->middleware('auth');
     }
 
 
@@ -57,11 +57,11 @@ class RoomsController extends Controller
         return view('rooms/edit',compact('room'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Room $room)
     {
         $room_data = $this->validateRoomRequest();
         $room_data['details'] = $this->setRoomDetails(Arr::except($room_data,['name','location']));
-        Room::create(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
+        $room->update(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
         return redirect("rooms");
     }
 
