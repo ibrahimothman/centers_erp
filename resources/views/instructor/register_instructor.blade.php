@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
     <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../css/bootstrap.min.css">
     <title>register instructor</title>
     <style>
         body {
@@ -50,7 +50,7 @@
 </head>
 <body class="bg-light">
 
-
+{{$errors}}
 <!-- Begin Page Content -->
 <section>
 
@@ -64,19 +64,20 @@
                         تسجيل بيانات المدرب
                     </div>
                     <div class="card-body">
-                        <form action="" method="post">
+                        <form action="{{url('/instructor')}}" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-row form-group">
                                 <div class="col-sm-12 ">
                                     <label>الاسم باللغه العربيه</label>
                                     <span class="required">*</span>
-                                    <input type="text" class="form-control" name=""
+                                    <input type="text" class="form-control" name="nameAr"
                                            placeholder="بالاسم باللغه العربيه " value="">
                                 </div>
                             </div>
                             <div class="form-row form-group">
                                 <div class="col">
                                     <label>الاسم باللغه الانجليزيه</label>
-                                    <input type="text" name="" class="form-control"
+                                    <input type="text" name="nameEn" class="form-control"
                                            placeholder="الاسم باللغه الانجليزيه" value="">
                                 </div>
                             </div>
@@ -119,6 +120,11 @@
                                            class="form-control ">
                                 </div>
                             </div>
+                            <br>
+
+
+
+
 
 
                             <div class="form-row form-group">
@@ -144,6 +150,7 @@
                             </div>
 
 
+
                             <div class="form-row form-group ">
                                 <div class="col-sm-6 ">
                                     <label>المؤهل الدراسى </label>
@@ -165,9 +172,10 @@
                                 <label>نبذه عن</label>
                                 <span class="required">*</span>
 
-                                <textarea name="about" placeholder="نبذه عن " rows="3"
+                                <textarea name="bio" placeholder="نبذه عن " rows="3"
                                           class="form-control" style="  overflow-scrolling:auto; "></textarea>
                             </div>
+
 
 
                             <div class="form-row image-upload">
@@ -218,9 +226,12 @@
 <!-- script-->
 <script type="text/javascipt" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<script src="{{url('js/jquery-3.3.1.min.js')}}"></script>
+<script src="/../../../js/popper.min.js"></script>
+<script src="/../../../js/bootstrap.min.js"></script>
+<script src="/../../..js/jquery-3.3.1.min.js"></script>
+<script src="/../../..js/popper.min.js"></script>
+<script src="/../../..js/bootstrap.min.js"></script>
 <!-- photo js-->
 
 
@@ -230,7 +241,7 @@
     $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(function () {
         let photoNum = this.id[this.id.length - 1];
         $(`#customFile${photoNum}`).trigger('click');
-    })
+    });
 
 
     //code for the image uploaded to be shown
