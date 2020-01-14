@@ -19,7 +19,11 @@ class CreateRoomsTable extends Migration
             $table->string('location');
             $table->longText('details');
             $table->longText('including')->nullable();
+            $table->unsignedBigInteger('center_id');
             $table->timestamps();
+
+            $table->foreign('center_id')->references('id')->on('centers')
+                ->onDelete('cascade');
         });
     }
 

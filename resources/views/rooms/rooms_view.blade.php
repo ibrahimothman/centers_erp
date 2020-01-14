@@ -54,8 +54,8 @@
             <div class=" col-md-3  col-xs-1">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-text">{{ $room->name }}1</h5>
-                        <a href="#" class="text-primary">قراء المزيد</a>
+                        <h5 class="card-text">{{ $room->name }}</h5>
+                        <a href="{{ route('rooms.edit',$room->id) }}" class="text-primary">قراء المزيد</a>
                     </div>
                 </div>
                 <br>

@@ -41,76 +41,7 @@
                     <div class="card-body">
                         <form action="{{ route('rooms.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-row form-group">
-                                <div class="col-3 ">اسم الغرفه</div>
-                                <div class="col-9 ">
-                                    <input type="text" name="name" class='form-control'
-                                           placeholder='ادخل اسم الغرفه'>
-                                    <div>{{ $errors->first('name') }}</div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="form-row form-group">
-                                <div class="col-3 ">الموقع</div>
-                                <div class="col-9 ">
-                                    <input type="text" name="location" class='form-control' placeholder='ادخل الموقع'>
-                                    <div>{{ $errors->first('location') }}</div>
-                                </div>
-
-                            </div>
-                            <h6>تفاصيل مساحه الغرفه</h6>
-                            <div class="card ">
-                                <div class="card-body">
-                                    <div class="form-row form-group">
-                                        <div class="col-3 ">مساحه الغرفه</div>
-                                        <div class="col-9 ">
-                                            <input type="number" name="area" class='form-control' placeholder='المساحه بالمتر المربع'>
-                                            <div>{{ $errors->first('area') }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row form-group">
-                                        <div class="col-3 ">عدد الكراسي</div>
-                                        <div class="col-9 ">
-                                            <input type="number" name="no_of_chairs" class='form-control'
-                                                   placeholder='ادخل عدد الكراسي'>
-                                            <div>{{ $errors->first('no_of_chairs') }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row form-group">
-                                        <div class="col-3 ">عدد الكمبيوتر</div>
-                                        <div class="col-9 ">
-                                            <input type="number" name="no_of_computers" class='form-control'
-                                                   placeholder='ادخل عدد الكمبيوتر'>
-                                            <div>{{ $errors->first('no_of_computers') }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <h6>محتويات الغرفه</h6>
-                            <div class="card ">
-                                <div class="card-body">
-                                    <div class="row ">
-                                        <div class="col-md-3">
-                                            <input name="check" type="checkbox">
-                                            <label>كاميرات مراقبه</label>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input name="check" type="checkbox">
-                                            <label>تكيف</label>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input name="check" type="checkbox">
-                                            <label>دتاشو</label>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="checkbox" onClick="selectAll(this)">
-                                            <label>تحديد الكل</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
+                            @include('rooms/form')
                             <div class="form-row save">
                                 <div class="col-sm-6 mx-auto text-center">
                                     <button class="btn btn-primary" type="submit" id="submit">حفظ</button>

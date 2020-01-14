@@ -54,4 +54,9 @@ class Center extends Model
         return $this->belongsToMany(Instructor::class);
     }
 
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
 }
