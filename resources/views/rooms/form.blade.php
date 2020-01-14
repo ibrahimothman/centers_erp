@@ -50,15 +50,15 @@
     <div class="card-body">
         <div class="row ">
             <div class="col-md-3">
-                <input name="including[camera]" class="extra-class" type="checkbox" {{ ! is_null($room->including) && array_key_exists('camera',$room->including) && $room->including['camera'] == 'on' ? 'checked' : '' }}>
+                <input name="extras[camera]" class="extra-class" type="checkbox" {{ ! is_null($room->extras) && array_key_exists('camera',$room->extras) && $room->extras['camera'] == 'on' ? 'checked' : '' }}>
                 <label>كاميرات مراقبه</label>
             </div>
             <div class="col-md-3">
-                <input name="including[air-conditioner]" class="extra-class" type="checkbox" {{  ! is_null($room->including) && array_key_exists('air-conditioner',$room->including) && $room->including['air-conditioner'] == 'on' ? 'checked' : '' }} >
+                <input name="extras[air-conditioner]" class="extra-class" type="checkbox" {{  ! is_null($room->extras) && array_key_exists('air-conditioner',$room->extras) && $room->extras['air-conditioner'] == 'on' ? 'checked' : '' }} >
                 <label>تكيف</label>
             </div>
             <div class="col-md-3">
-                <input name="including[data-show]" class="extra-class" type="checkbox" {{ ! is_null($room->including) && array_key_exists('data-show',$room->including) && $room->including['data-show'] == 'on' ? 'checked' : '' }} >
+                <input name="extras[data-show]" class="extra-class" type="checkbox" {{ ! is_null($room->extras) && array_key_exists('data-show',$room->extras) && $room->extras['data-show'] == 'on' ? 'checked' : '' }} >
                 <label>دتاشو</label>
             </div>
             <div class="col-md-3">

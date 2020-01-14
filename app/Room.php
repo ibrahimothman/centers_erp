@@ -14,7 +14,7 @@ class Room extends Model
         return json_decode($key,true);
     }
 
-    public function getIncludingAttribute($key)
+    public function getExtrasAttribute($key)
     {
         return json_decode($key,true);
     }

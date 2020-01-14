@@ -21,7 +21,8 @@ class RoomsController extends Controller
 
     public function index()
     {
-        $rooms = Room::all();
+        $center = Center::findOrFail(Session('center_id'));
+        $rooms = $center->rooms;
         return view('rooms/rooms_view',compact('rooms'));
     }
 
@@ -35,12 +36,11 @@ class RoomsController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
         $room_data = $this->validateRoomRequest();
         $room_data['details'] = $this->setRoomDetails(Arr::except($room_data,['name','location']));
-        if($request->has('including')) {
-            $room_data['including'] = $this->setRoomExtras($room_data['including']);
+        if($request->has('extras')) {
+            $room_data['extras'] = $this->setRoomExtras($room_data['extras']);
         }
         $center->rooms()->create(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
         return redirect("rooms");
@@ -65,9 +65,9 @@ class RoomsController extends Controller
     {
         $room_data = $this->validateRoomRequest();
         $room_data['details'] = $this->setRoomDetails(Arr::except($room_data,['name','location']));
-        if($request->has('including')) {
-            $room_data['including'] = $this->setRoomExtras($room_data['including']);
-        }else $room_data['including'] = null;
+        if($request->has('extras')) {
+            $room_data['extras'] = $this->setRoomExtras($room_data['extras']);
+        }else $room_data['extras'] = null;
         $room->update(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
         return redirect("rooms");
     }
@@ -85,7 +85,7 @@ class RoomsController extends Controller
             'area' => 'required|integer',
             'no_of_chairs' => 'required|integer',
             'no_of_computers' => 'required|integer',
-            'including' => 'sometimes|array'
+            'extras' => 'sometimes|array'
         ]);
 
     }
