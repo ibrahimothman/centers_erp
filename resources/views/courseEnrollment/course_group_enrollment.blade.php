@@ -125,7 +125,8 @@
         <script >
             $(document).ready(function() {
                 //alert("/*/**");
-                getGroups_date($('#course_id').val());
+                if($('#course_id').val())
+                    getGroups_date($('#course_id').val());
                 var student_id = 0;
 
                 // autocomplete students
