@@ -97,9 +97,9 @@
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-group-room">قاعة الدورة</label>
                                                     <select class="form-control" id="course-group-room" name="room" required>
-                                                        <option value="1">قاعة رقم 1</option>
-                                                        <option value="2">قاعة رقم 2</option>
-                                                        <option value="3">قاعة رقم 3</option>
+                                                        @foreach($rooms as $room)
+                                                            <option value="{{ $room->id }}">قاعة {{ $room->name }}1</option>
+                                                         @endforeach
                                                     </select>
                                                         <span id="test_course-group-room_error"></span>
                                                     <div>{{ $errors->first('room') }}</div>

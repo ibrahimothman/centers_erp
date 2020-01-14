@@ -196,7 +196,7 @@ class StudentController extends Controller
             'email' => 'required|unique:students,email,'.$user_id,
             'idNumber' => 'required|digits:14|unique:students,idNumber,'.$user_id,
             'image' => ' required|image|file | max:10000',
-            'idImage' => 'sometimes|image|file | max:10000',
+            'idImage' => 'required|image|file | max:10000',
             'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber,'.$user_id,
             //'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
             'passportNumber' => 'sometimes',

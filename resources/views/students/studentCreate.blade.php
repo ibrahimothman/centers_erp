@@ -298,9 +298,9 @@
                                     <div class="form-row image-upload">
                                         <div class="col-sm-8">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" accept="image/*" name="image1"
+                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
                                                        id="customFile1" src="" onchange="readURL(this, 1);" required>
-                                                <input type="file" class="custom-file-input" accept="image/*" name="image2"
+                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
                                                        id="customFile2" src="" onchange="readURL(this, 2);" required>
 
 
