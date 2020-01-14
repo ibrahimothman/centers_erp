@@ -11,8 +11,8 @@ class Uploader
     public static $public_path='/uploads/profiles/';
 
     public static function uploadImage($image,$dir){
-        if(! is_dir(public_path('/uploads/profiles'))){
-            mkdir(public_path('/uploads/profiles'));
+        if(! is_dir(public_path($dir))){
+            mkdir(public_path($dir));
         }
         $basename = Str::random();
         $original = $basename.'.'.$image->getClientOriginalExtension();
@@ -21,9 +21,8 @@ class Uploader
     }
 
     private static function getPath($dir,$original){
-        if ($dir===self::$public_path){
-            return public_path("/uploads/profiles/".$original);
-        }
+            return url($dir.$original);
+
     }
 
 }
