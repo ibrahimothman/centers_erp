@@ -20,7 +20,8 @@ class Student extends Model
                 Sort::class,
                 Name::class
             ])
-            ->thenReturn();
+            ->thenReturn()
+            ->get();
 
     }
 

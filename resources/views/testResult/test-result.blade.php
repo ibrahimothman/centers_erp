@@ -90,9 +90,9 @@
                                     <div class="form-row">
 
                                         <div class="col-md-6 form-group">
-                                            <label for="validationCustom01"> اسم الامتحان </label>
+                                            <label for="testselector"> اسم الامتحان </label>
 
-                                            <select class="form-control "  placeholder="اختار الامتحان" id="testselector" name="test" required>
+                                            <select class="form-control "  id="testselector" name="test" required>
                                                 <option value="0">اختار الامتحان</option>
                                                 @foreach($tests as $test)
                                                     <option value={{$test->id}}>{{$test->name}}</option>
@@ -217,7 +217,7 @@
     $(function() {
         $('#testselector').change(function(){
 
-            if($(this).val()=="test")
+            if($(this).val()==="test")
             {
                 $('.cont-det').show();
             }
@@ -236,7 +236,7 @@
             data : {test_id : test_id},
             dataType : 'json',
             success: function (data) {
-                // console.log(data);
+                console.log( data);
                 displayData(data);
             }
         });

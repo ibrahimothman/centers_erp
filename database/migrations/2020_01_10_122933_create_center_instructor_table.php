@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInstructorCenter extends Migration
+class CreateCenterInstructorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,6 @@ class CreateInstructorCenter extends Migration
     public function up()
     {
         Schema::create('center_instructor', function (Blueprint $table) {
-
             $table->unsignedBigInteger('instructor_id');
             $table->foreign('instructor_id')
                 ->references("id")
@@ -26,7 +25,7 @@ class CreateInstructorCenter extends Migration
                 ->references("id")
                 ->on("centers")
                 ->onDelete('cascade');
-           
+
 
             $table->timestamps();
         });
@@ -39,6 +38,6 @@ class CreateInstructorCenter extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instructor_center');
+        Schema::dropIfExists('centers_instructors');
     }
 }
