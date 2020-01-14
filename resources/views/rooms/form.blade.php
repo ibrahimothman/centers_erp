@@ -50,15 +50,15 @@
     <div class="card-body">
         <div class="row ">
             <div class="col-md-3">
-                <input name="check" type="checkbox">
+                <input name="including[camera]" class="extra-class" type="checkbox" {{ ! is_null($room->including) && array_key_exists('camera',$room->including) && $room->including['camera'] == 'on' ? 'checked' : '' }}>
                 <label>كاميرات مراقبه</label>
             </div>
             <div class="col-md-3">
-                <input name="check" type="checkbox">
+                <input name="including[air-conditioner]" class="extra-class" type="checkbox" {{  ! is_null($room->including) && array_key_exists('air-conditioner',$room->including) && $room->including['air-conditioner'] == 'on' ? 'checked' : '' }} >
                 <label>تكيف</label>
             </div>
             <div class="col-md-3">
-                <input name="check" type="checkbox">
+                <input name="including[data-show]" class="extra-class" type="checkbox" {{ ! is_null($room->including) && array_key_exists('data-show',$room->including) && $room->including['data-show'] == 'on' ? 'checked' : '' }} >
                 <label>دتاشو</label>
             </div>
             <div class="col-md-3">
@@ -69,4 +69,14 @@
     </div>
 </div>
 <br>
+
+
+<script>
+    function selectAll(source) {
+        var checkboxes = document.getElementsByClassName('extra-class');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
 
