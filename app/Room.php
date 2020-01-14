@@ -14,6 +14,11 @@ class Room extends Model
         return json_decode($key,true);
     }
 
+    public function getIncludingAttribute($key)
+    {
+        return json_decode($key,true);
+    }
+
     public function center()
     {
         return $this->belongsTo(Center::class);

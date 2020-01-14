@@ -63,13 +63,6 @@
 <script src="{{url('js/popper.min.js')}}"></script>
 <script src="{{url('js/bootstrap.min.js')}}"></script>
 
-<script>
-    function selectAll(source) {
-        var checkboxes = document.getElementsByName('check');
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-            checkboxes[i].checked = source.checked;
-        }
-    }
-</script>
+
 </body>
 </html>
