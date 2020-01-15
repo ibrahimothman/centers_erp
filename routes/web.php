@@ -64,6 +64,8 @@ Route::get('get_course_enrollments','CourseEnrollmentController@getCourseEnrollm
 
 // ----------------------- rooms----------------
 Route::resource('rooms','RoomsController');
+Route::get('available_begins_for_the_room','RoomsController@getAvailableBegins');
+Route::get('available_ends_for_the_room','RoomsController@getAvailableEnds');
 
 
 // -------------------instructor----------------

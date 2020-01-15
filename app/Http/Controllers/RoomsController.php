@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\Room;
+use App\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use mysql_xdevapi\Session;
@@ -51,7 +52,7 @@ class RoomsController extends Controller
 
     public function show(Room $room)
     {
-        echo json_encode($room);
+//        $this->getAvailableTimes(2,2);
 
     }
 
@@ -102,4 +103,56 @@ class RoomsController extends Controller
     {
         return json_encode($extras);
     }
+
+    public function getAvailableBegins()
+    {
+        if(request()->ajax()){
+            $room_id = request('room_id');
+            $day_id = request('day_id');
+        }
+        $begin = Time::hours();
+        $room = Room::findOrFail($room_id);
+        foreach($room->times->where('day', $day_id) as $time){
+            for ($i = $time->begin; $i < $time->end; $i++){
+                $begin= Arr::except($begin,$i);
+            }
+        }
+
+        return $begin;
+
+    }
+
+    public function getAvailableEnds()
+    {
+        if(request()->ajax()){
+            $room_id = request('room_id');
+            $day_id = request('day_id');
+            $begin_id = request('begin_id');
+        }
+        $end = Time::hours();
+        $room = Room::findOrFail($room_id);
+
+        // Except all times before the time at which you begin
+        for ($k = 7; $k <= $begin_id; $k++) {
+            $end = Arr::except($end, $k);
+        }
+        foreach ($room->times->where('day', $day_id) as $time) {
+            if ($begin_id < $time->begin) {
+                for ($i = $time->begin + 1; $i <= 24; $i++) {
+                    $end = Arr::except($end, $i);
+                }
+            } else {
+                for ($j = $begin_id; $j >= 7; $j--) {
+                    $end = Arr::except($end, $j);
+                }
+            }
+
+        }
+
+
+        return $end;
+
+    }
+
+
 }
