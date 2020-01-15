@@ -17,9 +17,9 @@
 <div class="container  ">
     <nav class="navbar navbar-expand-lg navbar-light ">
 
-        <form class="form-inline my-2 my-lg-0   ">
+        <form class="form-inline my-2 my-lg-0   " action="/instructor" method="get">
 
-            <input type="search" placeholder="بحث">
+            <input name="search" type="search" placeholder="بحث">
             <button class="btn btn-primary  mx-2 px-4 my-5 my-sm-0" type="submit">بحث</button>
 
         </form>
