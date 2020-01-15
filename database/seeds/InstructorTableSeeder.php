@@ -14,6 +14,6 @@ class InstructorTableSeeder extends Seeder
     {
         //
 
-        factory(Instructor::class)->create();
+        factory(Instructor::class,3)->create();
     }
 }
