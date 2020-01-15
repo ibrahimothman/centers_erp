@@ -1,19 +1,15 @@
 <?php
 
-
 namespace App\QueryFilter;
-
-
 use Closure;
 use Illuminate\Support\Str;
 
-class Name extends Filter
+class Id extends Filter
 {
 
     protected function applyFilter($builder)
     {
         // TODO: Implement applyFilter() method.
-        return $builder->where('nameAr','like', '%' . request('name') . '%')
-            ->orWhere('nameEn','like', '%' . request('name') . '%');
+        return $builder->where(str::snake(class_basename($this)), request(str::snake(class_basename($this))));
     }
 }

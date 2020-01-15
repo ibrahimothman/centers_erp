@@ -52,7 +52,6 @@ class RoomsController extends Controller
 
     public function show(Room $room)
     {
-//        $this->getAvailableTimes(2,2);
 
     }
 

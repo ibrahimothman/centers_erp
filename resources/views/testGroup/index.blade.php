@@ -219,7 +219,7 @@
                                                     ||$Utility->datePassed($Utility->getDate($testGroup->group_date),$Utility->getTime($testGroup->group_date))==true)
                                                                 @php($dis="disabled")
                                                                 @endif
-                                                            <a href="test-enrollments/create"  class="btn btn-outline-warning {{$dis}} btn-sm">
+                                                            <a href="test-enrollments/create?id={{ $test->id }}"  class="btn btn-outline-warning {{$dis}} btn-sm">
                                                                 <i class="fas fa-plus"></i>
                                                                 <SPAN>تسجيل الطلاب</SPAN> </a>
                                                             <a  href="test-enrollments"  class="btn btn-outline-success   btn-sm ">

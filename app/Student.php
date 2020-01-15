@@ -15,13 +15,13 @@ class Student extends Model
     public static function allStudents($center)
     {
         return app(Pipeline::class)
-            ->send($center->students)
+            ->send($center->students())
             ->through([
                 Sort::class,
                 Name::class
             ])
-            ->thenReturn();
-            //->get();
+            ->thenReturn()
+            ->get();
 
     }
 

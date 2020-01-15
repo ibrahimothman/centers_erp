@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\QueryFilter\ById;
+use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
@@ -13,14 +13,13 @@ class Course extends Model
 
     public static function allCourses($center)
     {
-        return $center->courses;
-//        return app(Pipeline::class)
-//            ->send($center->courses)
-//            ->through([
-//                ById::class
-//            ])
-//            ->thenReturn()
-//            ->get();
+        return app(Pipeline::class)
+            ->send($center->courses())
+            ->through([
+                Id::class
+            ])
+            ->thenReturn()
+            ->get();
     }
 
     public function courseImages()
