@@ -32,7 +32,7 @@ class TestGroupController extends Controller
 //        $this->authorize('viewAny',TestGroup::class);
 
         $center = Center::findOrFail(Session('center_id'));;
-        $allTests = $center->tests;
+        $allTests = Test::allTests($center);
 
         $tests = $center->tests()->paginate(2);
         if (Input::get('test')!=null)

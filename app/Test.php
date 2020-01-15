@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\QueryFilter\ById;
+use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
@@ -13,9 +13,9 @@ class Test extends Model
     public static function allTests($center)
     {
         return app(Pipeline::class)
-            ->send($center->tests)
+            ->send($center->tests())
             ->through([
-                ById::class
+                Id::class
             ])
             ->thenReturn()
             ->get();
