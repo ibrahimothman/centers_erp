@@ -28,6 +28,7 @@ function addDayInCourse(num) {
     <div class="col-sm-4 form-group">
         <label for="course-day-${num}">يوم ${num}</label>
         <select class="form-control" id="course-day-${num}" name="course-day[]" onchange="onDayChanged(${num})" required>
+            <option value="0">اختر اليوم</option>
             <option value="1">السبت</option>
             <option value="2">الاحد</option>
             <option value="3">الاتنين</option>

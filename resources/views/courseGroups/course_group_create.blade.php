@@ -111,6 +111,7 @@
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1">يوم 1</label>
                                                     <select class="form-control" id="course-day-1" name="course-day[]" onchange="onDayChanged(1);" required>
+                                                        <option value="0">اختر اليوم</option>
                                                         @foreach(\App\Time::days() as $dayKey => $dayValue)
                                                             <option value="{{ $dayKey }}">{{ $dayValue }}</option>
                                                          @endforeach
@@ -201,6 +202,7 @@
 
             function fillBegins(begins) {
                 $('#course-day-'+number+'-begin').empty();
+                $('#course-day-'+number+'-begin').append('<option value="0">اختر ميعاد</option>');
                 $.each(begins, function (i, v) {
                     $('#course-day-'+number+'-begin').append('<option value="' + i + '">' + v + '</option>');
                 });
@@ -229,6 +231,7 @@
 
             function fillEnds(ends) {
                 $('#course-day-'+number+'-end').empty();
+                $('#course-day-'+number+'-end').append('<option value="0">اختر ميعاد</option>');
                 $.each(ends, function (i, v) {
                     // console.log('i = '+ i +" / v = "+v);
                     $('#course-day-'+number+'-end').append('<option value="' + i + '">' + v + '</option>');
