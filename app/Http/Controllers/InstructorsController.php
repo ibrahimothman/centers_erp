@@ -88,7 +88,7 @@ class InstructorsController extends Controller
         return view("instructor/update_instructor", compact('instructor'));
     }
 
-    
+
     public function update(Request $request, Instructor $instructor)
     {
         $data = $this->validateRequest('');
