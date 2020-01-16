@@ -10,14 +10,14 @@ function addChapterInput(num) {
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon${num}">باب  ${num}</span>
             </div>
-            <input type="text" class="form-control" id="course-chapter-${num}" placeholder="محتوى الدورة " value="" name="course-chapter[]" >
+            <input type="text" class="form-control" id="course-chapter-${num}" placeholder="محتوى الدورة " value="" name="course-chapter-${num}" >
             <span id="test_course-chapter-${num}_error"></span>
             <div></div>
         </div>
     </div>
     <div class="form-row">
         <label for="chapter-${num}-desc">عن باب ${num}</label>
-        <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-${num}-desc" name="chapter-desc[]"></textarea>
+        <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-${num}-desc" name="chapter-${num}-desc"></textarea>
         <div></div>
     </div>`;
 }

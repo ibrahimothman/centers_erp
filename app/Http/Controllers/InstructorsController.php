@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class InstructorsController extends Controller
 {
@@ -15,7 +16,18 @@ class InstructorsController extends Controller
      */
     public function index()
     {
-        return view("instructor/overview_instructor");
+
+        if (Input::has('search')) {
+            $queryString=Input::get('search');
+            $instructors=Instructor::where('nameAr','like','%'.$queryString.'%')->paginate(5);
+
+            return view("instructor/view_all_instructors")
+                ->with('instructors',$instructors);
+        }
+
+        $instructors=Instructor::paginate(5);
+        return view("instructor/view_all_instructors")
+            ->with('instructors',$instructors);
 
     }
 
@@ -101,6 +113,12 @@ class InstructorsController extends Controller
     public function destroy($id)
     {
 
+    }
+
+    public function searchInstructors(Request $request){
+
+
+        return view("instructor/view_all_instructors");
     }
 
     private function validateRequest($user_id)
