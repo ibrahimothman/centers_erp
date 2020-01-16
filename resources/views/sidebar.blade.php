@@ -66,6 +66,23 @@
         </div>
     </li>
 
+    <!-- courses -->
+    <li class="nav-item {{str_contains(Request::url(),'instructors' )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#instructorCollapse" aria-expanded="true" aria-controls="instructorCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>المدربين</span>
+        </a>
+        <div id="instructorCollapse" class="{{str_contains(Request::url(),'instructors' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                @foreach(\App\helper\SideBarLinks::instructorLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
+
     <!-- rooms -->
     <li class="nav-item {{str_contains(Request::url(),'rooms') ? 'active' : ''}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#roomCollapse" aria-expanded="true" aria-controls="roomCollapse">

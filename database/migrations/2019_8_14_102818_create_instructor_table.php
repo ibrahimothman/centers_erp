@@ -24,7 +24,6 @@ class CreateInstructorTable extends Migration
             $table->string('passportNumber')->nullable();
             $table->string('image')->nullable();
             $table->string('idImage')->nullable();
-            $table->string('idImage')->nullable();
             $table->string('bio')->nullable();
 
 

@@ -69,7 +69,7 @@ Route::get('available_ends_for_the_room','RoomsController@getAvailableEnds');
 
 
 // -------------------instructor----------------
-Route::resource('instructor','InstructorsController');
+Route::resource('instructors','InstructorsController');
 Route::post('search_instructor','InstructorsController@searchInstructors');
 //-------------------- jobs ---------------------
 Route::resource('jobs','jobController');
