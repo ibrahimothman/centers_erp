@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\helper\Constants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -11,6 +12,14 @@ class Instructor extends Model
 
 
     protected $guarded = [];
+
+    public function getImage($key)
+    {
+        $imagePath = ($this->$key) ? $this->$key : Constants::getInstructorPlaceholderImage();
+        return $imagePath;
+    }
+
+
 
     public function centers(){
         return $this->belongsToMany(Center::class);

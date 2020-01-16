@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\helper\Constants;
 use App\QueryFilter\Name;
 use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
@@ -25,10 +26,10 @@ class Student extends Model
 
     }
 
-    public function profileImage()
+    public function getImage($key)
     {
-        $imagePath = ($this->image) ? $this->image : 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
-        return url('/uploads/profiles/' . $imagePath);
+        $imagePath = ($this->$key) ? $this->$key : Constants::getInstructorPlaceholderImage();
+        return  $imagePath;
     }
 
     public function setImageAttribute($image){

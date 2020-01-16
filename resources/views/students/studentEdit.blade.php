@@ -162,7 +162,7 @@
 
 
                                         <div class="text-center">
-                                            <img src="{{ $student->profileImage() }}"  class="avatar img-circle img-thumbnail" alt="">
+                                            <img src="{{ $student->getImage("image") }}"  class="avatar img-circle img-thumbnail" alt="">
                                         </div></hr><br>
 
                                     </div>

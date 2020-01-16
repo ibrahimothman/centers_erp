@@ -51,7 +51,6 @@ class InstructorsController extends Controller
     public function store(Request $request)
     {
 
-//        dd($request->all());
         $data = $this->validateRequest('');
 
         // fetch center from session
@@ -83,27 +82,26 @@ class InstructorsController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function edit(Instructor $instructor)
     {
-        return view("instructor/update_instructor");
+        return view("instructor/update_instructor", compact('instructor'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    
+    public function update(Request $request, Instructor $instructor)
     {
-        //
+        $data = $this->validateRequest('');
+
+
+        $instructor->update(Arr::except($data,['state','city','address']));
+        $instructor->address()->update([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
+        return redirect('instructors/'.$instructor->id);
     }
 
     /**
