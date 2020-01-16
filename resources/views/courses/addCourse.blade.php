@@ -137,18 +137,6 @@
                                     </div>
                                 </fieldset>
                                 <div class="form-row">
-                                    {{--
-                                        <div class="col-sm-6 form-group">
-                                        <label for="instructor-name">اسم المدرس</label>
-                                        <select class="form-control" id="instructor-name" multiple required>
-                                            @foreach($instructors as $instructor)
-                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
-                                            @endforeach
-                                        </select>
-                                            <span id="test_course-teacher_error"></span>
-                                            <div></div>
-                                        </div>
-                                        --}}
                                     <div class="col-sm-6 form-group">
                                         <label for="instructor-name">اسم المدرس</label>
                                         <div class="dropdown ">
@@ -157,7 +145,7 @@
                                             </button>
                                             <ul id="instructors-list"  class=" dropdown-menu text-right">
                                                 @foreach($instructors as $instructor)
-                                                    <li value="{{$instructor->id}}"><label class="checkbox"><input value="true"  type="checkbox">{{$instructor->nameAr}}</label></li>
+                                                    <li ><label class="checkbox"><input value="{{ $instructor->id }}"  type="checkbox">{{$instructor->nameAr}}</label></li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -190,43 +178,6 @@
                                     </div>
                                 </div>
 
-                                <div hidden class="form-row">
-                                    <div class="col-sm-6 form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input part-of-diploma"
-                                                   name="retake" id="customCheck1">
-                                            <label class="custom-control-label" for="customCheck1">هذه الدورة جزء من
-                                                دبلومة</label>
-                                        </div>
-                                        <div hidden class="shown-if-checked">
-                                            <div>
-                                                <label for="diploma-name">اسم الدبلومة</label>
-                                                <input type="text" class="form-control" id="diploma-name"
-                                                       placeholder="اسم الدبلومة " value="" name="diploma-name"
-                                                       required>
-                                                <span id="test_diploma-name_error"></span>
-                                                <div></div>
-                                                <label for="diploma-course-num"> ترتيب الدورة بالدبلومة</label>
-                                                <input type="number" class="form-control" id="diploma-course-num"
-                                                       placeholder=" ترتيب الدورة بالدبلومة " value=""
-                                                       name="diploma-course-num" required>
-                                                <span id="test_diploma-course-num_error"></span>
-                                                <div></div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="retake"
-                                                   id="customCheck2" checked="">
-                                            <label class="custom-control-label" for="customCheck2">هذه الدورة لها
-                                                امتحان</label>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="form-row save">
 
@@ -307,6 +258,12 @@
                     fd.append('images[]',file.files[0]);
                }
             });
+            $('input[type="checkbox"]').each(function () {
+                if(this.checked)
+                    fd.append('instructors[]',$(this).val());
+            });
+
+
             fd.append('_token',"{{ csrf_token() }}");
             fd.append('name',courseName);
             fd.append('code', courseCode);
@@ -315,7 +272,6 @@
             fd.append('cost', courseCost);
             fd.append('content', JSON.stringify(chapters));
             fd.append('teamCost', teamCost);
-            fd.append('instructors', "1");
             $.ajax({
                 url: "/courses",
                 method: "POST",

@@ -51,9 +51,9 @@ class CoursesController extends Controller
         $course = $center->courses()->create($course_data);
 
         // attach the course to the instructors
-//        foreach ($data['instructors'] as $instructor_id){
-            $course->instructors()->syncWithoutDetaching($data['instructors']);
-//        }
+        foreach ($data['instructors'] as $instructor_id){
+            $course->instructors()->syncWithoutDetaching($instructor_id);
+        }
 
         // upload images
         $this->uploadImages($request,$course);
@@ -137,7 +137,7 @@ class CoursesController extends Controller
                 'description'=>'required',
                 'content'=>'required',
                 'images'=>'required|array',
-                'instructors'=>'required',
+                'instructors'=>'required|array',
             ]);
 
 
