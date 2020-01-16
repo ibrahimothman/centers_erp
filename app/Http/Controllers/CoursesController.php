@@ -41,6 +41,7 @@ class CoursesController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         //dd($request->get('instructor_id'));
         $center = Center::findOrFail(Session('center_id'));
         $course = $center->courses()

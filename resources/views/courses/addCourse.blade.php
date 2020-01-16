@@ -47,7 +47,7 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form enctype="multipart/form-data" id="form">
+                            <form method="post" action="{{url('/courses')}}" enctype="multipart/form-data" id="form">
                                 @csrf
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
@@ -156,11 +156,10 @@
                                             <button data-toggle="dropdown" class="dropdown-toggle py-1">
                                                 اسم المدرس <b class="caret"></b>
                                             </button>
-                                            <ul class=" dropdown-menu text-right">
-                                                <li><label class="checkbox"><input type="checkbox">احمد محمد</label>
-                                                </li>
-                                                <li><label class="checkbox"><input type="checkbox">محمود مصطفي</label>
-                                                </li>
+                                            <ul id="instructors-list"  class=" dropdown-menu text-right">
+                                                @foreach($instructors as $instructor)
+                                                <li value="{{$instructor->id}}"><label class="checkbox"><input value="true"  type="checkbox">{{$instructor->nameAr}}</label></li>
+                                                    @endforeach
                                             </ul>
                                         </div>
                                         <span id="test_course-teacher_error"></span>
@@ -192,7 +191,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-row">
+                                <div hidden class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input part-of-diploma"
@@ -200,7 +199,7 @@
                                             <label class="custom-control-label" for="customCheck1">هذه الدورة جزء من
                                                 دبلومة</label>
                                         </div>
-                                        <div class="shown-if-checked">
+                                        <div hidden class="shown-if-checked">
                                             <div>
                                                 <label for="diploma-name">اسم الدبلومة</label>
                                                 <input type="text" class="form-control" id="diploma-name"
@@ -275,10 +274,17 @@
 <script src="static/js/bootstrap.min.js"></script>
 <!--  end script-->
 <script>
-    {{--
-    $(document).ready(function () {
 
+    $(document).ready(function () {
+        console.log("ready");
         $("#submit").click(function () {
+            var ins=$('#instructors-list').find('li').map(function()
+            {
+                return $(this).val()
+            }).get().join(',');
+            console.log("ins"+ins);
+            return;
+
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
             var courseDescription = $("#course-description").val();
@@ -336,7 +342,7 @@
 
         });
     });
---}}
+
 </script>
 
 <script >
