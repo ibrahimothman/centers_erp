@@ -75,18 +75,21 @@ class CoursesController extends Controller
 
     public function edit($id )
     {
+        $center=Center::findOrFail(Session("center_id"));
+        $instructors= $center->instructors;
         $course=Course::find($id);
         if ($course==null)
             abort(404,"Course was not found");
         return view('courses/updateCourse')
-            ->with("course",$course);
+            ->with("course",$course)
+            ->with("instructors",$instructors);
     }
 
 
 
     public function update(Request $request, Course $course)
     {
-        //dd($request->all());
+        dd($request->all());
         // todo handle validation with ajax
         // delete all course's image from db and files
         if($request->hasFile('image')) {
