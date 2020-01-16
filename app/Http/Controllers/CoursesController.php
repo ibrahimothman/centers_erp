@@ -41,13 +41,23 @@ class CoursesController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->get('instructor_id'));
+//        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
-        $course = $center->courses()
-            ->create($this->getValidatedCourseData(''));
-        $course->instructors()->attach($request->get("instructor_id"));
+
+        $data = $this->getValidatedCourseData('');
+        $course_data = Arr::except($data,['images','instructors']);
+
+        // create the course
+        $course = $center->courses()->create($course_data);
+
+        // attach the course to the instructors
+//        foreach ($data['instructors'] as $instructor_id){
+            $course->instructors()->syncWithoutDetaching($data['instructors']);
+//        }
+
+        // upload images
         $this->uploadImages($request,$course);
-        return redirect('courses');
+        return "Course is added";
     }
 
 
@@ -92,8 +102,8 @@ class CoursesController extends Controller
 
     public function uploadImages(Request $request, $course){
 
-        if($request->hasFile('image')) {
-            $images = Collection::wrap($request->file('image'));
+        if($request->hasFile('images')) {
+            $images = Collection::wrap($request->file('images'));
             foreach ($images as $image) {
 
                 $original = Image::saveImage('/uploads/courses', $image);
@@ -118,20 +128,18 @@ class CoursesController extends Controller
     }
 
     private function getValidatedCourseData($course_id){
-        $data = request()->validate([
+        return request()->validate([
                 'name'=>'required|unique:courses,name,'.$course_id,
                 'code'=>'required|unique:courses,code,'.$course_id,
                 'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',
                 'description'=>'required',
-                'course-chapter'=>'required|array',
-                'chapter-desc'=>'required|array'
+                'content'=>'required',
+                'images'=>'required|array',
+                'instructors'=>'required',
             ]);
 
-        $data['content'] = $this->setContent($data['course-chapter'], $data['chapter-desc']);
-        $data = Arr::except($data,['course-chapter','chapter-desc']);
-        return $data;
 
     }
 

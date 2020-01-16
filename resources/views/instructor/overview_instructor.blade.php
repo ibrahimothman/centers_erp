@@ -51,7 +51,6 @@
                 <h2 class="text-primary">الكورسات </h2>
             </div>
         </div>
-<<<<<<< HEAD
 
 <!-- motion -->
 
@@ -92,8 +91,10 @@
 
                 </div>
                 <br>
+
             </div>
         </div>
+
         <!-- end cards  -->
     </div>
 

@@ -22,11 +22,6 @@ class Course extends Model
             ->get();
     }
 
-    public function courseImages()
-    {
-        $imagePath = ($this->image) ? $this->image : 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
-        return '/uploads/profiles/' . $imagePath;
-    }
 
     public function center(){
         return $this->belongsTo(Center::class);

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
     <!-- Bootstrap CSS & js -->
@@ -24,6 +25,11 @@
         .image-upload input, .image-upload label {
             display: none;
         }
+=======
+
+    @include('library')
+    <link rel="stylesheet" href="/css/instructor_style.css">
+>>>>>>> 0813976f6b54054fa0a46c96c5c771f579c4fe6c
 
         .image-upload + div {
             text-align: center;
@@ -50,7 +56,7 @@
 </head>
 <body class="bg-light">
 
-{{$errors}}
+
 <!-- Begin Page Content -->
 <section>
 
@@ -149,25 +155,6 @@
                                           class="form-control"></textarea>
                             </div>
 
-
-
-                            <div class="form-row form-group ">
-                                <div class="col-sm-6 ">
-                                    <label>المؤهل الدراسى </label>
-                                    <select name="degree" class="form-control  mb-1">
-                                        <option>طالب</option>
-                                        <option>خريج</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label>الكليه </label>
-                                    <select name="faculty" class="form-control">
-                                        <option>هندسه</option>
-                                        <option>تجاره</option>
-                                    </select>
-                                </div>
-                            </div>
-
                             <div class=" form-row  form-group">
                                 <label>نبذه عن</label>
                                 <span class="required">*</span>
@@ -224,6 +211,7 @@
     <!-- /.container-fluid -->
 </section>
 <!-- script-->
+<<<<<<< HEAD
 <script type="text/javascipt" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 <script src="{{url('js/jquery-3.3.1.min.js')}}"></script>
@@ -232,6 +220,11 @@
 <script src="/../../..js/jquery-3.3.1.min.js"></script>
 <script src="/../../..js/popper.min.js"></script>
 <script src="/../../..js/bootstrap.min.js"></script>
+=======
+
+
+@include('script')
+>>>>>>> 0813976f6b54054fa0a46c96c5c771f579c4fe6c
 <!-- photo js-->
 
 
