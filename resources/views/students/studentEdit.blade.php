@@ -240,14 +240,14 @@
                                         <div class="col-sm-6" >
 
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="image" id="customFile" src="{{ old('image') }}" >
+                                                <input type="file" class="custom-file-input" name="image" id="customFile" src="{{ old('image') ?? $student->getImage("image") }}" >
                                                 <label class="custom-file-label" for="customFile">صوره الشخصيه</label>
                                                 <div>{{ $errors->first('image') }}</div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 ">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="idImage" src="{{ old('idImage') ?? $student->idImage}}" id="customFile">
+                                                <input type="file" class="custom-file-input" name="idImage" src="{{ old('idImage') ?? $student->getImage("idImage")}}" id="customFile">
                                                 <label class="custom-file-label" for="customFile">صوره  البطاقه </label>
                                                 <div>{{ $errors->first('idImage') }}</div>
                                             </div>
