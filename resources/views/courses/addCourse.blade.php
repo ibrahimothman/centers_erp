@@ -157,9 +157,9 @@
                                                 اسم المدرس <b class="caret"></b>
                                             </button>
                                             <ul class=" dropdown-menu text-right">
-                                                <li><label class="checkbox"><input type="checkbox">احمد محمد</label>
+                                                <li><label class="checkbox"><input  name="check"  value="احمد محمد" type="checkbox">احمد محمد</label>
                                                 </li>
-                                                <li><label class="checkbox"><input type="checkbox">محمود مصطفي</label>
+                                                <li><label class="checkbox"><input name="check" value="محمود مصطفي" type="checkbox">محمود مصطفي</label>
                                                 </li>
                                             </ul>
                                         </div>
@@ -265,14 +265,6 @@
 
 
 <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
-
-<!-- script multi select-->
-
-<script type="text/javascript" src="js/jQuery.js"></script>
-<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
-<script src="static/js/jquery-3.3.1.min.js"></script>
-<script src="static/js/popper.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
 <!--  end script-->
 <script>
     {{--
@@ -413,6 +405,18 @@
     //     });
     // });
 
+</script>
+<!-- test instructor check -->
+<script>
+    $(document).ready(function() {
+        $("#submit").click(function(){
+            var myarray = [];
+            $.each($("input[name='check']:checked"), function(){
+                myarray.push($(this).val());
+            });
+        console.log("instructors is: " + myarray.join(", "));
+        });
+    });
 </script>
 </body>
 
