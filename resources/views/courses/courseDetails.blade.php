@@ -97,8 +97,8 @@
                                                 <div class="course-teachers">
                                                 @foreach($course->instructors as $instructor)
                                                     <div class="teacher">
-                                                        <img src="{{$instructor->profile_img==null?$Constants->getInstructorPlaceholderImage():$instructor->profile_img}}" alt="">
-                                                        <a href="#"></a>
+                                                        <img src="{{$instructor->image==null?$Constants->getInstructorPlaceholderImage():$instructor->image}}" alt="">
+                                                        <a href="#">{{ $instructor->nameAr }}</a>
                                                     </div>
 
                                                     @endforeach
