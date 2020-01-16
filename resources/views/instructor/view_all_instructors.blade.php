@@ -90,7 +90,7 @@
                                         height="100" alt="card image"></p>
                                 <h4 class="card-title">{{$instructors[$j]->nameAr}}</h4>
                                 <p class="card-text">{{$instructors[$j]->bio}}</p>
-                                <a href="/instructor/{{$instructors[$j]->id}}" class="btn btn-primary btn-sm">قراءه المزيد</a>
+                                <a href="/instructors/{{$instructors[$j]->id}}" class="btn btn-primary btn-sm">قراءه المزيد</a>
                             </div>
                         </div>
                     </div>
