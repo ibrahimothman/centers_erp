@@ -31,29 +31,15 @@ class Student extends Model
         return url('/uploads/profiles/' . $imagePath);
     }
 
-    // save image before center it to db
     public function setImageAttribute($image){
-        if(! is_dir(public_path('/uploads/profiles'))){
-            mkdir(public_path('/uploads/profiles'));
-        }
-        $basename = Str::random();
-        $original = $basename.'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('/uploads/profiles'), $original);
+        $original = Image::saveImage('/uploads/profiles', $image);
+        return $this->attributes['image'] = url("/uploads/profiles/".$original);
 
-        $this->attributes['image'] = $original;
-//        dd($image);
     }
+    public function setIdImageAttribute($idImage){
+        $original = Image::saveImage('/uploads/profiles', $idImage);
+        return $this->attributes['idImage'] = url("/uploads/profiles/".$original);
 
-    public function setIdImageAttribute($idimage){
-        if(! is_dir(public_path('/uploads/profiles'))){
-            mkdir(public_path('/uploads/profiles'));
-        }
-        $basename = Str::random();
-        $original = $basename.'.'.$idimage->getClientOriginalExtension();
-        $idimage->move(public_path('/uploads/profiles'), $original);
-
-        $this->attributes['idImage'] = $original;
-//        dd($image);
     }
 
 

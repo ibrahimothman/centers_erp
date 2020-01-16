@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Input;
 
 class InstructorsController extends Controller
@@ -50,12 +51,13 @@ class InstructorsController extends Controller
     public function store(Request $request)
     {
 
+//        dd($request->all());
         $data = $this->validateRequest('');
 
         // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
 
-        $instructor=Instructor::create(array_except($data,['state','city','address']));
+        $instructor=Instructor::create(Arr::except($data,['state','city','address']));
         $instructor->address()->create([
             'state' => $data['state'],
             'city' => $data['city'],
@@ -63,7 +65,7 @@ class InstructorsController extends Controller
         ]);
 
         $center->instructors()->syncWithoutDetaching($instructor);
-        return redirect('/instructor/'.$instructor->id);
+        return redirect('instructors/'.$instructor->id);
     }
 
     /**
