@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class Instructor extends Model
 {
-
+    protected $hidden = array('pivot');
 
     protected $guarded = [];
 
