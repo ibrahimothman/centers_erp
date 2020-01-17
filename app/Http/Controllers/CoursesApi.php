@@ -19,7 +19,9 @@ class CoursesApi extends Controller
         $courses['courses']=$courses['data'];
         unset($courses['data']);
         for ($i=0;$i<count($courses['courses']);$i++){
-            $courses['courses'][$i]['instructor']=Course::find($courses['courses'][$i]['id'])->instructors;
+            $course=Course::find($courses['courses'][$i]['id']);
+            $courses['courses'][$i]['instructors']=$course->instructors()->get();
+            $courses['courses'][$i]['center']=$course->center()->first(['id','name']);
         }
 
         return response()->json($courses,200);
