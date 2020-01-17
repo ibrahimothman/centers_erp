@@ -88,4 +88,7 @@ Route::get('set_role',function (){
     }
 });
 
+//__________________________________________Api routes___________________________________________________
+
+Route::get('APi/courses','CoursesApi@index');
 Auth::routes(['register' => true]);
