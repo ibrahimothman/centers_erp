@@ -14,10 +14,14 @@ class CoursesApi extends Controller
      */
     public function index()
     {
-        $courses=Course::paginate(1);
-        $courses=$courses->toArray();
+        $courses=Course::paginate(1)->toArray();
+
         $courses['courses']=$courses['data'];
         unset($courses['data']);
+        for ($i=0;$i<count($courses['courses']);$i++){
+            $courses['courses'][$i]['instructor']=Course::find($courses['courses'][$i]['id'])->instructors;
+        }
+
         return response()->json($courses,200);
     }
 
