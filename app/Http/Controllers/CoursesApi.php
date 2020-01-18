@@ -6,6 +6,7 @@ use App\Center;
 use App\Course;
 use App\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class CoursesApi extends Controller
 {
@@ -16,7 +17,9 @@ class CoursesApi extends Controller
      */
     public function index()
     {
-        $courses=Course::paginate(1)->toArray();
+        $limit =Input::get('limit');
+        if ($limit==null)$limit=5;
+        $courses=Course::paginate($limit)->toArray();
 
         $courses['courses']=$courses['data'];
         unset($courses['data']);
