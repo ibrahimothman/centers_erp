@@ -46,6 +46,9 @@ class Instructor extends Model
 
     }
 
+    public static function ApiFields(){
+        return ['instructors.id','nameAr','nameEn','image','bio'];
+    }
 
 
 }
