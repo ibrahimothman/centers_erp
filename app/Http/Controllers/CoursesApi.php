@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Center;
 use App\Course;
+use App\Instructor;
 use Illuminate\Http\Request;
 
 class CoursesApi extends Controller
@@ -20,8 +22,8 @@ class CoursesApi extends Controller
         unset($courses['data']);
         for ($i=0;$i<count($courses['courses']);$i++){
             $course=Course::find($courses['courses'][$i]['id']);
-            $courses['courses'][$i]['instructors']=$course->instructors()->get();
-            $courses['courses'][$i]['center']=$course->center()->first(['id','name']);
+            $courses['courses'][$i]['instructors']=$course->instructors()->get(Instructor::ApiFields());
+            $courses['courses'][$i]['center']=$course->center()->first(Center::$ApiFields);
         }
 
         return response()->json($courses,200);
