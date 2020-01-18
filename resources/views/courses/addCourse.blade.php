@@ -268,11 +268,7 @@
 
 <!-- script multi select-->
 
-<script type="text/javascript" src="js/jQuery.js"></script>
-<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
-<script src="static/js/jquery-3.3.1.min.js"></script>
-<script src="static/js/popper.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
+
 <!--  end script-->
 <script>
     {{--
