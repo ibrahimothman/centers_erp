@@ -75,6 +75,7 @@ class CourseGroupController extends Controller
             Room::findOrFail($data['room'])->times()->syncWithoutDetaching($time);
         }
 
+        return response()->json('added');
     }
 
     /**

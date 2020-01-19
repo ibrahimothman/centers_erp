@@ -26,14 +26,15 @@ class Image extends Model
     public static function saveImage($dir, $image)
     {
         // create courses dir if not existed
-        if (!is_dir(public_path($dir))) {
-            mkdir(public_path($dir));
+        if (!is_dir(base_path().'/public_html'.$dir)) {
+            mkdir(base_path().'/public_html'.$dir,0777,true);
         }
 
         // loop through images, move it to courses dir then save it into db
         $basename = Str::random();
         $original = $basename . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path($dir), $original);
+
+        $image->move(base_path().'/public_html'.$dir, $original);
         return $original;
     }
 

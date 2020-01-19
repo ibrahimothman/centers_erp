@@ -175,30 +175,15 @@
                                             <div class="card-header">courses <i class="fa fa-link fa-1x"></i></div>
                                             <div class="card-body">
                                                 <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item">
-                                                        <span>Web Applications</span>
-                                                        <div class="progress progress_sm">
-                                                            <div class="progress-bar bg-danger" role="progressbar" data-transitiongoal="50" aria-valuenow="49" style="width: 50%;"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <span>Web Applications</span>
-                                                        <div class="progress progress_sm">
-                                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70" aria-valuenow="69" style="width: 70%;"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <span>html</span>
-                                                        <div class="progress progress_sm">
-                                                            <div class="progress-bar bg-warning" role="progressbar" data-transitiongoal="70" aria-valuenow="69" style="width: 70%;"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <span>Web Applications</span>
-                                                        <div class="progress progress_sm">
-                                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70" aria-valuenow="69" style="width: 70%;"></div>
-                                                        </div>
-                                                    </li>
+                                                    @foreach($student->courses as $group)
+                                                        <li class="list-group-item">
+                                                            <span>{{ $group->course->name }}</span>
+                                                            <div class="progress progress_sm">
+                                                                <div class="progress-bar bg-danger" role="progressbar" data-transitiongoal="50" aria-valuenow="49" style="width: 50%;"></div>
+                                                            </div>
+                                                        </li>
+
+                                                    @endforeach
                                                     <li class="list-group-item">
                                                         <a href="#" class="btn btn-primary btn-xs"> المزيد  </a>
 
@@ -343,65 +328,69 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
+                                                            @foreach($student->courses as $group)
 
-                                                                <td class="text-center">photoshop</td>
-                                                                <td class="text-center">
-                                                                    <div class="badge badge-warning">Pending</div>
-                                                                </td>
-                                                                <td class="text-center">12</td>
-                                                                <td class="text-center">المجموعه1</td>
+                                                                <tr>
 
-                                                                <td class="text-center">
-                                                                    <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Details</button>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
+                                                                    <td class="text-center">{{ $group->course->name }}</td>
+                                                                    <td class="text-center">
+                                                                        <div class="badge badge-warning">Pending</div>
+                                                                    </td>
+                                                                    <td class="text-center"></td>
+                                                                    <td class="text-center">المجموعه {{ $group->id }}</td>
 
-                                                                <td class="text-center">php</td>
-                                                                <td class="text-center">
-                                                                    <div class="badge badge-success">Completed</div>
-                                                                </td>
-                                                                <td class="text-center">12</td>
-                                                                <td class="text-center">المجموعه1</td>
+                                                                    <td class="text-center">
+                                                                        <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Details</button>
+                                                                    </td>
+                                                                </tr>
+                                                             @endforeach
 
-                                                                <td class="text-center">
-                                                                    <button type="button" id="PopoverCustomT-2" class="btn btn-primary btn-sm">Details</button>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-
-                                                                <td class="text-center">css</td>
-                                                                <td class="text-center">
-                                                                    <div class="badge badge-danger">In Progress</div>
-                                                                </td>
-                                                                <td class="text-center">12</td>
-                                                                <td class="text-center">المجموعه1</td>
-
-                                                                <td class="text-center">
-                                                                    <button type="button" id="PopoverCustomT-3" class="btn btn-primary btn-sm">Details</button>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-
-                                                                <td class="text-center">html</td>
-                                                                <td class="text-center">
-                                                                    <div class="badge badge-info">On Hold</div>
-                                                                </td>
-                                                                <td class="text-center">12</td>
-                                                                <td class="text-center">المجموعه1</td>
-
-                                                                <td class="text-center">
-                                                                    <button type="button" id="PopoverCustomT-4" class="btn btn-primary btn-sm">Details</button>
-                                                                </td>
-                                                            </tr>
                                                             </tbody>
                                                         </table>
 
 
                                                     </div>
-                                                </div></div>
-                                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="align-middle mb-0 table  table-striped table-hover">
+                                                            <thead>
+                                                            <tr>
+
+                                                                <th class="text-center">الكورس</th>
+                                                                <th class="text-center">الحاله</th>
+                                                                <th class="text-center">القاعه</th>
+                                                                <th class="text-center">المجموعه</th>
+                                                                <th class="text-center">التفاصيل </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($student->testsEnrolling as $group)
+
+                                                                <tr>
+
+                                                                    <td class="text-center">{{ $group->test->name }}</td>
+                                                                    <td class="text-center">
+                                                                        <div class="badge badge-warning">Pending</div>
+                                                                    </td>
+                                                                    <td class="text-center"></td>
+                                                                    <td class="text-center">المجموعه {{ $group->id }}</td>
+
+                                                                    <td class="text-center">
+                                                                        <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Details</button>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+
+                                                            </tbody>
+                                                        </table>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
 

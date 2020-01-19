@@ -246,7 +246,7 @@
                                                     <div class="card-header bg-transparent border-primary">{{$students[$m]->nameAr}}</div>
                                                     <div class="card-body ">
                                                         <p class="card-text">
-                                                            <img src="{{$students[$m]->profileImage()  }}" alt="" class="rounded-circle img-profile-contact float-right img-responsive">
+                                                            <img src="{{$students[$m]->getImage("image")  }}" alt="" class="rounded-circle img-profile-contact float-right img-responsive">
                                                         <ul class="list-unstyled contact-det">
                                                             <li><i class="fas fa-envelope btn-circle"></i> البريد الالكترونى
                                                                 <br>{{$students[$m]->email}}

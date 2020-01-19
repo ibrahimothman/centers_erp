@@ -46,7 +46,7 @@ class CourseEnrollmentController extends Controller
 
 //        echo json_encode($courses);
 
-        return view("courseEnrollment\course_group_enrollment")
+        return view("courseEnrollment/course_group_enrollment")
             ->with('students',$students)
             ->with('courses',$courses);
 
