@@ -3,7 +3,10 @@
 namespace App;
 
 use App\helper\Constants;
+use App\QueryFilter\Name;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -12,6 +15,17 @@ class Instructor extends Model
 
 
     protected $guarded = [];
+
+    public static function allInstructors($center)
+    {
+        return App(Pipeline::class)
+            ->send($center->instructors())
+            ->through([
+                Name::class
+            ])
+            ->thenReturn()
+            ->paginate(5);
+    }
 
     public function getImage($key)
     {
