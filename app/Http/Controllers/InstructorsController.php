@@ -20,16 +20,7 @@ class InstructorsController extends Controller
     {
 
         $center = Center::findOrFail(Session('center_id'));
-        if (Input::has('search')) {
-            $queryString=Input::get('search');
-            $instructors=$center->instructors->where('nameAr','like','%'.$queryString.'%')->paginate(5);
-
-            return view("instructor/view_all_instructors")
-                ->with('instructors',$instructors);
-        }
-
-        $instructors=$center->Instructors;
-        dd($instructors);
+        $instructors = Instructor::allInstructors($center);
         return view("instructor/view_all_instructors")
             ->with('instructors',$instructors);
 
