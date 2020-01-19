@@ -125,6 +125,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
 <script type='text/javascript' src="/js/room_create_validation.js"></script>
+<!-- check all -->
 <script>
 
 
