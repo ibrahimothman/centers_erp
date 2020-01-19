@@ -6,7 +6,23 @@
     <link rel="stylesheet" href="/css/instructor_style.css">
 
     <title>register instructor</title>
-
+    <style>
+        .error {
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        /* img error */
+        .photo{
+            display: none;
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="bg-light">
 
@@ -28,7 +44,7 @@
                         تسجيل بيانات المدرب
                     </div>
                     <div class="card-body">
-                        <form action="{{url('/instructor')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{url('/instructor')}}" method="post" enctype="multipart/form-data" id="addInstructor">
                             @csrf
                             <div class="form-row form-group">
                                 <div class="col-sm-12 ">
@@ -85,12 +101,6 @@
                                 </div>
                             </div>
                             <br>
-
-
-
-
-
-
                             <div class="form-row form-group">
                                 <div class="col-sm-6  ">
                                     <label>البلد </label>
@@ -113,21 +123,21 @@
                                           class="form-control"></textarea>
                             </div>
 
-
-
                             <div class="form-row form-group ">
                                 <div class="col-sm-6 ">
                                     <label>المؤهل الدراسى </label>
                                     <select name="degree" class="form-control  mb-1">
-                                        <option>طالب</option>
-                                        <option>خريج</option>
+                                        <option value="">اختار</option>
+                                        <option value="طالب">طالب</option>
+                                        <option value="خريج">خريج</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 ">
                                     <label>الكليه </label>
                                     <select name="faculty" class="form-control">
-                                        <option>هندسه</option>
-                                        <option>تجاره</option>
+                                        <option value="">اختار</option>
+                                        <option value="هندسه">هندسه</option>
+                                        <option value="تجاره">تجاره</option>
                                     </select>
                                 </div>
                             </div>
@@ -139,9 +149,6 @@
                                 <textarea name="bio" placeholder="نبذه عن " rows="3"
                                           class="form-control" style="  overflow-scrolling:auto; "></textarea>
                             </div>
-
-
-
                             <div class="form-row image-upload">
                                 <div class="col-sm-8">
                                     <div class="custom-file">
@@ -149,8 +156,6 @@
                                                id="customFile1" src="" onchange="readURL(this, 1);" required>
                                         <input type="file" class="custom-file-input" accept="image/*" name="image2"
                                                id="customFile2" src="" onchange="readURL(this, 2);" required>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -159,13 +164,16 @@
                                     <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                          alt="your image"/>
                                     <p>صورة البطاقه</p>
+                                    <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
                                 </div>
                                 <div class="course-image-input">
                                     <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                          alt="your image"/>
-                                    <p>الصوره الشخصيه</p>
+                                    <p >الصوره الشخصيه</p>
+                                    <div id="photo2" class="photo" >هذه الخانه مطلوبه</div>
                                 </div>
                             </div>
+
                             <br>
                             <div class="form-row save">
                                 <div class="col-sm-6 mx-auto text-center">
@@ -194,7 +202,12 @@
 
 
 @include('script')
-<!-- photo js-->
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+
+<!-- client side validation page -->
+<script type='text/javascript' src="/js/instructor_register_validation.js"></script>
+
 
 
 <script>

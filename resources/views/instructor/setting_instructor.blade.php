@@ -6,6 +6,14 @@
     @include('library')
     <link rel="stylesheet" href="/css/instructor_style.css">
     <title>setting instructor</title>
+    <style>
+        .error {
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body class="bg-light">
 <div id="wrapper">
@@ -25,7 +33,7 @@
                                 تعديل البايانات الشخصيه
                             </div>
                             <div class="card-body">
-                                <form action="" method="post">
+                                <form action=""  id="settingInstructor">
                                     <div class="row">
                                         <div class="col-sm text-center ">
                                             <h5> email@email.com</h5>
@@ -35,7 +43,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-6  ">
                                             <label>الاسم باللغه العربيه</label>
-                                            <input type="text" name="" value=" ندي " class='form-control'>
+                                            <input type="text" name="name"  class='form-control'>
                                         </div>
                                         <hr>
 
@@ -43,7 +51,7 @@
                                         <div class=" col-sm-6 ">
                                             <label>الاسم باللغه الانجليزيه</label>
 
-                                            <input type="text" name="" value="nada " class='form-control'>
+                                            <input type="text" name="nameEn"  class='form-control'>
                                         </div>
 
                                         <hr>
@@ -52,8 +60,9 @@
                                         <div class="col-sm-6 ">
                                             <label>المؤهل الدراسى </label>
                                             <select name="degree" class="form-control">
-                                                <option>طالب</option>
-                                                <option>خريج</option>
+                                                <option value="">اختار</option>
+                                                <option value="طالب">طالب</option>
+                                                <option value="خريج">خريج</option>
                                             </select>
                                         </div>
 
@@ -63,8 +72,9 @@
                                         <div class="col-sm-6 ">
                                             <label>الكليه </label>
                                             <select name="faculty" class="form-control">
-                                                <option>هندسه</option>
-                                                <option>تجاره</option>
+                                                <option value="">اختار</option>
+                                                <option value="هندسه">هندسه</option>
+                                                <option value="تجاره">تجاره</option>
                                             </select>
                                         </div>
                                         <hr>
@@ -72,7 +82,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-6  ">
                                             <label>رقم التليفون</label>
-                                            <input type="text" name="" value="  " class='form-control'>
+                                            <input type="text" name="phoneNumber"  class='form-control'>
                                         </div>
                                         <hr>
 
@@ -80,7 +90,7 @@
                                         <div class=" col-sm-6 ">
                                             <label>تليفون اخر</label>
 
-                                            <input type="text" name="" value=" " class='form-control'>
+                                            <input type="text" name="phoneNumberSec"class='form-control'>
                                         </div>
 
                                         <hr>
@@ -88,7 +98,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-6  ">
                                             <label>البلد</label>
-                                            <input type="text" name="" value="  " class='form-control'>
+                                            <input type="text" name="state" class='form-control'>
                                         </div>
                                         <hr>
 
@@ -96,7 +106,7 @@
                                         <div class=" col-sm-6 ">
                                             <label>المدينه</label>
 
-                                            <input type="text" name="" value=" " class='form-control'>
+                                            <input type="text" name="city"  class='form-control'>
                                         </div>
 
                                         <hr>
@@ -105,7 +115,7 @@
                                         <div class=" col-sm-12  ">
                                             <label>العنوان</label>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="2"
-                                                      class="form-control" value=" "></textarea>
+                                                      class="form-control" ></textarea>
                                         </div>
 
 
@@ -114,7 +124,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-12  ">
                                             <label>نبذه عن</label>
-                                            <textarea name="about" placeholder="نبذه عن " rows="3"
+                                            <textarea name="bio" placeholder="نبذه عن " rows="3"
                                                       class="form-control"
                                                       style="  overflow-scrolling:auto; "></textarea>
                                         </div>
@@ -144,6 +154,12 @@
 <!-- script-->
 
 @include('script')
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<!-- client side validation page -->
+<script type='text/javascript' src="/js/instructor_setting_validation.js"></script>
+
+
 </body>
 </html>
 
