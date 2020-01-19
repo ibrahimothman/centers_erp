@@ -7,6 +7,7 @@ use App\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Input;
+use mysql_xdevapi\Session;
 
 class InstructorsController extends Controller
 {
@@ -18,15 +19,17 @@ class InstructorsController extends Controller
     public function index()
     {
 
+        $center = Center::findOrFail(Session('center_id'));
         if (Input::has('search')) {
             $queryString=Input::get('search');
-            $instructors=Instructor::where('nameAr','like','%'.$queryString.'%')->paginate(5);
+            $instructors=$center->instructors->where('nameAr','like','%'.$queryString.'%')->paginate(5);
 
             return view("instructor/view_all_instructors")
                 ->with('instructors',$instructors);
         }
 
-        $instructors=Instructor::paginate(5);
+        $instructors=$center->Instructors;
+        dd($instructors);
         return view("instructor/view_all_instructors")
             ->with('instructors',$instructors);
 

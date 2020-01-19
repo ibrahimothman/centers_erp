@@ -57,7 +57,7 @@ class CoursesController extends Controller
 
         // upload images
         $this->uploadImages($request,$course);
-        return "Course is added";
+        return response()->json("Course is added");
     }
 
 
@@ -97,7 +97,11 @@ class CoursesController extends Controller
             $course->images()->delete();
         }
 
-        $course->update($this->getValidatedCourseData($course->id));
+        $data = $this->getValidatedCourseData('');
+        $course_data = Arr::except($data,['images','instructors']);
+
+        $course->update($course_data);
+
         $this->uploadImages($request,$course);
         return redirect("courses/$course->id");
 

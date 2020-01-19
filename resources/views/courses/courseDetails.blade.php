@@ -98,7 +98,7 @@
                                                 @foreach($course->instructors as $instructor)
                                                     <div class="teacher">
                                                         <img src="{{$instructor->image==null?\App\helper\Constants::getInstructorPlaceholderImage():$instructor->image}}" alt="">
-                                                        <a href="#">{{ $instructor->nameAr }}</a>
+                                                        <a href="{{ route('instructors.show',$instructor->id) }}">{{ $instructor->nameAr }}</a>
                                                     </div>
 
                                                     @endforeach

@@ -172,10 +172,10 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //policy
-        $this->authorize('delete',$student);
+//        $this->authorize('delete',$student);
 
         // delete from pivot
-        $center = Auth::user()->center;
+        $center = Center::findOrFail(Session('center_id'));
         $center->students()->detach($student);
 
         // delete images

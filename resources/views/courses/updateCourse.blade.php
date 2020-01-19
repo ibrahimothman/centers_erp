@@ -42,7 +42,9 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form enctype="multipart/form-data" >
+                            <form enctype="multipart/form-data" id="form" >
+                                @csrf
+                                @method('patch')
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
@@ -200,7 +202,8 @@
 <script>
     $(document).ready(function () {
         console.log("ready");
-        $("#submit").click(function () {
+        $("#submit").click(function (e) {
+            e.preventDefault();
 
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
@@ -223,6 +226,7 @@
             var fd = new FormData();
             $('input[type="file"]').each(function (index, file) {
                 if(file.files.length != 0){
+                    console.log(file.files[0]);
                     fd.append('images[]',file.files[0]);
                 }
             });
@@ -248,16 +252,16 @@
             });
 
             $.ajax({
-                url: "/courses/{{ $course->id }}",
-                method: "put",
+                url: "/courses/{{$course->id}}",
+                type : "patch",
                 data : fd,
                 contentType : false,
                 processData : false,
                 // dataType: "json",
                 success: function (data) {
                     // console.log(data);
-                    document.getElementById('form').reset();
-                    alert(data);
+                    // document.getElementById('form').reset();
+                    // alert(data);
                 },
                 error: function (error) {
                     if (error.status == 422) {// validation

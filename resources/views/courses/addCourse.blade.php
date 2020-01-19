@@ -272,6 +272,7 @@
             fd.append('cost', courseCost);
             fd.append('content', JSON.stringify(chapters));
             fd.append('teamCost', teamCost);
+
             $.ajax({
                 url: "/courses",
                 method: "POST",
@@ -281,8 +282,8 @@
                 dataType: "json",
                 success: function (data) {
                     // console.log(data);
-                    document.getElementById('form').reset();
                     alert(data);
+                    document.getElementById('form').reset();
                 },
                 error: function (error) {
                     if (error.status == 422) {// validation
