@@ -3,7 +3,6 @@
 <head>
     @include('library')
 <title> تسجيل نتيجه الامتحانات</title>
-
  <!-- Custom styles for this page -->
  <link href="/../../../vendor/datatables/datatables.min.css" rel="stylesheet">
 
@@ -15,37 +14,12 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-
-@include('sidebar')
-
-<!-- Content Wrapper -->
-<div id="content-wrapper" class="d-flex flex-column">
-
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+    @include('operationBar')
 <!-- Main Content -->
 <div id="content">
-
-    <!-- Topbar -->
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-        <!-- Sidebar Toggle (Topbar) -->
-        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"> <i class="fa fa-bars"></i> </button>
-
-        <!-- Topbar Search -->
-        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="البحث عن " aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button"> <i class="fas fa-search fa-sm"></i> </button>
-                </div>
-            </div>
-        </form>
-
-    @include('tobbar')
-
-    <!-- Begin Page Content -->
-
     <!-- Page Heading -->
-
     <div class="container-fluid">
         <div class="col-md-12">
             <div class="card">
@@ -102,11 +76,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto"> <span>Copyright &copy;وحدة التعليم الالكترونى - جامعه المنصورة </span> </div>
-                </div>
-            </footer>
+@include('footer')
             <!-- End of Footer -->
 
         </div>
@@ -133,16 +103,9 @@
         </div>
     </div>
 </div>
+<!-- script-->
 
-<!-- Bootstrap core JavaScript-->
-<script src="/../../../vendor/jquery/jquery.min.js"></script>
-<script src="/../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/../../../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/../../../js/sb-admin-2.min.js"></script>
+@include('script')
 <!-- Page level plugins -->
 <script src="/../../../vendor/datatables/datatables.min.js"></script>
 <!-- Page level custom scripts -->

@@ -34,8 +34,6 @@
 
         <input name="add" type="submit" value="register group student" required />
     </form>
-
-
 </div>
 
 <span class="alert">
