@@ -3,6 +3,8 @@
 <head>
     <!-- Bootstrap CSS & js -->
     @include('library')
+<!-- Bootstrap CSS & js -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/instructor_style.css">
     <title>change password instructor</title>
     <style>

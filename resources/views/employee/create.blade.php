@@ -3,6 +3,8 @@
 
 <head>
     @include('library')
+    <!-- Bootstrap CSS & js -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>add a new admin</title>
     <style>
         body {

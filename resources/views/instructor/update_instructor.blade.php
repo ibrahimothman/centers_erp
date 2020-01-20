@@ -3,6 +3,8 @@
 <head>
 
     @include('library')
+    <!-- Bootstrap CSS & js -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/instructor_style.css">
 
     <title> update register instructor</title>
