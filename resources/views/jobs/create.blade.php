@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
+@include('library')
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="{{url('css/bootstrap.min.css')}}">
 
@@ -11,11 +12,19 @@
     <style>
         body {
             direction: rtl;
-            margin-top: 50px;
+
         }
+
     </style>
 </head>
-<body>
+<body class="bg-light">
+
+
+<!-- Begin Page Content -->
+<div id="wrapper">
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+        @include('operationBar')
 
 <section>
     <div class="container-fluid text-right">
@@ -59,7 +68,7 @@
                             <div class="form-row save">
 
                                 <div class="col-sm-6 mx-auto text-center" style="width: 200px;">
-                                    <button class="btn btn-primary" type="button" onclick="submitJob();" id="submit_job">اضافه</button>
+                                    <button class="btn btn-primary" type="button"  onclick="submitJob();" id="submit_job">اضافه</button>
                                     <button class="btn  btn-danger" type="reset"> الغاء</button>
 
 
@@ -75,12 +84,14 @@
     </div>
 </section>
 
+        @include('footer')
+    </div>
+</div>
 
 
+@include('script')
 
-
-
-<script type="text/javascipt" src="{{ url('js/jQuery.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/jQuery.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ url('static/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ url('static/js/popper.min.js') }}"></script>
@@ -88,7 +99,6 @@
 
 <script src="src={{url('vendor/jquery/jquery.js/jquery.min.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 
 <script>
 
@@ -131,6 +141,7 @@
         }
 
     }
+
 </script>
 
 </body>

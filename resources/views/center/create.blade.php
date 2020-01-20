@@ -2,45 +2,26 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
+    @include('library')
     <title>setup your center</title>
-
-    <!-- Custom fonts for this template-->
-
-    <link href="{{url('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{{url('css/sb-admin-rtl.css')}}" rel="stylesheet">
-    <link
-        rel="stylesheet"
-        href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
-        integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If"
-        crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"
-            integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k"
-            crossorigin="anonymous"></script>
-
+    <style>
+        body{
+           text-align: right;
+        }
+        .error {
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 
 <body id="page-top">
-
 <!-- Page Wrapper -->
 <div id="wrapper">
-
-
-
 <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
         <!-- Main Content -->
         <div id="content">
 
@@ -87,7 +68,7 @@
                         </div>
                     </li>
 
-
+                </ul>
                     <!-- Nav Item - User Information -->
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -133,9 +114,10 @@
                                 </div>
                             </li>
                         @endguest
-                    </ul>
 
+                </ul>
             </nav>
+
             <!-- End of Topbar -->
 
 
@@ -149,7 +131,7 @@
                             <div class="card-header text-primary">
                                 تسجيل بيانات المركز            </div>
                             <div class="card-body">
-                                <form action="{{ route('centers.store') }}" method="post" enctype="multipart/form-data" >
+                                <form action="{{ route('centers.store') }}" method="post" enctype="multipart/form-data" id="centerCreate" >
 
                                     @csrf
 
@@ -159,7 +141,7 @@
 
                                             <label for="validationCustom01">اسم المركز</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="name" id="validationCustom01" placeholder="بالاسم باللغه العربيه "  value="{{ old('name') }}" >
+                                            <input type="text" class="form-control" name="name" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('name') }}" >
                                             <div>{{ $errors->first('name') }}</div>
                                         </div>
 
@@ -170,7 +152,7 @@
                                         <div class="col-sm-12">
                                             <label for="validationCustom03">اسم مدير المركز</label>
                                             <span class="required">*</span>
-                                            <input type="text" name= "manager_name" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('manager_name') }}" >
+                                            <input type="text" name= "manager_name" class="form-control" id="validationCustom03" placeholder="الاسم باللغه العربيه" value="{{ old('manager_name') }}" >
                                             <div>{{ $errors->first('manager_name') }}</div>
                                         </div>
 
@@ -202,13 +184,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy;وحدة التعليم الالكترونى - جامعه المنصورة </span>
-                    </div>
-                </div>
-            </footer>
+        @include('footer')
             <!-- End of Footer -->
 
         </div>
@@ -252,6 +228,13 @@
     <!-- Custom scripts for all pages-->
     <script src="{{url('employee')}}"></script>
     <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <!-- script-->
+
+@include('script')
+<!-- client side validation plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+    <!-- client side validation page -->
+    <script type='text/javascript' src="/js/centers_create-validation.js"></script>
 
 
     <script>
