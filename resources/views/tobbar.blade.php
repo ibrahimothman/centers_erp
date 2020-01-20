@@ -15,7 +15,7 @@
             </form>
         </div>
     </li>
-
+</ul>
     <!-- Nav Item - User Information -->
     <!-- Right Side Of Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -63,4 +63,5 @@
         @endguest
     </ul>
     </nav>
+</div>
     <!-- End of Topbar -->
