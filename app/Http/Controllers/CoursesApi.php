@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Center;
 use App\Course;
 use App\Instructor;
@@ -19,17 +20,32 @@ class CoursesApi extends Controller
     {
         $limit =Input::get('limit');
         if ($limit==null)$limit=5;
-        $courses=Course::paginate($limit)->toArray();
 
-        $courses['courses']=$courses['data'];
-        unset($courses['data']);
-        for ($i=0;$i<count($courses['courses']);$i++){
-            $course=Course::find($courses['courses'][$i]['id']);
-            $courses['courses'][$i]['instructors']=$course->instructors()->get(Instructor::ApiFields());
-            $courses['courses'][$i]['center']=$course->center()->first(Center::$ApiFields);
+        $category_id =Input::get('category');
+        if ($category_id!=null){
+            $category=Category::find($category_id);
+            if ($category==null)
+                return response()->json([]);
+                else
+                    $courses= $category->courses()->paginate($limit);
+        }else{
+            $courses=Course::paginate($limit);
+
         }
 
-        return response()->json($courses,200);
+
+        $coursesRes=$courses->toArray();
+        $coursesRes['courses']=$coursesRes['data'];
+        unset($coursesRes['data']);
+        foreach ($courses as $j=>$course){
+            $coursesRes['courses'][$j]['instructors']=$course->instructors()->get(Instructor::ApiFields());
+            $coursesRes['courses'][$j]['center']=$course->center()->first(Center::$ApiFields);
+            $coursesRes['courses'][$j]['categories']=$course->categories;
+        }
+
+
+
+        return response()->json($coursesRes,200);
     }
 
     /**
