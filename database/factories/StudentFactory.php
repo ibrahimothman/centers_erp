@@ -7,17 +7,27 @@ use Faker\Generator as Faker;
 
 $factory->define(Student::class, function (Faker $faker) {
     return [
-        'nameAr' => 'عربي',
+        'nameAr' => $faker->name,
         'nameEn' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'phoneNumber' => '01234567896',
-        'idNumber' => '12345678965412',
+        'phoneNumber' => '010'.$faker->randomNumber(8),
+        'idNumber' => randomNumber(14),
         'phoneNumberSec' => '01234567896',
-        'skillCardNumber' => '123',
-        'state' => 'Egypt',
-        'city' => 'cairo',
-        'address' => '15 building',
-        'degree' => 'students',
-        'faculty' => 'engineering',
+        //'skillCardNumber' => '123',
+//        'state' => 'Egypt',
+//        'city' => 'cairo',
+//        'address' => '15 building',
+//        'degree' => 'students',
+//        'faculty' => 'engineering',
     ];
 });
+
+function randomNumber($length) {
+    $result = '';
+
+    for($i = 0; $i < $length; $i++) {
+        $result .= mt_rand(0, 9);
+    }
+
+    return $result;
+}
