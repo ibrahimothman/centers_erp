@@ -90,6 +90,6 @@ Route::get('set_role',function (){
 
 //__________________________________________Api routes___________________________________________________
 
-Route::get('APi/courses','CoursesApi@index');
-Route::resource('APi/instructors','InstructorApiController');
+Route::resource('Api/courses','CoursesApi');
+Route::resource('Api/instructors','InstructorApiController');
 Auth::routes(['register' => true]);
