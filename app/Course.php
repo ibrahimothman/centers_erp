@@ -8,6 +8,7 @@ use Illuminate\Pipeline\Pipeline;
 
 class Course extends Model
 {
+    protected $hidden = array('pivot');
     public $timestamps = false;
     protected $guarded = [];
 
