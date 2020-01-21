@@ -42,6 +42,10 @@ class Course extends Model
         return $this->morphMany(Image::class,'imageable');
     }
 
+    public function categories(){
+        return $this->belongsToMany(Category::class);
+    }
+
 
     protected static function boot()
     {
