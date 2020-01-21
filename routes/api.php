@@ -18,5 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('search_student_by_name','StudentController@searchByName');
+Route::get('all-tests','TestController@getTests');
 
 

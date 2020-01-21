@@ -32,6 +32,7 @@ Route::get('/search_student_by_name','StudentController@searchByName');
 
 //---------------------- Tests-------------------
 Route::resource('tests','TestController');
+Route::get('all-tests','TestController@getTests');
 
 //--------------------- Test Groups -------------------------
 Route::resource('test-groups','TestGroupController');
