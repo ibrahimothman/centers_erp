@@ -9,5 +9,8 @@ class Category extends Model
     protected $guarded = [];
 
 
+    public function courses(){
+        return $this->belongsToMany(Course::class);
+    }
 
 }
