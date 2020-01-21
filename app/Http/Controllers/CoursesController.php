@@ -57,7 +57,7 @@ class CoursesController extends Controller
 
         // upload images
         $this->uploadImages($request,$course);
-        return response()->json("Course is added");
+        return $course;
     }
 
 

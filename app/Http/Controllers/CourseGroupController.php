@@ -27,6 +27,10 @@ class CourseGroupController extends Controller
     public function index()
     {
         //
+        $center = Center::findOrFail(Session('center_id'));
+        $courses = Course::allCourses($center);
+        $allCourses = $center->courses;
+        return view('courseGroups/index', compact('courses','allCourses'));
 //
     }
 
@@ -75,7 +79,7 @@ class CourseGroupController extends Controller
             Room::findOrFail($data['room'])->times()->syncWithoutDetaching($time);
         }
 
-        return response()->json('added');
+        return redirect('/course_groups');
     }
 
     /**
@@ -119,9 +123,13 @@ class CourseGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CourseGroup $courseGroup)
     {
         //
+//        dd($courseGroup);
+        $courseGroup->delete();
+        return redirect('course_groups');
+
     }
 
     private function validateCourseGroupData()

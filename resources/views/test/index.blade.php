@@ -92,41 +92,8 @@
                         </div>
                         </span> </div>
                             <div class="row cont-det">
-                                <div class="col-md-12">
-                                    @foreach($tests as $test)
-                                    <div class="card card  card-sh  border-primary p-3 test-view ">
-                                        <div class="card-header bg-transparent border-primary text-success font-weight-bold  clearfix">
-                                            <span class="float-right">
-
-                                                <form class="card-footer border-primary " method="post" action="/tests/{{$test->id}}">
-                                                    @csrf
-                                                    @method('delete')
-                                                        <a href="{{ route('test-groups.create') }}" class="btn btn-outline-success "><i class="fas fa-plus"></i> <SPAN>تسجيل الامتحان</SPAN> </a>
-                                                        <a href="tests/{{$test->id}}/edit" class=" btn btn-outline-primary "><i class="fas fa-edit"></i> </a>
-                                                        <button type="submit" class="btn btn-outline-danger"> <i class="fas fa-trash-alt"></i> </button>
-                                                    </form>
-
-                                            </span> <span  class=" float-left">{{$test->name}}</span> </div>
-                                        <div class="card-body ">
-                                            <p class="card-title text-primary "> عن الامتحان : </p>
-                                            <span class="card-text text-justify">{{$test->description}}</span>
-                                            <div class="dropdown-divider"></div>
-                                            <div class="card-text clearfix "> <span class="w-50 p-3  text-primary" > تكلفه الامتحان :</span>
-                                                <div class="d-inline p-2 "> <span class="text-warning " >فردى : </span> <span class=" text-secondary " > جنيه{{$test->cost_ind}}</span> </div>
-                                                <div class="d-inline p-2 "> <span class="text-warning  " >كورس : </span> <span class=" text-secondary " > جنيه{{$test->cost_course}}</span> </div>
-                                                @if($test->retake == 1)
-                                                    <div class="d-inline p-5  "> <span class="btn-success rep " >قابل للاعاده</span> </div>
-                                                @else
-                                                    <div class="d-inline p-5  "> <span class="btn-warning rep " >غير قابل للاعاده</span> </div>
-                                                @endif
-                                                <footer class="blockquote-footer float-right">
-                                                    تاريخ الاضافه <span>{{$test->created_at}}<span>
-                                                </footer>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-
+                                <div  class="col-md-12">
+                                    <div id="data">
                                 </div>
                             </div>
                         </div>
@@ -180,25 +147,64 @@
         <script src="/../../../js/sb-admin-2.min.js"></script>
 
         <script>
-            // $('#search').keyup(function (e) {
-            //     if(e.keyCode == 13) {
-            //         var query = $(this).val();
-            //         searchForStudents(query);
-            //     }
-            //
-            // });
-            //
-            // function searchForStudents(query = '') {
-            //     $.ajax({
-            //         url:"api/search_test_by_name",
-            //         type:'GET',
-            //         data:{query:query},
-            //         dataType : 'json',
-            //         success:function (response) {
-            //             view(response);
-            //         }
-            //     })
-            // }
+            $(document).ready(function () {
+                // get all center's tests
+                getTests();
+            });
+
+            function getTests() {
+                $.ajax({
+                    url:'/all-tests',
+                    type:'GET',
+                    success: function (data) {
+                        var lines = "";
+                        data.forEach(function (test) {
+                            // console.log(test.name);
+                            lines += "<div class='card card  card-sh  border-primary p-3 test-view'>";
+                            lines += "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";
+                            lines += "<span class='float-right'>";
+                            lines += "<a href='/test-groups/create?id="+test.id+"' class='btn btn-outline-success '><i class='fas fa-plus'></i> <SPAN>تسجيل الامتحان</SPAN> </a>";
+                            lines += "<a href='tests/"+test.id+"/edit/' class=' btn btn-outline-primary '><i class='fas fa-edit'></i> </a>";
+                            lines += "<button onclick='deleteTest("+test.id+");' class='btn btn-outline-danger'> <i class='fas fa-trash-alt'></i> </button>";
+                            lines += "</span>";
+                            lines += "<span  class=' float-left'>"+test.name+"</span>";
+                            lines += "</div>";
+                            lines += "<div class='card-body '>";
+                            lines += "<p class='card-title text-primary '> عن الامتحان : </p>";
+                            lines += "<span class='card-text text-justify'>"+test.description+"</span>";
+                            lines += "<div class='dropdown-divider'></div>";
+                            lines += "<div class='card-text clearfix '> <span class='w-50 p-3  text-primary' > تكلفه الامتحان :</span>";
+                            lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >فردي : </span> <span class=' text-secondary ' >"+test.cost_ind+" جنيها </span> </div>";
+                            lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >كورس : </span> <span class=' text-secondary ' >"+test.cost_course+" جنيها </span> </div>";
+                            if(test.retake)
+                                lines += "<div class='d-inline p-5  '> <span class='btn-success rep ' >قابل للاعاده</span> </div>";
+                            else
+                                lines += "<div class='d-inline p-5  '> <span class='btn-warning rep ' >غير قابل للاعاده</span> </div>";
+                            lines += "<footer class='blockquote-footer float-right'>";
+                            lines += "<span>تاريخ الاضافه "+test.created_at+"</span>";
+                            lines += " </footer>";
+                            lines += "</div>";
+                            lines += "</div>";
+                            lines += "</div>";
+
+                        });
+
+                        $('#data').html(lines);
+                    }
+                });
+            }
+
+            function deleteTest(test_id) {
+                $.ajax({
+                    url: '/tests/'+test_id,
+                    type: 'DELETE',
+                    data : {'_token':"{{csrf_token()}}"},
+                    success : function (data) {
+                        console.log(data);
+                        getTests();
+                    }
+                });
+            }
         </script>
 </body>
 </html>

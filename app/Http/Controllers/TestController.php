@@ -22,11 +22,12 @@ class TestController extends Controller
      */
     public function index()
     {
-
-//        $this->authorize('viewAny',Test::class);
+        return view('test.index');
+    }
+    public function getTests(){
         $center = Center::findOrFail(Session('center_id'));
         $tests = $center->tests()->orderBy('created_at','desc')->get();
-        return view('test.index',compact('tests'));
+        return json_decode($tests);
     }
 
     /**
@@ -137,7 +138,6 @@ class TestController extends Controller
 
 //        $this->authorize('delete',$test);
         $test->delete();
-        return redirect('/tests')->with('success','test is deleted');
     }
 
     /**
@@ -161,10 +161,7 @@ class TestController extends Controller
         return view ('testGroup.test-time-add');
     }
 
-    public  function getTests(){
-        $tests = Test::all();
-        return response()->json($tests);
-    }
+
     public  function searchTest(Request $request){
         if($request->ajax()){
             $query = $request->get('query');

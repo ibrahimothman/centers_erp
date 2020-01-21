@@ -280,9 +280,10 @@
                 contentType : false,
                 processData : false,
                 dataType: "json",
-                success: function (data) {
+                success: function (course) {
                     // console.log(data);
-                    alert(data);
+                    // alert(data);
+                    location.href = '/courses/'+course.id;
                     document.getElementById('form').reset();
                 },
                 error: function (error) {
