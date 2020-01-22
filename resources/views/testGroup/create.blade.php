@@ -8,7 +8,15 @@
     -->
     <link href="{{url('employee')}}" rel="stylesheet">
     <title>test-time-add</title>
+    <style>
 
+        .error {
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        </style>
 </head>
 
 <body id="page-top">
@@ -96,21 +104,34 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<form id="add_people_form">
+    <input type="hidden" id="counter" value="1">
+    <button type="button" id="add_fields">+</button>
+    <div id="add_people_div"></div>
+    <button type="submit">Submit</button>
+</form>
         <!-- script-->
     @include('script')
+    <!-- client side validation plugin -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<!-- client side validation page  -->
+<script type='text/javascript' src="/js/testGroup_create_validation.js"></script>
+
         <script>
+
             $('input#addButton').on('click', function() {
                 var id = ($('.field .form-row').length + 1).toString();
-                $('.field').append(' <div class="form-row "> <div class="col-sm-6 form-group" "><label for="validationCustom01">   تاريخ الامتحان</label><div class="input-group-append"> <input id="datetimepicker' +id+'" name="test_time'+id+'" class="form-control datetimepicker"  placeholder="تاريخ الامتحان"    type="text" ><span class="fas fa-calendar-alt input-group-text start_date_calendar" aria-hidden="true "></span> </div></div><div class="col-sm-3 form-group "><label for="validationCustom01">  عدد المقاعد  </label><input type="number" name="seat'+id+'" class="form-control"  id="seat'+id+'"   style="width: 100px" ></div></div></div>');
+                $('.field').append(' <div class="form-row "> <div class="col-sm-6 form-group" "><label for="validationCustom01">   تاريخ الامتحان</label><div class="input-group-append"> <input id="datetimepicker' +id+'" name="test_time'+id+'" class="form-control datetimepicker"  placeholder="تاريخ الامتحان"    type="text" ><span class="fas fa-calendar-alt input-group-text start_date_calendar" aria-hidden="true "></span> </div></div><div class="col-sm-3 form-group "><label for="validationCustom01">  عدد المقاعد  </label><input type="number" name="seat'+id+'" class="form-control char"  id="seat'+id+'"   style="width: 100px" ></div></div></div>');
                 $(".datetimepicker").datetimepicker();
             });
+
         </script>
         <script>
             function onOptionSelected() {
             }
         </script>
-
-
 
 </body>
 </html>
