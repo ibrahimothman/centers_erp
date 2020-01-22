@@ -1,17 +1,29 @@
 
 
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
 
 <link href="{{asset('css/form.css')}}" rel="stylesheet" type="text/css"/>
 
+    <style>
+
+    .error {
+        color: #b60000;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+    }
+</style>
+</head>
+<body>
 <div class="form-style-5">
 
 
 
 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" id="addGroup">
         @csrf
         <legend><span class="number">.</span> Group Registeration </legend>
         <input type="text" name="course" placeholder="course *" required>
@@ -31,6 +43,15 @@
     ?>
 </p>
 </span>
+<!-- jquery -->
+<script src="{{url('vendor/jquery/jquery.min.js')}}"></script>
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 
+<!-- client side validation page -->
+<script type='text/javascript' src="/js/courses_addGroup_validation.js"></script>
+
+
+</body>
 </html>
 

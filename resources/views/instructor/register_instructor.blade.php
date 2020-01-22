@@ -201,8 +201,6 @@
     </div>
 </div>
 <!-- script-->
-
-
 @include('script')
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>

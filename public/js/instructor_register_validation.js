@@ -131,7 +131,6 @@ $(document).ready(function () {
 
         });
 /* image1 validation */
-    /* image2 validation */
     $("#submit").click(function () {
         var img1=document.getElementById("customFile1");
         if (img1.files.length == 0) {

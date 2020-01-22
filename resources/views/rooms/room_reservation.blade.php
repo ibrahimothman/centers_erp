@@ -7,26 +7,6 @@
     <link rel="stylesheet" href="/css/room_style.css">
     <title> room reservation</title>
     <style>
-        .weekDays-selector input {
-            display: none!important;
-        }
-
-        .weekDays-selector input[type=checkbox] + label {
-            display: inline-block;
-            border-radius: 6px;
-            background: #dddddd;
-            height: 40px;
-            width: 30px;
-            margin-right: 3px;
-            line-height: 40px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .weekDays-selector input[type=checkbox]:checked + label {
-            background: #2AD705;
-            color: #ffffff;
-        }
         .error {
             color: #b60000;
             font-size: 1rem;

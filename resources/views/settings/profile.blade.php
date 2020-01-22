@@ -36,9 +36,7 @@
 <script src="{{url('js/jquery.datetimepicker.js')}}"></script>
 <!-- Page Wrapper -->
 <div id="wrapper">
-
 @include('sidebar')
-
 <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -62,9 +60,6 @@
                 </form>
 
 @include('tobbar')
-
-
-
                 <form type="" method="post" action="{{url('settings/profile/update')}}">
                     @csrf
     <label>
