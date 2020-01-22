@@ -22,7 +22,7 @@ Route::resource('centers','CentersController');
 Route::resource('employees','EmployeeController');
 
 // --------------------- students --------------------
-Route::get('/', 'HomeController@index' );
+Route::get('/', 'StudentController@create' );
 Route::resource('students','StudentController');
 
 Route::get('students.table','StudentController@showTable')->name('students.table');
