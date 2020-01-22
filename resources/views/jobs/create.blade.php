@@ -14,7 +14,12 @@
             direction: rtl;
 
         }
-
+         .error {
+             color: #b60000;
+             font-size: 1rem;
+             font-weight: 400;
+             line-height: 1.5;
+         }
     </style>
 </head>
 <body class="bg-light">
@@ -64,17 +69,17 @@
                             </div>
                             <br>
 
-
                             <div class="form-row save">
 
                                 <div class="col-sm-6 mx-auto text-center" style="width: 200px;">
-                                    <button class="btn btn-primary" type="button"  onclick="submitJob();" id="submit_job">اضافه</button>
+                                    <button class="btn btn-primary" type="submit"  onclick="submitJob();" id="submit_job">اضافه</button>
                                     <button class="btn  btn-danger" type="reset"> الغاء</button>
 
 
                                 </div>
 
                             </div>
+
                             <br>
                         </form>
                     </div>
@@ -91,24 +96,24 @@
 
 @include('script')
 
-<script type="text/javascript" src="{{ url('js/jQuery.js') }}"></script>
-<script type="text/javascript" src="{{ url('js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ url('static/js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url('static/js/popper.min.js') }}"></script>
-<script src="{{ url('static/js/bootstrap.min.js') }}"></script>
-
 <script src="src={{url('vendor/jquery/jquery.js/jquery.min.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<!-- client side validation page -->
+<script type='text/javascript' src="/js/jobs_create_validation.js"></script>
+<!-- check all -->
 <script>
-
     function selectall(source) {
         var checkboxes = document.getElementsByName('check');
         for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = source.checked;
         }
     }
+</script>
 
+<script>
+    /*
     function submitJob() {
         var job_name = document.getElementById('job_name').value;
         if(job_name.length === 0){
@@ -141,7 +146,7 @@
         }
 
     }
-
+*/
 </script>
 
 </body>
