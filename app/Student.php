@@ -85,4 +85,7 @@ class Student extends Model
 
         });
     }
+    public static function ApiFields(){
+        return ['students.id','nameAr','nameEn','image',];
+    }
 }

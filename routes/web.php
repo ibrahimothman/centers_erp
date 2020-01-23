@@ -93,4 +93,5 @@ Route::get('set_role',function (){
 Route::resource('Api/courses','CoursesApi');
 Route::resource('Api/instructors','InstructorApiController');
 Route::resource('Api/categories','CategoriesApiController');
+Route::resource('Api/reviews','ReviewsApiController');
 Auth::routes(['register' => true]);
