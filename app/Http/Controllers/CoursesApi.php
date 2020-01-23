@@ -41,6 +41,7 @@ class CoursesApi extends Controller
             $coursesRes['courses'][$j]['instructors']=$course->instructors()->get(Instructor::ApiFields());
             $coursesRes['courses'][$j]['center']=$course->center()->first(Center::$ApiFields);
             $coursesRes['courses'][$j]['categories']=$course->categories;
+            $coursesRes['courses'][$j]['rating']=$course->courseReviews()->avg('rating');
         }
 
 
