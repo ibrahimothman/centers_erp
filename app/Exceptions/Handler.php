@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\helper\Constants;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -49,16 +50,20 @@ class Handler extends ExceptionHandler
     {
 
 
-
-        if (method_exists($exception,'getStatusCode' )&&$exception->getStatusCode() == 404) {
-            $message=Constants::getDefaultErrorMessage();
-            if ($exception->getMessage()!=null)
-                $message=$exception->getMessage();
-
+        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
+            dd('asdasdsa');
+            return response()->json(['message' => 'Not Found!'], 404);
+        }
 
 
-        return response()->view('errors/404',['message'=>$message],404);
-    }
+
+//        if (method_exists($exception,'getStatusCode' )&&$exception->getStatusCode() == 404) {
+//            $message=Constants::getDefaultErrorMessage();
+//            if ($exception->getMessage()!=null)
+//                $message=$exception->getMessage();
+//
+//        return response()->view('errors/404',['message'=>$message],404);
+//        }
         return parent::render($request, $exception);
     }
 }
