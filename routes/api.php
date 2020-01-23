@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('search_student_by_name','StudentController@searchByName');
+Route::resource('courses','CoursesApi');
+Route::resource('instructors','InstructorApiController');
+Route::resource('categories','CategoriesApiController');
+Route::resource('reviews','ReviewsApiController');
 
 
