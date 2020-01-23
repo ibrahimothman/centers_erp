@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Resources\Student as StudentResource;
+use App\Student;
 use Illuminate\Http\Request;
 
 /*
@@ -18,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('search_student_by_name','StudentController@searchByName');
-Route::get('all-tests','TestController@getTests');
+
+Route::get('/students', function () {
+    return response()->json(Student::all());
+});
 
 
