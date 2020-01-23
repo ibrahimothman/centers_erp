@@ -45,7 +45,7 @@ class Student extends Model
 
 
 
-    public function degreeOptions(){
+    public static function degreeOptions(){
         return [
           'طالب','خريج'
         ];
