@@ -11,6 +11,6 @@ class Address extends Model
 
     public function addressable()
     {
-        return $this->morphTo();
+        return $this->morphTo('addressable');
     }
 }
