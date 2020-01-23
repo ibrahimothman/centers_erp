@@ -29,5 +29,10 @@ Route::get('/students', function () {
     $center = Auth::user()->center;
     return StudentResource::collection($center->students);
 });
+Route::get('/students/{student}', function (Student $student) {
+    $center = Auth::user()->center;
+    return new StudentResource($center->students->find($student));
+});
+
 
 
