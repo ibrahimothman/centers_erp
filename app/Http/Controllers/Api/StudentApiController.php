@@ -9,6 +9,7 @@ use App\Center;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Student as StudentResource;
 use App\Image;
+use App\Rules\DegreeRule;
 use App\Rules\FacultyRule;
 use App\Student;
 use Illuminate\Http\Request;
@@ -99,7 +100,7 @@ class StudentApiController extends Controller
             'state' => 'required',
             'city' => 'required',
             'address' => 'required',
-            'degree' => 'required',
+            'degree' => ['required',new DegreeRule],
             'faculty' => ['required',new FacultyRule],
             'skillCardNumber' => 'required|unique:students,skillCardNumber',
         ]);
