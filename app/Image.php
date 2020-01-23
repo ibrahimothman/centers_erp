@@ -40,12 +40,11 @@ class Image extends Model
         return $original;
     }
 
-    public static function deleteImages($dir, $images)
+    public static function deleteImage($dir, $image)
     {
-        foreach ($images as $image) {
-            File::delete([
-                public_path($dir."/".$image->url)
-            ]);
-        }
+        File::delete([
+            public_path($dir."/".$image->url)
+        ]);
+
     }
 }

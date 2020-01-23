@@ -51,7 +51,7 @@ class Student extends Model
         ];
     }
 
-    public function facultyOptions(){
+    public static function facultyOptions(){
         return [
             'هندسه','تجاره'
         ];

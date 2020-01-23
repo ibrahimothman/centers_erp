@@ -42,7 +42,7 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form enctype="multipart/form-data" id="form" >
+                            <form enctype="application/x-www-form-urlencoded" id="form" >
                                 @csrf
                                 @method('patch')
                                 <div class="form-row image-upload">
@@ -236,7 +236,6 @@
             });
 
 
-            {{--fd.append('_token',"{{ csrf_token() }}");--}}
             fd.append('name',courseName);
             fd.append('code', courseCode);
             fd.append('description', courseDescription);
@@ -257,7 +256,7 @@
                 data : fd,
                 contentType : false,
                 processData : false,
-                // dataType: "json",
+                dataType: "json",
                 success: function (data) {
                     // console.log(data);
                     // document.getElementById('form').reset();
