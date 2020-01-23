@@ -1,8 +1,12 @@
 <?php
 
+use App\Center;
+use App\Course;
 use App\Http\Resources\Student as StudentResource;
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +26,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('search_student_by_name','StudentController@searchByName');
 
 Route::get('/students', function () {
-    return response()->json(Student::all());
+    $center = Auth::user()->center;
+    return StudentResource::collection($center->students);
 });
 
 
