@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class Instructor extends Model
 {
-
+    protected $hidden = array('pivot');
 
     protected $guarded = [];
 
@@ -60,6 +60,9 @@ class Instructor extends Model
 
     }
 
+    public static function ApiFields(){
+        return ['instructors.id','nameAr','nameEn','image','bio'];
+    }
 
 
 }

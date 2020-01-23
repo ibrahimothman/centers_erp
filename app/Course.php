@@ -8,6 +8,7 @@ use Illuminate\Pipeline\Pipeline;
 
 class Course extends Model
 {
+    protected $hidden = array('pivot');
     public $timestamps = false;
     protected $guarded = [];
 
@@ -39,6 +40,10 @@ class Course extends Model
     public function images()
     {
         return $this->morphMany(Image::class,'imageable');
+    }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class);
     }
 
 
