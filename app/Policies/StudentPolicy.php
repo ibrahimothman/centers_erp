@@ -41,9 +41,9 @@ class StudentPolicy
          * A member in center which student enrolled in and
          * Has student.view role
          * */
-        $role = Role::where('name','student.view')->first();
+//        $role = Role::where('name','student.view')->first();
         foreach ($student->centers as $center){
-            if(Session::get('center')->employess->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
+            if($center->user_id ==  Auth::id())
                 return true;
         }
 //
