@@ -28,7 +28,7 @@ class StudentApiController extends Controller
 
     public function store(Request $request)
     {
-
+        
         $student_data = $this->validateRequest($request);
         if($student_data->fails()){
             return response()->json($student_data->errors(), 400);
