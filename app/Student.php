@@ -10,7 +10,7 @@ use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class Student extends Model
+class Student extends Image
 {
     protected $guarded = [];
 
@@ -34,12 +34,12 @@ class Student extends Model
     }
 
     public function setImageAttribute($image){
-        $original = Image::saveImage('/uploads/profiles', $image);
+        $original = $this->saveImage($image);
         return $this->attributes['image'] = url("/uploads/profiles/".$original);
 
     }
     public function setIdImageAttribute($idImage){
-        $original = Image::saveImage('/uploads/profiles', $idImage);
+        $original = $this->saveImage($idImage);
         return $this->attributes['idImage'] = url("/uploads/profiles/".$original);
 
     }
@@ -90,9 +90,19 @@ class Student extends Model
             // delete student's address
             if($student->address) $student->address->delete();
             // delete student's image and id_image from /uploads/profiles
-            if($student->image) Image::deleteImage('/uploads/profiles', $student->image);
-            if($student->idImage) Image::deleteImage('/uploads/profiles', $student->idImage);
+            if($student->image) $this->deleteImage();
+            if($student->idImage) $this->deleteImage();
 
         });
+    }
+
+    public function getDir()
+    {
+        return '/uploads/profiles';
+    }
+
+    public function getImageUrl()
+    {
+        return $this->image;
     }
 }
