@@ -81,8 +81,12 @@ class StudentApiController extends Controller
         return new StudentResource($student);
     }
 
-    public function delete()
+    public function destroy(Student $student)
     {
+        //policy
+//        $this->authorize('delete',$student);
+        $student->delete();
+        return response()->json(['message' => 'The student has successfully deleted'], 200);
 
     }
 

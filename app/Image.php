@@ -42,8 +42,10 @@ class Image extends Model
 
     public static function deleteImage($dir, $image)
     {
+        $url = explode('/', $image)[5];
+//        dd($url);
         File::delete([
-            public_path($dir."/".$image->url)
+            public_path($dir."/".$url)
         ]);
 
     }
