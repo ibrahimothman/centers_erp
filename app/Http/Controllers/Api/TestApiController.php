@@ -42,8 +42,9 @@ class TestApiController extends Controller
         return new TestResource($test);
     }
 
-    public function destroy(){
-
+    public function destroy(Test $test){
+        $test->delete();
+        return response()->json(['message' => 'The test has successfully deleted']);
     }
 
     private function validateRequest(Request $request, $test_id)
