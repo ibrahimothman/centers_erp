@@ -33,6 +33,7 @@ class TestApiController extends Controller
 
     public function show(Test $test)
     {
+        $this->authorize('view', $test);
         return new TestResource($test);
     }
 
@@ -43,6 +44,7 @@ class TestApiController extends Controller
     }
 
     public function destroy(Test $test){
+        $this->authorize('view', $test);
         $test->delete();
         return response()->json(['message' => 'The test has successfully deleted']);
     }

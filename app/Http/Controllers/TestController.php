@@ -71,7 +71,7 @@ class TestController extends Controller
     {
         //
 
-//        $this->authorize('view',$test);
+        $this->authorize('view',$test);
 
         $testGroups=DB::table('test_groups')
             ->leftJoin('student_test_group','test_groups.id','=','student_test_group.test_group_id')
