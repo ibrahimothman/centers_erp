@@ -27,6 +27,18 @@ class TestEnrollmentApiController extends Controller
         return TestGroupResource:: collection(Student::findOrFail($student)->testsEnrolling);
     }
 
+    public function cancelEnrollment(Request $request){
+        $enrollment_data = $this->validateRequest($request);
+        if($enrollment_data->fails()){
+            return response()->json($enrollment_data->errors(), 400);
+        }
+        $student = Student::findOrFail($enrollment_data->validate()['student_id']);
+        $student->testsEnrolling()->detach($enrollment_data->validate()['test_group_id']);
+        return response()->json(['message' => 'Successfully you have unenrolled in this group'], 200);
+
+//        return $student.' / '.$test_group;
+    }
+
 
     private function validateRequest(Request $request){
         return Validator::make($request->all(),[

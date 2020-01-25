@@ -16,6 +16,7 @@ Route::group(['middleware' => ['before' => 'jwt.auth']], function (){
     Route::apiResource('tests', '\App\Http\Controllers\Api\TestApiController');
     Route::apiResource('test-groups', '\App\Http\Controllers\Api\TestGroupApiController');
     Route::apiResource('test-enrollments', '\App\Http\Controllers\Api\TestEnrollmentApiController');
+    Route::DELETE('cancel-test-enrollment', '\App\Http\Controllers\Api\TestEnrollmentApiController@cancelEnrollment');
 
 });
 
