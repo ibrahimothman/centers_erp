@@ -1,0 +1,66 @@
+<?php
+
+
+namespace App\Http\Controllers\Api;
+
+
+use App\Center;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Test as TestResource;
+use App\Test;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+class TestApiController extends Controller
+{
+    public function index(){
+        return TestResource::collection(Test::allTests(Auth::user()->center));
+    }
+
+    public function store(Request $request){
+
+        $test_date = $this->validateRequest($request);
+        if($test_date->fails()){
+            return response()->json($test_date->errors(), 400);
+        }
+
+        $test = Auth::user()->center->tests()->create($test_date->validate());
+        $test = $this->setRetake($test);
+
+        return new TestResource($test);
+    }
+
+    public function update(){
+
+    }
+
+    public function destroy(){
+
+    }
+
+    private function validateRequest(Request $request)
+    {
+        return Validator::make($request->all(),[
+            'name' => 'required|unique:tests,name',
+            'description' => 'required',
+            'cost_ind' => 'required|integer',
+            'cost_course' => 'required|integer',
+
+        ]);
+    }
+
+
+    private function setRetake($test)
+    {
+        if(request()->has('retake')){
+            $test->update(['retake' => 1]);
+        }else{
+            $test->update(['retake' => 0]);
+        }
+        return Test::find($test->id);
+    }
+
+
+
+}

@@ -4,11 +4,9 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Address;
-use App\Center;
+
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Student as StudentResource;
-use App\Image;
 use App\Rules\DegreeRule;
 use App\Rules\FacultyRule;
 use App\Student;
@@ -34,12 +32,8 @@ class StudentApiController extends Controller
             return response()->json($student_data->errors(), 400);
         }
 
-        // fetch center from session
-        $center = Auth::user()->center;
-
         // create a new student
         $student = Student::create(Arr::except($student_data->validate(),['state','city','address']));
-
 
         // attach student with center
         $student->address()->create([
@@ -48,7 +42,9 @@ class StudentApiController extends Controller
             'address' => $request->all()['address'],
         ]);
 
-
+        // fetch center from session
+        $center = Auth::user()->center;
+        // attach the student to the center
         $center->students()->syncWithoutDetaching($student);
         return new StudentResource($student);
 
