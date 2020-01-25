@@ -39,7 +39,7 @@ class TestApiController extends Controller
 
     public function update(Request $request, Test $test){
         $test->update($this->validateRequest($request, $test->id)->validate());
-        $test = $this->setRetake($test);
+        $this->setRetake($test);
         return new TestResource($test);
     }
 

@@ -28,7 +28,7 @@ class TestGroupApiController extends Controller
 
     public function store(Request $request)
     {
-        $group_data = $this->validateRequest($request,'');
+        $group_data = $this->validateRequest($request);
         if($group_data->fails()){
             return response()->json($group_data->errors(), 400);
         }
@@ -36,11 +36,22 @@ class TestGroupApiController extends Controller
         return new TestGroupResource(TestGroup::create($group_data->validate()));
     }
 
-    public function show(TestGroup $group){
-        return new TestGroupResource($group);
+    public function show(TestGroup $testGroup){
+        return new TestGroupResource($testGroup);
     }
 
-    private function validateRequest(Request $request, $group_id)
+    public function update(Request $request, TestGroup $testGroup)
+    {
+        $group_data = $this->validateRequest($request);
+        if($group_data->fails()){
+            return response()->json($group_data->errors(), 400);
+        }
+
+        $testGroup->update($group_data->validate());
+        return new TestGroupResource($testGroup);
+    }
+
+    private function validateRequest(Request $request)
     {
         return Validator::make($request->all(),[
             'test_id' => ['required','integer', new TestRule],
