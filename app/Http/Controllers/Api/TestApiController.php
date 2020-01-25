@@ -20,7 +20,7 @@ class TestApiController extends Controller
 
     public function store(Request $request){
 
-        $test_date = $this->validateRequest($request);
+        $test_date = $this->validateRequest($request,'');
         if($test_date->fails()){
             return response()->json($test_date->errors(), 400);
         }
@@ -31,18 +31,20 @@ class TestApiController extends Controller
         return new TestResource($test);
     }
 
-    public function update(){
-
+    public function update(Request $request, Test $test){
+        $test->update($this->validateRequest($request, $test->id)->validate());
+        $test = $this->setRetake($test);
+        return new TestResource($test);
     }
 
     public function destroy(){
 
     }
 
-    private function validateRequest(Request $request)
+    private function validateRequest(Request $request, $test_id)
     {
         return Validator::make($request->all(),[
-            'name' => 'required|unique:tests,name',
+            'name' => 'required|unique:tests,name,'.$test_id,
             'description' => 'required',
             'cost_ind' => 'required|integer',
             'cost_course' => 'required|integer',
