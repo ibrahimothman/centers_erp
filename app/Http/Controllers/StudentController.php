@@ -148,10 +148,8 @@ class StudentController extends Controller
         // todo delete prev image from profiles dir
 
         $data = $this->validateRequest($student->id);
-
         // create a new student
-        $this->deleteImage($student->image);
-        $student->update(array_except($data,['state','city','address']));
+        $student->update(Arr::except($data,['state','city','address']));
 
         // update address
         $student->address()->update([
@@ -207,10 +205,5 @@ class StudentController extends Controller
 
     }
 
-    private function deleteImage($image)
-    {
-        File::delete([
-           public_path('/uploads/profiles/'.$image)
-        ]);
-    }
+
 }

@@ -34,11 +34,14 @@ class Student extends Image
     }
 
     public function setImageAttribute($image){
+        $this->deleteImage($this->image);
         $original = $this->saveImage($image);
         return $this->attributes['image'] = url("/uploads/profiles/".$original);
 
     }
     public function setIdImageAttribute($idImage){
+        // first delete prev one
+        $this->deleteImage($this->idImage);
         $original = $this->saveImage($idImage);
         return $this->attributes['idImage'] = url("/uploads/profiles/".$original);
 
@@ -101,8 +104,5 @@ class Student extends Image
         return '/uploads/profiles';
     }
 
-    public function getImageUrl()
-    {
-        return $this->image;
-    }
+
 }

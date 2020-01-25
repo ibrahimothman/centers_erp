@@ -68,8 +68,7 @@ class StudentApiController extends Controller
             return response()->json($student_data->errors(), 400);
         }
         // create a new student
-        Image::deleteImage('/uploads/profiles', $student->image);
-        $student->update(Arr::except($student_data,['state','city','address']));
+        $student->update(Arr::except($student_data->validate(),['state','city','address']));
 
         // update address
         $student->address()->update([

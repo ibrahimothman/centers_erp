@@ -42,16 +42,16 @@ abstract class Image extends Model
         return $original;
     }
 
-    public function deleteImage()
+    public function deleteImage($image)
     {
-        $url = explode('/', $this->getImageUrl())[5];
-//        dd($url);
-        File::delete([
-            public_path($this->getDir()."/".$url)
-        ]);
+        if($image) {
+            $url = explode('/', $image)[5];
+            File::delete([
+                public_path($this->getDir() . "/" . $url)
+            ]);
+        }
 
     }
 
-    public abstract function getImageUrl();
 
 }
