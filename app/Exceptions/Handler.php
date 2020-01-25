@@ -60,6 +60,10 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
+        if ($exception instanceof AccessDeniedHttpException){
+            return response()->json(['message' => 'Access is Denied'], 403);
+        }
+
 //        if (method_exists($exception,'getStatusCode' )&&$exception->getStatusCode() == 404) {
 //            $message=Constants::getDefaultErrorMessage();
 //            if ($exception->getMessage()!=null)

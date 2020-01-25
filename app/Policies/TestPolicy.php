@@ -39,8 +39,8 @@ class TestPolicy
          * he is a member in the center which has this test and
          * he has test.view rights
          * */
-        $role = Role::where('name','test.view')->first();
-        return $test->center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id);
+//        $role = Role::where('name','test.view')->first();
+        return Auth::id() == $test->center->user_id;
     }
 
     /**
@@ -52,7 +52,7 @@ class TestPolicy
     public function create(User $user)
     {
         //
-        $role = Role::where('name','test.add')->first();
+//        $role = Role::where('name','test.add')->first();
         return Auth::user()->roles->contains($role->id);
     }
 

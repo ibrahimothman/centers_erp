@@ -14,6 +14,7 @@ Route::group([
 Route::group(['middleware' => ['before' => 'jwt.auth']], function (){
     Route::apiResource('students', '\App\Http\Controllers\Api\StudentApiController');
     Route::apiResource('tests', '\App\Http\Controllers\Api\TestApiController');
+    Route::apiResource('test-groups', '\App\Http\Controllers\Api\TestGroupApiController');
 
 });
 
