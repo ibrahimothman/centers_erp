@@ -6,7 +6,7 @@ use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
-class Course extends Model
+class Course extends Model implements Imagable
 {
     protected $hidden = array('pivot');
     public $timestamps = false;
@@ -56,4 +56,29 @@ class Course extends Model
     }
 
 
+    public function uploadImages($images)
+    {
+        foreach ($images as $image) {
+            $original = $this->saveImage($image);
+//            echo $original;
+            $this->images()->create([
+                'url' => url("/uploads/courses/".$original)
+            ]);
+        }
+    }
+
+    public function saveImage($image)
+    {
+        return Image::saveImage($this->getDir(), $image);
+    }
+
+    public function deleteImage($image)
+    {
+        // TODO: Implement deleteImage() method.
+    }
+
+    public function getDir()
+    {
+        return '/uploads/courses';
+    }
 }

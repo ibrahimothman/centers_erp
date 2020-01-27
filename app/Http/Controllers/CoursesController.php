@@ -110,14 +110,9 @@ class CoursesController extends Controller
     public function uploadImages(Request $request, $course){
 
         if($request->hasFile('images')) {
-            $images = Collection::wrap($request->file('images'));
-            foreach ($images as $image) {
+//            dd(Collection::wrap($request->file('images')));
+            $course->uploadImages(Collection::wrap($request->file('images')));
 
-                $original = Image::saveImage('/uploads/courses', $image);
-                $course->images()->create([
-                    'url' => url("/uploads/courses/".$original)
-                ]);
-            }
         }
 
     }

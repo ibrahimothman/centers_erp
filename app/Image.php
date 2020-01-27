@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-abstract class Image extends Model
+class Image extends Model
 {
     //
     protected $guarded = [];
@@ -18,18 +18,17 @@ abstract class Image extends Model
         return $this->morphTo();
     }
 
-    public abstract function getDir();
 
     /*
      * @param $dir public path you want to save images inside
      * @param $images set of images you want to upload
      * @param $creator images' owner ex:(course,test or student)
      * */
-    public  function saveImage($image)
+    public static function saveImage($dir, $image)
     {
         // create courses dir if not existed
 //        $path = base_path().'/public_html'.$this->getDir();
-        $path = public_path($this->getDir());
+        $path = public_path($dir);
         if (!is_dir($path)) {
             mkdir($path,0777,true);
         }
@@ -42,12 +41,12 @@ abstract class Image extends Model
         return $original;
     }
 
-    public function deleteImage($image)
+    public function deleteImage($dir, $image)
     {
         if($image) {
             $url = explode('/', $image)[5];
             File::delete([
-                public_path($this->getDir() . "/" . $url)
+                public_path($dir . "/" . $url)
             ]);
         }
 
