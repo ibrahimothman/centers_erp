@@ -41,7 +41,7 @@ class Image extends Model
         return $original;
     }
 
-    public function deleteImage($dir, $image)
+    public static function deleteImage($dir, $image)
     {
         if($image) {
             $url = explode('/', $image)[5];
