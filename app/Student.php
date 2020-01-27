@@ -10,7 +10,7 @@ use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class Student extends Image
+class Student extends Model implements Imagable
 {
     protected $guarded = [];
 
@@ -105,4 +105,13 @@ class Student extends Image
     }
 
 
+    public function saveImage($image)
+    {
+        return Image::saveImage($this->getDir(), $image);
+    }
+
+    public function deleteImage($image)
+    {
+        Image::deleteImage($this->getDir(), $image);
+    }
 }
