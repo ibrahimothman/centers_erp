@@ -40,7 +40,7 @@ class TestTakeController extends Controller
         //todo mvalidation
         // todo get todays test groups only
         // todo paginate
-        
+
         $center = Center::findOrFail(Session('center_id'));
         $tests = Test::allTests($center);
         return view('testTakes/test-take')->with('tests',$tests);

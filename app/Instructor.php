@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class Instructor extends Model
+class Instructor extends Image
 {
     protected $hidden = array('pivot');
 
@@ -50,13 +50,15 @@ class Instructor extends Model
 
     // save image before center it to db
     public function setImageAttribute($image){
-        $original = Image::saveImage('/uploads/profiles', $image);
-        return $this->attributes['image'] = url("/uploads/profiles/".$original);
+        $this->deleteImage($this->image);
+        $original = $this->saveImage($image);
+        return $this->attributes['image'] = url($this->getDir()."/".$original);
 
     }
     public function setIdImageAttribute($idImage){
-        $original = Image::saveImage('/uploads/profiles', $idImage);
-        return $this->attributes['idImage'] = url("/uploads/profiles/".$original);
+        $this->deleteImage($this->idImage);
+        $original = $this->saveImage($idImage);
+        return $this->attributes['idImage'] = url($this->getDir()."/".$original);
 
     }
 
@@ -65,4 +67,8 @@ class Instructor extends Model
     }
 
 
+    public function getDir()
+    {
+        return '/uploads/profiles';
+    }
 }
