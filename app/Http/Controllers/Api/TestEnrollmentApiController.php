@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class TestEnrollmentApiController extends Controller
 {
 
-
+    // enroll the student to the test group
     public function store(Request $request){
         $enrollment_data = $this->validateRequest($request);
         if($enrollment_data->fails()){
@@ -23,10 +23,13 @@ class TestEnrollmentApiController extends Controller
         return response()->json(['message' => 'Successfully you have enrolled in this group'], 200);
     }
 
+    // show all test enrollments of the student
     public function show($student){
+//        return response()->json(Student::findOrFail($student)->testsEnrolling);
         return TestGroupResource:: collection(Student::findOrFail($student)->testsEnrolling);
     }
 
+    // cancel student enrollment of the test group
     public function cancelEnrollment(Request $request){
         $enrollment_data = $this->validateRequest($request);
         if($enrollment_data->fails()){
@@ -36,7 +39,6 @@ class TestEnrollmentApiController extends Controller
         $student->testsEnrolling()->detach($enrollment_data->validate()['test_group_id']);
         return response()->json(['message' => 'Successfully you have unenrolled in this group'], 200);
 
-//        return $student.' / '.$test_group;
     }
 
 

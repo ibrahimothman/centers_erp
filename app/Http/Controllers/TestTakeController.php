@@ -40,34 +40,10 @@ class TestTakeController extends Controller
         //todo mvalidation
         // todo get todays test groups only
         // todo paginate
-
-
+        
         $center = Center::findOrFail(Session('center_id'));
-        $utility=new Utility();
-        $today=$utility->getCurrentDay();
-        $testGroups=DB::table('test_groups')
-            ->join("tests",'test_groups.test_id','=','tests.id')
-            ->where('tests.center_id','=',$center->id)
-            ->get();
-        if (Input::get('test')!=null)
-            $testGroups=DB::table('test_groups')
-                ->join("tests",'test_groups.test_id','=','tests.id')
-                ->where('tests.center_id','=',$center->id)
-                ->where('tests.id','=',Input::get('test'))
-                ->get();
-        foreach ($testGroups as $testGroup){
-            $testGroup->students=DB::table('student_test_group')
-                ->join("students",'student_test_group.student_id','=','students.id')
-                ->join("tests",'student_test_group.test_group_id','=','tests.id')
-                ->where('student_test_group.test_group_id','=',$testGroup->id)
-                ->where('tests.center_id','=',$center->id)
-                ->select(['students.*' ,'student_test_group.id','student_test_group.take'])
-                ->get();
-        }
-
-//        echo json_encode($testGroups);
-        return view('testTakes/test-take')
-            ->with('testGroups',$testGroups);
+        $tests = Test::allTests($center);
+        return view('testTakes/test-take')->with('tests',$tests);
     }
 
     /**

@@ -90,8 +90,8 @@
                                     <div class="form-row col-md-12 ">
                                         <select name="test"  id="testselector"     class="form-control ">
                                             <option value="0"> اختر الامتحان</option>
-                                            @foreach($testGroups as $testGroup)
-                                                <option value="{{$testGroup->id}}">{{$testGroup->name}}</option>
+                                            @foreach($tests as $test)
+                                                <option value="{{$test->id}}">{{$test->name}}</option>
 
                                             @endforeach
                                         </select>
