@@ -20,6 +20,12 @@ class TestGroup extends JsonResource
             'available_chairs' => $this->available_chairs,
             'group_date' => $this->group_date,
             'opened' => $this->opened,
+            'result' => $this->whenPivotLoaded('student_test_group', function () {
+                return $this->pivot->result;
+            }),
+            'take' => $this->whenPivotLoaded('student_test_group', function () {
+                return $this->pivot->take;
+            }),
         ];
     }
 }
