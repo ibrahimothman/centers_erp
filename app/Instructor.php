@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class Instructor extends Image
+class Instructor extends Model implements Imagable
 {
     protected $hidden = array('pivot');
 
@@ -70,5 +70,15 @@ class Instructor extends Image
     public function getDir()
     {
         return '/uploads/profiles';
+    }
+
+    public function saveImage($image)
+    {
+        return Image::saveImage($this->getDir(), $image);
+    }
+
+    public function deleteImage($image)
+    {
+        Image::deleteImage($this->getDir(), $image);
     }
 }
