@@ -103,22 +103,16 @@ Route::get('calendar',function (){
 Route::get('room-time',function (){
 
     $groups = [];
-    foreach (Room::findOrFail(2)->times as $time){
-        foreach ($time->course_groups as $group){
-            $start = new DateTime("2020-02-01"); // when group starting
-            $end = 28; // when group ending
-            echo gettype($group->start_at);
-//            for($i = $start; $i < $end; $i+=7){
-//                $temp['title'] = $group->course->name;
-//                $temp['start'] = Utility::getDate(addDays($group->start_at, 7));
-////                $temp['end'] = Utility::getDate(addDays($group->start_at, 7));
-//
-//                $groups[] = $temp;
-//            }
+    foreach (Room::findOrFail(1)->course_groups as $course_group){
+        foreach ($course_group->times as $time){
+            $temp['title'] = $course_group->course->name;
+            $temp['start'] = $time->day;
+            $temp['end'] = $time->day;
+           $groups[] = $temp;
 
         }
     }
-//    return response()->json($groups);
+    return response()->json($groups);
 });
 
 function addDays($begin, $rate){

@@ -31,7 +31,7 @@ class RoomsController extends Controller
     public function create()
     {
         $room = new Room();
-        return view('rooms/room_calendar',compact('room'));
+        return view('rooms/room_create',compact('room'));
     }
 
 
@@ -107,11 +107,12 @@ class RoomsController extends Controller
     {
         if(request()->ajax()){
             $room_id = request('room_id');
-            $day_id = request('day_id');
+            $day = request('day');
         }
         $begin = Time::hours();
         $room = Room::findOrFail($room_id);
-        foreach($room->times->where('day', $day_id) as $time){
+        
+        foreach($room->times->where('day', $day) as $time){
             for ($i = $time->begin; $i < $time->end; $i++){
                 $begin= Arr::except($begin,$i);
             }

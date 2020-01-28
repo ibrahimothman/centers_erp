@@ -107,17 +107,16 @@
                                             </div>
                                             <fieldset>
                                             <div class="form-row days">
-                                                <header class="full-width"><h4> ايام الدورة <i class="fas fa-plus-circle" id='add-more-days' style="color:green; cursor:pointer"></i></h4></header>
+                                                <header class="full-width"><h4> ايام الدورة <i class="fas fa-plus-circle" id='add-more-days' onclick="" style="color:green; cursor:pointer"></i></h4></header>
                                                 <div class="col-sm-4 form-group">
-                                                    <label for="course-day-1">يوم 1</label>
-                                                    <select class="form-control" id="course-day-1" name="course-day[]" onchange="onDayChanged(1);" required>
-                                                        <option value="0">اختر اليوم</option>
-                                                        @foreach(\App\Time::days() as $dayKey => $dayValue)
-                                                            <option value="{{ $dayKey }}">{{ $dayValue }}</option>
-                                                         @endforeach
-                                                    </select>
-                                                        <span id="test_course-day-1_error"></span>
-                                                        <div>{{ $errors->first('day') }}</div>
+                                                    <label for="validationCustom01">   اختر اليوم</label>
+                                                    <div class='input-group date'>
+
+                                                        <input id="course-day-1" name="course-day[]" onchange="onDayChanged(1)" onclick="onDayClicked(1)"  class="form-control" type="text" >
+                                                        <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1-begin"> بداية المحاضرة</label>
@@ -169,29 +168,36 @@
         <script src="{{url('js/sb-admin-2.min.js')}}"></script>
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
         <script>
+
             $(function () {
                 $('#datetimepicker').datetimepicker({
-                timepicker:false,
-                format:'Y-m-d'
+                    timepicker:false,
+                    format:'Y-m-d'
                 });
             });
-
-
              let number = 1;
+
+             function onDayClicked(num) {
+                 $('#course-day-'+num).datetimepicker({
+                     timepicker:false,
+                     format:'Y-m-d',
+                 });
+             }
             function onDayChanged (num) {
                 number = num;
                 $('#course-day-'+number+'-begin').empty();
                 $('#course-day-'+number+'-end').empty();
                 var room_id = $('#course-group-room').val();
-                var day_id = $('#course-day-'+number).val();
-                getAvailableBeginsForTheRoom(room_id, day_id);
+                var day = $('#course-day-'+number).val();
+                console.log('room id = '+room_id+' and day = '+day);
+                getAvailableBeginsForTheRoom(room_id, day);
             }
 
-            function getAvailableBeginsForTheRoom(room_id, day_id) {
+            function getAvailableBeginsForTheRoom(room_id, day) {
                 $.ajax({
                     url : "/available_begins_for_the_room",
                     type : 'GET',
-                    data : {room_id : room_id, day_id : day_id},
+                    data : {room_id : room_id, day : day},
                     success : function (begins) {
                         console.log(begins);
                         fillBegins(begins);

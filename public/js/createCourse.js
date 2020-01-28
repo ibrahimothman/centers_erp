@@ -25,21 +25,17 @@ function addChapterInput(num) {
 function addDayInCourse(num) {
     return `
     <hr/>
-    <div class="col-sm-4 form-group">
-        <label for="course-day-${num}">يوم ${num}</label>
-        <select class="form-control" id="course-day-${num}" name="course-day[]" onchange="onDayChanged(${num})" required>
-            <option value="0">اختر اليوم</option>
-            <option value="1">السبت</option>
-            <option value="2">الاحد</option>
-            <option value="3">الاتنين</option>
-            <option value="4">الثلاثاء</option>
-            <option value="5">الاربعاء</option>
-            <option value="6">الخميس</option>
-            <option value="7">الجمعة</option>
-        </select>
-            <span id="test_course-day-${num}_error"></span>
-            <div></div>
-    </div>
+     <div class="col-sm-4 form-group">
+        <label for="validationCustom01">   اختر اليوم</label>
+        <div class='input-group date'>
+
+        <input id="course-day-${num}" name="course-day[]" onchange="onDayChanged(${num})"  onclick="onDayClicked(${num})" class="form-control" type="text" >
+        
+        <span class="input-group-addon">
+           <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        </div>
+      </div>
     <div class="col-sm-4 form-group">
         <label for="course-day-${num}-begin"> بداية المحاضرة</label>
         <select class="form-control" id="course-day-${num}-begin"  name="course-begin[]" onchange="onBeginChanged(${num})" required>
@@ -76,6 +72,7 @@ $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(fu
 $('#add-more-days').click(function () {
     console.log('add more days');
     courseDayNom++;
+
     $(this).parent().parent().parent()
         .append(
             $(addDayInCourse(courseDayNom))

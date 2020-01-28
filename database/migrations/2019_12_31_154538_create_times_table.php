@@ -15,7 +15,7 @@ class CreateTimesTable extends Migration
     {
         Schema::create('times', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedSmallInteger('day');
+            $table->date('day');
             $table->unsignedSmallInteger('begin');
             $table->unsignedSmallInteger('end');
             $table->unsignedSmallInteger('busy')->default(1); // 1 -> busy , 0 -> free

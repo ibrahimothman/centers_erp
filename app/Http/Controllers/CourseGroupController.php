@@ -68,6 +68,7 @@ class CourseGroupController extends Controller
 
         // create times
         $times = Time::addTimes($data['course-day'],$data['course-begin'],$data['course-end']);
+//        dd($times);
 
         // attach times to group
         foreach($times as $time){
@@ -78,6 +79,9 @@ class CourseGroupController extends Controller
         foreach($times as $time){
             Room::findOrFail($data['room'])->times()->syncWithoutDetaching($time);
         }
+
+        // attach course_group to the room
+        Room::findOrFail($data['room'])->course_groups()->syncWithoutDetaching($course_group);
 
         return redirect('/course_groups');
     }
