@@ -44,6 +44,6 @@
 <!-- script-->
 
 @include('script')
-<script src="/js/calendar.js"></script>
+<script src="{{url('js/calendar.js')}}"></script>
 </body>
 </html>

@@ -12,7 +12,14 @@
 */
 
 
+use App\Http\Resources\CourseGroup;
+use App\Http\Resources\TestGroup as TestGroupResource;
 use App\Role;
+use App\Room;
+use App\TestGroup;
+use App\Utility;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 //------------------------ center -------------
@@ -89,4 +96,32 @@ Route::get('set_role',function (){
     }
 });
 
+Route::get('calendar',function (){
+   return view('calendar/index');
+});
+
+Route::get('room-time',function (){
+
+    $groups = [];
+    foreach (Room::findOrFail(2)->times as $time){
+        foreach ($time->course_groups as $group){
+            $start = new DateTime("2020-02-01"); // when group starting
+            $end = 28; // when group ending
+            echo gettype($group->start_at);
+//            for($i = $start; $i < $end; $i+=7){
+//                $temp['title'] = $group->course->name;
+//                $temp['start'] = Utility::getDate(addDays($group->start_at, 7));
+////                $temp['end'] = Utility::getDate(addDays($group->start_at, 7));
+//
+//                $groups[] = $temp;
+//            }
+
+        }
+    }
+//    return response()->json($groups);
+});
+
+function addDays($begin, $rate){
+    return date('Y-m-d', strtotime($begin. ' + '.$rate.' days'));
+}
 Auth::routes(['register' => true]);

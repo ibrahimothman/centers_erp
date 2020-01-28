@@ -3,6 +3,7 @@
 namespace App;
 
 use App\helper\Constants;
+use App\helper\ImageUploader;
 use App\QueryFilter\Name;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class Instructor extends Model implements Imagable
+class Instructor extends ImageUploader
 {
     protected $hidden = array('pivot');
 
@@ -74,8 +75,8 @@ class Instructor extends Model implements Imagable
             // delete student's address
             if($instructor->address) $instructor->address->delete();
             // delete student's image and id_image from /uploads/profiles
-            if($instructor->image) $this->deleteImage();
-            if($instructor->idImage) $this->deleteImage();
+            if($instructor->image) $this->deleteImage($instructor->image);
+            if($instructor->idImage) $this->deleteImage($instructor->idImage);
 
         });
     }
@@ -90,13 +91,5 @@ class Instructor extends Model implements Imagable
         return '/uploads/profiles';
     }
 
-    public function saveImage($image)
-    {
-        return Image::saveImage($this->getDir(), $image);
-    }
 
-    public function deleteImage($image)
-    {
-        Image::deleteImage($this->getDir(), $image);
-    }
 }

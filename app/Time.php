@@ -20,10 +20,6 @@ class Time extends Model
         return $this->belongsToMany(Room::class)->withTimestamps();
     }
 
-//    public function getDayAttribute($value)
-////    {
-////        return self::days()[$value];
-////    }
 
     public static function days()
     {

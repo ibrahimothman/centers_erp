@@ -2,11 +2,12 @@
 
 namespace App;
 
+use App\helper\ImageUploader;
 use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
-class Course extends Model implements Imagable
+class Course extends ImageUploader
 {
     protected $hidden = array('pivot');
     public $timestamps = false;
@@ -65,16 +66,6 @@ class Course extends Model implements Imagable
                 'url' => url("/uploads/courses/".$original)
             ]);
         }
-    }
-
-    public function saveImage($image)
-    {
-        return Image::saveImage($this->getDir(), $image);
-    }
-
-    public function deleteImage($image)
-    {
-        // TODO: Implement deleteImage() method.
     }
 
     public function getDir()

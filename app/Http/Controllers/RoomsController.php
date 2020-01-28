@@ -31,7 +31,7 @@ class RoomsController extends Controller
     public function create()
     {
         $room = new Room();
-        return view('rooms/room_create',compact('room'));
+        return view('rooms/room_calendar',compact('room'));
     }
 
 

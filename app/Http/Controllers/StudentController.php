@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Center;
-use App\helper\Uploader;
+use App\helper\ImageUploader;
 use App\QueryFilter\Name;
 use App\QueryFilter\Sort;
 use App\QueryFilter\SortElse;
