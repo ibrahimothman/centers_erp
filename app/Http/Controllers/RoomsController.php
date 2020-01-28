@@ -111,7 +111,7 @@ class RoomsController extends Controller
         }
         $begin = Time::hours();
         $room = Room::findOrFail($room_id);
-        
+
         foreach($room->times->where('day', $day) as $time){
             for ($i = $time->begin; $i < $time->end; $i++){
                 $begin= Arr::except($begin,$i);
@@ -152,6 +152,20 @@ class RoomsController extends Controller
 
         return $end;
 
+    }
+
+    public function showRoomCalendar(Room $room){
+        $groups = [];
+        foreach ($room->course_groups as $course_group){
+            foreach ($course_group->times as $time){
+                $temp['title'] = $course_group->course->name;
+                $temp['start'] = $time->day;
+                $temp['end'] = $time->day;
+                $groups[] = $temp;
+
+            }
+        }
+        return response()->json($groups);
     }
 
 

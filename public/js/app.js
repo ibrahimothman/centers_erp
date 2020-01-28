@@ -14993,7 +14993,7 @@ __webpack_require__.r(__webpack_exports__);
     getEvents: function getEvents() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/room-time").then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/room-calendar/" + 1).then(function (resp) {
         return _this.events = resp.data;
       })["catch"](function (err) {
         return console.log(err.response.data);

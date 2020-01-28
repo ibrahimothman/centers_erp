@@ -1,23 +1,36 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>Laravel and Vue - Fullcalendar</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
+    <!-- Bootstrap CSS & js -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/room_style.css">
+    <title> room create</title>
 
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link href="/../../../css/styles.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+
+    <link href="{{url('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{url('css/sb-admin-rtl.css')}}" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+        integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If"
+        crossorigin="anonymous">
 
 </head>
-<body>
+<body class="bg-light">
 <div id="app">
-    <br>
-    <calendar-component></calendar-component>
+    <div id="wrapper">
+        @include('sidebar')
+        <div id="content-wrapper" class="d-flex flex-column">
+            @include('operationBar')
+            <calendar-component></calendar-component>
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>

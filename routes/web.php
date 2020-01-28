@@ -100,20 +100,7 @@ Route::get('calendar',function (){
    return view('calendar/index');
 });
 
-Route::get('room-time',function (){
-
-    $groups = [];
-    foreach (Room::findOrFail(1)->course_groups as $course_group){
-        foreach ($course_group->times as $time){
-            $temp['title'] = $course_group->course->name;
-            $temp['start'] = $time->day;
-            $temp['end'] = $time->day;
-           $groups[] = $temp;
-
-        }
-    }
-    return response()->json($groups);
-});
+Route::get('room-calendar/{room}','RoomsController@showRoomCalendar');
 
 function addDays($begin, $rate){
     return date('Y-m-d', strtotime($begin. ' + '.$rate.' days'));

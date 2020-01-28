@@ -60,6 +60,13 @@ class SideBarLinks
         ];
     }
 
+    public static function CalendarLinks()
+    {
+        return[
+            self::$baseUrl.'calendar' => 'عرض',
+        ];
+    }
+
     public static function employeeLinks()
     {
         return [

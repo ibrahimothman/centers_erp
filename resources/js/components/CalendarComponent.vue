@@ -52,7 +52,7 @@
 
             getEvents() {
                 axios
-                    .get("/room-time")
+                    .get("/room-calendar/"+1)
                     .then(resp => (this.events = resp.data))
                     .catch(err => console.log(err.response.data));
             },
