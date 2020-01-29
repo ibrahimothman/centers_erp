@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
@@ -25,14 +25,22 @@
 
 </head>
 <body class="bg-light">
-<div id="app">
-    <div id="wrapper">
-        @include('sidebar')
-        <div id="content-wrapper" class="d-flex flex-column">
-            @include('operationBar')
-            <calendar-component></calendar-component>
-</div>
+    <div id="app">
+        <div id="wrapper">
+            @include('sidebar')
+            <div id="content-wrapper" class="d-flex flex-column">
+                @include('operationBar')
+                <room_calendar_component></room_calendar_component>
+            </div>
+        </div>
+    </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
+<script>
+    import RoomCalendarComponent from "../../js/components/RoomCalendarComponent";
+    export default {
+        components: {RoomCalendarComponent}
+    }
+</script>

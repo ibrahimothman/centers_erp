@@ -99,21 +99,7 @@
         </div>
     </li>
 
-    <!-- calendar -->
-    <li class="nav-item {{str_contains(Request::url(),'calendar') ? 'active' : ''}}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarCollapse" aria-expanded="true" aria-controls="calendarCollapse">
-            <i class="fas fa-users-cog"></i>
-            <span>النتيجه</span>
-        </a>
-        <div id="calendarCollapse" class="{{str_contains(Request::url(),'calendar') ? "collapse show" : 'collapse'}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                @foreach(\App\helper\SideBarLinks::CalendarLinks() as $linkKey => $linkValue)
-                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
-                @endforeach
 
-            </div>
-        </div>
-    </li>
 
     <!-- employees -->
     <li class="nav-item {{str_contains(Request::url(),'employees') ? 'active' : ''}}">

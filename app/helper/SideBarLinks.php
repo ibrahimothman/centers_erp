@@ -48,6 +48,7 @@ class SideBarLinks
         return[
             self::$baseUrl.'instructors/create' => 'اضافه بيانات المدرب',
             self::$baseUrl.'instructors' => 'عرض/تعديل بيانات المدرب',
+            self::$baseUrl.'instructor-calendar' => 'عرض مواعيد امدرسين',
 
         ];
     }
@@ -57,15 +58,11 @@ class SideBarLinks
         return[
             self::$baseUrl.'rooms/create' => 'اضافه غرفه جديده',
             self::$baseUrl.'rooms' => 'عرض/تعديل بيانات الغرف',
+            self::$baseUrl.'room-calendar' => 'عرض مواعيد الغرف',
         ];
     }
 
-    public static function CalendarLinks()
-    {
-        return[
-            self::$baseUrl.'calendar' => 'عرض',
-        ];
-    }
+
 
     public static function employeeLinks()
     {

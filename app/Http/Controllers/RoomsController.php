@@ -168,5 +168,17 @@ class RoomsController extends Controller
         return response()->json($groups);
     }
 
+    public function calendar()
+    {
+        return view('rooms/calendar');
+
+    }
+
+    public function allRooms()
+    {
+        $center = Center::findOrFail(Session('center_id'));
+        return $center->rooms;
+    }
+
 
 }

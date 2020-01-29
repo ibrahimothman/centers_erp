@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Center;
 use App\Instructor;
+use App\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Input;
@@ -132,5 +133,33 @@ class InstructorsController extends Controller
             'address' => 'required',
             'bio' => 'nullable',
         ]);
+    }
+
+    public function showInstructorCalendar(Instructor $instructor){
+        $groups = [];
+        foreach ($instructor->courses as $course){
+            foreach ($course->groups as $group){
+                foreach ($groups->times as $time) {
+                    $temp['title'] = $course->name;
+                    $temp['start'] = $time->day;
+                    $temp['end'] = $time->day;
+                    $groups[] = $temp;
+                }
+
+            }
+        }
+        return response()->json($groups);
+    }
+
+    public function calendar()
+    {
+        return view('instructor/calendar');
+
+    }
+
+    public function allInstructors()
+    {
+        $center = Center::findOrFail(Session('center_id'));
+        return $center->instructors;
     }
 }

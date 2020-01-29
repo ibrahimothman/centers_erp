@@ -14,6 +14,7 @@
 
 use App\Http\Resources\CourseGroup;
 use App\Http\Resources\TestGroup as TestGroupResource;
+use App\Instructor;
 use App\Role;
 use App\Room;
 use App\TestGroup;
@@ -74,11 +75,18 @@ Route::get('get_course_enrollments','CourseEnrollmentController@getCourseEnrollm
 Route::resource('rooms','RoomsController');
 Route::get('available_begins_for_the_room','RoomsController@getAvailableBegins');
 Route::get('available_ends_for_the_room','RoomsController@getAvailableEnds');
+Route::get('room-calendar','RoomsController@calendar');
+Route::get('room-calendar/{room}','RoomsController@showRoomCalendar');
+Route::get('/all-rooms','RoomsController@allRooms');
 
 
 // -------------------instructor----------------
 Route::resource('instructors','InstructorsController');
 Route::post('search_instructor','InstructorsController@searchInstructors');
+Route::get('instructor-calendar','InstructorsController@calendar');
+Route::get('instructor-calendar/{instructor}','InstructorController@showInstructorCalendar');
+Route::get('/all-instructors','InstructorController@allInstructors');
+
 //-------------------- jobs ---------------------
 Route::resource('jobs','jobController');
 //-------------------- settings ---------------------
@@ -96,13 +104,8 @@ Route::get('set_role',function (){
     }
 });
 
-Route::get('calendar',function (){
-   return view('calendar/index');
-});
 
-Route::get('room-calendar/{room}','RoomsController@showRoomCalendar');
 
-function addDays($begin, $rate){
-    return date('Y-m-d', strtotime($begin. ' + '.$rate.' days'));
-}
+
+
 Auth::routes(['register' => true]);

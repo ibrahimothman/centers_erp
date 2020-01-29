@@ -136,8 +136,6 @@
                     </div>
                     <div class="card-body">
                         <div class=" clearfix">
-
-
                             <span class="float-right">
                             <div class="btn-group print-btn p-3 ">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
