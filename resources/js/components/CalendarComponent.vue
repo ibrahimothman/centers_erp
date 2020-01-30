@@ -8,8 +8,17 @@
 
                         <div class="form-group">
                             <label>اختر </label>
-                            <select class='form-control' v-model='room' @change='getEvents()'>
-                                <option v-for="room in rooms" :value='room.id'>{{ room.name }}</option>
+                            <select  class='form-control' v-model='option' @change='getData()'>
+                                <option v-for="option in options" >{{ option }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>اختر </label>
+                            <select class='form-control' v-model='source' @change='getEvents()'>
+                                    <option v-for="source in sources" :value='source.id'>
+                                        {{ option === 'rooms' ? source.name : source.nameAr }}
+                                    </option>
                             </select>
                         </div>
 
@@ -46,20 +55,24 @@
                 },
                 addingMode: true,
                 indexToUpdate: "",
-                room: 0,
-                rooms : []
+                options : ['rooms', 'instructors'],
+                option : 0,
+                source: 0,
+                sources : []
 
 
             }
         },
         methods:{
-            getRooms: function(){
-                axios.get('/all-rooms')
+            getData: function(){
+                axios.get('/all-'+this.option)
                     .then(function (response) {
-                        this.rooms = response.data;
+                        this.sources = response.data;
+                        this.source = 0;
                     }.bind(this));
 
             },
+
             showEvent(arg) {
                 this.addingMode = false;
                 const { id, title, start, end } = this.events.find(
@@ -74,9 +87,8 @@
             },
 
             getEvents: function() {
-                console.log('getEvent room id = '+this.room);
                 axios
-                    .get("/room-calendar/"+this.room)
+                    .get("/"+this.option+"-calendar/"+this.source)
                     .then(resp => (this.events = resp.data))
                     .catch(err => console.log(err.response.data));
             },

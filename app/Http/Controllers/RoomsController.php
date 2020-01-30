@@ -168,11 +168,6 @@ class RoomsController extends Controller
         return response()->json($groups);
     }
 
-    public function calendar()
-    {
-        return view('rooms/calendar');
-
-    }
 
     public function allRooms()
     {

@@ -6,7 +6,7 @@
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/room_style.css">
-    <title> room create</title>
+    <title> calendar </title>
 
 
     <link href="/../../../css/styles.css" rel="stylesheet">
@@ -25,16 +25,16 @@
 
 </head>
 <body class="bg-light">
-    <div id="app">
-        <div id="wrapper">
-            @include('sidebar')
-            <div id="content-wrapper" class="d-flex flex-column">
-                @include('operationBar')
+<div id="app">
+    <div id="wrapper">
+        @include('sidebar')
+        <div id="content-wrapper" class="d-flex flex-column">
+            @include('operationBar')
 
-                <calendar_component></calendar_component>
-            </div>
+            <calendar_component></calendar_component>
         </div>
     </div>
+</div>
 
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

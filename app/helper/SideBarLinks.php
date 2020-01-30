@@ -62,6 +62,14 @@ class SideBarLinks
         ];
     }
 
+    public static function CalendarLinks()
+    {
+        return[
+            self::$baseUrl.'calendar' => 'عرض ال calendar',
+
+        ];
+    }
+
 
 
     public static function employeeLinks()

@@ -13,14 +13,13 @@ window.Vue = require('vue');
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/RoomCalendarComponent.vue -> <example-component></example-component>
+ * Eg. ./components/CalendarComponent.vue -> <example-component></example-component>
  */
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('room_calendar_component', require('./components/RoomCalendarComponent.vue').default);
-// Vue.component('instructor_calendar', require('./components/RoomCalendarComponent.vue'));
+Vue.component('calendar_component', require('./components/CalendarComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

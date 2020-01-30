@@ -22,6 +22,7 @@ use App\Utility;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use function foo\func;
 
 //------------------------ center -------------
 Route::resource('centers','CentersController');
@@ -75,23 +76,25 @@ Route::get('get_course_enrollments','CourseEnrollmentController@getCourseEnrollm
 Route::resource('rooms','RoomsController');
 Route::get('available_begins_for_the_room','RoomsController@getAvailableBegins');
 Route::get('available_ends_for_the_room','RoomsController@getAvailableEnds');
-Route::get('room-calendar','RoomsController@calendar');
-Route::get('room-calendar/{room}','RoomsController@showRoomCalendar');
 Route::get('/all-rooms','RoomsController@allRooms');
+Route::get('/rooms-calendar/{room}','RoomsController@showRoomCalendar');
 
 
 // -------------------instructor----------------
 Route::resource('instructors','InstructorsController');
 Route::post('search_instructor','InstructorsController@searchInstructors');
-Route::get('instructor-calendar','InstructorsController@calendar');
-Route::get('instructor-calendar/{instructor}','InstructorController@showInstructorCalendar');
-Route::get('/all-instructors','InstructorController@allInstructors');
+Route::get('/all-instructors','InstructorsController@allInstructors');
+Route::get('/instructors-calendar/{instructor}','InstructorsController@showInstructorCalendar');
 
 //-------------------- jobs ---------------------
 Route::resource('jobs','jobController');
 //-------------------- settings ---------------------
 Route::get('settings/instructorSettings','settingsController@instructorSettings');
 Route::get('settings/instructorPassReset','settingsController@instructorPassReset');
+
+Route::get('calendar', function(){
+    return view('calendar/calendar');
+});
 
 Route::get('set_role',function (){
     $roles = ['student.add','student.view','student.update','student.delete',

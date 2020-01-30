@@ -139,16 +139,16 @@ class InstructorsController extends Controller
         $groups = [];
         foreach ($instructor->courses as $course){
             foreach ($course->groups as $group){
-                foreach ($groups->times as $time) {
+                foreach ($group->times as $time){
                     $temp['title'] = $course->name;
                     $temp['start'] = $time->day;
                     $temp['end'] = $time->day;
                     $groups[] = $temp;
                 }
-
             }
         }
-        return response()->json($groups);
+
+        return json_encode($groups);
     }
 
     public function calendar()
