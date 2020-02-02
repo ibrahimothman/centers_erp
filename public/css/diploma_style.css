@@ -56,7 +56,7 @@
     border: 1px solid #aaa;
     overflow: auto;
     visibility: hidden;
-    height: 50px;
+    height: 5px;
 }
 
 .ms-options-wrap.ms-active > .ms-options {

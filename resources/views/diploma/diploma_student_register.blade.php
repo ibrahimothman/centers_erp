@@ -3,8 +3,15 @@
 <head>
     <!-- Bootstrap CSS & js -->
 @include('library')
-<!-- style-->
     <title>Enrolling students in diploma</title>
+    <style>
+        .error {
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -21,19 +28,19 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form action="">
+                            <form  id="form" >
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="student-id">اسم الطالب</label>
-                                        <input type="text"  placeholder="اسم الطالب" class="form-control" id="student-id" required>
+                                        <input type="text"  placeholder="اسم الطالب" name="name" class="form-control" id="student" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="course-id">الدبلومة</label>
-                                        <select class="form-control" id="course_id" required>
+                                        <select class="form-control" id="course_id" required name="selectDiploma">
                                             <option value="">اختار</option>
-                                            <option value="">full stack diploma</option>
+                                            <option value=" full stack">full stack diploma</option>
                                         </select>
                                     </div>
                                 </div>
@@ -42,19 +49,18 @@
                                         <label >مواعيد الدبلومه</label>
                                         <select  class="form-control "  id="time" name="time" required>
                                             <option value="">اختار</option>
-                                            <option value="">  السبت والثلاثاء الساعه  <span>2 : 6</span> </option>
-                                            <option value=""> الاحد والاربعاء الساعه  <span>4 : 8</span> </option>
+                                            <option value="السبت">  السبت والثلاثاء الساعه  <span>2 : 6</span> </option>
+                                            <option value="الاحد"> الاحد والاربعاء الساعه  <span>4 : 8</span> </option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
-                                        <hr/>
-                                        <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة
-                                            <i class="fas fa-plus"></i></button>
-                                        <button class="btn  btn-danger action-buttons" type="reset"> إلغاء <i
-                                                    class="fas fa-times"></i></button>
+                                        <button class="btn btn-primary " type="submit" id="submit"> إضافة
+                                            </button>
+                                        <button class="btn  btn-danger " type="reset"> إلغاء
+                                                   </button>
                                     </div>
                                 </div>
                             </form>
@@ -69,6 +75,11 @@
 </div>
 <!-- script-->
 @include('script')
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<!-- client side validation page -->
+<script type='text/javascript' src="/js/diploma_student_register_validation.js "></script>
+
 </body>
 </html>
 

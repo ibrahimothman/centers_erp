@@ -53,7 +53,7 @@
                                     <label>الاسم باللغه العربيه</label>
                                     <span class="required">*</span>
                                     <input type="text" class="form-control" name="nameAr"
-                                           placeholder="بالاسم باللغه العربيه " value="">
+                                           placeholder="الاسم باللغه العربيه " value="">
                                 </div>
                             </div>
                             <div class="form-row form-group">

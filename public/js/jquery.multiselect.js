@@ -56,7 +56,7 @@
         // general options
         selectAll          : false, // add select all option
         selectGroup        : false, // select entire optgroup
-        minHeight          : 50,   // minimum height of option overlay
+        minHeight          : 5,   // minimum height of option overlay
         maxHeight          : null,  // maximum height of option overlay
         maxWidth           : null,  // maximum width of option overlay (or selector)
         maxPlaceholderWidth: null,  // maximum width of placeholder button
@@ -173,7 +173,7 @@
             }
             else {
                 // cacl default maxHeight
-                var maxHeight = ($(window).height() - optionsWrap.offset().top + $(window).scrollTop() - 20);
+                var maxHeight = ($(window).height() - optionsWrap.offset().top + $(window).scrollTop() -20);
             }
 
             // maxHeight cannot be less than options.minHeight
