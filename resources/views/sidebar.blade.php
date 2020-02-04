@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
         <div class="sidebar-brand-icon rotate-n-15">
 
         </div>
@@ -13,17 +13,15 @@
     <hr class="sidebar-divider my-0">
 
 
-
-
-
     <!-- students -->
-    <li class="nav-item {{str_contains(Request::url(),'students') ? 'active' : ''}}">
+    <li class="nav-item {{str_contains(Request::url(),'student' )? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#studentCollapse" aria-expanded="true" aria-controls="studentCollapse">
-            <i class="fas fa-users-cog"></i>
+            <i class="fas fa-fw fa-wrench"></i>
             <span>الطلاب</span>
         </a>
-        <div id="studentCollapse" class="{{str_contains(Request::url(),'students') ? "collapse show" : 'collapse'}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="studentCollapse" class="{{str_contains(Request::url(),'student' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+
                 @foreach(\App\helper\SideBarLinks::studentLinks() as $linkKey => $linkValue)
                     <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
                 @endforeach
@@ -89,7 +87,7 @@
             <i class="fas fa-users-cog"></i>
             <span>الغرف</span>
         </a>
-        <div id="roomCollapse" class="{{str_contains(Request::url(),'rooms') ? "collapse show" : 'collapse'}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="roomCollapse" class="{{str_contains(Request::url(),'rooms') ? "collapse show" : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 @foreach(\App\helper\SideBarLinks::roomLinks() as $linkKey => $linkValue)
                     <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
@@ -105,7 +103,7 @@
             <i class="fas fa-users-cog"></i>
             <span>الكاليندار</span>
         </a>
-        <div id="calendarCollapse" class="{{str_contains(Request::url(),'calendar') ? "collapse show" : 'collapse'}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="calendarCollapse" class="{{str_contains(Request::url(),'calendar') ? "collapse show" : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 @foreach(\App\helper\SideBarLinks::CalendarLinks() as $linkKey => $linkValue)
                     <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
@@ -122,7 +120,7 @@
             <i class="fas fa-users-cog"></i>
             <span>الموظفين</span>
         </a>
-        <div id="employeeCollapse" class="{{str_contains(Request::url(),'employees') ? "collapse show" : "collapse"}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="employeeCollapse" class="{{str_contains(Request::url(),'employees') ? "collapse show" : "collapse"}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 @foreach(\App\helper\SideBarLinks::employeeLinks() as $linkKey => $linkValue)
                     <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>

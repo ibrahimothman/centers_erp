@@ -93,7 +93,7 @@ Route::get('settings/instructorSettings','settingsController@instructorSettings'
 Route::get('settings/instructorPassReset','settingsController@instructorPassReset');
 
 Route::get('calendar', function(){
-    return view('calendar/calendar');
+    return view('Calendar/calendar');
 });
 
 Route::get('set_role',function (){
