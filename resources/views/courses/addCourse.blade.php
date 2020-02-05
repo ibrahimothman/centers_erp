@@ -147,6 +147,7 @@
                                                 @foreach($instructors as $instructor)
                                                     <li ><label class="checkbox"><input value="{{ $instructor->id }}"  type="checkbox">{{$instructor->nameAr}}</label></li>
                                                 @endforeach
+
                                             </ul>
                                         </div>
                                         <span id="test_course-teacher_error"></span>
@@ -214,14 +215,6 @@
 
 
 <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
-
-<!-- script multi select-->
-
-<script type="text/javascript" src="js/jQuery.js"></script>
-<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
-<script src="static/js/jquery-3.3.1.min.js"></script>
-<script src="static/js/popper.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
 <!--  end script-->
 <script>
     $(document).ready(function () {
@@ -372,6 +365,18 @@
     //
     //     });
     // });
+</script>
+<!-- test instructor check -->
+<script>
+    $(document).ready(function() {
+        $("#submit").click(function(){
+            var myarray = [];
+            $.each($("input[name='check']:checked"), function(){
+                myarray.push($(this).val());
+            });
+        console.log("instructors is: " + myarray.join(", "));
+        });
+    });
 </script>
 </body>
 
