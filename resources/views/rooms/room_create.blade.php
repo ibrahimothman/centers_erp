@@ -44,7 +44,7 @@
                                 @include('rooms/form')
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto text-center">
-                                        <button class="btn btn-primary" type="submit" id="submit">تعديل</button>
+                                        <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
                                         <button class="btn  btn-danger" type="reset"> الغاء</button>
                                     </div>
                                 </div>
@@ -63,13 +63,6 @@
         <script src="{{url('js/popper.min.js')}}"></script>
         <script src="{{url('js/bootstrap.min.js')}}"></script>
 
-        <script>
-            function selectAll(source) {
-                var checkboxes = document.getElementsByName('check');
-                for(var i=0, n=checkboxes.length;i<n;i++) {
-                    checkboxes[i].checked = source.checked;
-                }
-            }
-        </script>
+
 </body>
 </html>

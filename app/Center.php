@@ -18,7 +18,7 @@ class Center extends Model
         static::created(function ($center)
         {
             Session(['center_id' => $center->id]);
-            dd(Center::findOrFail(Session('center_id')));
+//            dd(Center::findOrFail(Session('center_id')));
         });
     }
 

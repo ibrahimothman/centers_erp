@@ -57,7 +57,6 @@
                                             <select class="form-control " placeholder="اختار ميعاد الامتحان" id="time"
                                                     name="time" required>
                                                 <option value="">اختر مبعادا</option>
-                                                <option value="2">2</option>
 
                                             </select>
                                             <span id="dateselector_error"></span>
