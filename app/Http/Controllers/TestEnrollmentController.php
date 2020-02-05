@@ -29,6 +29,7 @@ class TestEnrollmentController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $tests = $center->tests;
+//        dd($tests);
         return view('testEnrollments.index',compact('tests'));
     }
 

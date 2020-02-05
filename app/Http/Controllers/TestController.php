@@ -6,6 +6,7 @@ use App\Center;
 use Illuminate\Http\Request;
 use App\Test;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Session;
 
 class TestController extends Controller
 {
@@ -53,6 +54,7 @@ class TestController extends Controller
         // check if auth user has rights to add a new test
 //        $this->authorize('create',Test::class);
         $center = Center::findOrFail(Session('center_id'));
+        dd($center);
         $test = $center->tests()->create($this->validateRequest(''));
         $this->setRetake($test);
 
