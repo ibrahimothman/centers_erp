@@ -10,7 +10,7 @@ use mysql_xdevapi\Session;
 class Center extends Model
 {
     protected $guarded = [];
-    public static $ApiFields=['id','name'];
+    public static $ApiFields=['id','name','logo'];
     // once center is created save it in session
     protected static function boot()
     {
