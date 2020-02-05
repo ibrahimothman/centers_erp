@@ -3,35 +3,34 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    @include('library')
-    <!--style multi select-->
-        <link rel="stylesheet" href="/css/multiSelect.css">
-        <title>Add a Course</title>
-        <style>
-
-            .error {
-                color: #b60000;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-            }
-            /* img error */
-            .photo{
-                display: none;
-                color: #b60000;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-                text-align: center;
-            }
-            .errorMselector{
-                display: none;
-                color: #b60000;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-            }
-        </style>
+@include('library')
+<!--style multi select-->
+    <link rel="stylesheet" href="/css/multiSelect.css">
+    <title>Add a Course</title>
+    <style>
+        .error {
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        /* img error */
+        .photo{
+            display: none;
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .errorMselector{
+            display: none;
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -149,7 +148,6 @@
                                         <select class="form-control" id="instructor-name" multiple required>
                                             @foreach($instructors as $instructor)
                                                 <option value="{{$instructor->id}}">{{$instructor->name}}</option>
-
                                             @endforeach
                                         </select>
                                             <span id="test_course-teacher_error"></span>
@@ -278,7 +276,6 @@
 <script>
     {{--
     $(document).ready(function () {
-
         $("#submit").click(function () {
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
@@ -289,20 +286,15 @@
             // var instructorId = $("#instructor-name").val();
             var courseChapter = $("#course-chapter-1").val();
             var chapterDesc = $("#chapter-1-desc").val();
-
             let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
             let chapterDescription = [...$('fieldset textarea')];
             let chapterName = [...$('fieldset input')];
-
             chapterName.forEach(function (chapter, chapterIndex) {
                 let chapterInfo = {};
                 chapterInfo.name = chapterName[chapterIndex].value;
                 chapterInfo.description = chapterDescription[chapterIndex].value;
-
                 chapters.push(chapterInfo);
             });
-
-
             $.ajax({
                 url: "/courses",
                 method: "POST",
@@ -320,7 +312,6 @@
                 },
                 error: function (error) {
                     if (error.status == 422) {// validation
-
                         // loop through the errors and show them to the user
                         $.each(error.responseJSON.errors, function (i, error) {
                             // error is message
@@ -330,11 +321,8 @@
                             element.after($('<span style="color: red;">' + error[0] + '</span>'));
                         });
                     }
-
                 }
-
             });
-
         });
     });
 --}}
@@ -342,7 +330,6 @@
 
 <script >
     //$(document).ready(function() {
-
     // $("#form").submit(function(e) {
     //     e.preventDefault();
     //     var courseName = $("#course-name").val();
@@ -409,13 +396,10 @@
     //     });
     //
     // });
-
     //
     //     });
     // });
-
 </script>
 </body>
 
 </html>
-
