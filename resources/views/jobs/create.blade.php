@@ -3,30 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
+@include('library')
     <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="{{url('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 
 
     <title>jobs</title>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Custom styles for this template-->
-    <link href="/../../../css/sb-admin-rtl.css" rel="stylesheet">
-    <link href="/../../../css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+    <style>
+        body {
+            direction: rtl;
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
-
+        }
+         .error {
+             color: #b60000;
+             font-size: 1rem;
+             font-weight: 400;
+             line-height: 1.5;
+         }
+    </style>
 </head>
-<body>
+<body class="bg-light">
+
+
+<!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
         @include('operationBar')
-    <div class="container-fluid ">
+
+
+<section>
+    <div class="container-fluid text-right">
         <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-lg-8">
@@ -63,17 +71,17 @@
                             </div>
                             <br>
 
-
                             <div class="form-row save">
 
                                 <div class="col-sm-6 mx-auto text-center" style="width: 200px;">
-                                    <button class="btn btn-primary" type="button" onclick="submitJob();" id="submit_job">اضافه</button>
+                                    <button class="btn btn-primary" type="submit"  onclick="submitJob();" id="submit_job">اضافه</button>
                                     <button class="btn  btn-danger" type="reset"> الغاء</button>
 
 
                                 </div>
 
                             </div>
+
                             <br>
                         </form>
                     </div>
@@ -83,29 +91,30 @@
     </div>
 </section>
 
+        @include('footer')
+    </div>
+</div>
 
 
+@include('script')
 
-
-
-<script type="text/javascipt" src="{{ url('js/jQuery.js') }}"></script>
-<script type="text/javascript" src="{{ url('js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ url('static/js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url('static/js/popper.min.js') }}"></script>
-<script src="{{ url('static/js/bootstrap.min.js') }}"></script>
-
-<script src="src={{url('vendor/jquery/jquery.js/jquery.min.js')}}"></script>
+<script src="src={{asset('vendor/jquery/jquery.js/jquery.min.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<!-- client side validation page -->
+<script type='text/javascript' src="{{asset("js/jobs_create_validation.js")}}"></script>
+<!-- check all -->
 <script>
-
     function selectall(source) {
         var checkboxes = document.getElementsByName('check');
         for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = source.checked;
         }
     }
+</script>
+
+<script>
 
     function submitJob() {
         var job_name = document.getElementById('job_name').value;
@@ -139,6 +148,7 @@
         }
 
     }
+
 </script>
 
 </body>

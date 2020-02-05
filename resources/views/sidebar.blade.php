@@ -66,6 +66,40 @@
         </div>
     </li>
 
+    <!-- instructors -->
+    <li class="nav-item {{str_contains(Request::url(),'instructors' )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#instructorCollapse" aria-expanded="true" aria-controls="instructorCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>المدربين</span>
+        </a>
+        <div id="instructorCollapse" class="{{str_contains(Request::url(),'instructors' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                @foreach(\App\helper\SideBarLinks::instructorLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
+
+    <!-- calendar -->
+    <li class="nav-item {{str_contains(Request::url(),'calendar' )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarCollapse" aria-expanded="true" aria-controls="calendarCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>كالندر</span>
+        </a>
+        <div id="calendarCollapse" class="{{str_contains(Request::url(),'calendar' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                @foreach(\App\helper\SideBarLinks::CalendarLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
+
     <!-- employees -->
     <li class="nav-item {{str_contains(Request::url(),'employees') ? 'active' : ''}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#employeeCollapse" aria-expanded="true" aria-controls="employeeCollapse">

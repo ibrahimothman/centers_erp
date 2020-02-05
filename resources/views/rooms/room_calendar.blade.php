@@ -2,6 +2,8 @@
 <html lang="ar">
 <head>
     @include('library')
+    <!-- Bootstrap CSS & js -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/room_style.css">
     <link rel="stylesheet" href="/css/calendar.css">
     <title>room calendar</title>

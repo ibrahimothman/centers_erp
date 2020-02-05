@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
     <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/room_style.css">
+    <link rel="stylesheet" href="{{asset("css/bootstrap.min.css")}}">
+    <link rel="stylesheet" href="{{asset("css/room_style.css")}}">
     <title> room create</title>
 
 
-    <link href="/../../../css/styles.css" rel="stylesheet">
+    <link href="{{asset("css/styles.css")}}" rel="stylesheet">
     <!-- Custom fonts for this template-->
 
     <link href="{{url('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -29,40 +29,47 @@
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
     @include('operationBar')
-<!-- Begin Page Content -->
-    <div class="container-fluid  ">
-        <div class="row">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8">
-                <div class="card mb-4">
-                    <div class="card-header text-primary">
-                        اضافه غرفه جديده
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('rooms.store') }}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            @include('rooms/form')
-                            <div class="form-row save">
-                                <div class="col-sm-6 mx-auto text-center">
-                                    <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
-                                    <button class="btn  btn-danger" type="reset"> الغاء</button>
+    <!-- Begin Page Content -->
+        <div class="container-fluid  ">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-header text-primary">
+                            تعديل بيانات الغرفه
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('rooms.store') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                @include('rooms/form')
+                                <div class="form-row save">
+                                    <div class="col-sm-6 mx-auto text-center">
+                                        <button class="btn btn-primary" type="submit" id="submit">تعديل</button>
+                                        <button class="btn  btn-danger" type="reset"> الغاء</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /.container-fluid -->
-</section>
-<!-- script-->
-<script type="text/javascipt" src="{{url('js/jQuery.js')}}"></script>
-<script type="text/javascript" src="{{url('js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{url('js/jquery-3.3.1.min.js')}}"></script>
-<script src="{{url('js/popper.min.js')}}"></script>
-<script src="{{url('js/bootstrap.min.js')}}"></script>
+        <!-- /.container-fluid -->
+        </section>
+        <!-- script-->
+        <script type="text/javascipt" src="{{url('js/jQuery.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{url('js/jquery-3.3.1.min.js')}}"></script>
+        <script src="{{url('js/popper.min.js')}}"></script>
+        <script src="{{url('js/bootstrap.min.js')}}"></script>
 
-
+        <script>
+            function selectAll(source) {
+                var checkboxes = document.getElementsByName('check');
+                for(var i=0, n=checkboxes.length;i<n;i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+        </script>
 </body>
 </html>

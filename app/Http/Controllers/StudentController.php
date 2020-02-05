@@ -44,8 +44,6 @@ class StudentController extends Controller
 
     public function getStudents(){
         $center = Center::findOrFail(Session('center_id'));
-        dd($center->students);
-        dd(Student::allStudents($center));
         return Student::allStudents($center);
 
     }

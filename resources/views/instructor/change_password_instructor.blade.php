@@ -3,9 +3,18 @@
 <head>
     <!-- Bootstrap CSS & js -->
     @include('library')
+<!-- Bootstrap CSS & js -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/instructor_style.css">
     <title>change password instructor</title>
-
+    <style>
+        .error {
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body class="bg-light">
 
@@ -25,7 +34,7 @@
                         تغير كلمه السر
                     </div>
                     <div class="card-body">
-                        <form action="" method="post">
+                        <form action="" method="" id="passwordForm">
                             <div class="row">
                                 <div class="col-sm text-center ">
                                     <h5> email@email.com</h5>
@@ -36,7 +45,7 @@
                                 <div class="col-4 ">كلمه السر القديمه</div>
 
                                 <div class="col-8 ">
-                                    <input type="text" name="" class='form-control'
+                                    <input type="text" name="password" class='form-control'
                                            placeholder='ادخل كلمه السر القديمه'>
                                 </div>
                             </div>
@@ -47,7 +56,7 @@
                                 <div class="col-4 ">كلمه السر الجديده</div>
 
                                 <div class="col-8 ">
-                                    <input type="text" name="" class='form-control'
+                                    <input  id="newPassword" type="text" name="newPassword" class='form-control'
                                            placeholder='ادخل كلمه السر الجديده'>
                                 </div>
                             </div>
@@ -56,7 +65,7 @@
                                 <div class="col-4 ">تاكيد كلمه السر</div>
 
                                 <div class="col-8 ">
-                                    <input type="text" name="" class='form-control' placeholder="تاكيد كلمه السر">
+                                    <input type="text" name="confirm" class='form-control' placeholder="تاكيد كلمه السر">
                                 </div>
                             </div>
                             <hr>
@@ -84,6 +93,11 @@
 </div>
 <!-- script-->
 @include('script')
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<!-- client side validation page -->
+<script type='text/javascript' src="/js/instructor_change_password_validation.js"></script>
+
 
 </body>
 </html>

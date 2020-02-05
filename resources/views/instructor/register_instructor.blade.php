@@ -3,10 +3,28 @@
 <head>
 
     @include('library')
-    <link rel="stylesheet" href="/css/instructor_style.css">
+    <!-- Bootstrap CSS & js -->
+        <link rel="stylesheet" href="{{url("css/bootstrap.min.css")}}">
+    <link rel="stylesheet" href="{{url("css/instructor_style.css")}}">
 
     <title>register instructor</title>
-
+    <style>
+        .error {
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        /* img error */
+        .photo{
+            display: none;
+            color: #b60000;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="bg-light">
 
@@ -20,13 +38,13 @@
 
             <div class="container-fluid   text-right">
 
-                <div class="row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-8">
-                        <div class="card mb-4">
-                            <div class="card-header text-primary">
-                                تسجيل بيانات المدرب
-                            </div>
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header text-primary">
+                        تسجيل بيانات المدرب
+                    </div>
                             <div class="card-body">
                                 <form action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data">
                                     @csrf
@@ -72,31 +90,25 @@
 
                                     </div>
 
-                                    <div class=" form-row form-group">
-                                        <div class="col-sm-6 ">
-                                            <label>الرقم القومى </label>
-                                            <input type="text" name="idNumber" value=""
-                                                   placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label>رقم جواز السفر</label>
-                                            <input name="passportNum" type="text" placeholder="ادخل رقم جواز السفر" value=""
-                                                   class="form-control ">
-                                        </div>
-                                    </div>
-                                    <br>
-
-
-
-
-
-
-                                    <div class="form-row form-group">
-                                        <div class="col-sm-6  ">
-                                            <label>البلد </label>
-                                            <input name="state" type="text" placeholder="البلد" value=""
-                                                   class="form-control mb-1">
-                                        </div>
+                            <div class=" form-row form-group">
+                                <div class="col-sm-6 ">
+                                    <label>الرقم القومى </label>
+                                    <input type="text" name="idNumber" value=""
+                                           placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>رقم جواز السفر</label>
+                                    <input name="passportNum" type="text" placeholder="ادخل رقم جواز السفر" value=""
+                                           class="form-control ">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-row form-group">
+                                <div class="col-sm-6  ">
+                                    <label>البلد </label>
+                                    <input name="state" type="text" placeholder="البلد" value=""
+                                           class="form-control mb-1">
+                                </div>
 
                                         <div class="col-sm-6  ">
                                             <label>المدينه </label>
@@ -120,6 +132,7 @@
                                         <textarea name="bio" placeholder="نبذه عن " rows="3"
                                                   class="form-control" style="  overflow-scrolling:auto; "></textarea>
                                     </div>
+
 
 
 
@@ -163,7 +176,6 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
             <!-- /.container-fluid -->
@@ -172,10 +184,13 @@
     </div>
 </div>
 <!-- script-->
-
-
 @include('script')
-<!-- photo js-->
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+
+<!-- client side validation page -->
+<script type='text/javascript' src="{{url("js/instructor_register_validation.js")}}"></script>
+
 
 
 <script>

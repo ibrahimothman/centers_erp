@@ -3,33 +3,17 @@
     <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
         <head>
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <meta name="description" content="">
-            <meta name="author" content="">
-
+            @include('library')
             <title>Add a Course group</title>
-
-            <!-- Custom fonts for this template-->
-            <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-            <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-            <!-- Custom styles for this template-->
-            <link href="/../../../css/sb-admin-rtl.css" rel="stylesheet">
-            <link href="/../../../css/styles.css" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
-
-            <!-- Latest compiled and minified JavaScript -->
-            <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
-            <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
-
-
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"
-            integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k"
-            crossorigin="anonymous"></script>
+            <style>
+                .error {
+                    color: #b60000;
+                    font-size: 1rem;
+                    font-weight: 400;
+                    line-height: 1.5;
+                }
+                /* img error */
+            </style>
 
         </head>
 
@@ -57,7 +41,7 @@
                                        </div>
                                     </header>
                                     <div class="card-body">
-                                        <form action="{{ route('course_groups.store') }}" method="post" enctype="multipart/form-data">
+                                        <form action="{{ route('course_groups.store') }}" method="post" enctype="multipart/form-data" id="courseGroupCreate">
                                             @csrf
 
                                             <div class="form-row">
@@ -72,7 +56,7 @@
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
                                                         <div class='input-group date'>
 
-                                                            <input id="datetimepicker" name="start_at"  class="form-control" type="text" >
+                                                            <input  id="datetimepicker" name="start_at"  class="form-control" type="text" >
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
@@ -100,6 +84,7 @@
                                                         @foreach($rooms as $room)
                                                             <option value="{{ $room->id }}">قاعة {{ $room->name }}1</option>
                                                          @endforeach
+
                                                     </select>
                                                         <span id="test_course-group-room_error"></span>
                                                     <div>{{ $errors->first('room') }}</div>
@@ -122,16 +107,13 @@
                                                     <label for="course-day-1-begin"> بداية المحاضرة</label>
                                                     <select class="form-control" id="course-day-1-begin" name="course-begin[]"
                                                             onchange="onBeginChanged();" required>
-
                                                     </select>
-                                                        <span id="test_course-day-1-begin_error"></span>
-                                                    <div>{{ $errors->first('begin') }}</div>
                                                 </div>
+
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1-end"> نهاية المحاضرة</label>
                                                     <select class="form-control" id="course-day-1-end" name="course-end[]"
                                                             required>
-
                                                     </select>
                                                         <span id="test_course-day-1-end_error"></span>
                                                     <div>{{ $errors->first('end') }}</div>
@@ -159,16 +141,15 @@
             </div>
 
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="{{url('vendor/jquery/jquery.min.js')}}"></script>
-        <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-        <!-- Custom scripts for all pages-->
-        <script src="{{url('js/sb-admin-2.min.js')}}"></script>
-        <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
-        <script>
 
+            @include('script')
+            <script src="{{url('js/jquery.min.js')}}"></script>
+            <!-- client side validation plugin -->
+            <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+            <!-- client side validation page -->
+            <script type='text/javascript' src="{{url("js/course_group_create_validation.js")}}"></script>
+
+          <script>
             $(function () {
                 $('#datetimepicker').datetimepicker({
                     timepicker:false,
@@ -247,8 +228,8 @@
 
         </script>
     </body>
+
     <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
-    <script src="{{url('js/jquery.min.js')}}"></script>
     <script src="{{url('js/jquery.datetimepicker.js')}}"></script>
     <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
 

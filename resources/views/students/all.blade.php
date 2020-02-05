@@ -3,67 +3,44 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <!-- Bootstrap CSS & js -->
+    @include('library')
+    <link href="{{url('employee')}}" rel="stylesheet">
+    <script wesrc="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <title>students</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="{{url('/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{{url('css/sb-admin-rtl.css')}}" rel="stylesheet">
-    <link href="{{url('employee')}}" rel="stylesheet">
-    <link
-        rel="stylesheet"
-        href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
-        integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If"
-        crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script
-        src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"
-        integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k"
-        crossorigin="anonymous"></script>
-
-
-    <script wesrc="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 
 <body id="page-top">
-
-<!-- Page Wrapper -->
+<!-- Begin Page Content -->
 <div id="wrapper">
-
     @include('sidebar')
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-        @include('operationBar')
+
+    @include('operationBar')
+
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Page Heading -->
+
             <div class="container-fluid">
 
                 <div class="col-md-12">
                     <div class="card">
 
                         <div class="card-header text-primary">
-
                             <div class="row  ">
-
                                 <div class="col-md-6">
                                     بيانات الطلاب
-
                                 </div>
-
                                 <div class="col-md-6 grid-view ">
-
                                     <button type="button" class="btn ">
                                         <a href="{{ route('students.table') }}">
                                             <i class="fas fa-th-list"></i>  </a>
+                                    </button>
                                         <button type="button" class="btn ">
                                             <a href="#">
 
@@ -71,16 +48,8 @@
                                             </a>
                                         </button>
                                 </div>
-
-
                             </div>
-
-
-
-
-
                         </div>
-
                         <div class="card-body">
 
                             <div class="row cont-header">
@@ -108,14 +77,13 @@
                                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <span id="search_concept">البحث فى </span> <span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="">الكل</a></li>
-                                                <li><a href="">الاسماء</a></li>
-                                                <li><a href="">الرقم القومى</a></li>
-                                                <li><a href="">الكورس</a></li>
-                                                <li><a href="">المجموعه</a></li>
-
-                                            </ul>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#">الكل</a>
+                                                <a class="dropdown-item" href="#">الاسماء</a>
+                                                <a class="dropdown-item" href="#">الرقم القومى</a>
+                                                <a class="dropdown-item" href="#">الكورس</a>
+                                                <a class="dropdown-item" href="#">المجموعه</a>
+                                            </div>
                                         </div>
                                         <input type="hidden" name="search_param" value="all" id="search_param">
                                         <input type="text" class="form-control " id="search" placeholder="ابحث">
@@ -176,35 +144,22 @@
                                     @endfor
                                 </div>
                             </div>
-
-
-
 {{--                            {{$students->links()}}--}}
 
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- /.container-fluid -->
-
-
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy;وحدة التعليم الالكترونى - جامعه المنصورة </span>
-                    </div>
-                </div>
-            </footer>
+        @include('footer')
             <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->
     </div>
-
 </div>
 <!-- End of Page Wrapper -->
 
@@ -231,16 +186,9 @@
         </div>
     </div>
 </div>
+<!-- script-->
 
-<!-- Bootstrap core JavaScript-->
-<script src="src={{url('vendor/jquery/jquery.min.js')}}"></script>
-<script src=src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-<!-- Core plugin JavaScript-->
-<script src=src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="src={{url('js/sb-admin-2.min.js')}}"></script>
+@include('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
