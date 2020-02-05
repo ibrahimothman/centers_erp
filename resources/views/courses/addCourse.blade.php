@@ -237,7 +237,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-row save">
 
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
@@ -286,15 +285,20 @@
             // var instructorId = $("#instructor-name").val();
             var courseChapter = $("#course-chapter-1").val();
             var chapterDesc = $("#chapter-1-desc").val();
+
             let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
             let chapterDescription = [...$('fieldset textarea')];
             let chapterName = [...$('fieldset input')];
+
             chapterName.forEach(function (chapter, chapterIndex) {
                 let chapterInfo = {};
                 chapterInfo.name = chapterName[chapterIndex].value;
                 chapterInfo.description = chapterDescription[chapterIndex].value;
+
                 chapters.push(chapterInfo);
             });
+
+
             $.ajax({
                 url: "/courses",
                 method: "POST",
