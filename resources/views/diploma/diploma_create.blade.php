@@ -39,11 +39,12 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form id="formDiploma">
+                            <form id="formDiploma" enctype="multipart/form-data" action="{{ route('diplomas.store') }}" method="post">
+                                @csrf
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image1"
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image"
                                                    id="customFile1" src="" onchange="readURL(this, 1);" required>
                                             <input type="file" accept="video/*" class="custom-file-input" name="video"
                                                    id="customFile4" src="" onchange="readURL(this, 4);">
@@ -76,7 +77,7 @@
                                         <label for="course-id">عدد المحاضرات</label>
                                         <input type="text" class="form-control" id="course-id"
                                                placeholder="عدد المحاضرات "
-                                               value="" name="num" required>
+                                               value="" name="number_of_lectures" required>
                                     </div>
 
                                 </div>
@@ -104,23 +105,13 @@
                                     <legend class="full-width "> محتوى الدبلومه<SPAN id="course"  class="photo pl-2">هذه الخانه مطلوبه</SPAN>
                                     </legend>
                                     <div class="col form-group">
-                                        <select name="basic[]" multiple="multiple" class="col active">
-                                            <optgroup label="Programming Languages">
-                                                <option value="c#">c#</option>
-                                                <option value="asp.net">asp.net</option>
-                                                <option value="bs">bootstrap</option>
-                                                <option value="js">javascript</option>
+                                        <select name="courses[]" multiple="multiple" class="col active">
+                                            <optgroup label="All Courses">
+                                                @foreach($courses as $course)
+                                                    <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                                @endforeach
 
-                                            </optgroup>
-                                            <optgroup label="Back end ">
-                                                <option value="laravel">laravel</option>
-                                                <option value="php">php</option>
-                                                <option value="sql">sql</option>
 
-                                            </optgroup>
-                                            <optgroup label="Front end">
-                                                <option value="html">html</option>
-                                                <option value="css">css</option>
                                             </optgroup>
                                         </select>
                                     </div>
@@ -147,14 +138,14 @@
 <!-- script-->
 @include('script')
 <!-- script  for page -->
-<script type='text/javascript' src="/js/diploma.js"></script>
+<script type='text/javascript' src="{{ asset('js/diploma.js') }}"></script>
 <!-- script  multi selector courses-->
 <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
-<script src="/js/jquery.multiselect.js"></script>
+<script src="{{ asset('js/jquery.multiselect.js') }}"></script>
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
-<script type='text/javascript' src="/js/diploma_create_validation.js "></script>
+<script type='text/javascript' src="{{ asset('js/diploma_create_validation.js') }} "></script>
 
 
 </body>

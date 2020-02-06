@@ -29,6 +29,11 @@ class Course extends ImageUploader
         return $this->belongsTo(Center::class);
     }
 
+    public function diplomas()
+    {
+        return $this->belongsToMany(Diploma::class)->withTimestamps();
+    }
+
     public function instructors(){
         return $this->belongsToMany(Instructor::class);
     }

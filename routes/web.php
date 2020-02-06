@@ -79,6 +79,8 @@ Route::get('available_ends_for_the_room','RoomsController@getAvailableEnds');
 Route::get('/all-rooms','RoomsController@allRooms');
 Route::get('/rooms-calendar/{room}','RoomsController@showRoomCalendar');
 
+//------------------ Diplomas ---------------
+Route::resource('diplomas','DiplomaController');
 
 // -------------------instructor----------------
 Route::resource('instructors','InstructorsController');

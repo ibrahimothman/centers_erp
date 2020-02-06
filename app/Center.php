@@ -51,6 +51,11 @@ class Center extends Model
         return $this->hasMany(Course::class);
     }
 
+    public function diplomas()
+    {
+        return $this->hasMany(Diploma::class);
+    }
+
     public function instructors(){
         return $this->belongsToMany(Instructor::class);
     }

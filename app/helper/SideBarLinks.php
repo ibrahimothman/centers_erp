@@ -43,6 +43,18 @@ class SideBarLinks
         ];
     }
 
+    public static function diplomaLinks()
+    {
+        return[
+            self::$baseUrl.'diplomas/create' => 'اضافه بيانات الدبلومات',
+            self::$baseUrl.'diplomas' => 'عرض/تعديل بيانات الدبلومات',
+            self::$baseUrl.'course_groups/create' => 'تسجيل مواعيد الدبلومات',
+            self::$baseUrl.'course_groups' => 'عرض مواعيد الدبلومات',
+            self::$baseUrl.'course_enrollment/create' => 'تسجيل الطلاب علي الدبلومات',
+            self::$baseUrl.'course_enrollment' => 'عرض الطلاب المسجلين',
+        ];
+    }
+
     public static function instructorLinks()
     {
         return[

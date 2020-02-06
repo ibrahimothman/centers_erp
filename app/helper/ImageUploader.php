@@ -16,7 +16,6 @@ abstract class ImageUploader extends Model
     public function saveImage($image)
     {
         // create courses dir if not existed
-//        $path = base_path().'/public_html'.$this->getDir();
         $path = public_path($this->getDir());
         if (!is_dir($path)) {
             mkdir($path,0777,true);
