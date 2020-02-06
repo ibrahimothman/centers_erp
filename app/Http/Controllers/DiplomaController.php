@@ -55,12 +55,34 @@ class DiplomaController extends Controller
 
     public function show(Diploma $diploma)
     {
-        return view('diploma/diploma_details');
+        $diploma = Diploma::with('courses')->findOrFail($diploma)->first();
+        return view('diploma/diploma_details', compact('diploma'));
     }
 
     public function edit(Diploma $diploma)
     {
-        return view('diploma/diploma_update');
+
+        $diploma = Diploma::with('courses')->findOrFail($diploma)->first();
+        $courses = $diploma->center->courses;
+        return view('diploma/diploma_update', compact('diploma', 'courses'));
+    }
+
+
+    public function update(Request $request, Diploma $diploma)
+    {
+        $diploma_data = $this->validateDiplomaData($request, $diploma->id);
+        if ($diploma_data->fails()){
+            return response()->json($diploma_data->errors());
+        }
+
+        $diploma_courses = $diploma_data->validate()['courses'];
+
+        $diploma->update(Arr::except($diploma_data->validate(), 'courses'));
+
+        // attach courses to diploma
+        $diploma->courses()->sync($diploma_courses);
+
+        return redirect("diplomas/$diploma->id");
     }
 
     private function validateDiplomaData($request, $diploma_id)
@@ -72,7 +94,7 @@ class DiplomaController extends Controller
             'number_of_lectures' => 'required|integer',
             'courses' => 'required|array',
             'duration' => 'required',
-            'image' => 'required|image',
+            'image' => 'sometimes|image',
         ]);
 
 

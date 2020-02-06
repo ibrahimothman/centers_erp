@@ -39,11 +39,13 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form id="formDiploma">
+                            <form id="formDiploma" enctype="multipart/form-data" action="{{ route('diplomas.update', $diploma->id) }}" method="post">
+                                @csrf
+                                @method('patch')
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image1"
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image"
                                                    id="customFile1" src="" onchange="readURL(this, 1);" required>
                                             <input type="file" accept="video/*" class="custom-file-input" name="video"
                                                    id="customFile4" src="" onchange="readURL(this, 4);">
@@ -54,7 +56,7 @@
                                 <div class="d-flex  justify-content-center">
                                     <div class="course-image-input">
                                         <img id="imageUploaded1"
-                                             src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                             src="{{ $diploma->image }}"
                                              alt="your image"/>
                                         <p>صورة الدبلومة</p>
                                         <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
@@ -70,13 +72,13 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="course-name">اسم الدبلومه</label>
                                         <input type="text" class="form-control" id="name"
-                                               placeholder="اسم الدبلومه " value="" name="name" required>
+                                               placeholder="اسم الدبلومه " value="{{ $diploma->name }}" name="name" required>
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="course-id">عدد المحاضرات</label>
                                         <input type="text" class="form-control" id="course-id"
                                                placeholder="عدد المحاضرات "
-                                               value="" name="num" required>
+                                               value="{{ $diploma->number_of_lectures }}" name="number_of_lectures" required>
                                     </div>
 
                                 </div>
@@ -85,18 +87,18 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="course-duration">مدة الدبلومه</label>
                                         <input type="number" min='0' class="form-control" id="duration"
-                                               placeholder="مدة الدبلومه " value="" name="duration" required>
+                                               placeholder="مدة الدبلومه " value="{{ $diploma->duration }}" name="duration" required>
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="course-cost">تكلفة الدبلومه</label>
                                         <input type="number" min='0' class="form-control" id="cost"
-                                               placeholder="تكلفة الدبلومه " value="" name="cost" required>
+                                               placeholder="تكلفة الدبلومه " value="{{ $diploma->cost }}" name="cost" required>
                                     </div>
                                 </div>
                                 <div class=" form-row">
                                     <label for="course-description">وصف الدبلومه</label>
                                     <textarea placeholder="وصف الدبلومه" rows="2" class="form-control"
-                                              id="description" name="description" required></textarea>
+                                              id="description" name="description" required>{{ $diploma->description }}</textarea>
                                 </div>
                                 <br>
                                 <fieldset>
@@ -104,24 +106,12 @@
                                         <legend class="full-width "> محتوى الدبلومه<SPAN id="course"  class="photo pl-2">هذه الخانه مطلوبه</SPAN>
                                         </legend>
                                         <div class="col form-group">
-                                            <select name="basic[]" multiple="multiple" class="col active">
+                                            <select name="courses[]" multiple="multiple" class="col active">
                                                 <optgroup label="Programming Languages">
-                                                    <option value="c#">c#</option>
-                                                    <option value="asp.net">asp.net</option>
-                                                    <option value="bs">bootstrap</option>
-                                                    <option value="js">javascript</option>
+                                                    @foreach($courses as $course)
+                                                        <option value="{{ $course->id }}" {{ $diploma->courses->contains($course->id)? 'selected' : '' }}>{{ $course->name }}</option>
+                                                    @endforeach
 
-                                                </optgroup>
-                                                <optgroup label="Back end ">
-                                                    <option value="laravel">laravel</option>
-                                                    <option value="php">php</option>
-                                                    <option value="sql">sql</option>
-
-                                                </optgroup>
-                                                <optgroup label="Front end">
-                                                    <option value="html">html</option>
-                                                    <option value="css">css</option>
-                                                </optgroup>
                                             </select>
                                         </div>
                                     </div>
@@ -147,14 +137,14 @@
 <!-- script-->
 @include('script')
 <!-- script  for page -->
-<script type='text/javascript' src="/js/diploma.js"></script>
+<script type='text/javascript' src="{{ asset('/js/diploma.js') }}"></script>
 <!-- script  multi selector courses-->
 <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
-<script src="/js/jquery.multiselect.js"></script>
+<script src="{{ asset('/js/jquery.multiselect.js') }}"></script>
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
-<script type='text/javascript' src="/js/diploma_update_validation.js "></script>
+<script type='text/javascript' src="{{ asset('/js/diploma_update_validation.js') }} "></script>
 
 
 </body>

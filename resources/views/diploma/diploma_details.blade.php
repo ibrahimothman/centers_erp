@@ -3,7 +3,7 @@
 <head>
 @include('library')
 <!-- style -->
-    <link href="/css/diploma_style.css" rel="stylesheet"/>
+    <link href="{{ asset('css/diploma_style.css') }}" rel="stylesheet"/>
     <title>details of diploma</title>
     <style>
     </style>
@@ -20,7 +20,7 @@
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
-                                <h3>full stack diploma </h3>
+                                <h3>{{ $diploma->name }}</h3>
                                 <form>
                                     <button type="submit" class="btn btn-outline-danger py-1 px-2">
                                         <i class="fas fa-trash-alt m-0"></i></button>
@@ -42,43 +42,25 @@
                                                     <h5 class="card-title text-primary">تفاصيل الدبلومه</h5>
                                                     <div class="dropdown-divider"></div>
 
-                                                    <a href="" class=" btn btn-outline-primary  py-1 px-2"><i
+                                                    <a href="{{ route('diplomas.edit', $diploma->id) }}" class=" btn btn-outline-primary  py-1 px-2"><i
                                                                 class="fas fa-edit m-0 "></i> </a>
 
                                                 </div>
                                                 <div class="card-text clearfix ">
                                                     <div><span class="  text-primary"> محتوي الدبلومه:</span></div>
                                                     <div class="mb-1">
-                                                        <span class=" text-secondary pl-5  ">html</span>
-                                                        <span class=" text-secondary pl-5 ">css</span>
-                                                        <span class=" text-secondary  pl-5">bootstrap</span>
-                                                        <span class=" text-secondary pl-5  ">javascript</span>
-                                                        <span class=" text-secondary pl-5  ">jquery</span>
-                                                        <span class=" text-secondary pl-5  ">html</span>
-                                                        <span class=" text-secondary pl-5 ">css</span>
-                                                        <span class=" text-secondary  pl-5">bootstrap</span>
-                                                        <span class=" text-secondary pl-5  ">javascript</span>
-                                                        <span class=" text-secondary pl-5  ">jquery</span>
+                                                        @foreach($diploma->courses as $course)
+                                                            <span class=" text-secondary pl-5  ">{{ $course->name }}</span>
+                                                        @endforeach
                                                     </div>
                                                     <span class="  text-primary"> عن الدبلومه :  </span>
-                                                    <div class="pr-5">
-                                                        هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء
-                                                        لصفحة ما سيلهي
-                                                        القارئ عن
-                                                        التركيز على الشكل
-                                                        الخارجي تعطي
-                                                        هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء
-                                                        لصفحة ما سيلهي
-                                                        القارئ عن
-                                                        التركيز على الشكل
-                                                        الخارجي تعطي
-                                                    </div>
+                                                    <div class="pr-5">{{ $diploma->description }}</div>
                                                 </div>
                                                 <br>
                                                 <div class="mb-1  d-inline">
-                                                    <span class="text-success px-5"> السعر: <span class=" text-secondary pl-2  ">500 جنيه</span></span>
-                                                    <span class="text-success px-5"> عدد المحاضرات:<span class=" text-secondary pl-2 ">20 محاضره</span></span>
-                                                    <span class="text-success px-5"> عدد الساعات:  <span class=" text-secondary  pl-2">30 ساعه</span></span>
+                                                    <span class="text-success px-5"> السعر: <span class=" text-secondary pl-2  ">{{ $diploma->cost }} جنيه</span></span>
+                                                    <span class="text-success px-5"> عدد المحاضرات:<span class=" text-secondary pl-2 ">{{ $diploma->number_of_lectures }} محاضره</span></span>
+                                                    <span class="text-success px-5"> عدد الساعات:  <span class=" text-secondary  pl-2">{{ $diploma->duration }} ساعه</span></span>
                                                 </div>
 
                                             <fieldset>
