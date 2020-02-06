@@ -37,14 +37,14 @@ class Student extends ImageUploader
     public function setImageAttribute($image){
         $this->deleteImage($this->image);
         $original = $this->saveImage($image);
-        return $this->attributes['image'] = url("/uploads/profiles/".$original);
+        return $this->attributes['image'] = url($this->getDir()."/".$original);
 
     }
     public function setIdImageAttribute($idImage){
         // first delete prev one
         $this->deleteImage($this->idImage);
         $original = $this->saveImage($idImage);
-        return $this->attributes['idImage'] = url("/uploads/profiles/".$original);
+        return $this->attributes['idImage'] = url($this->getDir()."/".$original);
 
     }
 
