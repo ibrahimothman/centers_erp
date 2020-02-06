@@ -19,7 +19,7 @@
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
                                 <h3>الدبلومات المتاحة </h3>
-                                <a href="">
+                                <a href="{{ route('diplomas.create') }}">
                                     <button type="button" class="btn btn-success">أضف دبلومه</button>
                                 </a>
                             </div>
@@ -40,40 +40,38 @@
                         </div>
                         </span></div>
                             <!-- diploma view -->
-                            <a href="#">
-                                <div class="card  cardDiploma mb-3" style="max-width: 100%; ">
-                                    </span>
-                                    <div class="row ">
-                                        <div class="col-md-4">
-                                            <a href="#"> <img src="img\image2.jpg" class="card-img h-100" alt="..."></a>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <div class="view-courses-title">
-                                                    <h5 class="card-title text-primary">full stack diploma</h5>
-                                                    <form>
-                                                        <a href="" class=" btn btn-outline-primary  py-1 px-2"><i
-                                                                    class="fas fa-edit m-0 "></i> </a>
-                                                        <button type="submit" class="btn btn-outline-danger py-1 px-2">
-                                                            <i class="fas fa-trash-alt m-0"></i></button>
-                                                    </form>
+                            @foreach($diplomas as $diploma)
+                                <a href="#">
+                                    <div class="card  cardDiploma mb-3" style="max-width: 100%; ">
+                                        </span>
+                                        <div class="row ">
+                                            <div class="col-md-4">
+                                                <a href="#"> <img src="{{$diploma->image }}" class="card-img h-100" alt="..."></a>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <div class="view-courses-title">
+                                                        <h5 class="card-title text-primary">{{ $diploma->name }}</h5>
+                                                        <form>
+                                                            <a href="{{ route('diplomas.edit', $diploma->id) }}" class=" btn btn-outline-primary  py-1 px-2"><i
+                                                                        class="fas fa-edit m-0 "></i> </a>
+                                                            <button type="submit" class="btn btn-outline-danger py-1 px-2">
+                                                                <i class="fas fa-trash-alt m-0"></i></button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="mb-1">
+                                                        <span class=" text-secondary pl-2  ">{{ $diploma->cost }} جنيه</span>
+                                                        <span class=" text-secondary pl-2 ">20 {{ $diploma->number_of_lectures }}</span>
+                                                        <span class=" text-secondary  pl-2">30 {{ $diploma->duration }}</span>
+                                                    </div>
+                                                    <p class="card-text">{{ $diploma->description }}</p>
                                                 </div>
-                                                <div class="mb-1">
-                                                    <span class=" text-secondary pl-2  ">500 جنيه</span>
-                                                    <span class=" text-secondary pl-2 ">20 محاضره</span>
-                                                    <span class=" text-secondary  pl-2">30 ساعه</span>
-                                                </div>
-                                                <p class="card-text">ناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء
-                                                    لصفحة ما سيلهي
-                                                    القارئ عن
-                                                    التركيز على الشكل
-                                                    الخارجي تعطي</p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                            <br>
+                                </a>
+                                <br>
+                            @endforeach
                             <!--  end diploma view -->
                         </div>
                     </div>

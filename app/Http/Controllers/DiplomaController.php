@@ -20,7 +20,9 @@ class DiplomaController extends Controller
 
     public function index()
     {
-        return view('diploma/diploma_view_all');
+        $center = Center::findOrFail(Session('center_id'));
+        $diplomas = $center->diplomas;
+        return view('diploma/diploma_view_all', compact('diplomas'));
     }
 
 
@@ -47,7 +49,7 @@ class DiplomaController extends Controller
         // attach courses to diploma
         $diploma->courses()->syncWithoutDetaching($diploma_courses);
 
-        dd(Diploma::with('courses')->findOrFail($diploma));
+        return redirect('diplomas');
 
     }
 
