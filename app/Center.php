@@ -10,7 +10,7 @@ use mysql_xdevapi\Session;
 class Center extends Model
 {
     protected $guarded = [];
-
+    public static $ApiFields=['id','name'];
     // once center is created save it in session
     protected static function boot()
     {
@@ -52,6 +52,11 @@ class Center extends Model
 
     public function instructors(){
         return $this->belongsToMany(Instructor::class);
+    }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class)->latest();
     }
 
 }

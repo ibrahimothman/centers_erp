@@ -5,6 +5,8 @@
 <head>
     @include('library')
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Update Course</title>
    </head>
 
@@ -23,15 +25,13 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form enctype="multipart/form-data" id="form" method="post" action="{{ route('courses.update',[$course->id]) }}">
-                                @csrf
-                                @method('put')
+                            <form enctype="multipart/form-data" >
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile1"  src="" onchange="readURL(this, 1);" >
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile2"  src="" onchange="readURL(this, 2);" >
-                                            <input type="file" class="custom-file-input" accept="image/*" name="image[]" id="customFile3" src="" onchange="readURL(this, 3);">
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image1" id="customFile1"  src="" onchange="readURL(this, 1);" >
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image2" id="customFile2"  src="" onchange="readURL(this, 2);" >
+                                            <input type="file" class="custom-file-input" accept="image/*" name="image3" id="customFile3" src="" onchange="readURL(this, 3);">
                                             <input type="file" accept="video/*" class="custom-file-input" name="video" id="customFile4" src="" onchange="readURL(this, 4);">
                                             <label class="custom-file-label" for="customFile">صوره الدورة</label>
                                             <div></div>
@@ -90,16 +90,16 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">باب رقم   {{$i}}</span>
                                                 </div>
-                                                <input type="text" class="form-control" id="course-chapter-1"
-                                                       placeholder="محتوى الدورة " value="{{$content['name']}}" name="course-chapter[]" required>
+                                                <input type="text" class="form-control" id="course-chapter-{{ $i }}"
+                                                       placeholder="محتوى الدورة " value="{{$content['name']}}" name="course-chapter-{{ $i }}" required>
                                                 <span id="test_course-chapter-1_error"></span>
                                                 <div></div>
                                             </div>
                                     </div>
                                     <div class="form-row">
                                         <label for="chapter-1-desc">عن باب رقم  {{$i}}</label>
-                                        <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-1-desc"
-                                                  name="chapter-desc[]">{{$content['description']}}</textarea>
+                                        <textarea placeholder="عن الباب" rows="2" class="form-control" id="chapter-{{ $i }}-desc"
+                                                  name="chapter-{{ $i }}-desc">{{$content['description']}}</textarea>
                                         <div></div>
                                             @php($i++)
                                         @endforeach
@@ -109,18 +109,23 @@
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <label for="instructor-name">اسم المدرس</label>
-                                        <select class="form-control" id="instructor-name" name="instructor_id" multiple >
-                                        @foreach($course->instructors as $instructor)
-                                            <option {{$instructor->id==$course->instructor_id?"selected":""}} value="{{$instructor->id}}">{{$instructor->nameAr}}</option>
-                                            @endforeach
-                                        </select>
+                                        <div class="dropdown ">
+                                            <button data-toggle="dropdown" class="dropdown-toggle py-1">
+                                                اسم المدرس <b class="caret"></b>
+                                            </button>
+                                            <ul id="instructors-list"  class=" dropdown-menu text-right">
+                                                @foreach($instructors as $instructor)
+                                                    <li ><label class="checkbox"><input value="{{ $instructor->id }}"  type="checkbox" {{ $course->instructors->contains($instructor->id) ? 'checked' : ''}}>{{$instructor->nameAr}}</label></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                         <span id="test_course-teacher_error"></span>
                                         <div></div>
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="course-duration">مدة الدورة</label>
                                         <input type="number" min='0' class="form-control" id="course-duration"
-                                               placeholder="مدة الدورة " value="{{$course->cost}}" name="duration" required>
+                                               placeholder="مدة الدورة " value="{{$course->duration}}" name="duration" required>
                                         <span id="test_course-duration_error"></span>
                                         <div></div>
                                     </div>
@@ -142,40 +147,11 @@
                                     </div>
                                 </div>
 
-                                <div class="form-row" hidden>
-                                    <div class="col-sm-6 form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input part-of-diploma" name="retake" id="customCheck1">
-                                            <label class="custom-control-label" for="customCheck1">هذه الدورة جزء من دبلومة</label>
-                                        </div>
-                                        <div class="shown-if-checked">
-                                            <div >
-                                                <label for="diploma-name">اسم الدبلومة</label>
-                                                <input type="text" class="form-control" id="diploma-name" placeholder="اسم الدبلومة " value="" name="diploma-name" >
-                                                <span id="test_diploma-name_error"></span>
-                                                <div></div>
-                                                <label for="diploma-course-num"> ترتيب الدورة بالدبلومة</label>
-                                                <input type="number" class="form-control" id="diploma-course-num" placeholder=" ترتيب الدورة بالدبلومة " value="" name="diploma-course-num" >
-                                                <span id="test_diploma-course-num_error"></span>
-                                                <div></div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="retake" id="customCheck2" checked="">
-                                            <label class="custom-control-label" for="customCheck2">هذه الدورة لها امتحان</label>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="form-row save">
 
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
                                         <hr/>
-                                        <button class="btn btn-primary action-buttons" type="submit" id="submit"> تعديل  <i class="fas fa-plus"></i></button>
+                                        <button class="btn btn-primary action-buttons" type="button" id="submit"> تعديل  <i class="fas fa-plus"></i></button>
                                         <button class="btn  btn-danger action-buttons" type="reset">  إلغاء  <i class="fas fa-times"></i></button>
                                     </div>
 
@@ -195,8 +171,83 @@
 @include('script')
 <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
 
-<script >
+<script>
+    $(document).ready(function () {
+        console.log("ready");
+        $("#submit").click(function () {
 
+            var courseName = $("#course-name").val();
+            var courseCode = $("#course-id").val();
+            var courseDescription = $("#course-description").val();
+            var courseDuration = $("#course-duration").val();
+            var courseCost = $("#course-cost").val();
+            var teamCost = $("#course-group-cost").val();
+            var courseChapter = $("#course-chapter-1").val();
+            var chapterDesc = $("#chapter-1-desc").val();
+            let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+            let chapterDescription = [...$('fieldset textarea')];
+            let chapterName = [...$('fieldset input')];
+            chapterName.forEach(function (chapter, chapterIndex) {
+                let chapterInfo = {};
+                chapterInfo.name = chapterName[chapterIndex].value;
+                chapterInfo.description = chapterDescription[chapterIndex].value;
+                chapters.push(chapterInfo);
+            });
+
+            var fd = new FormData();
+            $('input[type="file"]').each(function (index, file) {
+                if(file.files.length != 0){
+                    fd.append('images[]',file.files[0]);
+                }
+            });
+            $('input[type="checkbox"]').each(function () {
+                if(this.checked)
+                    fd.append('instructors[]',$(this).val());
+            });
+
+
+            {{--fd.append('_token',"{{ csrf_token() }}");--}}
+            fd.append('name',courseName);
+            fd.append('code', courseCode);
+            fd.append('description', courseDescription);
+            fd.append('duration', courseDuration);
+            fd.append('cost', courseCost);
+            fd.append('content', JSON.stringify(chapters));
+            fd.append('teamCost', teamCost);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+
+            $.ajax({
+                url: "/courses/{{ $course->id }}",
+                method: "put",
+                data : fd,
+                contentType : false,
+                processData : false,
+                // dataType: "json",
+                success: function (data) {
+                    // console.log(data);
+                    document.getElementById('form').reset();
+                    alert(data);
+                },
+                error: function (error) {
+                    if (error.status == 422) {// validation
+                        // loop through the errors and show them to the user
+                        $.each(error.responseJSON.errors, function (i, error) {
+                            // error is message
+                            // i is element's name
+                            console.log(error);
+                            var element = $(document).find('[name="' + i + '"]');
+                            element.after($('<span style="color: red;">' + error[0] + '</span>'));
+                        });
+                    }
+                }
+            });
+        });
+    });
 </script>
 
 </body>

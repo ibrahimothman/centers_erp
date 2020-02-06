@@ -34,7 +34,7 @@
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
         @include('operationBar')
-<section>
+        <section>
 
     <div class="container-fluid   text-right">
 
@@ -63,30 +63,55 @@
                                            placeholder="الاسم باللغه الانجليزيه" value="">
                                 </div>
                             </div>
-
-
-                            <div class=" form-row form-group">
-                                <div class="col">
-                                    <label>البريد الالكترونى </label>
-                                    <span class="required">*</span>
-                                    <input type="text" name="email" placeholder="ادخل البريد الالكترونى "
-                                           class="form-control" value="">
-                                </div>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header text-primary">
+                                تسجيل بيانات المدرب
                             </div>
+                            <div class="card-body">
+                                <form action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-row form-group">
+                                        <div class="col-sm-12 ">
+                                            <label>الاسم باللغه العربيه</label>
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" name="nameAr"
+                                                   placeholder="بالاسم باللغه العربيه " value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-row form-group">
+                                        <div class="col">
+                                            <label>الاسم باللغه الانجليزيه</label>
+                                            <input type="text" name="nameEn" class="form-control"
+                                                   placeholder="الاسم باللغه الانجليزيه" value="">
+                                        </div>
+                                    </div>
 
 
-                            <div class=" form-row form-group">
-                                <div class="col-sm-6  ">
-                                    <label>رقم التليفون المحمول</label>
-                                    <input type="text" name="phoneNumber"
-                                           placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="">
-                                </div>
+                                    <div class=" form-row form-group">
+                                        <div class="col">
+                                            <label>البريد الالكترونى </label>
+                                            <span class="required">*</span>
+                                            <input type="text" name="email" placeholder="ادخل البريد الالكترونى "
+                                                   class="form-control" value="">
+                                        </div>
+                                    </div>
 
-                                <div class="col-sm-6">
-                                    <label>تليفون اخر </label>
-                                    <input type="text" name="phoneNumberSec" placeholder="ادخل رقم التليفون" value=""
-                                           class="form-control">
-                                </div>
+
+                                    <div class=" form-row form-group">
+                                        <div class="col-sm-6  ">
+                                            <label>رقم التليفون المحمول</label>
+                                            <input type="text" name="phoneNumber"
+                                                   placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="">
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <label>تليفون اخر </label>
+                                            <input type="text" name="phoneNumberSec" placeholder="ادخل رقم التليفون" value=""
+                                                   class="form-control">
+                                        </div>
 
                             </div>
 
@@ -109,10 +134,35 @@
                                     <input name="state" type="text" placeholder="البلد" value=""
                                            class="form-control mb-1">
                                 </div>
+                                    <div class=" form-row form-group">
+                                        <div class="col-sm-6 ">
+                                            <label>الرقم القومى </label>
+                                            <input type="text" name="idNumber" value=""
+                                                   placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>رقم جواز السفر</label>
+                                            <input name="passportNum" type="text" placeholder="ادخل رقم جواز السفر" value=""
+                                                   class="form-control ">
+                                        </div>
+                                    </div>
+                                    <br>
 
-                                <div class="col-sm-6  ">
-                                    <label>المدينه </label>
-                                    <input name="city" type="text" placeholder="المدينه" value="" class="form-control">
+
+
+
+
+
+                                    <div class="form-row form-group">
+                                        <div class="col-sm-6  ">
+                                            <label>البلد </label>
+                                            <input name="state" type="text" placeholder="البلد" value=""
+                                                   class="form-control mb-1">
+                                        </div>
+
+                                        <div class="col-sm-6  ">
+                                            <label>المدينه </label>
+                                            <input name="city" type="text" placeholder="المدينه" value="" class="form-control">
 
                                 </div>
                             </div>
@@ -211,35 +261,26 @@
 
 
 <script>
-
-
     $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(function () {
         let photoNum = this.id[this.id.length - 1];
         $(`#customFile${photoNum}`).trigger('click');
     });
-
-
     //code for the image uploaded to be shown
     function readURL(input, num) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
                 if (num > 3) {
                     $(`#imageUploaded${num}`)
                         .attr('src', 'https://icon-library.net/images/done-icon/done-icon-5.jpg')
-
                 } else {
                     $(`#imageUploaded${num}`)
                         .attr('src', e.target.result)
                 }
             };
-
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-
 </script>
 
 

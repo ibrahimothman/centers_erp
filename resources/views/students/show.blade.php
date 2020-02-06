@@ -36,7 +36,7 @@
 
 
                                         <div class="text-center">
-                                            <img src="{{ $student->profileImage() }}" class="avatar img-circle img-thumbnail" alt="avatar">
+                                            <img src="{{ $student->getImage("image") }}" class="avatar img-circle img-thumbnail" alt="avatar">
 
                                         </div></hr><br>
                                         <p>تاريخ الاضافه : {{$student->created_at}}</p>

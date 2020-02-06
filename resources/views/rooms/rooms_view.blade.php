@@ -35,86 +35,18 @@
     </div>
     <!-- card -->
     <div class="row">
-        <div class=" col-md-3  col-xs-1">
-            <div class="card motionCard">
-                <div class="card-body">
-                    <h5 class="card-text">غرفه رقم 1</h5>
-                    <a href="#" class="text-primary">قراء المزيد</a>
+        @foreach($rooms as $room)
+            <div class=" col-md-3  col-xs-1">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-text">{{ $room->name }}</h5>
+                        <a href="{{ route('rooms.edit',$room->id) }}" class="text-primary">قراء المزيد</a>
+                    </div>
                 </div>
+                <br>
             </div>
-            <br>
-        </div>
-        <div class=" col-md-3  col-xs-1">
-            <div class="card motionCard">
-                <div class="card-body">
-                    <h5 class="card-text">غرفه رقم 1</h5>
-                    <a href="#" class="text-primary">قراء المزيد</a>
-                </div>
-            </div>
-            <br>
-        </div>
-        <div class=" col-md-3  col-xs-1">
-            <div class="card motionCard">
-                <div class="card-body">
-                    <h5 class="card-text">غرفه رقم 1</h5>
-                    <a href="#" class="text-primary">قراء المزيد</a>
-                </div>
-            </div>
-            <br>
-        </div>
-        <div class=" col-md-3  col-xs-1">
-            <div class="card motionCard">
-                <div class="card-body">
-                    <h5 class="card-text">غرفه رقم 1</h5>
-                    <a href="#" class="text-primary">قراء المزيد</a>
-                </div>
-            </div>
-            <br>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class=" col-md-3  col-xs-1">
-            <div class="card motionCard">
-                <div class="card-body">
-                    <h5 class="card-text">غرفه رقم 1</h5>
-                    <a href="#" class="text-primary">قراء المزيد</a>
-                </div>
-            </div>
-            <br>
-        </div>
-        <div class=" col-md-3  col-xs-1">
-            <div class="card motionCard">
-                <div class="card-body">
-                    <h5 class="card-text">غرفه رقم 1</h5>
-                    <a href="#" class="text-primary">قراء المزيد</a>
-                </div>
-            </div>
-            <br>
-        </div>
-        <div class=" col-md-3  col-xs-1">
-            <div class="card motionCard">
-                <div class="card-body">
-                    <h5 class="card-text">غرفه رقم 1</h5>
-                    <a href="#" class="text-primary">قراء المزيد</a>
-                </div>
-            </div>
-            <br>
-        </div>
-        <div class=" col-md-3  col-xs-1">
-            <div class="card motionCard">
-                <div class="card-body">
-                    <h5 class="card-text">غرفه رقم 1</h5>
-                    <a href="#" class="text-primary">قراء المزيد</a>
-                </div>
-            </div>
-            <br>
-        </div>
-    </div>
-    <br>
-</div>
-        @include('footer')
-    </div>
+        @endforeach
+
 </div>
 <!-- script-->
 

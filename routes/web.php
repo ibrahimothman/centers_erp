@@ -61,11 +61,16 @@ Route::resource('course_groups','CourseGroupController');
 Route::get('/get_course_groups','CourseGroupController@getCourseGroups');
 Route::resource('course_enrollment','CourseEnrollmentController');
 Route::get('get_course_enrollments','CourseEnrollmentController@getCourseEnrollments');
+
+// ----------------------- rooms----------------
 Route::resource('rooms','RoomsController');
+Route::get('available_begins_for_the_room','RoomsController@getAvailableBegins');
+Route::get('available_ends_for_the_room','RoomsController@getAvailableEnds');
 
 
 // -------------------instructor----------------
-Route::resource('instructor','InstructorsController');
+Route::resource('instructors','InstructorsController');
+Route::post('search_instructor','InstructorsController@searchInstructors');
 //-------------------- jobs ---------------------
 Route::resource('jobs','jobController');
 //-------------------- settings ---------------------
@@ -83,4 +88,9 @@ Route::get('set_role',function (){
     }
 });
 
+//__________________________________________Api routes___________________________________________________
+
+Route::resource('Api/courses','CoursesApi');
+Route::resource('Api/instructors','InstructorApiController');
+Route::resource('Api/categories','CategoriesApiController');
 Auth::routes(['register' => true]);

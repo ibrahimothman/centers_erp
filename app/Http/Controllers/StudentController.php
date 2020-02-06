@@ -10,6 +10,7 @@ use App\QueryFilter\SortElse;
 use Illuminate\Http\Request;
 use App\Student;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
@@ -84,9 +85,6 @@ class StudentController extends Controller
     {
         // todo : attach student to the center
         // check if user has rights to add a new student
-        //dd($request->file('image'));
-
-
 
 //        $this->authorize('create',Student::class);
         $data = $this->validateRequest('');
@@ -95,14 +93,9 @@ class StudentController extends Controller
         $center = Center::findOrFail(Session('center_id'));
 
         // create a new student
-        $student = Student::create(array_except($data,['state','city','address']));
-        $idPicture=$request->file('idPicture');
-        if ($idPicture==null)
-        Uploader::uploadImage($idPicture,Uploader::$public_path);
-
+        $student = Student::create(Arr::except($data,['state','city','address']));
 
         // attach student with center
-
         $student->address()->create([
             'state' => $data['state'],
             'city' => $data['city'],
@@ -203,7 +196,7 @@ class StudentController extends Controller
             'email' => 'required|unique:students,email,'.$user_id,
             'idNumber' => 'required|digits:14|unique:students,idNumber,'.$user_id,
             'image' => ' required|image|file | max:10000',
-            'idImage' => 'sometimes|image|file | max:10000',
+            'idImage' => 'required|image|file | max:10000',
             'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber,'.$user_id,
             //'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
             'passportNumber' => 'sometimes',
@@ -219,7 +212,6 @@ class StudentController extends Controller
 
     public function searchByName(){
         return response()->json($this->getStudents());
-
 
     }
 

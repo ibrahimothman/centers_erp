@@ -42,6 +42,23 @@ class SideBarLinks
         ];
     }
 
+    public static function instructorLinks()
+    {
+        return[
+            self::$baseUrl.'instructors/create' => 'اضافه بيانات المدرب',
+            self::$baseUrl.'instructors' => 'عرض/تعديل بيانات المدرب',
+
+        ];
+    }
+
+    public static function RoomLinks()
+    {
+        return[
+            self::$baseUrl.'rooms/create' => 'اضافه غرفه جديده',
+            self::$baseUrl.'rooms' => 'عرض/تعديل بيانات الغرف',
+        ];
+    }
+
     public static function employeeLinks()
     {
         return [

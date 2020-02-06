@@ -120,6 +120,34 @@
         @include('footer')
     </div>
 </div>
+    @include('operationBar')
+<!-- Begin Page Content -->
+    <div class="container-fluid  ">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header text-primary">
+                        اضافه غرفه جديده
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('rooms.store') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @include('rooms/form')
+                            <div class="form-row save">
+                                <div class="col-sm-6 mx-auto text-center">
+                                    <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
+                                    <button class="btn  btn-danger" type="reset"> الغاء</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
 <!-- script-->
 @include('script')
 <!-- client side validation plugin -->

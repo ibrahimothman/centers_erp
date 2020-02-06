@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\helper\Constants;
 use App\QueryFilter\Name;
 use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
@@ -15,45 +16,31 @@ class Student extends Model
     public static function allStudents($center)
     {
         return app(Pipeline::class)
-            ->send($center->students)
+            ->send($center->students())
             ->through([
                 Sort::class,
                 Name::class
             ])
-            ->thenReturn();
-            //->get();
+            ->thenReturn()
+            ->get();
 
     }
 
-    public function profileImage()
+    public function getImage($key)
     {
-        $imagePath = ($this->image) ? $this->image : 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
-        return url('/uploads/profiles/' . $imagePath);
+        $imagePath = ($this->$key) ? $this->$key : Constants::getInstructorPlaceholderImage();
+        return  $imagePath;
     }
 
-    // save image before center it to db
     public function setImageAttribute($image){
-        if(! is_dir(public_path('/uploads/profiles'))){
-            mkdir(public_path('/uploads/profiles'));
-        }
-        $basename = Str::random();
-        $original = $basename.'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('/uploads/profiles'), $original);
+        $original = Image::saveImage('/uploads/profiles', $image);
+        return $this->attributes['image'] = url("/uploads/profiles/".$original);
 
-        $this->attributes['image'] = $original;
-//        dd($image);
     }
+    public function setIdImageAttribute($idImage){
+        $original = Image::saveImage('/uploads/profiles', $idImage);
+        return $this->attributes['idImage'] = url("/uploads/profiles/".$original);
 
-    public function setIdImageAttribute($idimage){
-        if(! is_dir(public_path('/uploads/profiles'))){
-            mkdir(public_path('/uploads/profiles'));
-        }
-        $basename = Str::random();
-        $original = $basename.'.'.$idimage->getClientOriginalExtension();
-        $idimage->move(public_path('/uploads/profiles'), $original);
-
-        $this->attributes['idImage'] = $original;
-//        dd($image);
     }
 
 

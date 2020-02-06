@@ -135,6 +135,8 @@
 
                 getGroupsDate($('#testselector').val());
                 var student_id = 0;
+            if($('#testselector').val()) getGroupsDate($('#testselector').val());
+            var student_id = 0;
 
                 $('#student-id').keyup(function () {
                     var query=$(this).val();
@@ -147,6 +149,20 @@
                         url: "/search_student_by_name",
                         method: "GET",
                         data: {query:query, _token: "{{ csrf_token() }}"},
+            $('#student-id').keyup(function () {
+                var query=$(this).val();
+                console.log(query);
+                if (query===""){
+                    $('#studentsList').html("");
+                    return;
+                }
+
+                loc = $('<a>', { href: window.location })[0];
+                var data = "name="+query;
+                $.ajax({
+                    url: "/search_student_by_name",
+                    method: "GET",
+                    data: data,
                     dataType: "json",
                     success: function (data) {
                         console.log(data);

@@ -26,7 +26,7 @@
                                                     @php($i = 0)
                                                     @if($course->images->isEmpty())
                                                         <div class="carousel-item active" >
-                                                            <img class="d-block w-100" src="{{$Constants->getCoursePlaceholderImage()}}" alt="First slide">
+                                                            <img class="d-block w-100" src="{{\App\helper\Constants::getCoursePlaceholderImage()}}" alt="First slide">
                                                         </div>
                                                     @else
                                                         @foreach($course->images as $image)
@@ -80,8 +80,8 @@
                                                 <div class="course-teachers">
                                                 @foreach($course->instructors as $instructor)
                                                     <div class="teacher">
-                                                        <img src="{{$instructor->profile_img==null?$Constants->getInstructorPlaceholderImage():$instructor->profile_img}}" alt="">
-                                                        <a href="#"></a>
+                                                        <img src="{{$instructor->image==null?\App\helper\Constants::getInstructorPlaceholderImage():$instructor->image}}" alt="">
+                                                        <a href="#">{{ $instructor->nameAr }}</a>
                                                     </div>
 
                                                     @endforeach

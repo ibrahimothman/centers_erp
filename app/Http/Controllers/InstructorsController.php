@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Input;
 
 class InstructorsController extends Controller
 {
@@ -15,7 +17,18 @@ class InstructorsController extends Controller
      */
     public function index()
     {
-        return view("instructor/overview_instructor");
+
+        if (Input::has('search')) {
+            $queryString=Input::get('search');
+            $instructors=Instructor::where('nameAr','like','%'.$queryString.'%')->paginate(5);
+
+            return view("instructor/view_all_instructors")
+                ->with('instructors',$instructors);
+        }
+
+        $instructors=Instructor::paginate(5);
+        return view("instructor/view_all_instructors")
+            ->with('instructors',$instructors);
 
     }
 
@@ -43,7 +56,7 @@ class InstructorsController extends Controller
         // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
 
-        $instructor=Instructor::create(array_except($data,['state','city','address']));
+        $instructor=Instructor::create(Arr::except($data,['state','city','address']));
         $instructor->address()->create([
             'state' => $data['state'],
             'city' => $data['city'],
@@ -51,7 +64,7 @@ class InstructorsController extends Controller
         ]);
 
         $center->instructors()->syncWithoutDetaching($instructor);
-        return redirect('/instructor/'.$instructor->id);
+        return redirect('instructors/'.$instructor->id);
     }
 
     /**
@@ -69,27 +82,26 @@ class InstructorsController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function edit(Instructor $instructor)
     {
-        return view("instructor/update_instructor");
+        return view("instructor/update_instructor", compact('instructor'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(Request $request, Instructor $instructor)
     {
-        //
+        $data = $this->validateRequest('');
+
+
+        $instructor->update(Arr::except($data,['state','city','address']));
+        $instructor->address()->update([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
+        return redirect('instructors/'.$instructor->id);
     }
 
     /**
@@ -101,6 +113,12 @@ class InstructorsController extends Controller
     public function destroy($id)
     {
 
+    }
+
+    public function searchInstructors(Request $request){
+
+
+        return view("instructor/view_all_instructors");
     }
 
     private function validateRequest($user_id)

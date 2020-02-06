@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
-@include('library')
+   @include('library')
     <!-- Bootstrap CSS & js -->
     <link rel="stylesheet" href="{{url('css/bootstrap.min.css')}}">
 
@@ -79,7 +77,6 @@
                                 </div>
 
                             </div>
-
                             <br>
                         </form>
                     </div>

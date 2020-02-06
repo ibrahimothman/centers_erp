@@ -32,6 +32,7 @@
         }
     </style>
 </head>
+
 <body>
 <div id="wrapper">
     @include('sidebar')
@@ -47,7 +48,7 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form enctype="multipart/form-data" id="form">
+                            <form method="post" action="{{url('/courses')}}" enctype="multipart/form-data" id="form">
                                 @csrf
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
@@ -148,6 +149,7 @@
                                         <select class="form-control" id="instructor-name" multiple required>
                                             @foreach($instructors as $instructor)
                                                 <option value="{{$instructor->id}}">{{$instructor->name}}</option>
+
                                             @endforeach
                                         </select>
                                             <span id="test_course-teacher_error"></span>
@@ -166,6 +168,10 @@
                                                 </li>
                                                 <li><label class="checkbox"><input type="checkbox" name="check">محمود مصطفي</label>
                                                 </li>
+                                            <ul id="instructors-list"  class=" dropdown-menu text-right">
+                                                @foreach($instructors as $instructor)
+                                                    <li ><label class="checkbox"><input value="{{ $instructor->id }}"  type="checkbox">{{$instructor->nameAr}}</label></li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                         <div id="errorSelect"  class="errorMselector">هذه الخانه مطلوبه</div>
@@ -199,43 +205,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-row">
-                                    <div class="col-sm-6 form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input part-of-diploma"
-                                                   name="retake" id="customCheck1">
-                                            <label class="custom-control-label" for="customCheck1">هذه الدورة جزء من
-                                                دبلومة</label>
-                                        </div>
-                                        <div class="shown-if-checked">
-                                            <div>
-                                                <label for="diploma-name">اسم الدبلومة</label>
-                                                <input type="text" class="form-control" id="diploma-name"
-                                                       placeholder="اسم الدبلومة " value="" name="diploma-name"
-                                                       required>
-                                                <span id="test_diploma-name_error"></span>
-                                                <div></div>
-                                                <label for="diploma-course-num"> ترتيب الدورة بالدبلومة</label>
-                                                <input type="number" class="form-control" id="diploma-course-num"
-                                                       placeholder=" ترتيب الدورة بالدبلومة " value=""
-                                                       name="diploma-course-num" required>
-                                                <span id="test_diploma-course-num_error"></span>
-                                                <div></div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="retake"
-                                                   id="customCheck2" checked="">
-                                            <label class="custom-control-label" for="customCheck2">هذه الدورة لها
-                                                امتحان</label>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="form-row save">
 
@@ -269,13 +238,16 @@
 <script type='text/javascript' src="/js/course_create_validation.js"></script>
 
 
-<!-- script multi select-->
-
-<!--  end script-->
 <script>
-    {{--
     $(document).ready(function () {
+        console.log("ready");
         $("#submit").click(function () {
+            var ins=$('#instructors-list').find('li').map(function()
+            {
+                return $(this).val()
+            }).get().join(',');
+            console.log("ins"+ins);
+            // return;
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
             var courseDescription = $("#course-description").val();
@@ -285,29 +257,42 @@
             // var instructorId = $("#instructor-name").val();
             var courseChapter = $("#course-chapter-1").val();
             var chapterDesc = $("#chapter-1-desc").val();
-
             let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
             let chapterDescription = [...$('fieldset textarea')];
             let chapterName = [...$('fieldset input')];
-
             chapterName.forEach(function (chapter, chapterIndex) {
                 let chapterInfo = {};
                 chapterInfo.name = chapterName[chapterIndex].value;
                 chapterInfo.description = chapterDescription[chapterIndex].value;
-
                 chapters.push(chapterInfo);
             });
 
+            var fd = new FormData();
+            $('input[type="file"]').each(function (index, file) {
+               if(file.files.length != 0){
+                    fd.append('images[]',file.files[0]);
+               }
+            });
+            $('input[type="checkbox"]').each(function () {
+                if(this.checked)
+                    fd.append('instructors[]',$(this).val());
+            });
 
+
+            fd.append('_token',"{{ csrf_token() }}");
+            fd.append('name',courseName);
+            fd.append('code', courseCode);
+            fd.append('description', courseDescription);
+            fd.append('duration', courseDuration);
+            fd.append('cost', courseCost);
+            fd.append('content', JSON.stringify(chapters));
+            fd.append('teamCost', teamCost);
             $.ajax({
                 url: "/courses",
                 method: "POST",
-                data: {
-                    name: courseName, code: courseCode, description: courseDescription,
-                    duration: courseDuration, cost: courseCost, content: JSON.stringify(chapters),
-                    teamCost: teamCost,
-                    instructor_id: 1, _token: "{{ csrf_token() }}"
-                },
+                data : fd,
+                contentType : false,
+                processData : false,
                 dataType: "json",
                 success: function (data) {
                     // console.log(data);
@@ -329,7 +314,6 @@
             });
         });
     });
---}}
 </script>
 
 <script >
@@ -400,10 +384,13 @@
     //     });
     //
     // });
+
     //
     //     });
     // });
+
 </script>
 </body>
 
 </html>
+

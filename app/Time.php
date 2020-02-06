@@ -15,10 +15,15 @@ class Time extends Model
         return $this->belongsToMany(CourseGroup::class);
     }
 
-    public function getDayAttribute($value)
+    public function rooms()
     {
-        return self::days()[$value];
+        return $this->belongsToMany(Room::class)->withTimestamps();
     }
+
+//    public function getDayAttribute($value)
+////    {
+////        return self::days()[$value];
+////    }
 
     public static function days()
     {
@@ -32,5 +37,46 @@ class Time extends Model
           7 => 'الجمعه',
 
         ];
+    }
+
+    public static function hours()
+    {
+        return[
+            7 => "07:00",
+            8 => "08:00",
+            9 => "09:00",
+            10 => "10:00",
+            11 => "11:00",
+            12 => "12:00",
+            13 => "13:00",
+            14 => "14:00",
+            15 => "15:00",
+            16 => "16:00",
+            17 => "17:00",
+            18 => "18:00",
+            19 => "19:00",
+            20 => "20:00",
+            21 => "21:00",
+            22 => "22:00",
+            23 => "23:00",
+            24 => "24:00",
+        ];
+    }
+
+    public static function addTimes($days, $begins, $ends)
+    {
+        $times = array();
+        for ($i = 0; $i < count($days); $i++){
+            $time = Time::firstOrCreate([
+                'day' => $days[$i],
+                'begin' => $begins[$i],
+                'end' => $ends[$i],
+                'busy' => 1,
+
+            ]);
+
+            $times[] = $time;
+        }
+        return $times;
     }
 }

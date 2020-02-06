@@ -2,31 +2,27 @@
 
 namespace App;
 
-use App\QueryFilter\ById;
+use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
 class Course extends Model
 {
+    protected $hidden = array('pivot');
     public $timestamps = false;
     protected $guarded = [];
 
     public static function allCourses($center)
     {
         return app(Pipeline::class)
-            ->send($center->courses)
+            ->send($center->courses())
             ->through([
-                ById::class
+                Id::class
             ])
             ->thenReturn()
             ->get();
     }
 
-    public function courseImages()
-    {
-        $imagePath = ($this->image) ? $this->image : 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
-        return '/uploads/profiles/' . $imagePath;
-    }
 
     public function center(){
         return $this->belongsTo(Center::class);
@@ -44,6 +40,10 @@ class Course extends Model
     public function images()
     {
         return $this->morphMany(Image::class,'imageable');
+    }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class);
     }
 
 

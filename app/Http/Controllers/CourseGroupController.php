@@ -6,11 +6,13 @@ use App\Center;
 use App\Course;
 use App\CourseGroup;
 use App\Employee;
+use App\Room;
 use App\Rules\courseGroupDay;
 use App\Test;
 use App\Time;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use mysql_xdevapi\Session;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
@@ -37,7 +39,8 @@ class CourseGroupController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $courses = $center->courses;
-        return view('courseGroups/course_group_create', compact('courses'));
+        $rooms = $center->rooms;
+        return view('courseGroups/course_group_create', compact('courses','rooms'));
     }
 
     /**
@@ -50,18 +53,28 @@ class CourseGroupController extends Controller
     {
 
         // fetch validated date
-        $data = $this->validateCourseGroup();
+        $data = $this->validateCourseGroupData();
 //        // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
-        // create a new course group
-        $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
-            'name' => $data['name'],
-            'start_at' => $data['start_at'],
-        ]);
 
-        // create a new time
-        $this->addGroupTimes($course_group, $data['course-day'],$data['course-begin'],$data['course-end']);
-        dd($course_group);
+        $course_group = $center->courses()->findOrFail($data['course'])->groups()->create([
+                'name' => $data['name'],
+                'start_at' => $data['start_at'],
+            ]);
+
+        // create times
+        $times = Time::addTimes($data['course-day'],$data['course-begin'],$data['course-end']);
+
+        // attach times to group
+        foreach($times as $time){
+            $course_group->times()->syncWithoutDetaching($time);
+        }
+
+        // attach times to the room
+        foreach($times as $time){
+            Room::findOrFail($data['room'])->times()->syncWithoutDetaching($time);
+        }
+
     }
 
     /**
@@ -110,7 +123,7 @@ class CourseGroupController extends Controller
         //
     }
 
-    private function validateCourseGroup()
+    private function validateCourseGroupData()
     {
 
         $today_date = Carbon::now()->toDateString();
@@ -118,34 +131,23 @@ class CourseGroupController extends Controller
             'name' => 'required|unique:course_groups,name',
             'start_at' => "required|date|after_or_equal:$today_date",
             'course' => 'required',
+            'room' => 'required',
             'course-begin' => 'required|array',
             'course-end' => 'required|array',
-            'course-day' => ['required','array',new courseGroupDay],
+            'course-day' => ['required','array'],
 
         ]);
     }
 
-    private function addGroupTimes($course_group, $days, $begins, $ends)
-    {
-//        $times= [];
-        for ($i = 0; $i < count($days); $i++){
-            $time = Time::firstOrCreate([
-                'day' => $days[$i],
-                'begin' => $begins[$i],
-                'end' => $ends[$i],
-                'busy' => 1,
 
-            ]);
-
-//            echo json_encode($times);
-            // attach time to course group
-            $course_group->times()->syncWithoutDetaching($time);
-        }
-    }
 
     public function getCourseGroups()
     {
         $course_id  = request()->get('course_id');
         return Course::with('groups')->findOrFail($course_id)->groups;
     }
+
+
+
+
 }
