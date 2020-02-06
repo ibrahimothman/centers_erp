@@ -1,77 +1,83 @@
+
 <!DOCTYPE html>
-<html lang="en">
-<head dir="rtl">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <meta charset="UTF-8">
-    <title>صيغة الشهادة/الإفادة</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="/../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Custom styles for this template-->
-    <link href="/../../../css/sb-admin-rtl.css" rel="stylesheet">
-    <link href="/../../../css/course-details.css" rel="stylesheet">
-    <link href="/../../../css/jquery-ui.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
-
-
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        @include('library')
+<!-- css statement -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-    <script src="{{url("js/summernote-ext-print.js")}}"></script>
-    <script src="{{url("js/summernote-paper-size.js")}}"></script>
-    <meta name="csrf_token" content="{{ csrf_token() }}">
-
+            <link href="/css/statementLibrary.css" rel="stylesheet">
+            <title>صيغة الشهادة/الإفادة</title>
 </head>
 <body>
-
-
-<div class="card-body pb-5">
+<div id="wrapper">
     @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+        @include('operationBar')
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card mb-4 shadowed">
+                        <header>
+                            <div class="card-header text-primary form-title">
+                                إضافه افاده
+                            </div>
+                        </header>
+                        <div class="card-body">
+                            <form >
+                                <div class="form-row form-group ">
+                                    <div class="col">
+                                        <label>اختيار الامتحان</label>
+                                        <select   id="testselector"   class="form-control ">
+                                            <option value="0">اختر الامتحان</option>
+                                            @foreach($tests as $test)
+                                                <option value={{ $test->id }}>{{ $test->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
-    <div class=" clearfix col-md-8 mb-4">
-        <form >
-            <div class="form-row col-md-12 ">
-                <select   id="testselector"   class="form-control ">
-                    <option value="0">اختر الامتحان</option>
-                    @foreach($tests as $test)
-                        <option value={{ $test->id }}>{{ $test->name }}</option>
-                    @endforeach
-                </select>
+                                <div  class="text-primary"><p >يمكنك إضافة (اسم الطالب - اسم المركز - اسم المدير - التاريخ) عن طريق كتابة @ لظهور الإختيارات  </p></div>
+                                <div id="summernote"></div>
+                                <div style="margin-right:2em;text-align:right;">
+
+                                </div>
+
+                                <div class="form-row save">
+                                    <div class="col-sm-6 mx-auto" style="width: 200px;">
+                                        <button  id="saveCert" name="saveCert" class="btn btn-primary action-buttons" type="submit" > حفظ الشهاده
+                                        </button>
+                                        <button class="btn  btn-danger action-buttons" type="reset"> إلغاء
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
             </div>
-        </form>
+        </div>
+        @include('footer')
     </div>
-
 </div>
-
-
-
-<div style="text-align: right; margin-top: 2em;"><p style="margin-right: 2em;">يمكنك إضافة (اسم الطالب - اسم المركز - اسم المدير - التاريخ) عن طريق كتابة @ لظهور الإختيارات  </p></div>
-<div id="summernote"></div>
-<div style="margin-right:2em;text-align:right;">
-
-    <br>
-    <button id="saveCert" name="saveCert">حفظ الشهادة</button>
-</div>
-
-<!-- Bootstrap core JavaScript-->
+<!-- script-->
+@include('script')
+<script>var jQuery = $.noConflict(true);</script>
+<!-- Bootstrap core JavaScript -->
 <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{url('js/jquery-ui.min.js')}}"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{url('js/sb-admin-2.min.js')}}"></script>
 <script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
+
+
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+<script src="{{url("js/summernote-ext-print.js")}}"></script>
+<script src="{{url("js/summernote-paper-size.js")}}"></script>
 
 <script>
     $(document).ready(function() {
@@ -80,7 +86,6 @@
         $('#summernote').summernote({
             placeholder: 'أدخل صيغة الشهادة/الإفادة',
             tabsize: 4,
-            width:900,
             minHeight: 200,
             maxHeight: 700,
             toolbar: [
@@ -197,3 +202,5 @@
 </script>
 </body>
 </html>
+
+
