@@ -36,12 +36,6 @@ a[class="add"]:active {
     padding-top: 50px;
 }
 /* room create */
-select {
-    width: 100%;
-    padding: 3px 5px;
-    border: 1px solid #007bff;
-    border-radius: 4px;
-}
 h6 {
     color: #007bff;
 }

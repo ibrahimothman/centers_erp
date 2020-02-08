@@ -57,8 +57,8 @@
                                         <div class="card-body">
                                             <div class="form-row form-group">
                                                 <div class="col-3 ">مساحه الغرفه</div>
-                                                <div class="col-9 ">
-                                                    <select name="area">
+                                                <div class="col-9 l ">
+                                                    <select class="form-control" name="area">
                                                         <option value="">اختار</option>
                                                         <option value="12متر مربع">12متر مربع</option>
                                                         <option value="30متر مربع">30 متر مربع</option>
@@ -82,10 +82,10 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <h6>امكانيات المعمل</h6>
+                                    <h6> اضف امكانيات المعمل</h6>
                                     <div class="card ">
                                         <div class="card-body">
-                                            <div class=" row smiley-wrapper">
+                                            <div class=" row smiley-wrapper justify-content-center">
                                                 <div class="smiley " id="addBtn">
                                                     <div name="add">
                                                         <button class="btn btn-primary" name="option"> <span >كاميرات مراقبه</span></button>
