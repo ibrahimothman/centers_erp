@@ -64,19 +64,17 @@
                                                 <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                                      alt="your image"/>
                                                 <p>صورة البطاقه</p>
-                                                <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
+                                          <!--      <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
                                             </div>
                                             <div class="course-image-input">
                                                 <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                                      alt="your image"/>
                                                 <p>الصوره الشخصيه</p>
-                                                <div id="photo2" class="photo" >هذه الخانه مطلوبه</div>
+                                          <!--      <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
 
                                             </div>
                                         </div>
                                         <!-- end photo -->
-
-
                                         <div class="form-row">
 
                                         <div class="col-sm-12 form-group">
