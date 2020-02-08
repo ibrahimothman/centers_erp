@@ -46,7 +46,7 @@
                                         </span>
                                         <div class="row ">
                                             <div class="col-md-4">
-                                                <a href="#"> <img src="{{$diploma->image }}" class="card-img h-100" alt="..."></a>
+                                                <a href="{{ route('diplomas.show', $diploma->id) }}"> <img src="{{$diploma->image }}" class="card-img h-100" alt="..."></a>
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">

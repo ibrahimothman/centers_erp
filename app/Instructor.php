@@ -44,6 +44,12 @@ class Instructor extends ImageUploader
     {
         return $this->belongsToMany(Course::class);
     }
+
+    public function diplomaGroups()
+    {
+        return $this->belongsToMany(DiplomaGroup::class)->withTimestamps();
+    }
+
     public function address()
     {
         return $this->morphOne(Address::class,'addressable');
@@ -75,8 +81,8 @@ class Instructor extends ImageUploader
             // delete student's address
             if($instructor->address) $instructor->address->delete();
             // delete student's image and id_image from /uploads/profiles
-            if($instructor->image) $this->deleteImage($instructor->image);
-            if($instructor->idImage) $this->deleteImage($instructor->idImage);
+            if($instructor->image) (new self)->deleteImage($instructor->image);
+            if($instructor->idImage) (new self)->deleteImage($instructor->idImage);
 
         });
     }

@@ -118,7 +118,7 @@
                                 </fieldset>
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
-                                        <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة
+                                        <button class="btn btn-primary action-buttons" type="submit" id="submit"> تعديل
                                         </button>
                                         <button class="btn  btn-danger action-buttons" type="reset"> إلغاء
                                         </button>

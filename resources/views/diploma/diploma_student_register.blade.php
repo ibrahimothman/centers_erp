@@ -28,29 +28,34 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form  id="form" >
+                            <form  id="form" enctype="multipart/form-data" action="{{ route('diploma-enrollments.store') }}" method="post" >
+                                @csrf
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="student-id">اسم الطالب</label>
-                                        <input type="text"  placeholder="اسم الطالب" name="name" class="form-control" id="student" required>
+                                        <input type="hidden" id="student_id" name="student_id">
+                                        <input type="text"  placeholder="اسم الطالب"  name="student_name" class="form-control" id="student_name" required>
+                                        <div class="list-gpfrm-list" id="studentsList"></div>
+                                        <span id="stuselector_error"></span>
+                                        <div></div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="course-id">الدبلومة</label>
-                                        <select class="form-control" id="course_id" required name="selectDiploma">
+                                        <select class="form-control" id="diploma_option" required name="selectDiploma">
                                             <option value="">اختار</option>
-                                            <option value=" full stack">full stack diploma</option>
+                                            @foreach($diplomas as $diploma)
+                                                <option data-content="{{ $diploma->groups }}" value="{{ $diploma->id }}">{{ $diploma->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label >مواعيد الدبلومه</label>
-                                        <select  class="form-control "  id="time" name="time" required>
+                                        <select  class="form-control "  id="diploma_group_date" name="diploma_group_id" required>
                                             <option value="">اختار</option>
-                                            <option value="السبت">  السبت والثلاثاء الساعه  <span>2 : 6</span> </option>
-                                            <option value="الاحد"> الاحد والاربعاء الساعه  <span>4 : 8</span> </option>
                                         </select>
                                     </div>
                                 </div>
@@ -78,8 +83,62 @@
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
-<script type='text/javascript' src="/js/diploma_student_register_validation.js "></script>
+<script type='text/javascript' src="{{ asset('js/diploma_student_register_validation.js') }} "></script>
 
+<script>
+    $(document).ready(function () {
+
+        $('#student_name').keyup(function () {
+            var query=$(this).val();
+            if (query===""){
+                $('#studentsList').html("");
+                return;
+            }
+
+            loc = $('<a>', { href: window.location })[0];
+            var data = "name="+query;
+            $.ajax({
+                url: "/search_student_by_name",
+                method: "GET",
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    $('#studentsList').show();
+                    var output='<ul class="dropdown-menu" style="display:block; position:relative">';
+
+                    $.each(data, function (i, v) {
+                        console.log(v.id+" --> "+v.nameAr);
+                        output+=" <li value="+ v.id +"><a href='#'>"+v.nameAr+"</a></li>"
+
+                    });
+                    output += '</ul>';
+                    $("#studentsList").fadeIn();
+                    $("#studentsList").html(output);
+
+                },
+                error: function (res) {
+                    alert(res.data);
+                }
+
+            });
+        });
+
+        $(document).on('click', 'li', function(){
+            $('#student_name').val($(this).text());
+            $('#student_id').val($(this).val());
+            $('#studentsList').fadeOut();
+        });
+
+        $('#diploma_option').on('change', function () {
+            $('#diploma_group_date').empty();
+            $('#diploma_group_date').append("<option value='0'>اختر ميعادا</option>");
+            let groups = $.parseJSON($(this).find(':selected').attr('data-content'));
+            groups.forEach(function (group) {
+                $('#diploma_group_date').append("<option value='"+ group.id +"'>"+ group.starts_at +"</option>");
+            })
+        })
+    });
+</script>
 </body>
 </html>
 

@@ -82,6 +82,12 @@ Route::get('/rooms-calendar/{room}','RoomsController@showRoomCalendar');
 //------------------ Diplomas ---------------
 Route::resource('diplomas','DiplomaController');
 
+//----------------- Diploma Groups----------------
+Route::resource('diploma-groups', 'DiplomaGroupController');
+
+//----------------- Diploma enrollment----------------
+Route::resource('diploma-enrollments', 'DiplomaEnrollmentController');
+
 // -------------------instructor----------------
 Route::resource('instructors','InstructorsController');
 Route::post('search_instructor','InstructorsController@searchInstructors');

@@ -21,10 +21,12 @@
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
                                 <h3>{{ $diploma->name }}</h3>
-                                <form>
+                                <form enctype="multipart/form-data" action="{{ route('diplomas.destroy', $diploma->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
                                     <button type="submit" class="btn btn-outline-danger py-1 px-2">
                                         <i class="fas fa-trash-alt m-0"></i></button>
-                                    <a href="">
+                                    <a href="/diploma-groups/create">
                                         <button type="button" class="btn btn-success">حجز مجموعه جديده</button>
                                     </a>
                                 </form>
@@ -64,72 +66,31 @@
                                                 </div>
 
                                             <fieldset>
-                                                <div class="view-courses-title">
-                                                    <h5 class="card-title text-primary">تفاصيل الحجز</h5>
-                                                    <div class="dropdown-divider"></div>
-                                                        <a href="" class=" btn btn-outline-primary  py-1 px-2"><i
-                                                                    class="fas fa-edit m-0 "></i> </a>
-                                                </div>
-                                                <div class="row ">
-                                                    <div class="col-sm-6">
-                                                        <div>
-                                                            <span class="w-50 p-3  text-primary"> اسم المدرس :</span>
-                                                            محمد علي
+                                                @foreach($diploma->groups as $group)
+                                                    <div class="view-courses-title">
+                                                        <h5 class="card-title text-primary">تفاصيل الحجز</h5>
+                                                        <div class="dropdown-divider"></div>
+                                                            <a href="" class=" btn btn-outline-primary  py-1 px-2"><i
+                                                                        class="fas fa-edit m-0 "></i> </a>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="col-sm-6">
+                                                            @foreach($group->instructors as $instructor)
+                                                                <div>
+                                                                    <span class="w-50 p-3  text-primary"> اسم المدرس :</span>
+                                                                    {{ $instructor->nameAr }}
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div><span class="w-50 p-3  text-primary"> القاعه :</span>
+                                                                 {{ $group->room->name }}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <div><span class="w-50 p-3  text-primary"> القاعه :</span>
-                                                            قاعه رقم 10
-                                                        </div>
-                                                    </div>
-                                                </div>
 
-                                                <fieldset>
-                                                <div class="form-row days">
-                                                    <header class="full-width"><h6> مواعيد الدبلومه </h6></header>
-                                                    <div class="col-sm-4 form-group">
-                                                        <div>
-                                                            <span class="w-50 p-3  text-warning"> تاريخ البدايه :</span>
-                                                            20/1/2020
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4 form-group">
-                                                        <div>
-                                                            <span class="w-50 p-3  text-warning"> بدايه المحاضره :</span>
-                                                          الساعه:2
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4 form-group">
-                                                        <div>
-                                                            <span class="w-50 p-3  text-warning">نهايه المحاضره :</span>
-                                                           الساعه:5
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                            </fieldset>
-                                            <!-- othet register -->
-                                            <fieldset>
-                                                <div class="view-courses-title">
-                                                    <h5 class="card-title text-primary">تفاصيل الحجز</h5>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a href="" class=" btn btn-outline-primary  py-1 px-2"><i
-                                                                class="fas fa-edit m-0 "></i> </a>
-                                                </div>
-                                                <div class="row ">
-                                                    <div class="col-sm-6">
-                                                        <div>
-                                                            <span class="w-50 p-3  text-primary"> اسم المدرس :</span>
-                                                            احمد ابراهيم
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div><span class="w-50 p-3  text-primary"> القاعه :</span>
-                                                            قاعه رقم 5
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <fieldset>
+
+                                                    <fieldset>
                                                     <div class="form-row days">
                                                         <header class="full-width"><h6> مواعيد الدبلومه </h6></header>
                                                         <div class="col-sm-4 form-group">
@@ -138,21 +99,12 @@
                                                                 20/1/2020
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-4 form-group">
-                                                            <div>
-                                                                <span class="w-50 p-3  text-warning"> بدايه المحاضره :</span>
-                                                                الساعه:5
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4 form-group">
-                                                            <div>
-                                                                <span class="w-50 p-3  text-warning">نهايه المحاضره :</span>
-                                                                الساعه:8
-                                                            </div>
-                                                        </div>
+
                                                     </div>
                                                 </fieldset>
-                                            </fieldset>
+                                                </fieldset>
+                                            @endforeach
+
                                         </div>
 
                                     </div>

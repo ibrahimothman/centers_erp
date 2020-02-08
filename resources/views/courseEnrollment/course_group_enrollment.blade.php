@@ -125,7 +125,7 @@
 
                             $.each(data, function (i, v) {
                                 console.log(v.id+" --> "+v.nameAr);
-                                output+=" <li value="+ v.id +"><a href=''>"+v.nameAr+"</a></li>"
+                                output+=" <li value="+ v.id +"><a href='#'>"+v.nameAr+"</a></li>"
 
                             });
                             output += '</ul>';
@@ -140,11 +140,11 @@
                     });
                 });
 
-                $(document).on('click', 'li', function(){
+                $(document).on('click', 'li', function(event){
                     student_id = $(this).val();
                     $('#student-id').val($(this).text());
                     $('#studentsList').fadeOut();
-                    return false;
+
                 });
 
                 // get selected course's groups

@@ -67,12 +67,12 @@
     </li>
 
     <!-- diplomas -->
-    <li class="nav-item {{str_contains(Request::url(),'diplomas' )? 'active' : ''}}"  >
+    <li class="nav-item {{str_contains(Request::url(),'diploma' )? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#diplomaCollapse" aria-expanded="true" aria-controls="diplomaCollapse">
             <i class="fas fa-fw fa-wrench"></i>
             <span>الدبلومات</span>
         </a>
-        <div id="diplomaCollapse" class="{{str_contains(Request::url(),'diplomas' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="diplomaCollapse" class="{{str_contains(Request::url(),'diploma' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
 
                 @foreach(\App\helper\SideBarLinks::diplomaLinks() as $linkKey => $linkValue)

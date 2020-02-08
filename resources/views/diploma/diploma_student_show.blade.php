@@ -19,7 +19,7 @@
                 <div class="card">
                         <div class="card-header text-primary form-title view-courses-title">
                             <h3>الطلاب المسجلين بالدبلومه </h3>
-                            <a href="">
+                            <a href="{{ route('diploma-enrollments.create') }}">
                                 <button type="button" class="btn btn-success">أضف طالب</button>
                             </a>
                         </div>
@@ -29,9 +29,9 @@
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false"> اختار اسم الدبلومه </button>
                             <div class="dropdown-menu">
-                               <a class="dropdown-item" href="#">full stack diploma</a>
-                                <a class="dropdown-item" href="#">full stack diploma</a>
-                                <a class="dropdown-item" href="#">full stack diploma</a>
+                                @foreach($all_diplomas as $diploma)
+                                    <a class="dropdown-item" href="{{ route('diploma-enrollments.index') }}?id={{ $diploma->id }}">{{ $diploma->name }}</a>
+                                @endforeach
                             </div>
                         </div>
                         <div class="btn-group p-3 ">
@@ -48,66 +48,34 @@
                             <tr>
                                 <th class="th-sm">اسم الطالب</th>
                                 <th class="th-sm">اسم الدبلومه</th>
-                                <th class="th-sm">الايام</th>
                                 <th class="th-sm">المعاد</th>
                                 <th class="th-sm"> تعديل</th>
                                 <th class="th-sm"> ازاله</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>احمد محمد</td>
-                                <td>full stack diploma</td>
-                                <td> السبت والاربعاء</td>
-                                <td>2 : 5</td>
-                                <td>
-                                    <a href="" class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                class="fas fa-edit m-0 "></i> </a>
+                            @foreach($diplomas as $diploma)
+                                @foreach($diploma->groups as $group)
+                                    @foreach($group->students as $student)
+                                        <tr>
+                                            <td>{{ $student->nameAr }}</td>
+                                            <td>{{ $diploma->name }}</td>
+                                            <td>{{ $group->starts_at }}</td>
+                                            <td>
+                                                <a href="" class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                            class="fas fa-edit m-0 "></i> </a>
 
-                                </td>
-                                <td>
-                                    <form>
-                                        <button type="submit" class="btn btn-outline-danger py-1 px-2">
-                                            <i class="fas fa-trash-alt m-0"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <!-- second row -->
-                            <tr>
-                                <td>احمد محمد</td>
-                                <td>full stack diploma</td>
-                                <td> السبت والاربعاء</td>
-                                <td>2 : 5</td>
-                                <td>
-                                    <a href="" class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                class="fas fa-edit m-0 "></i> </a>
-
-                                </td>
-                                <td>
-                                    <form>
-                                        <button type="submit" class="btn btn-outline-danger py-1 px-2">
-                                            <i class="fas fa-trash-alt m-0"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <!-- third row -->
-                            <tr>
-                                <td>احمد محمد</td>
-                                <td>full stack diploma</td>
-                                <td> السبت والاربعاء</td>
-                                <td>2 : 5</td>
-                                <td>
-                                    <a href="" class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                class="fas fa-edit m-0 "></i> </a>
-
-                                </td>
-                                <td>
-                                    <form>
-                                        <button type="submit" class="btn btn-outline-danger py-1 px-2">
-                                            <i class="fas fa-trash-alt m-0"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
+                                            </td>
+                                            <td>
+                                                <form>
+                                                    <button type="button" onclick="deleteEnrollment('{{ $group->id }}', '{{  $student->id }}');" class="btn btn-outline-danger py-1 px-2">
+                                                        <i class="fas fa-trash-alt m-0"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endforeach
+                            @endforeach
                             </tbody>
 
                         </table>
@@ -124,6 +92,19 @@
 </div>
 <!-- End of Page Wrapper -->
 @include('script')
+<script>
+    function deleteEnrollment(diploma_group_id, student_id) {
+        console.log("diploma_group_id : "+diploma_group_id+", student_id : "+student_id);
+        $.ajax({
+            url : '/diploma-enrollments/1',
+            type : 'delete',
+            data : { diploma_group_id : diploma_group_id, student_id : student_id, '_token' : '{{ csrf_token() }}'  },
+            success : function (data) {
+                window.location.reload();
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

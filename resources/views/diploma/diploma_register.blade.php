@@ -36,25 +36,27 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form id="diplomaRegister">
+                            <form id="diplomaRegister" enctype="multipart/form-data" action="{{ route('diploma-groups.store') }}" method="post">
+                                @csrf
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="name">اسم الدبلومة</label>
-                                        <select class="form-control" id="" name="name" required>
+                                        <select class="form-control" id="diplomas_options" name="diploma_id" required>
                                             <option value="">اختار</option>
-                                            <option value="full">full stack diploma</option>
-                                            <option value="programming">programming diploma</option>
+                                            @foreach($diplomas as $diploma)
+                                                <option data-content="{{ $diploma }}" value="{{ $diploma->id }}">{{ $diploma->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label>قاعة الدبلومة</label>
-                                        <select class="form-control" id="" name="room" required>
+                                        <select class="form-control" id="" name="room_id" required>
                                             <option value="">اختار</option>
-                                            <option value="1">قاعة رقم 1</option>
-                                            <option value="2">قاعة رقم 2</option>
-                                            <option value="3">قاعة رقم 3</option>
+                                            @foreach($rooms as $room)
+                                                <option value="{{ $room->id }}">{{ $room->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -62,7 +64,7 @@
                                     <div class='col-sm-6 form-group'>
                                             <label> تاريخ بداية الدبلومة</label>
                                             <div class='input-group date'>
-                                                <input id="datetimepicker" name="date" class="form-control" type="text">
+                                                <input id="datetimepicker" name="starts_at" class="form-control" type="text">
 
                                             </div>
                                         <div class="dateError"></div>
@@ -73,13 +75,8 @@
                                                 <button data-toggle="dropdown" class="dropdown-toggle btnInstructor py-1">
                                                     اسم المدرس <b class="caret"></b>
                                                 </button>
-                                                <ul class=" dropdown-menu text-right " >
-                                                    <li><label class="checkbox"><input type="checkbox" name="check">احمد
-                                                            محمد</label>
-                                                    </li>
-                                                    <li><label class="checkbox"><input type="checkbox" name="check">محمود
-                                                            مصطفي</label>
-                                                    </li>
+                                                <ul id="instructor_options" class=" dropdown-menu text-right " >
+
                                                 </ul>
                                             </div>
                                             <div id="errorSelect"  class="errorMselector">هذه الخانه مطلوبه</div>
@@ -113,7 +110,7 @@
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
-<script type='text/javascript' src="/js/diploma_register_validation.js "></script>
+<script type='text/javascript' src="{{ asset('js/diploma_register_validation.js ') }}"></script>
 
 <script>
     $(function () {
@@ -121,6 +118,25 @@
             timepicker: false,
             format: 'Y-m-d'
         });
+    });
+
+    $(document).ready(function () {
+        $('#diplomas_options').on('change', function () {
+            $('#instructor_options').empty();
+            var instructors = {};
+            var diploma = $.parseJSON($(this).find(':selected').attr('data-content'));
+            diploma.courses.forEach(function (course) {
+                course.instructors.forEach(function (instructor) {
+                    if((instructor.id in instructors) === false){
+                        instructors[instructor.id] = instructor;
+                        $('#instructor_options').append("<li><label class='checkbox'><input type='checkbox' name='instructors[]' value='"+ instructor.id +"'>"+ instructor.nameAr +"</label></li>");
+
+                    }
+                })
+            });
+
+
+        })
     })
 </script>
 </body>

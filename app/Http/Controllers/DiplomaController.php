@@ -55,7 +55,7 @@ class DiplomaController extends Controller
 
     public function show(Diploma $diploma)
     {
-        $diploma = Diploma::with('courses')->findOrFail($diploma)->first();
+        $diploma = Diploma::with('courses')->with('groups.instructors')->findOrFail($diploma)->first();
         return view('diploma/diploma_details', compact('diploma'));
     }
 
@@ -83,6 +83,12 @@ class DiplomaController extends Controller
         $diploma->courses()->sync($diploma_courses);
 
         return redirect("diplomas/$diploma->id");
+    }
+
+    public function destroy(Diploma $diploma)
+    {
+        $diploma->delete();
+        return redirect('diplomas');
     }
 
     private function validateDiplomaData($request, $diploma_id)

@@ -48,10 +48,11 @@ class SideBarLinks
         return[
             self::$baseUrl.'diplomas/create' => 'اضافه بيانات الدبلومات',
             self::$baseUrl.'diplomas' => 'عرض/تعديل بيانات الدبلومات',
-            self::$baseUrl.'course_groups/create' => 'تسجيل مواعيد الدبلومات',
-            self::$baseUrl.'course_groups' => 'عرض مواعيد الدبلومات',
-            self::$baseUrl.'course_enrollment/create' => 'تسجيل الطلاب علي الدبلومات',
-            self::$baseUrl.'course_enrollment' => 'عرض الطلاب المسجلين',
+            self::$baseUrl.'diploma-groups/create' => 'تسجيل مواعيد الدبلومات',
+            self::$baseUrl.'diploma-groups' => 'عرض مواعيد الدبلومات',
+            self::$baseUrl.'diploma-enrollments/create' => 'تسجيل الطلاب علي الدبلومات',
+            self::$baseUrl.'diploma-enrollments' => 'عرض الطلاب المسجلين',
+
         ];
     }
 

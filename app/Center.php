@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Events\NewCenterHasCreated;
+use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use mysql_xdevapi\Session;
 
@@ -12,6 +14,16 @@ class Center extends Model
     protected $guarded = [];
     public static $ApiFields=['id','name'];
     // once center is created save it in session
+    public static function allDiplomasEnrollments($center)
+    {
+        return app(Pipeline::class)
+            ->send($center->diplomas()->with('groups.students'))
+            ->through([
+                Id::class
+            ])
+            ->thenReturn()->get();
+    }
+
     protected static function boot()
     {
         parent::boot();
