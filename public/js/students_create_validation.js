@@ -12,6 +12,7 @@ $(document).ready(function () {
     /* validation */
     $('#studentCreate').validate(
         {
+           // onkeyup: true,
             rules: {
                 nameAr: {
                     required: true,
@@ -56,7 +57,7 @@ $(document).ready(function () {
                 },
                 nameEn: {
                     required: "هذه الخانه مطلوبه",
-                    validUsername: "مسموح بالكتابه بالانجليزي فقط"
+                    validUsername: "مسموح بالانجليزي فقط"
                 },
 
                 email: {
@@ -93,7 +94,13 @@ $(document).ready(function () {
                 form.submit();
             }
 
+
         });
+    /* real time validate */
+    $('#studentCreate').on('keyup', function() {
+       $(this).validate();
+  });
+//);
     /* image1 validation */
     /* image2 validation */
     /*

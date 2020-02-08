@@ -9,9 +9,10 @@
         .error {
             color: #b60000;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            font-weight: 600;
+            line-height: 1;
         }
+
         /* img error */
         /*
         .photo{
@@ -81,7 +82,7 @@
 
                                             <label for="validationCustom01">الاسم باللغه العربيه</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="بالاسم باللغه العربيه "  value="{{ old('nameAr') }}" >
+                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('nameAr') }}" >
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
                                     </div>
@@ -266,6 +267,7 @@
 <!-- client side validation page -->
 <script type='text/javascript' src="/js/students_create_validation.js"></script>
 <script>
+
         $(document).ready(function() {
             $(":input").inputmask();
 
