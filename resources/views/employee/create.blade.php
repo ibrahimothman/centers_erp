@@ -12,10 +12,12 @@
             font-family: 'GESSTwoLight-Light' !important;
         }
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error ,select.error {
+            border: 1px solid #dc3545;
         }
     </style>
 </head>
@@ -56,6 +58,7 @@
                                         <div class=" form-row ">
                                             <div class="col-6 text-right">
                                                 <label>رقم التليفون </label>
+                                                <span class="required">*</span>
                                                 <input type="text" name="phoneNumber" placeholder="ادخل رقم التليفون المحمول  "
                                                        class="form-control" value="{{ old('phoneNumber') }}">
                                                 <div>{{ $errors->first('phoneNumber') }}</div>
@@ -64,6 +67,7 @@
 
                                             <div class="col-6 text-right">
                                                 <label>الوظيفه </label>
+                                                <span class="required">*</span>
                                                 <select name="job" class="form-control">
                                                     <option value="">اختار وظيفة</option>
                                                     @foreach($jobs as $job)
@@ -95,6 +99,7 @@
 
                                         <div class=" form-row">
                                             <label>العنوان</label>
+                                            <span class="required">*</span>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="3"
                                                       class="form-control">{{ old('address') }}</textarea>
                                             <div>{{ $errors->first('address') }}</div>

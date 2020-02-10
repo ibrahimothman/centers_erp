@@ -6,10 +6,12 @@
     <title>add a test</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error , textarea.error{
+            border: 1px solid #dc3545;
         }
     </style>
 </head>
@@ -42,6 +44,7 @@
                                         <div class="col-sm-8 form-group">
 
                                             <label for="validationCustom01">اسم الامتحان</label>
+                                            <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom01" placeholder="اسم الامتحان " value="{{ old('name') }}"  name="name">
                                             <span id="test_name_error"></span>
                                             <div>{{ $errors->first('name') }}</div>
@@ -62,6 +65,7 @@
                                         <div class="col-sm-6  form-group">
 
                                             <label for="validationCustom02">مصاريف الامتحان/فردى</label>
+                                            <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom02" placeholder="" value="{{ old('cost_ind') }}" name="cost_ind">
                                             <div>{{ $errors->first('cost_ind') }}</div>
 
@@ -69,6 +73,7 @@
 
                                         <div class="col-sm-6  form-group">
                                             <label for="validationCustom03">مصاريف الامتحان/كورس</label>
+                                            <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom03" placeholder="" value="{{ old('cost_course') }}" name="cost_course">
                                             <div>{{ $errors->first('cost_course') }}</div>
 
@@ -81,6 +86,7 @@
 
                                     <div class=" form-row">
                                         <label>تفاصيل الامتحان</label>
+                                        <span class="required">*</span>
                                         <textarea placeholder="" rows="3" class="form-control" name="description">{{ old('description') }}</textarea>
                                         <div>{{ $errors->first('description') }}</div>
                                     </div>

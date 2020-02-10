@@ -23,12 +23,7 @@ $(document).ready(function () {
                 job: {
                     required: true,
                 },
-                state: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
+
                 address: {
                     required: true
                 },
@@ -53,12 +48,7 @@ $(document).ready(function () {
                 job: {
                     required: "هذه الخانه مطلوبه",
                 },
-                state: {
-                    required: "هذه الخانه مطلوبه",
-                },
-                city: {
-                    required: "هذه الخانه مطلوبه",
-                },
+
                 address: {
                     required: "هذه الخانه مطلوبه",
                 },
@@ -69,4 +59,9 @@ $(document).ready(function () {
             }
 
         });
+    $('#employeeCreate').on('focus', function() {
+       $(this).validate();
+
+    });
+
 }); // end document.ready

@@ -20,4 +20,7 @@ $(document).ready(function () {
             }
 
         });
+    $('#form').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready

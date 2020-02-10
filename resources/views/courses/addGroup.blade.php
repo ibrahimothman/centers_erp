@@ -8,13 +8,14 @@
 <link href="{{asset('css/form.css')}}" rel="stylesheet" type="text/css"/>
 
     <style>
-
-    .error {
-        color: #b60000;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-    }
+        .error {
+            color: #dc3545;
+            font-size: 1rem;
+            line-height: 1;
+        }
+        input.error , textarea.error {
+            border: 1px solid #dc3545;
+        }
 </style>
 </head>
 <body>

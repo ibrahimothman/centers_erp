@@ -8,10 +8,12 @@
     <title> room reservation</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error  {
+            border: 1px solid #dc3545;
         }
     </style>
 </head>
@@ -37,11 +39,13 @@
                                 <div class="form-row form-group">
                                     <div class="col-sm-6 ">
                                         <label>اسم الكورس </label>
+                                        <span class="required">*</span>
                                         <input type="text" name="courseName" class='form-control'
                                                placeholder='ادخل اسم اكورس'>
                                     </div>
                                     <div class="col-sm-6 ">
                                         <label>اسم المدرب</label>
+                                        <span class="required">*</span>
                                         <input type="text" name="tName" class='form-control'
                                                placeholder='ادخل اسم المدرب'>
                                     </div>
@@ -59,7 +63,7 @@
                                 <div class="form-row form-group">
                                     <div class="col-sm-6 form-group">
                                         <label> بداية المحاضرة</label>
-                                        <select class="form-control" id="" name="sDate" required>
+                                        <select class="form-control" id="" name="sDate" >
                                             <option value="">اختار</option>
                                             <option value="7">07:00</option>
                                             <option value="8">08:00</option>
@@ -69,7 +73,7 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label> نهاية المحاضرة</label>
-                                        <select class="form-control" name="eDate" required>
+                                        <select class="form-control" name="eDate" >
                                             <option value="">اختار</option>
                                             <option value="9">09:00</option>
                                             <option value="10">10:00</option>
@@ -80,7 +84,11 @@
                                     </div>
                                 </div>
                                 <div class="form-row form-group">
-                                    <h6 class="checkError ">ايام حجز الكورس</h6>
+                                    <h6 class="checkError ">
+                                        ايام حجز الكورس
+                                        <span class="required">*</span>
+                                    </h6>
+
                                 </div>
                                 <div class="card ">
                                     <div class="card-body">

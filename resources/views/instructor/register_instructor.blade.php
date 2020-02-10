@@ -10,12 +10,15 @@
     <title>register instructor</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error , textarea.error {
+            border: 1px solid #dc3545;
         }
         /* img error */
+        /*
         .photo{
             display: none;
             color: #b60000;
@@ -24,6 +27,7 @@
             line-height: 1.5;
             text-align: center;
         }
+        */
     </style>
 </head>
 <body class="bg-light">
@@ -52,9 +56,9 @@
                                 <div class="col-sm-8">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" accept="image/*" name="image1"
-                                               id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                               id="customFile1" src="" onchange="readURL(this, 1);" >
                                         <input type="file" class="custom-file-input" accept="image/*" name="image2"
-                                               id="customFile2" src="" onchange="readURL(this, 2);" required>
+                                               id="customFile2" src="" onchange="readURL(this, 2);" >
                                     </div>
                                 </div>
                             </div>
@@ -63,13 +67,13 @@
                                     <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                          alt="your image"/>
                                     <p>صورة البطاقه</p>
-                                    <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
+                          <!--          <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
                                 </div>
                                 <div class="course-image-input">
                                     <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                          alt="your image"/>
                                     <p >الصوره الشخصيه</p>
-                                    <div id="photo2" class="photo" >هذه الخانه مطلوبه</div>
+                         <!--           <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
                                 </div>
                             </div>
                             <div class="form-row form-group">
@@ -83,6 +87,7 @@
                             <div class="form-row form-group">
                                 <div class="col">
                                     <label>الاسم باللغه الانجليزيه</label>
+                                    <span class="required">*</span>
                                     <input type="text" name="nameEn" class="form-control"
                                            placeholder="الاسم باللغه الانجليزيه" value="">
                                 </div>
@@ -102,6 +107,7 @@
                             <div class=" form-row form-group">
                                 <div class="col-sm-6  ">
                                     <label>رقم التليفون المحمول</label>
+                                    <span class="required">*</span>
                                     <input type="text" name="phoneNumber"
                                            placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="">
                                 </div>

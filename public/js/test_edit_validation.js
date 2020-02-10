@@ -43,6 +43,9 @@ $(document).ready(function () {
             }
 
         });
+    $('#testEdit').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready
 
 

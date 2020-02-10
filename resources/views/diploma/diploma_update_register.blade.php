@@ -7,10 +7,15 @@
     <title>update a diploma group</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error , select.error {
+            border: 1px solid #dc3545;
+        }
+        .mSelectError{
+            border: 1px solid #dc3545;
         }
         .errorMselector{
             display: none;
@@ -40,6 +45,7 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="name">اسم الدبلومة</label>
+                                        <span class="required">*</span>
                                         <select class="form-control" id="" name="name" required>
                                             <option value="">اختار</option>
                                             <option value="full">full stack diploma</option>
@@ -50,7 +56,8 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label>قاعة الدبلومة</label>
-                                        <select class="form-control" id="" name="room" required>
+                                        <span class="required">*</span>
+                                        <select class="form-control" id="" name="room" >
                                             <option value="">اختار</option>
                                             <option value="1">قاعة رقم 1</option>
                                             <option value="2">قاعة رقم 2</option>
@@ -69,6 +76,7 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label>اسم المدرس</label>
+                                        <span class="required">*</span>
                                         <div class="dropdown " id="addInstructor" >
                                             <button data-toggle="dropdown" class="dropdown-toggle btnInstructor py-1">
                                                 اسم المدرس <b class="caret"></b>

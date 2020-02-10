@@ -9,10 +9,12 @@
            text-align: right;
         }
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error , textarea.error {
+            border: 1px solid #dc3545;
         }
     </style>
 </head>

@@ -9,10 +9,12 @@
     <title>change password instructor</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error {
+            border: 1px solid #dc3545;
         }
     </style>
 </head>
@@ -42,7 +44,8 @@
                             </div>
                             <hr>
                             <div class="form-row form-group">
-                                <div class="col-4 ">كلمه السر القديمه</div>
+                                <div class="col-4 ">كلمه السر القديمه
+                                    <span class="required">*</span></div>
 
                                 <div class="col-8 ">
                                     <input type="text" name="password" class='form-control'
@@ -53,7 +56,8 @@
 
 
                             <div class="form-row form-group">
-                                <div class="col-4 ">كلمه السر الجديده</div>
+                                <div class="col-4 ">كلمه السر الجديده
+                                    <span class="required">*</span></div>
 
                                 <div class="col-8 ">
                                     <input  id="newPassword" type="text" name="newPassword" class='form-control'
@@ -62,7 +66,8 @@
                             </div>
                             <hr>
                             <div class="form-row form-group">
-                                <div class="col-4 ">تاكيد كلمه السر</div>
+                                <div class="col-4 ">تاكيد كلمه السر
+                                    <span class="required">*</span></div>
 
                                 <div class="col-8 ">
                                     <input type="text" name="confirm" class='form-control' placeholder="تاكيد كلمه السر">

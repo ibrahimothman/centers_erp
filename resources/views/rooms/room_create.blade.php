@@ -9,10 +9,12 @@
     <title> room create</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error {
+            border: 1px solid #dc3545;
         }
         div[name="add"]{
             display: inline-block;
@@ -36,9 +38,13 @@
                                 اضافه غرفه جديده
                             </div>
                             <div class="card-body">
-                                <form id="roomForm" action="" method="get">
+                                <form  action="" method="get" id="form">
                                     <div class="form-row form-group">
-                                        <div class="col-3 ">اسم الغرفه</div>
+                                        <div class="col-3 ">
+                                            اسم الغرفه
+                                            <span class="required">*</span>
+                                            </div>
+
                                         <div class="col-9 ">
                                             <input type="text" name="roomName" class='form-control'
                                                    placeholder='ادخل اسم الغرفه'>
@@ -46,7 +52,10 @@
                                     </div>
                                     <hr>
                                     <div class="form-row form-group">
-                                        <div class="col-3 ">الموقع</div>
+                                        <div class="col-3 ">
+                                            الموقع
+                                        <span class="required">*</span>
+                                        </div>
                                         <div class="col-9 ">
                                             <input type="text" name="location" class='form-control'
                                                    placeholder='ادخل الموقع'>
@@ -131,12 +140,12 @@
 </div>
 <!-- script-->
 @include('script')
+<!-- script room option field-->
+<script type='text/javascript' src="/js/room_style.js"></script>
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
 <script type='text/javascript' src="/js/room_create_validation.js"></script>
-<!-- script room option field-->
-<script type='text/javascript' src="/js/room_style.js"></script>
 
 </body>
 </html>

@@ -7,10 +7,12 @@
             <title>Add a Course group</title>
             <style>
                 .error {
-                    color: #b60000;
+                    color: #dc3545;
                     font-size: 1rem;
-                    font-weight: 400;
-                    line-height: 1.5;
+                    line-height: 1;
+                }
+                input.error , select.error {
+                    border: 1px solid #dc3545;
                 }
             </style>
 
@@ -43,24 +45,24 @@
                                         <form action="{{ route('course_groups.store') }}" method="post" enctype="multipart/form-data" id="courseGroupCreate">
                                             @csrf
 
-                                            <div class="form-row">
+                                            <div class="form-row ">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="name">اسم الدورة</label>
+                                                    <span class="required">*</span>
                                                     <input type="text" class="form-control" id="name" placeholder="اسم الدورة " value="{{ old('name') }}" name="name" required>
                                                     <span id="test_course-name_error"></span>
                                                     <div>{{ $errors->first('name') }}</div>
                                                 </div>
-                                                <div class='col-sm-6'>
-                                                    <div class="form-group">
+                                                <div class='col-sm-6 form-group'>
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
+                                                        <span class="required">*</span>
                                                         <div class='input-group date'>
-
-                                                            <input  id="datetimepicker" name="start_at"  class="form-control" type="text" >
-                                                            <span class="input-group-addon">
+                                                            <input   id="datetimepicker" name="start_at"  class="form-control" type="text" required>                                                            <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
+
                                                         </div>
-                                                    </div>
+                                                    <div class="addError" ></div>
                                                     <div>{{ $errors->first('start_at') }}</div>
                                                 </div>
                                             </div>
@@ -68,6 +70,7 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course">اختار كورس</label>
+                                                    <span class="required">*</span>
                                                     <select class="form-control" name="course" id="course" required>
                                                         @foreach($courses as $course)
                                                             <option value="{{ $course->id }}">{{ $course->name }}</option>
@@ -79,7 +82,7 @@
 
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course-group-room">قاعة الدورة</label>
-                                                    <select class="form-control" id="course-group-room" name="room" required>
+                                                    <select class="form-control" id="course-group-room" name="room" >
                                                         <option value="">اختار</option>
                                                         <option value="1">قاعة رقم 1</option>
                                                         <option value="2">قاعة رقم 2</option>
@@ -94,7 +97,7 @@
                                                 <header class="full-width"><h4> ايام الدورة <i class="fas fa-plus-circle" id='add-more-days' style="color:green; cursor:pointer"></i></h4></header>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1">يوم 1</label>
-                                                    <select class="form-control" id="course-day-1" name="course-day[]" required>
+                                                    <select class="form-control" id="course-day-1" name="course-day[]" >
                                                         @foreach(\App\Time::days() as $key=>$value)
                                                             <option value="">اختار</option>
                                                             <option value="{{ $key }}">{{ $value }}</option>
@@ -105,7 +108,7 @@
                                                 </div>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1-begin"> بداية المحاضرة</label>
-                                                    <select class="form-control" id="course-day-1-begin" name="course-begin[]" required>
+                                                    <select class="form-control" id="course-day-1-begin" name="course-begin[]" >
                                                         <option value="">اختار</option>
                                                         <option value="7">07:00</option>
                                                         <option value="8">08:00</option>
@@ -129,7 +132,7 @@
                                                 </div>
                                                 <div class="col-sm-4 form-group">
                                                     <label for="course-day-1-end"> نهاية المحاضرة</label>
-                                                    <select class="form-control" id="course-day-1-end" name="course-end[]" required>
+                                                    <select class="form-control" id="course-day-1-end" name="course-end[]" >
                                                         <option value="">اختار</option>
                                                         <option value="9">09:00</option>
                                                         <option value="10">10:00</option>

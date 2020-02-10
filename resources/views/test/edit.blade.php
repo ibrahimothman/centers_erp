@@ -5,10 +5,12 @@
     <title>test-det-edit</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error , textarea.error {
+            border: 1px solid #dc3545;
         }
     </style>
 
@@ -38,6 +40,7 @@
                                     <div class="form-row">
                                         <div class="col-sm-8 form-group">
                                             <label for="validationCustom01">اسم الامتحان</label>
+                                            <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom01" placeholder="اسم الامتحان " value="{{$test->name}}" name="name">
                                             {{ $errors->first('name') }}
                                         </div>
@@ -53,6 +56,7 @@
                                             <label for="validationCustom02">
                                             مصاريف الامتحان/فردى
                                             </label>
+                                            <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom02" placeholder="" value="{{$test->cost_ind}}" name="cost_ind" >
                                             <div>{{ $errors->first('cost_ind') }}</div>
                                         </div>
@@ -60,12 +64,14 @@
                                             <label for="validationCustom03">
                                             مصاريف الامتحان/كورس
                                             </label>
+                                            <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom03" placeholder="" value="{{$test->cost_course}}" name="cost_course" >
                                             {{ $errors->first('cost_course') }}
                                         </div>
                                     </div>
                                     <div class=" form-row">
                                         <label>تفاصيل الامتحان</label>
+                                        <span class="required">*</span>
                                         <textarea placeholder="  " rows="3"  class="form-control" name="description">{{$test->description}}</textarea>
                                         {{ $errors->first('description') }}
                                     </div>

@@ -6,10 +6,12 @@
     <title>Enrolling students in diploma</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error , select.error {
+            border: 1px solid #dc3545;
         }
     </style>
 </head>
@@ -32,12 +34,14 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="student-id">اسم الطالب</label>
+                                        <span class="required">*</span>
                                         <input type="text"  placeholder="اسم الطالب" name="name" class="form-control" id="student" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="course-id">الدبلومة</label>
+                                        <span class="required">*</span>
                                         <select class="form-control" id="course_id" required name="selectDiploma">
                                             <option value="">اختار</option>
                                             <option value=" full stack">full stack diploma</option>
@@ -47,7 +51,7 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label >مواعيد الدبلومه</label>
-                                        <select  class="form-control "  id="time" name="time" required>
+                                        <select  class="form-control "  id="time" name="time">
                                             <option value="">اختار</option>
                                             <option value="السبت">  السبت والثلاثاء الساعه  <span>2 : 6</span> </option>
                                             <option value="الاحد"> الاحد والاربعاء الساعه  <span>4 : 8</span> </option>

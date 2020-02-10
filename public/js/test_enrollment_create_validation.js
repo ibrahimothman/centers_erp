@@ -36,6 +36,9 @@ $(document).ready(function () {
             }
 
         });
+    $('#testEnrollCreate').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready
 
 

@@ -7,21 +7,22 @@
     <title>update a diploma</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error , textarea.error {
+            border: 1px solid #dc3545;
         }
         /* img error */
         .photo{
             display: none;
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
             font-weight: 400;
             line-height: 1.5;
             text-align: center;
         }
-
     </style>
 </head>
 <body>
@@ -57,7 +58,7 @@
                                              src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                              alt="your image"/>
                                         <p>صورة الدبلومة</p>
-                                        <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
+                                     <!--   <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
                                     <div class="course-image-input">
                                         <img id="imageUploaded4"
@@ -69,6 +70,7 @@
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <label for="course-name">اسم الدبلومه</label>
+                                        <span class="required">*</span>
                                         <input type="text" class="form-control" id="name"
                                                placeholder="اسم الدبلومه " value="" name="name" required>
                                     </div>
@@ -76,7 +78,7 @@
                                         <label for="course-id">عدد المحاضرات</label>
                                         <input type="text" class="form-control" id="course-id"
                                                placeholder="عدد المحاضرات "
-                                               value="" name="num" required>
+                                               value="" name="num" >
                                     </div>
 
                                 </div>
@@ -85,26 +87,33 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="course-duration">مدة الدبلومه</label>
                                         <input type="number" min='0' class="form-control" id="duration"
-                                               placeholder="مدة الدبلومه " value="" name="duration" required>
+                                               placeholder="مدة الدبلومه " value="" name="duration" >
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="course-cost">تكلفة الدبلومه</label>
+                                        <span class="required">*</span>
                                         <input type="number" min='0' class="form-control" id="cost"
-                                               placeholder="تكلفة الدبلومه " value="" name="cost" required>
+                                               placeholder="تكلفة الدبلومه " value="" name="cost">
                                     </div>
                                 </div>
                                 <div class=" form-row">
                                     <label for="course-description">وصف الدبلومه</label>
+                                    <span class="required">*</span>
                                     <textarea placeholder="وصف الدبلومه" rows="2" class="form-control"
                                               id="description" name="description" required></textarea>
                                 </div>
                                 <br>
-                                <fieldset>
+
+                                <fieldset  >
+
                                     <div class="form-row">
-                                        <legend class="full-width "> محتوى الدبلومه<SPAN id="course"  class="photo pl-2">هذه الخانه مطلوبه</SPAN>
+                                        <legend class="  full-width ">
+                                            محتوى الدبلومه
+                                            <span class="required">*</span>
+                                             <SPAN id="course"  class="photo pl-2">هذه الخانه مطلوبه</SPAN>
                                         </legend>
                                         <div class="col form-group">
-                                            <select name="basic[]" multiple="multiple" class="col active">
+                                            <select name="basic[]" multiple="multiple" class=" col active">
                                                 <optgroup label="Programming Languages">
                                                     <option value="c#">c#</option>
                                                     <option value="asp.net">asp.net</option>
@@ -126,6 +135,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
+
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
                                         <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة

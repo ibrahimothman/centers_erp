@@ -25,4 +25,8 @@ $(document).ready(function () {
             }
 
         });
+    /* real time validate */
+    $('#centerCreate').on('keyup', function() {
+            $(this).validate();
+    });
 }); // end document.ready

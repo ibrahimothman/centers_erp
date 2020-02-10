@@ -11,10 +11,12 @@
     <style>
 
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error , textarea.error {
+            border: 1px solid #dc3545;
         }
         </style>
 </head>
@@ -42,7 +44,7 @@
                                     @csrf
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
-                                            <label for="validationCustom01"> اسم الامتحان </label>
+                                            <label class="s" for="validationCustom01"> اسم الامتحان </label>
                                             <input type="text" name="testName" value="{{$testName}}"  class="form-control" placeholder="اختار الامتحان"
                                                    id="validationCustom01" list="test" autocomplete="off"/>
                                             <datalist id="test">
@@ -101,7 +103,7 @@
 
             $('input#addButton').on('click', function() {
                 var id = ($('.field .form-row').length + 1).toString();
-                $('.field').append(' <div class="form-row "> <div class="col-sm-6 form-group" "><label for="validationCustom01">   تاريخ الامتحان</label><div class="input-group-append"> <input id="datetimepicker' +id+'" name="test_time'+id+'" class="form-control datetimepicker"  placeholder="تاريخ الامتحان"    type="text" ><span class="fas fa-calendar-alt input-group-text start_date_calendar" aria-hidden="true "></span> </div></div><div class="col-sm-3 form-group "><label for="validationCustom01">  عدد المقاعد  </label><input type="number" name="seat'+id+'" class="form-control char"  id="seat'+id+'"   style="width: 100px" ></div></div></div>');
+                $('.field').append(' <div class="form-row "> <div class="col-sm-6 form-group" "><label for="validationCustom01">   تاريخ الامتحان</label><div class="input-group-append"> <input id="datetimepicker' +id+'" name="test_time'+id+'" class="form-control datetimepicker"  placeholder="تاريخ الامتحان"    type="text" ><span class="fas fa-calendar-alt input-group-text start_date_calendar" aria-hidden="true "></span> </div></div><div class="col-sm-6 form-group "><label for="validationCustom01">  عدد المقاعد  </label><input type="number" name="seat'+id+'" class="form-control char"  id="seat'+id+'"   style="width: 100px" ></div></div></div>');
                 $(".datetimepicker").datetimepicker();
             });
 

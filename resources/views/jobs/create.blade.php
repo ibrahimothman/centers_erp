@@ -14,12 +14,13 @@
             direction: rtl;
 
         }
-
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error {
+            border: 1px solid #dc3545;
         }
     </style>
 </head>
@@ -101,6 +102,7 @@
                         <header>
                             <div class="card-header text-primary form-title ">
                                 <h3>تسجيل وظيفه جديده </h3>
+
                             </div>
                         </header>
                         <div class="card-body">
@@ -108,6 +110,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label>اسم الوظيفه</label>
+                                    <span class="required">*</span>
                                     <input type="text" class="form-control" id="job_name" name="job_name"
                                            placeholder="اسم الوظيفه">
                                 </div>

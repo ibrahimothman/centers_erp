@@ -10,10 +10,12 @@
     <title>setting instructor</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
+            line-height: 1;
+        }
+        input.error ,textarea.error {
+            border: 1px solid #dc3545;
         }
     </style>
 </head>
@@ -45,6 +47,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-6  ">
                                             <label>الاسم باللغه العربيه</label>
+                                            <span class="required">*</span>
                                             <input type="text" name="name"  class='form-control'>
                                         </div>
                                         <hr>
@@ -52,7 +55,7 @@
 
                                         <div class=" col-sm-6 ">
                                             <label>الاسم باللغه الانجليزيه</label>
-
+                                            <span class="required">*</span>
                                             <input type="text" name="nameEn"  class='form-control'>
                                         </div>
 
@@ -84,6 +87,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-6  ">
                                             <label>رقم التليفون</label>
+                                            <span class="required">*</span>
                                             <input type="text" name="phoneNumber"  class='form-control'>
                                         </div>
                                         <hr>
@@ -116,6 +120,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-12  ">
                                             <label>العنوان</label>
+                                            <span class="required">*</span>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="2"
                                                       class="form-control" ></textarea>
                                         </div>
@@ -126,6 +131,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-12  ">
                                             <label>نبذه عن</label>
+                                            <span class="required">*</span>
                                             <textarea name="bio" placeholder="نبذه عن " rows="3"
                                                       class="form-control"
                                                       style="  overflow-scrolling:auto; "></textarea>

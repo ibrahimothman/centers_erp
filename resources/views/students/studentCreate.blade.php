@@ -7,10 +7,12 @@
     <title>register a student</title>
     <style>
         .error {
-            color: #b60000;
+            color: #dc3545;
             font-size: 1rem;
-            font-weight: 600;
             line-height: 1;
+        }
+         input.error , textarea.error {
+            border: 1px solid #dc3545;
         }
 
         /* img error */
