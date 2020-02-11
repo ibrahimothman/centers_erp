@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Edumark</title>
+    <title>landing page</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSS here -->
@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <!-- style page-->
     <link rel="stylesheet" href="/css/landingPageStyle.css">
-    <style>
-    </style>
 </head>
 
 <body>
@@ -37,8 +35,11 @@
             <li class="nav-item">
                 <a class="nav-link text-light" href="#">Contact</a>
             </li>
-            <li class="nav-item text-danger">
-                <a class="nav-link text-light login popup-with-form  " href="#test-form">Log in</a>
+
+        </ul>
+        <ul>
+            <li class="nav-item text-right">
+                <a href="" class=" nav-link btn btn-light btn-rounded " data-toggle="modal" data-target="#darkModalForm">Log in</a>
             </li>
         </ul>
     </div>
@@ -59,7 +60,7 @@
                         <h3>Log In <br>
                             Admin Panel <br>
                             Now</h3>
-                        <a href="#test-form" class=" login popup-with-form boxed_btn">Log In Now</a>
+                        <a href="" class=" boxed_btn " data-toggle="modal" data-target="#formSignUp">Sign Up Now</a>
                     </div>
                 </div>
             </div>
@@ -130,78 +131,102 @@
 </footer>
 <!-- footer -->
 <!-- form log in-->
-<form id="test-form" class="white-popup-block mfp-hide">
-    <div class="popup_box ">
-        <div class="popup_inner">
-            <div class="logo text-center">
-                <a href="#">
-                    <h5 class="text-light">ITC Academy</h5>
-                </a>
-            </div>
-            <h3>Sign in</h3>
-            <form action="#">
-                <div class="row">
-                    <div class="col-xl-12 col-md-12">
-                        <input type="email" placeholder="Enter email">
-                    </div>
-                    <div class="col-xl-12 col-md-12">
-                        <input type="password" placeholder="Password">
-                    </div>
-                    <div class="col-xl-12">
-                        <a type="submit" href="" class="logIn">Log In</a>
-                    </div>
+<!-- Modal -->
+<div class="modal fade" id="darkModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog form-dark" role="document">
+        <!--Content-->
+        <div class="modal-content card card-image">
+            <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+                <!--Header-->
+                <div class="modal-header text-center pb-4">
+                    <h3 class="modal-title w-100 text-primary font-weight-bold" id="myModalLabel"><strong>SIGN</strong> <a
+                                class="text-primary  font-weight-bold"><strong>IN</strong></a></h3>
+                    <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </form>
-            <p class="doen_have_acc">Don’t have an account? <a class="dont-hav-acc" href="#test-form2">Sign Up</a>
-            </p>
-        </div>
-    </div>
-</form>
-<!-- form login end -->
-<!-- register form-->
-<form id="test-form2" class="white-popup-block mfp-hide">
-    <div class="popup_box ">
-        <div class="popup_inner">
-            <div class="logo text-center">
-                <a href="#">
-                    <!--  <img src="img/form-logo.png" alt=""> -->
-                    <h5 class="text-light">ITC Academy</h5>
-                </a>
-            </div>
-            <h3>Resistration</h3>
-            <form action="#">
-                <div class="row">
-                    <div class="col-xl-12 col-md-12">
-                        <input type="email" placeholder="Enter email">
+                <!--Body-->
+                <div class="modal-body">
+                    <!--Body-->
+                    <form>
+                    <div class="md-form mb-5">
+                        <input type="email" id="Form-email5" class="form-control validate white-text" required>
+                        <label data-error="wrong" data-success="right" for="Form-email5">Your email</label>
                     </div>
-                    <div class="col-xl-12 col-md-12">
-                        <input type="password" placeholder="Password">
-                    </div>
-                    <div class="col-xl-12 col-md-12">
-                        <input type="Password" placeholder="Confirm password">
-                    </div>
-                    <div class="col-xl-12">
-                        <a type="submit" href="" class="logIn">Sign Up</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</form>
-<!-- form  end -->
 
-<!-- library for modal form-->
-<script src="/js/jquery-1.12.4.min.js"></script>
-<script src="/js/popper.min.js"></script>
+                    <div class="md-form pb-3">
+                        <input type="password" id="Form-pass5" class="form-control validate white-text" required>
+                        <label data-error="wrong" data-success="right" for="Form-pass5">Your password</label>
+                    </div>
+                    <!--Grid row-->
+                    <div class="row d-flex align-items-center mb-4">
+                        <!--Grid column-->
+                        <div class="text-center mb-3 col-md-12">
+                            <button type="submit" id="submit" class=" sign btn-block btn-rounded z-depth-1">Sign in</button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+<!-- form sign up-->
+<!-- Modal -->
+
+<div class="modal fade" id="formSignUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog form-dark" role="document">
+        <!--Content-->
+        <div class="modal-content card card-image">
+            <div class="text-white rgba-stylish-strong py-2 px-2 z-depth-4">
+                <!--Header-->
+                <div class="modal-header text-center pb-4">
+                    <h3 class="modal-title w-100 text-primary font-weight-bold" id="myModalLabel"><strong>SIGN</strong> <a
+                                class="text-primary  font-weight-bold"><strong>UP</strong></a></h3>
+                    <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <!--Body-->
+                    <form>
+                        <div class="md-form mb-3">
+                            <input type="email"  class="form-control validate white-text" required>
+                            <label data-error="wrong" data-success="right" for="Form-email5">Your email</label>
+                        </div>
+
+                        <div class="md-form pb-3">
+                            <input type="password" id="" class="form-control validate white-text" required>
+                            <label data-error="wrong" data-success="right" for="Form-pass5">Your password</label>
+                        </div>
+                        <div class="md-form pb-3">
+                            <input type="password" class="form-control validate white-text" required>
+                            <label data-error="wrong" data-success="right" for="Form-pass5">confirm password</label>
+                        </div>
+                        <!--Grid row-->
+                        <div class="row d-flex align-items-center mb-4">
+                            <!--Grid column-->
+                            <div class="text-center mb-3 col-md-12">
+                                <button type="submit" id="submit" class=" sign btn-block btn-rounded z-depth-1">Sign in</button>
+                            </div>
+                            <!--Grid column-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+<!-- script form modal -->
+<script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/owl.carousel.min.js"></script>
-<script src="/js/isotope.pkgd.min.js"></script>
-<script src="/js/jquery.counterup.min.js"></script>
-<script src="/js/jquery.scrollUp.min.js"></script>
-<script src="/js/wow.min.js"></script>
-<script src="/js/jquery.slicknav.min.js"></script>
-<script src="/js/jquery.magnific-popup.min.js"></script>
-<!--contact js-->
-<script src="js/main.js"></script>
 </body>
 </html>
