@@ -3,14 +3,8 @@
 
 <head>
     @include('library')
-    <!-- Bootstrap CSS & js -->
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>add a new admin</title>
     <style>
-        body {
-           text-align: right;
-            font-family: 'GESSTwoLight-Light' !important;
-        }
         .error {
             color: #dc3545;
             font-size: 1rem;
@@ -36,7 +30,7 @@
                         <div class="col-lg-2"></div>
                         <div class="col-lg-8">
                             <div class="card mb-4">
-                                <div class="card-header text-primary text-right">
+                                <div class="card-header text-primary ">
                                     تسجيل بيانات الموظفين
                                 </div>
                                 <div class="card-body">
@@ -56,7 +50,7 @@
                                         </div>
 
                                         <div class=" form-row ">
-                                            <div class="col-6 text-right">
+                                            <div class="col-6 ">
                                                 <label>رقم التليفون </label>
                                                 <span class="required">*</span>
                                                 <input type="text" name="phoneNumber" placeholder="ادخل رقم التليفون المحمول  "
@@ -65,7 +59,7 @@
                                             </div>
 
 
-                                            <div class="col-6 text-right">
+                                            <div class="col-6 ">
                                                 <label>الوظيفه </label>
                                                 <span class="required">*</span>
                                                 <select name="job" class="form-control">
@@ -77,11 +71,9 @@
                                             </div>
 
                                         </div>
-
-
                                         <div class="form-row">
 
-                                            <div class="col text-right ">
+                                            <div class="col  ">
                                                 <label>البلد </label>
                                                 <input name="state" type="text" placeholder="البلد" value="{{ old('state') }}" class="form-control">
                                                 <div>{{ $errors->first('state') }}</div>
@@ -89,7 +81,7 @@
 
                                             </div>
 
-                                            <div class="col  text-right">
+                                            <div class="col  ">
                                                 <label >المدينه </label>
                                                 <input name="city" type="text" placeholder="المدينه" value="{{ old('city') }}" class="form-control">
                                                 <div>{{ $errors->first('city') }}</div>

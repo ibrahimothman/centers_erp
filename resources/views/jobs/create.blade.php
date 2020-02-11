@@ -4,16 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
 @include('library')
-<!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="{{url('css/bootstrap.min.css')}}">
-
-
     <title>jobs</title>
     <style>
-        body {
-            direction: rtl;
 
-        }
         .error {
             color: #dc3545;
             font-size: 1rem;
@@ -95,7 +88,7 @@
 --}}
     <!-- new version -->
         <!-- Page Heading -->
-        <div class="container-fluid text-right">
+        <div class="container-fluid ">
             <div class="row justify-content-center">
                 <div class="col-lg-11">
                     <div class="card mb-4">

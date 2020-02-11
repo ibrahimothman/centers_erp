@@ -46,7 +46,8 @@
                     <div class="col-lg-8">
                         <div class="card mb-4">
                             <div class="card-header text-primary">
-                                تسجيل بيانات الطلاب            </div>
+                                تسجيل بيانات الطلاب
+                            </div>
                             <div class="card-body">
                                 <form action="{{ route('students.store') }}" method="post" enctype="multipart/form-data" id="studentCreate">
 
