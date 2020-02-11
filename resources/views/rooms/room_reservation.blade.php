@@ -7,14 +7,7 @@
     <link rel="stylesheet" href="/css/room_style.css">
     <title> room reservation</title>
     <style>
-        .error {
-            color: #dc3545;
-            font-size: 1rem;
-            line-height: 1;
-        }
-        input.error  {
-            border: 1px solid #dc3545;
-        }
+
     </style>
 </head>
 <body class="bg-light">

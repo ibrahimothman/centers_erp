@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#form').validate(
+    $('#formRoom').validate(
         {
             rules: {
                 roomName: {
@@ -40,7 +40,7 @@ $(document).ready(function () {
             }
 
         });
-    $('#form').on('keyup', function() {
+    $('#formRoom').on('keyup', function() {
         $(this).validate();
     });
 }); // end document.ready

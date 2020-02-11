@@ -8,14 +8,7 @@
     <link rel="stylesheet" href="/css/room_style.css">
     <title> room create</title>
     <style>
-        .error {
-            color: #dc3545;
-            font-size: 1rem;
-            line-height: 1;
-        }
-        input.error {
-            border: 1px solid #dc3545;
-        }
+
         div[name="add"]{
             display: inline-block;
 
@@ -38,7 +31,7 @@
                                 اضافه غرفه جديده
                             </div>
                             <div class="card-body">
-                                <form  action="" method="get" id="form">
+                                <form  action="" method="get" id="formRoom">
                                     <div class="form-row form-group">
                                         <div class="col-3 ">
                                             اسم الغرفه

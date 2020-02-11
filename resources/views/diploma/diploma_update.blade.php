@@ -6,14 +6,7 @@
     <link href="/css/diploma_style.css" rel="stylesheet"/>
     <title>update a diploma</title>
     <style>
-        .error {
-            color: #dc3545;
-            font-size: 1rem;
-            line-height: 1;
-        }
-        input.error , textarea.error {
-            border: 1px solid #dc3545;
-        }
+
         /* img error */
         .photo{
             display: none;

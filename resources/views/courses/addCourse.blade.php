@@ -8,20 +8,13 @@
     <link rel="stylesheet" href="/css/multiSelect.css">
     <title>Add a Course</title>
     <style>
-
-        .error {
-            color: #dc3545;
-            font-size: 1rem;
-            line-height: 1;
-        }
-        input.error , textarea.error  , .mSelectError {
+        .mSelectError {
             border: 1px solid #dc3545;
         }
         .photoError{
             border: 2px solid #dc3545;
         }
         /* img error */
-
         .photo{
             display: none;
             color:#dc3545;

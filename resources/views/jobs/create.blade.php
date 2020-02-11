@@ -99,7 +99,7 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form enctype="multipart/form-data" id="from">
+                            <form enctype="multipart/form-data" id="fromJob">
                                 @csrf
                                 <div class="form-group">
                                     <label>اسم الوظيفه</label>

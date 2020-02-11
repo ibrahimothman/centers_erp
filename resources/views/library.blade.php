@@ -23,3 +23,5 @@
         integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k"
         crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
+<!-- error style --->
+<link rel="stylesheet" href="/css/error_style.css">

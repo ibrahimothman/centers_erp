@@ -5,14 +5,6 @@
     @include('library')
     <title>add a new admin</title>
     <style>
-        .error {
-            color: #dc3545;
-            font-size: 1rem;
-            line-height: 1;
-        }
-        input.error ,select.error {
-            border: 1px solid #dc3545;
-        }
     </style>
 </head>
 <body id="page-top">

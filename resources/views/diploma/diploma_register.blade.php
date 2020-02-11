@@ -6,14 +6,6 @@
         <link href="/css/diploma_style.css" rel="stylesheet"/>
         <title>Add a diploma group</title>
         <style>
-            .error {
-                color: #dc3545;
-                font-size: 1rem;
-                line-height: 1;
-            }
-            input.error , textarea.error ,select.error {
-                border: 1px solid #dc3545;
-            }
            .mSelectError{
                 border: 1px solid #dc3545;
             }
