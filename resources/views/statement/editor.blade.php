@@ -2,10 +2,12 @@
 <!DOCTYPE html>
     <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        @include('library')
+
 <!-- css statement -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
             <link href="/css/statementLibrary.css" rel="stylesheet">
+        <!-- library -->
+        @include('library')
             <title>صيغة الشهادة/الإفادة</title>
 </head>
 <body>
@@ -165,6 +167,7 @@
 </script>
 
 <script>
+  // var jQuery = $.noConflict(true);
     $.notify.addStyle('successful-process', {
         html: `<div>
                             <span data-notify-text/>
