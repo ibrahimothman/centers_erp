@@ -84,3 +84,27 @@ Route::get('set_role',function (){
 });
 
 Auth::routes(['register' => true]);
+Route::get('/1', function () {
+    return view('diploma.diploma_create');
+});
+Route::get('/2', function () {
+    return view('diploma.diploma_view_all');
+});
+Route::get('/3', function () {
+    return view('diploma.diploma_register');
+});
+Route::get('/4', function () {
+    return view('diploma.diploma_update');
+});
+Route::get('/5', function () {
+    return view('diploma.diploma_details');
+});
+Route::get('/6', function () {
+    return view('diploma.diploma_student_register');
+});
+Route::get('/7', function () {
+    return view('diploma.diploma_student_show');
+});
+Route::get('/8', function () {
+    return view('diploma.diploma_update_register');
+});

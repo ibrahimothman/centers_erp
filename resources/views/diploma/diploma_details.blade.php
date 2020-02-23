@@ -5,8 +5,6 @@
 <!-- style -->
     <link href="/css/diploma_style.css" rel="stylesheet"/>
     <title>details of diploma</title>
-    <style>
-    </style>
 </head>
 <body>
 

@@ -5,20 +5,6 @@
 <!-- style -->
     <link href="/css/diploma_style.css" rel="stylesheet"/>
     <title>Add a diploma</title>
-    <style>
-
-        /* img error */
-
-        .photo{
-            display: none;
-            color: #dc3545;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-    </style>
 </head>
 <body>
 <div id="wrapper">
