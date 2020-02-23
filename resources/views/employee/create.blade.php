@@ -4,8 +4,6 @@
 <head>
     @include('library')
     <title>add a new admin</title>
-    <style>
-    </style>
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->

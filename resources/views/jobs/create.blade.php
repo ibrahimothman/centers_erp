@@ -5,17 +5,6 @@
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
 @include('library')
     <title>jobs</title>
-    <style>
-
-        .error {
-            color: #dc3545;
-            font-size: 1rem;
-            line-height: 1;
-        }
-        input.error {
-            border: 1px solid #dc3545;
-        }
-    </style>
 </head>
 <body class="bg-light">
 

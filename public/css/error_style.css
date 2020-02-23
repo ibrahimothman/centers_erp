@@ -7,16 +7,8 @@
 input.error ,select.error ,textarea.error {
     border: 1px solid #dc3545;
 }
-/* img error */
-.photo{
-    display: none;
-    color: #dc3545;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    text-align: center;
-}
-/* diploma register */
+
+/* diploma  */
 .mSelectError{
     border: 1px solid #dc3545;
 }
@@ -27,6 +19,40 @@ input.error ,select.error ,textarea.error {
     font-weight: 400;
     line-height: 1.5;
 }
+/* img error */
+.photo{
+    display: none;
+    color: #dc3545;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+}
+/* course     */
+.mSelectError {
+    border: 1px solid #dc3545;
+}
+.photoError{
+    border: 2px solid #dc3545;
+}
+/* img error */
+.photo{
+    display: none;
+    color:#dc3545;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.errorMselector{
+    display: none;
+    color: #dc3545;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+/* instructor */
 /* input */
 #employeeCreate input:focus , #centerCreate input:focus , #form input:focus ,#courseGroupCreate input:focus ,
 #addGroup input:focus ,#formDiploma input:focus , #diplomaRegister input:focus ,

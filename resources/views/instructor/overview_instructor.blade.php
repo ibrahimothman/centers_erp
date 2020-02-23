@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="/css/instructor_style.css">
 
     <title>overview instructor</title>
-    <style>
-
-    </style>
 </head>
 @inject('Constants', 'App\helper\Constants')
 <body class="bg-light">

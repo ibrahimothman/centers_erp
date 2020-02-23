@@ -6,9 +6,6 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/room_style.css">
     <title> room reservation</title>
-    <style>
-
-    </style>
 </head>
 <body class="bg-light">
 
