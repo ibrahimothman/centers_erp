@@ -7,7 +7,7 @@
     <title>profit form</title>
 
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -55,6 +55,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 </body>

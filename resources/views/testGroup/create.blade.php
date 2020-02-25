@@ -8,10 +8,6 @@
     -->
     <link href="{{url('employee')}}" rel="stylesheet">
     <title>test-time-add</title>
-    <style>
-
-
-        </style>
 </head>
 
 <body id="page-top">
@@ -84,7 +80,8 @@
 
 
         <!-- End of Page Wrapper -->
-
+<!-- scroll top -->
+@include('scroll_top')
         <!-- script-->
     @include('script')
     <!-- client side validation plugin -->

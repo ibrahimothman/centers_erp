@@ -5,13 +5,8 @@
         <head>
             @include('library')
             <title>Add a Course group</title>
-            <style>
-
-            </style>
-
         </head>
-
-        <body>
+        <body id="page-top">
             <div id="wrapper">
                 @include('sidebar')
                 <div id="content-wrapper" class="d-flex flex-column">
@@ -168,8 +163,9 @@
                     @include('footer')
                 </div>
             </div>
-
-
+            <!-- scroll top -->
+            @include('scroll_top')
+<!-- script -->
             @include('script')
             <script src="{{url('js/jquery.min.js')}}"></script>
             <!-- client side validation plugin -->

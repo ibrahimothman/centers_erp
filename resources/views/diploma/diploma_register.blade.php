@@ -6,7 +6,7 @@
         <link href="/css/diploma_style.css" rel="stylesheet"/>
         <title>Add a diploma group</title>
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">

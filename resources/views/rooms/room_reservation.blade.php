@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/css/room_style.css">
     <title> room reservation</title>
 </head>
-<body class="bg-light">
-
+<body class="bg-light" id="page-top">
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
@@ -109,6 +108,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- client side validation plugin -->

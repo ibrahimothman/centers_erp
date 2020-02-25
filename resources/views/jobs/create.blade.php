@@ -6,7 +6,7 @@
 @include('library')
     <title>jobs</title>
 </head>
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 
 
 <!-- Begin Page Content -->
@@ -157,10 +157,10 @@
         @include('footer')
     </div>
 </div>
-
-
+<!-- scroll top -->
+@include('scroll_top')
+<!-- script -->
 @include('script')
-
 <script src="src={{url('vendor/jquery/jquery.js/jquery.min.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <!-- client side validation plugin -->

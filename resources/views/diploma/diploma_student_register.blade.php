@@ -5,7 +5,7 @@
 @include('library')
     <title>Enrolling students in diploma</title>
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">

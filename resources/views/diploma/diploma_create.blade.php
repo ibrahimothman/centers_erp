@@ -6,7 +6,7 @@
     <link href="/css/diploma_style.css" rel="stylesheet"/>
     <title>Add a diploma</title>
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -133,6 +133,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- script  for page -->

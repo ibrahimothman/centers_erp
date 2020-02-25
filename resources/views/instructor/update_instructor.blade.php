@@ -9,7 +9,7 @@
 
     <title> update register instructor</title>
 </head>
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 
 
 <!-- Begin Page Content -->
@@ -184,9 +184,9 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
-
-
 @include('script')
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>

@@ -11,7 +11,7 @@
 
     </style>
 </head>
-<body>
+<body id="page-top">
 
 <div id="wrapper">
     @include('sidebar')
@@ -158,6 +158,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')<!-- date picker script for modal -->
 <script src="{{url('js/jquery.datetimepicker.js')}}"></script>
