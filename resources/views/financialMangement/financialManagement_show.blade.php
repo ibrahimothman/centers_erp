@@ -9,7 +9,7 @@
     <link href="/css/financialManagement_style.css" rel="stylesheet"/>
     <title>expenses show</title>
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -824,6 +824,8 @@
     </div>
 </div>
 <!-- end print -->
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- script style-->

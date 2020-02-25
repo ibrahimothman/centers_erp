@@ -5,11 +5,8 @@
     <!-- style -->
     <link href="/css/financialManagement_style.css" rel="stylesheet"/>
     <title>expenses</title>
-    <style>
-
-    </style>
 </head>
-<body>
+<body id="page-top">
 
 <div id="wrapper">
     @include('sidebar')
@@ -183,6 +180,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- script style-->

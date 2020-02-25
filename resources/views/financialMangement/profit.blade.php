@@ -6,7 +6,7 @@
     <link href="/css/financialManagement_style.css" rel="stylesheet"/>
     <title>profit</title>
 </head>
-<body>
+<body id="page-top">
 
 <div id="wrapper">
     @include('sidebar')
@@ -109,6 +109,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- script style-->
