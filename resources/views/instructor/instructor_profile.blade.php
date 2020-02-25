@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/instructor_style.css">
     <title> instructor data</title>
 </head>
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -96,15 +96,14 @@
             </div>
         </div>
     </div>
-
 </section>
 <!-- script-->
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
-
 @include('script')
-
 </body>
 </html>

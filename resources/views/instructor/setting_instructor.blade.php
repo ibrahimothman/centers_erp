@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/instructor_style.css">
     <title>setting instructor</title>
 </head>
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -149,8 +149,9 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
-
 @include('script')
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>

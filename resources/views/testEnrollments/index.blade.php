@@ -30,9 +30,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-
                     <div class=" clearfix col-md-8 mb-4">
-
                             <form >
                                     <div class="form-row col-md-12 ">
                                             <select   id="testselector"   class="form-control ">
@@ -44,32 +42,22 @@
                                     </div>
                             </form>
                         </div>
-
                             <div id="test1">
-
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
 
             <!-- /.container-fluid -->
-
+</div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
     @include('footer')
 </div>
-    </div>
-
 </div>
 <!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i> </a>
-
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -85,9 +73,9 @@
         </div>
     </div>
 </div>
-
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
-
 @include('script')
 <!-- Custom scripts for all pages-->
 <script src={{url('employee')}}></script>

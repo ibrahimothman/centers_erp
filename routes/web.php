@@ -84,3 +84,4 @@ Route::get('set_role',function (){
 });
 
 Auth::routes(['register' => true]);
+

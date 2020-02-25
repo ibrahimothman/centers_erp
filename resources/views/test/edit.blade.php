@@ -83,7 +83,6 @@
 
                 <!-- /.container-fluid -->
             </div>
-
 @include('footer')
         <!-- End of Footer -->
 
@@ -92,10 +91,6 @@
 </div>
 
 <!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i> </a>
-
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -111,6 +106,8 @@
         </div>
     </div>
 </div>
+    <!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- client side validation plugin -->

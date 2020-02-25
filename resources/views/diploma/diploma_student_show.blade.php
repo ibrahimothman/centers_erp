@@ -123,7 +123,8 @@
     <!-- End of Content Wrapper -->
 </div>
 <!-- End of Page Wrapper -->
+<!-- scroll top -->
+@include('scroll_top')
 @include('script')
-
 </body>
 </html>
