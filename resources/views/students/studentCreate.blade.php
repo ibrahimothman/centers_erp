@@ -5,19 +5,6 @@
     <!-- Bootstrap CSS & js -->
     @include('library')
     <title>register a student</title>
-    <style>
-        /* img error */
-        /*
-        .photo{
-            display: none;
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-        }
-        */
-    </style>
 </head>
 
 <body id="page-top">

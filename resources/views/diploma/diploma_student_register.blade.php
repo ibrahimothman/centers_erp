@@ -4,9 +4,6 @@
     <!-- Bootstrap CSS & js -->
 @include('library')
     <title>Enrolling students in diploma</title>
-    <style>
-
-    </style>
 </head>
 <body>
 <div id="wrapper">

@@ -5,18 +5,6 @@
     <!-- style --->
         <link href="/css/diploma_style.css" rel="stylesheet"/>
         <title>Add a diploma group</title>
-        <style>
-           .mSelectError{
-                border: 1px solid #dc3545;
-            }
-            .errorMselector{
-                display: none;
-                color: #dc3545 ;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-            }
-        </style>
 </head>
 <body>
 <div id="wrapper">

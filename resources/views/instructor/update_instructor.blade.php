@@ -8,25 +8,6 @@
     <link rel="stylesheet" href="/css/instructor_style.css">
 
     <title> update register instructor</title>
-    <style>
-        .error {
-            color: #dc3545;
-            font-size: 1rem;
-            line-height: 1;
-        }
-        input.error , textarea.error {
-            border: 1px solid #dc3545;
-        }
-        /* img error */
-        .photo{
-            display: none;
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-        }
-    </style>
 </head>
 <body class="bg-light">
 

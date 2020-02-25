@@ -7,31 +7,6 @@
 <!--style multi select-->
     <link rel="stylesheet" href="/css/multiSelect.css">
     <title>Add a Course</title>
-    <style>
-        .mSelectError {
-            border: 1px solid #dc3545;
-        }
-        .photoError{
-            border: 2px solid #dc3545;
-        }
-        /* img error */
-        .photo{
-            display: none;
-            color:#dc3545;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        .errorMselector{
-            display: none;
-            color: #dc3545;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-    </style>
 </head>
 <body>
 <div id="wrapper">
