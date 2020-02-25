@@ -1,0 +1,117 @@
+/* financial show page */
+/* scroll spy btn */
+.menu {
+    list-style: none;
+    background-color: #007bff;
+    padding: 10px;
+}
+
+.menu > li {
+    display: inline-block;
+}
+
+.menu > li > .item {
+    display: inline-block;
+    color: #007bff;
+    padding: 10px;
+    margin-left: 10px;
+    border: none;
+}
+
+.menu > li > .item:hover {
+    background-color: rgba(99, 108, 114, 0.44);
+    color: #fff;
+}
+
+/* item */
+#section-1, #section-2, #section-3, #section-4, #section-5 {
+    display: block;
+}
+
+/*select */
+/* header */
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* select month year */
+input[type="month"] {
+    padding: 4px;
+    color: #007bff;
+
+
+}
+/* search*/
+.fRight{
+    float: right;
+}
+.fLeft{
+    float: left;
+}
+.fLeft input{
+    min-width: 200px;
+}
+/* details */
+#showDetails{
+    display: none;
+}
+/* print */
+@media print {
+    .mediaPrint{
+        display: block;
+    }
+    #myModalLabel ,.modal-footer  ,.dismiss, .print {
+        display: none;
+    }
+
+}
+#modalForPrint{
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width:none !important;
+
+}
+#contentForPrint {
+    height: auto !important;
+    min-height: 100% !important;
+    border-radius: 0 !important;
+    background-color: #fff !important
+}
+.fade{
+    padding: 0px !important;
+}
+
+/* outlay page */
+/* nav */
+.menu  li{
+    margin-bottom: 5px;
+}
+/* input date */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #007bff;
+}
+
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    color: #007bff;
+    font-family: "Helvetica", arial, sans-serif;
+    font-size: 18px;
+    border: 1px solid #ecf0f1;
+    background: #ecf0f1;
+    padding: 5px;
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+input[type="date"], focus {
+    color: #007bff;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+
