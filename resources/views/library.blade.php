@@ -24,4 +24,4 @@
         crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/58b9d7bcbd.js" crossorigin="anonymous"></script>
 <!-- error style --->
-<link rel="stylesheet" href="/css/error_style.css">
+<link rel="stylesheet" href="/css/error_allPage_style.css">
