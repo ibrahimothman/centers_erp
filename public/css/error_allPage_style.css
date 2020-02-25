@@ -59,7 +59,7 @@ input.error ,select.error ,textarea.error {
 #passwordForm input:focus , #addInstructor input:focus , #settingInstructor input:focus ,
 #editInstructor  input:focus , #fromJob input:focus , #formRoom  input:focus ,
 #roomReservation input:focus , #studentCreate input:focus ,#testEdit input:focus ,
-#testsCreate input:focus ,  #testEnrollCreate input:focus ,  #testGroupCreate input:focus {
+#testsCreate input:focus ,  #testEnrollCreate input:focus ,  #testGroupCreate input:focus ,#managerInfo input:focus,#centerInfo input:focus ,#password input:focus {
     border-bottom: 1px solid #00C851;
     -webkit-box-shadow: 0 1px 0 0 #00C851;
     box-shadow: 0 1px 0 0 #00C851; }
@@ -69,7 +69,7 @@ input.error ,select.error ,textarea.error {
 #passwordForm textarea:focus , #addInstructor textarea:focus , #settingInstructor textarea:focus ,
 #editInstructor  textarea:focus , #fromJob textarea:focus , #formRoom  textarea:focus ,
 #roomReservation textarea:focus , #studentCreate textarea:focus ,#testEdit textarea:focus ,
-#testsCreate textarea:focus ,  #testEnrollCreate textarea:focus ,  #testGroupCreate textarea:focus {
+#testsCreate textarea:focus ,  #testEnrollCreate textarea:focus ,  #testGroupCreate textarea:focus ,#centerInfo textarea:focus ,#managerInfo textarea:focus {
     border-bottom: 1px solid #00C851;
     -webkit-box-shadow: 0 1px 0 0 #00C851;
     box-shadow: 0 1px 0 0 #00C851; }

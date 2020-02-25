@@ -69,7 +69,7 @@
                                             </header>
 
                                             <div class="card-body">
-                                                <form>
+                                                <form id="centerInfo">
                                                     <div class="form-row image-upload">
                                                         <div class="col-sm-8">
                                                             <div class="custom-file">
@@ -91,7 +91,7 @@
                                                     <div class="form-row form-group">
                                                         <label>اسم المركز</label>
                                                         <span class="required">*</span>
-                                                        <input type="text" name="" class='form-control'
+                                                        <input type="text" name="centerName" class='form-control'
                                                                placeholder='ادخل اسم المركز'>
                                                     </div>
                                                     <div class="form-row form-group">
@@ -129,13 +129,12 @@
                                                     تعديل بيانات المدير
                                                 </div>
                                             </header>
-
                                             <div class="card-body">
-                                                <form>
+                                                <form id="managerInfo">
                                                     <div class="form-row form-group">
                                                         <label>اسم المدير</label>
                                                         <span class="required">*</span>
-                                                        <input type="text" name="" class='form-control'
+                                                        <input type="text" name="managerName" class='form-control'
                                                                placeholder='ادخل اسم المدير'>
                                                     </div>
                                                     <div class="form-row form-group">
@@ -167,7 +166,7 @@
                                                 تغير كلمه السر
                                             </div>
                                             <div class="card-body">
-                                                <form action="" method="">
+                                                <form  id="password">
                                                     <div class="row">
                                                         <div class="col-sm text-center ">
                                                             <h5> email@email.com</h5>
@@ -322,6 +321,12 @@
 @include('script')
 <!-- script style-->
 <script type='text/javascript' src="/js/setting.js"></script>
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<!-- client side validation page -->
+<script type='text/javascript' src="/js/setting_validation.js"></script>
+
+
 
 </body>
 </html>
