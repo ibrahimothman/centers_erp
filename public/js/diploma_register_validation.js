@@ -6,9 +6,6 @@ $(document).ready(function () {
                 name: {
                     required: true,
                 },
-              room: {
-                    required: true,
-                },
               date: {
                     required: true,
                   date:true,
@@ -19,9 +16,7 @@ $(document).ready(function () {
                 name: {
                     required: "هذه الخانه مطلوبه",
                 },
-               room: {
-                    required: "هذه الخانه مطلوبه",
-                },
+
                date: {
                     required: "هذه الخانه مطلوبه",
                    date:"ادخل التاريخ الصحيح"
@@ -41,7 +36,9 @@ $(document).ready(function () {
             }
 
         });
-
+    $('#diplomaRegister').on('keyup', function() {
+        $(this).validate();
+    });
 
     /* multi selector */
     $("#diplomaRegister").submit(function (e) {
@@ -49,8 +46,12 @@ $(document).ready(function () {
             $("#errorSelect").fadeOut();
         }else {
             $("#errorSelect").fadeIn();
+            $(".btnInstructor").addClass( "mSelectError");
             e.preventDefault();
-
+            if( $("input[type=checkbox]").click(function () {
+                $("#errorSelect").fadeOut();
+                $(".btnInstructor").removeClass( "mSelectError");
+            }));
         }
     });
 

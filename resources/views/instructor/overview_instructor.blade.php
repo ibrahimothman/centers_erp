@@ -7,12 +7,9 @@
     <link rel="stylesheet" href="/css/instructor_style.css">
 
     <title>overview instructor</title>
-    <style>
-
-    </style>
 </head>
 @inject('Constants', 'App\helper\Constants')
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -95,18 +92,15 @@
                 <br>
 
             </div>
-        </div>
 
-        <!-- end cards  -->
-    </div>
-
-    <!-- end container  -->
 </section>
+    <!-- end container  -->
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
-
 @include('script')
 </body>
 

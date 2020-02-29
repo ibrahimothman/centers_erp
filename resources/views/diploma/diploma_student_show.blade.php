@@ -91,6 +91,8 @@
     <!-- End of Content Wrapper -->
 </div>
 <!-- End of Page Wrapper -->
+<!-- scroll top -->
+@include('scroll_top')
 @include('script')
 <script>
     function deleteEnrollment(diploma_group_id, student_id) {

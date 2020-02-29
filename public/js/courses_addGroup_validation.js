@@ -32,4 +32,7 @@ $(document).ready(function () {
             }
 
         });
+    $('#addGroup').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready

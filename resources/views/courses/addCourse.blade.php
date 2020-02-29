@@ -3,37 +3,12 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    @include('library')
-    <!--style multi select-->
-        <link rel="stylesheet" href="{{url("css/multiSelect.css")}}">
-        <title>Add a Course</title>
-        <style>
-
-            .error {
-                color: #b60000;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-            }
-            /* img error */
-            .photo{
-                display: none;
-                color: #b60000;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-                text-align: center;
-            }
-            .errorMselector{
-                display: none;
-                color: #b60000;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-            }
-        </style>
+@include('library')
+<!--style multi select-->
+    <link rel="stylesheet" href="/css/multiSelect.css">
+    <title>Add a Course</title>
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -67,11 +42,16 @@
                                     </div>
                                 </div>
                                 <div class="d-flex  justify-content-center">
-                                    <div class="course-image-input">
-                                        <img id="imageUploaded1"
-                                             src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
-                                             alt="your image"/>
-                                        <p>صورة الدورة</p>
+                                    <div class="course-image-input" >
+                                        <div class="required-image-input">
+                                            <img  id="imageUploaded1"
+                                                  src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                  alt="your image"/>
+                                        </div>
+
+                                        <p>صورة الدورة
+                                            <span class="required">*</span> </p>
+
                                         <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
                                     </div>
                                     <div class="course-image-input">
@@ -79,7 +59,7 @@
                                              src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                              alt="your image"/>
                                         <p>صورة الدورة</p>
-                                        <div id="photo2" class="photo" >هذه الخانه مطلوبه</div>
+                           <!--             <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
 
                                     </div>
                                     <div class="course-image-input">
@@ -87,18 +67,19 @@
                                              src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                              alt="your image"/>
                                         <p>صورة الدورة</p>
-                                        <div id="photo3" class="photo" >هذه الخانه مطلوبه</div>
+                                   <!--     <div id="photo3" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
                                     <div class="course-image-input">
                                         <img id="imageUploaded4"
                                              src="http://simpleicon.com/wp-content/uploads/video.svg" alt="your video"/>
                                         <p>ڤيديو الدورة</p>
-                                        <div id="photo4" class="photo" >هذه الخانه مطلوبه</div>
+                                   <!--     <div id="photo4" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <label for="course-name">اسم الدورة</label>
+                                        <span class="required">*</span>
                                         <input type="text" class="form-control" id="course-name"
                                                placeholder="اسم الدورة " value="" name="name" required>
                                         <span id="test_course-name_error"></span>
@@ -107,13 +88,14 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="course-id">كود الدورة</label>
                                         <input type="text" class="form-control" id="course-id" placeholder="كود الدورة "
-                                               value="" name="code" required>
+                                               value="" name="code" >
                                         <span id="test_course-id_error"></span>
                                         <div></div>
                                     </div>
                                 </div>
                                 <div class=" form-row">
                                     <label for="course-description">وصف الدورة</label>
+                                    <span class="required">*</span>
                                     <textarea placeholder="وصف الدورة" rows="2" class="form-control"
                                               id="course-description" name="description" required></textarea>
                                     <div></div>
@@ -130,7 +112,7 @@
                                             </div>
                                             <input type="text" class="form-control" id="course-chapter-1"
                                                    placeholder="محتوى الدورة " value="" name="course-chapter-1"
-                                                   required>
+                                                  >
                                             <span id="test_course-chapter-1_error"></span>
                                             <div></div>
                                         </div>
@@ -143,11 +125,24 @@
                                     </div>
                                 </fieldset>
                                 <div class="form-row">
+                                    {{--
+                                        <div class="col-sm-6 form-group">
+                                        <label for="instructor-name">اسم المدرس</label>
+                                        <select class="form-control" id="instructor-name" multiple required>
+                                            @foreach($instructors as $instructor)
+                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
+                                            @endforeach
+                                        </select>
+                                            <span id="test_course-teacher_error"></span>
+                                            <div></div>
+                                        </div>
+                                        --}}
                                     <div class="col-sm-6 form-group">
                                         <label for="instructor-name"  >
                                             اسم المدرس</label>
+                                        <span class="required">*</span>
                                         <div class="dropdown ">
-                                            <button data-toggle="dropdown" class="dropdown-toggle py-1" >
+                                            <button data-toggle="dropdown" class="dropdown-toggle btnInstructor py-1">
                                                 اسم المدرس <b class="caret"></b>
                                             </button>
 
@@ -166,7 +161,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="course-duration">مدة الدورة</label>
                                         <input type="number" min='0' class="form-control" id="course-duration"
-                                               placeholder="مدة الدورة " value="" name="duration" required>
+                                               placeholder="مدة الدورة " value="" name="duration" >
                                         <span id="test_course-duration_error"></span>
                                         <div></div>
                                     </div>
@@ -174,6 +169,7 @@
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <label for="course-cost">تكلفة الدورة</label>
+                                        <span class="required">*</span>
                                         <input type="number" min='0' class="form-control" id="course-cost"
                                                placeholder="تكلفة الدورة " value="" name="cost" required>
                                         <span id="test_course-cost_error"></span>
@@ -183,12 +179,11 @@
                                         <label for="course-group-cost">تكلفة الدورة المجمعة</label>
                                         <input type="number" min='0' class="form-control" id="course-group-cost"
                                                placeholder="تكلفة الدورة المجمعة " value="" name="course-group-cost"
-                                               required>
+                                               >
                                         <span id="test_course-group-cost_error"></span>
                                         <div></div>
                                     </div>
                                 </div>
-
 
 
                                 <div class="form-row save">
@@ -212,7 +207,8 @@
         @include('footer')
     </div>
 </div>
-
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
@@ -228,7 +224,7 @@
 <!--  end script-->
 <script>
     $(document).ready(function () {
-        console.log("ready");
+
         $("#submit").click(function () {
             var ins=$('#instructors-list').find('li').map(function()
             {
@@ -307,77 +303,78 @@
 </script>
 
 <script >
-    //$(document).ready(function() {
-    // $("#form").submit(function(e) {
-    //     e.preventDefault();
-    //     var courseName = $("#course-name").val();
-    //     var courseCode = $("#course-id").val();
-    //     var courseDescription = $("#course-description").val();
-    //     var courseDuration = $("#course-duration").val();
-    //     var courseCost = $("#course-cost").val();
-    //     var teamCost = $("#course-group-cost").val();
-    //     // var instructorId = $("#instructor-name").val();
-    //     var courseChapter = $("#course-chapter-1").val();
-    //     var chapterDesc = $("#chapter-1-desc").val();
-    //
-    //     let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
-    //     let chapterDescription = [...$('fieldset textarea')];
-    //     let chapterName = [...$('fieldset input')];
-    //
-    //     chapterName.forEach(function(chapter,chapterIndex){
-    //         let chapterInfo = {};
-    //         chapterInfo.name = chapterName[chapterIndex].value;
-    //         chapterInfo.description = chapterDescription[chapterIndex].value;
-    //
-    //         chapters.push(chapterInfo);
-    //     });
-    //
-    //
-    //     var form_data = new FormData(this);
-    //     form_data.append('content',JSON.stringify(chapters));
-    //     form_data.append('name',courseName);
-    //     form_data.append('code',courseCode);
-    //     form_data.append('duration',courseDuration);
-    //     form_data.append('cost',courseCost);
-    //     form_data.append('teamCost',teamCost);
-    //     form_data.append('instructor_id',1);
-    //
-    //
-    //
-    //     $.ajax({
-    //         url: "/courses",
-    //         method: "POST",
-    //         data : form_data,
-    //         processData : false,
-    //         contentType : false,
-    //         dataType: "json",
-    //         success: function (data) {
-    //             // console.log(data);
-    //             document.getElementById('form').reset();
-    //             alert(data);
-    //         },
-    //         error: function(error) {
-    //             if(error.status == 422) {// validation
-    //
-    //                 // loop through the errors and show them to the user
-    //                 $.each(error.responseJSON.errors, function (i, error) {
-    //                     // error is message
-    //                     // i is element's name
-    //                     console.log(error);
-    //                     var element = $(document).find('[name="'+i+'"]');
-    //                     element.after($('<span style="color: red;">'+error[0]+'</span>'));
-    //                 });
-    //             }
-    //
-    //         }
-    //
-    //     });
-    //
-    // });
-    //
-    //     });
-    // });
+    $(document).ready(function() {
+    $("#form").submit(function(e) {
+        e.preventDefault();
+        var courseName = $("#course-name").val();
+        var courseCode = $("#course-id").val();
+        var courseDescription = $("#course-description").val();
+        var courseDuration = $("#course-duration").val();
+        var courseCost = $("#course-cost").val();
+        var teamCost = $("#course-group-cost").val();
+        // var instructorId = $("#instructor-name").val();
+        var courseChapter = $("#course-chapter-1").val();
+        var chapterDesc = $("#chapter-1-desc").val();
+
+        let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+        let chapterDescription = [...$('fieldset textarea')];
+        let chapterName = [...$('fieldset input')];
+
+        chapterName.forEach(function(chapter,chapterIndex){
+            let chapterInfo = {};
+            chapterInfo.name = chapterName[chapterIndex].value;
+            chapterInfo.description = chapterDescription[chapterIndex].value;
+
+            chapters.push(chapterInfo);
+        });
+
+
+        var form_data = new FormData(this);
+        form_data.append('content',JSON.stringify(chapters));
+        form_data.append('name',courseName);
+        form_data.append('code',courseCode);
+        form_data.append('duration',courseDuration);
+        form_data.append('cost',courseCost);
+        form_data.append('teamCost',teamCost);
+        form_data.append('instructor_id',1);
+
+
+
+        $.ajax({
+            url: "/courses",
+            method: "POST",
+            data : form_data,
+            processData : false,
+            contentType : false,
+            dataType: "json",
+            success: function (data) {
+                // console.log(data);
+                document.getElementById('form').reset();
+                alert(data);
+            },
+            error: function(error) {
+                if(error.status == 422) {// validation
+
+                    // loop through the errors and show them to the user
+                    $.each(error.responseJSON.errors, function (i, error) {
+                        // error is message
+                        // i is element's name
+                        console.log(error);
+                        var element = $(document).find('[name="'+i+'"]');
+                        element.after($('<span style="color: red;">'+error[0]+'</span>'));
+                    });
+                }
+
+            }
+
+        });
+
+    });
+
+        });
+    });
 </script>
 </body>
 
 </html>
+

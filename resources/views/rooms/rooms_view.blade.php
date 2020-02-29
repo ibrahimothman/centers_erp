@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , shrink-to-fit=no"/>
+
     <!-- Bootstrap CSS & js -->
 
     @include('library')
@@ -26,7 +27,7 @@
         integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If"
         crossorigin="anonymous">
 </head>
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -66,11 +67,11 @@
         @endforeach
 
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
-<script type="text/javascipt" src="{{asset("js/jQuery.js")}}"></script>
-<script type="text/javascript" src="{{asset("js/bootstrap.bundle.min.js")}}"></script>
-<script src="{{asset("js/jquery-3.3.1.min.js")}}"></script>
-<script src="{{asset("js/popper.min.js")}}"></script>
-<script src="{{asset("js/bootstrap.min.js")}}"></script>
+
+@include('script')
+
 </body>
 </html>

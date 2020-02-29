@@ -5,10 +5,8 @@
 <!-- style -->
     <link href="{{ asset('css/diploma_style.css') }}" rel="stylesheet"/>
     <title>details of diploma</title>
-    <style>
-    </style>
 </head>
-<body>
+<body id="page-top">
 
 <div id="wrapper">
     @include('sidebar')
@@ -122,6 +120,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 </body>

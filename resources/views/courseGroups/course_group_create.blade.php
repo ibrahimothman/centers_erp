@@ -5,6 +5,7 @@
         <head>
             @include('library')
             <title>Add a Course group</title>
+<<<<<<< HEAD
             <style>
                 .error {
                     color: #b60000;
@@ -15,9 +16,10 @@
                 /* img error */
             </style>
 
+=======
+>>>>>>> 5fd34efe6a5dec94e20abebb8659abd5138dcb45
         </head>
-
-        <body>
+        <body id="page-top">
             <div id="wrapper">
                 @include('sidebar')
                 <div id="content-wrapper" class="d-flex flex-column">
@@ -44,24 +46,24 @@
                                         <form action="{{ route('course_groups.store') }}" method="post" enctype="multipart/form-data" id="courseGroupCreate">
                                             @csrf
 
-                                            <div class="form-row">
+                                            <div class="form-row ">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="name">اسم الدورة</label>
+                                                    <span class="required">*</span>
                                                     <input type="text" class="form-control" id="name" placeholder="اسم الدورة " value="{{ old('name') }}" name="name" required>
                                                     <span id="test_course-name_error"></span>
                                                     <div>{{ $errors->first('name') }}</div>
                                                 </div>
-                                                <div class='col-sm-6'>
-                                                    <div class="form-group">
+                                                <div class='col-sm-6 form-group'>
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
+                                                        <span class="required">*</span>
                                                         <div class='input-group date'>
-
-                                                            <input  id="datetimepicker" name="start_at"  class="form-control" type="text" >
-                                                            <span class="input-group-addon">
+                                                            <input   id="datetimepicker" name="start_at"  class="form-control" type="text" required>                                                            <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
+
                                                         </div>
-                                                    </div>
+                                                    <div class="addError" ></div>
                                                     <div>{{ $errors->first('start_at') }}</div>
                                                 </div>
                                             </div>
@@ -69,6 +71,7 @@
                                             <div class="form-row">
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course">اختار كورس</label>
+                                                    <span class="required">*</span>
                                                     <select class="form-control" name="course" id="course" required>
                                                         @foreach($courses as $course)
                                                             <option value="{{ $course->id }}">{{ $course->name }}</option>
@@ -84,6 +87,7 @@
                                                         @foreach($rooms as $room)
                                                             <option value="{{ $room->id }}">قاعة {{ $room->name }}1</option>
                                                          @endforeach
+
 
                                                     </select>
                                                         <span id="test_course-group-room_error"></span>
@@ -107,6 +111,7 @@
                                                     <label for="course-day-1-begin"> بداية المحاضرة</label>
                                                     <select class="form-control" id="course-day-1-begin" name="course-begin[]"
                                                             onchange="onBeginChanged();" required>
+
                                                     </select>
                                                 </div>
 
@@ -114,6 +119,7 @@
                                                     <label for="course-day-1-end"> نهاية المحاضرة</label>
                                                     <select class="form-control" id="course-day-1-end" name="course-end[]"
                                                             required>
+
                                                     </select>
                                                         <span id="test_course-day-1-end_error"></span>
                                                     <div>{{ $errors->first('end') }}</div>
@@ -140,8 +146,9 @@
                 </div>
             </div>
 
-
-
+            <!-- scroll top -->
+            @include('scroll_top')
+<!-- script -->
             @include('script')
             <script src="{{url('js/jquery.min.js')}}"></script>
             <!-- client side validation plugin -->

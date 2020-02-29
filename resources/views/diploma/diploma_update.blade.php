@@ -5,26 +5,8 @@
 <!-- style -->
     <link href="/css/diploma_style.css" rel="stylesheet"/>
     <title>update a diploma</title>
-    <style>
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        /* img error */
-        .photo{
-            display: none;
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-    </style>
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -59,7 +41,7 @@
                                              src="{{ $diploma->image }}"
                                              alt="your image"/>
                                         <p>صورة الدبلومة</p>
-                                        <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
+                                     <!--   <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
                                     <div class="course-image-input">
                                         <img id="imageUploaded4"
@@ -71,6 +53,7 @@
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <label for="course-name">اسم الدبلومه</label>
+                                        <span class="required">*</span>
                                         <input type="text" class="form-control" id="name"
                                                placeholder="اسم الدبلومه " value="{{ $diploma->name }}" name="name" required>
                                     </div>
@@ -79,6 +62,7 @@
                                         <input type="text" class="form-control" id="course-id"
                                                placeholder="عدد المحاضرات "
                                                value="{{ $diploma->number_of_lectures }}" name="number_of_lectures" required>
+
                                     </div>
 
                                 </div>
@@ -88,25 +72,35 @@
                                         <label for="course-duration">مدة الدبلومه</label>
                                         <input type="number" min='0' class="form-control" id="duration"
                                                placeholder="مدة الدبلومه " value="{{ $diploma->duration }}" name="duration" required>
+
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="course-cost">تكلفة الدبلومه</label>
+                                        <span class="required">*</span>
                                         <input type="number" min='0' class="form-control" id="cost"
                                                placeholder="تكلفة الدبلومه " value="{{ $diploma->cost }}" name="cost" required>
+
                                     </div>
                                 </div>
                                 <div class=" form-row">
                                     <label for="course-description">وصف الدبلومه</label>
+                                    <span class="required">*</span>
                                     <textarea placeholder="وصف الدبلومه" rows="2" class="form-control"
                                               id="description" name="description" required>{{ $diploma->description }}</textarea>
                                 </div>
                                 <br>
-                                <fieldset>
+
+                                <fieldset  >
+
                                     <div class="form-row">
-                                        <legend class="full-width "> محتوى الدبلومه<SPAN id="course"  class="photo pl-2">هذه الخانه مطلوبه</SPAN>
+                                        <legend class="  full-width ">
+                                            محتوى الدبلومه
+                                            <span class="required">*</span>
+                                             <SPAN id="course"  class="photo pl-2">هذه الخانه مطلوبه</SPAN>
                                         </legend>
                                         <div class="col form-group">
                                             <select name="courses[]" multiple="multiple" class="col active">
+
                                                 <optgroup label="Programming Languages">
                                                     @foreach($courses as $course)
                                                         <option value="{{ $course->id }}" {{ $diploma->courses->contains($course->id)? 'selected' : '' }}>{{ $course->name }}</option>
@@ -116,6 +110,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
+
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
                                         <button class="btn btn-primary action-buttons" type="submit" id="submit"> تعديل
@@ -134,6 +129,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- script  for page -->

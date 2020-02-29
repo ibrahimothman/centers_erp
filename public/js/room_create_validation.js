@@ -1,22 +1,21 @@
 $(document).ready(function () {
-    $('#roomForm').validate(
+    $('#formRoom').validate(
         {
             rules: {
                 roomName: {
                     required: true,
+                    number:true
                 },
                 location: {
                     required: true,
                 },
-                area: {
-                    required: true,
-                },
+
                 char: {
-                    required: true,
+
                     number: true,
                 },
                 pc: {
-                    required: true,
+
                     number: true,
                 },
             },
@@ -27,16 +26,11 @@ $(document).ready(function () {
                 location: {
                     required: "هذه الخانه مطلوبه",
                 },
-                area: {
-                    required: "هذه الخانه مطلوبه",
-                },
-
                 char: {
-                    required: "هذه الخانه مطلوبه",
+
                     number: "ادخل عدد"
                 },
                 pc: {
-                    required: "هذه الخانه مطلوبه",
                     number: "ادخل عدد"
                 },
 
@@ -46,4 +40,7 @@ $(document).ready(function () {
             }
 
         });
+    $('#formRoom').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready

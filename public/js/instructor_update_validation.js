@@ -37,30 +37,19 @@ $(document).ready(function () {
                     minlength:7
                 },
                 idNumber: {
-                    required:true,
+                 //   required:true,
                     number: true,
                     minlength: 14,
                     maxlength:14,
-                    noSpace:true
+                   // noSpace:true
                 },
                 passportNum: {
                     maxlength:9,
                     minlength:9,
                 },
-                state: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
+
                 address: {
                     required: true
-                },
-                degree: {
-                    required: true,
-                },
-                faculty: {
-                    required: true,
                 },
                 bio: {
                     required: true
@@ -92,33 +81,18 @@ $(document).ready(function () {
                     minlength: "ادخل الرقم الصحيح",
                 },
                 idNumber: {
-                    required: "هذه الخانه مطلوبه",
                     number:"ادخل الرقم الصحيح",
                     minlength: "ادخل الرقم الصحيح",
                     maxlength: "ادخل الرقم الصحيح",
-                    noSpace:"غير مسموح بالمسافات"
+                 //   noSpace:"غير مسموح بالمسافات"
 
                 },
                 passportNum: {
                     minlength: "ادخل الرقم الصحيح",
                     maxlength: "ادخل الرقم الصحيح",
                 },
-                state: {
-                    required: "هذه الخانه مطلوبه",
-                },
-                city: {
-                    required: "هذه الخانه مطلوبه",
-                },
                 address: {
                     required: "هذه الخانه مطلوبه",
-                },
-                degree: {
-                    required: "هذه الخانه مطلوبه",
-
-                },
-                faculty: {
-                    required: "هذه الخانه مطلوبه",
-
                 },
                 bio: {
                     required: "هذه الخانه مطلوبه",
@@ -130,8 +104,11 @@ $(document).ready(function () {
             }
 
         });
-
+    $('#editInstructor').on('keyup', function() {
+        $(this).validate();
+    });
     /* image1 validation */
+    /*
     $("#submit").click(function () {
         if (document.getElementById("customFile1").files.length == 0) {
             $("#photo1").fadeIn();
@@ -142,7 +119,9 @@ $(document).ready(function () {
             $("#photo1").fadeOut();
         }
     });
+    */
     /* image2 validation */
+    /*
     $("#submit").click(function () {
         if (document.getElementById("customFile2").files.length == 0) {
             $("#photo2").fadeIn();
@@ -153,7 +132,7 @@ $(document).ready(function () {
             $("#photo2").fadeOut();
         }
     });
-
+*/
 
 
 }); // end document.ready

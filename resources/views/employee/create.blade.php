@@ -3,21 +3,7 @@
 
 <head>
     @include('library')
-    <!-- Bootstrap CSS & js -->
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>add a new admin</title>
-    <style>
-        body {
-           text-align: right;
-            font-family: 'GESSTwoLight-Light' !important;
-        }
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-    </style>
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -34,7 +20,7 @@
                         <div class="col-lg-2"></div>
                         <div class="col-lg-8">
                             <div class="card mb-4">
-                                <div class="card-header text-primary text-right">
+                                <div class="card-header text-primary ">
                                     تسجيل بيانات الموظفين
                                 </div>
                                 <div class="card-body">
@@ -54,16 +40,18 @@
                                         </div>
 
                                         <div class=" form-row ">
-                                            <div class="col-6 text-right">
+                                            <div class="col-6 ">
                                                 <label>رقم التليفون </label>
+                                                <span class="required">*</span>
                                                 <input type="text" name="phoneNumber" placeholder="ادخل رقم التليفون المحمول  "
                                                        class="form-control" value="{{ old('phoneNumber') }}">
                                                 <div>{{ $errors->first('phoneNumber') }}</div>
                                             </div>
 
 
-                                            <div class="col-6 text-right">
+                                            <div class="col-6 ">
                                                 <label>الوظيفه </label>
+                                                <span class="required">*</span>
                                                 <select name="job" class="form-control">
                                                     <option value="">اختار وظيفة</option>
                                                     @foreach($jobs as $job)
@@ -73,11 +61,9 @@
                                             </div>
 
                                         </div>
-
-
                                         <div class="form-row">
 
-                                            <div class="col text-right ">
+                                            <div class="col  ">
                                                 <label>البلد </label>
                                                 <input name="state" type="text" placeholder="البلد" value="{{ old('state') }}" class="form-control">
                                                 <div>{{ $errors->first('state') }}</div>
@@ -85,7 +71,7 @@
 
                                             </div>
 
-                                            <div class="col  text-right">
+                                            <div class="col  ">
                                                 <label >المدينه </label>
                                                 <input name="city" type="text" placeholder="المدينه" value="{{ old('city') }}" class="form-control">
                                                 <div>{{ $errors->first('city') }}</div>
@@ -95,6 +81,7 @@
 
                                         <div class=" form-row">
                                             <label>العنوان</label>
+                                            <span class="required">*</span>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="3"
                                                       class="form-control">{{ old('address') }}</textarea>
                                             <div>{{ $errors->first('address') }}</div>
@@ -121,11 +108,6 @@
             @include('footer')
     </div>
 </div>
-
-            <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -144,7 +126,8 @@
             </div>
         </div>
     </div>
-
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- client side validation plugin -->

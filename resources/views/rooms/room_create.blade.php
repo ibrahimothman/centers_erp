@@ -23,6 +23,13 @@
         integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If"
         crossorigin="anonymous">
 
+    <style>
+        div[name="add"]{
+            display: inline-block;
+
+        }
+    </style>
+
 </head>
 <body class="bg-light">
 <div id="wrapper">
@@ -46,6 +53,8 @@
                                     <div class="col-sm-6 mx-auto text-center">
                                         <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
                                         <button class="btn  btn-danger" type="reset"> الغاء</button>
+
+
                                     </div>
                                 </div>
                             </form>
@@ -56,13 +65,20 @@
         </div>
         <!-- /.container-fluid -->
         </section>
-        <!-- script-->
-        <script type="text/javascipt" src="{{url('js/jQuery.js')}}"></script>
-        <script type="text/javascript" src="{{url('js/bootstrap.bundle.min.js')}}"></script>
-        <script src="{{url('js/jquery-3.3.1.min.js')}}"></script>
-        <script src="{{url('js/popper.min.js')}}"></script>
-        <script src="{{url('js/bootstrap.min.js')}}"></script>
 
+        @include('footer')
+    </div>
+</div>
+<!-- scroll top -->
+@include('scroll_top')
+<!-- script-->
+@include('script')
+<!-- script room option field-->
+<script type='text/javascript' src="/js/room_style.js"></script>
+<!-- client side validation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<!-- client side validation page -->
+<script type='text/javascript' src="/js/room_create_validation.js"></script>
 
 </body>
 </html>

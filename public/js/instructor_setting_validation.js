@@ -31,20 +31,9 @@ $(document).ready(function () {
                     number: true,
                     minlength:7
                 },
-                state: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
+
                 address: {
                     required: true
-                },
-                degree: {
-                    required: true,
-                },
-                faculty: {
-                    required: true,
                 },
                 bio: {
                     required: true
@@ -71,23 +60,11 @@ $(document).ready(function () {
                     number:"ادخل الرقم الصحيح",
                     minlength: "ادخل الرقم الصحيح",
                 },
-                state: {
-                    required: "هذه الخانه مطلوبه",
-                },
-                city: {
-                    required: "هذه الخانه مطلوبه",
-                },
+
                 address: {
                     required: "هذه الخانه مطلوبه",
                 },
-                degree: {
-                    required: "هذه الخانه مطلوبه",
 
-                },
-                faculty: {
-                    required: "هذه الخانه مطلوبه",
-
-                },
                 bio: {
                     required: "هذه الخانه مطلوبه",
                 },
@@ -97,6 +74,9 @@ $(document).ready(function () {
             }
 
         });
+    $('#settingInstructor').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready
 
 

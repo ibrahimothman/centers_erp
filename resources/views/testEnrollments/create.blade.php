@@ -11,12 +11,7 @@
 
     <title>test-stu-add</title>
     <style>
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
+
     </style>
 </head>
 <body id="page-top">
@@ -40,7 +35,7 @@
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label for="validationCustom01"> اسم الامتحان </label>
-
+                                            <span class="required">*</span>
                                             <select class="form-control " placeholder="اختار الامتحان" id="testselector"
                                                     name="test" required>
                                                 <option value="">اختر مبعادا</option>
@@ -53,7 +48,7 @@
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label>مواعيد الامتحان</label>
-
+                                            <span class="required">*</span>
                                             <select class="form-control " placeholder="اختار ميعاد الامتحان" id="time"
                                                     name="time" required>
                                                 <option value="">اختر مبعادا</option>
@@ -66,6 +61,7 @@
                                         <!--stu-name-->
                                         <div class="col-sm-5 form-group">
                                             <label for="student-id"> الطالب</label>
+                                            <span class="required">*</span>
                                             <input type="text" placeholder="اسم الطالب" name="student"
                                                    class="form-control" id="student-id" required>
                                             <div class="list-gpfrm-list" id="studentsList"></div>
@@ -98,10 +94,6 @@
 
 </div>
 <!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i> </a>
-
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -119,6 +111,8 @@
         </div>
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- client side validation plugin -->

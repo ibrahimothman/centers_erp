@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#from').validate(
+    $('#fromJob').validate(
         {
             rules: {
                 job_name: {
@@ -20,4 +20,7 @@ $(document).ready(function () {
             }
 
         });
+    $('#formJob').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready

@@ -9,12 +9,6 @@
 
     <style>
 
-    .error {
-        color: #b60000;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-    }
 </style>
 </head>
 <body>

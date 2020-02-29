@@ -6,52 +6,51 @@ namespace App\helper;
 
 class SideBarLinks
 {
-    public static $baseUrl = 'http://127.0.0.1:8000/';
     public static function studentLinks ()
     {
         return [
-            self::$baseUrl.'students/create' =>'تسجيل الطلاب',
-            self::$baseUrl.'students' => 'عرض/تعديل بيانات الطلاب'
+            env('APP_URL', '').'/'.'students/create' =>'تسجيل الطلاب',
+            env('APP_URL', '').'/'.'students' => 'عرض/تعديل بيانات الطلاب'
         ];
     }
 
     public static function testLinks()
     {
         return[
-            self::$baseUrl.'tests/create' => 'اضافه بيانات الامتحانات',
-            self::$baseUrl.'tests' => 'عرض/تعديل بيانات الامتحانات',
-            self::$baseUrl.'test-groups/create' => 'تسجيل الامتحانات',
-            self::$baseUrl.'test-groups' => 'عرض مواعيد المتحانات',
-            self::$baseUrl.'test-enrollments/create' => 'تسجيل الطلاب علي المتحانات',
-            self::$baseUrl.'test-enrollments' => 'عرض الطلاب المسجلين',
-            self::$baseUrl.'test-takes/create' => 'تسجيل حضور الامتحان',
-            self::$baseUrl.'test-results/create' => 'تسجيل نتيجة الامتحان',
-            self::$baseUrl.'test-results' => 'نتيجة الامتحانات',
-            self::$baseUrl.'test-statements/create' => 'اضافه افاده',
+            env('APP_URL', '').'/'.'tests/create' => 'اضافه بيانات الامتحانات',
+            env('APP_URL', '').'/'.'tests' => 'عرض/تعديل بيانات الامتحانات',
+            env('APP_URL', '').'/'.'test-groups/create' => 'تسجيل الامتحانات',
+            env('APP_URL', '').'/'.'test-groups' => 'عرض مواعيد المتحانات',
+            env('APP_URL', '').'/'.'test-enrollments/create' => 'تسجيل الطلاب علي المتحانات',
+            env('APP_URL', '').'/'.'test-enrollments' => 'عرض الطلاب المسجلين',
+            env('APP_URL', '').'/'.'test-takes/create' => 'تسجيل حضور الامتحان',
+            env('APP_URL', '').'/'.'test-results/create' => 'تسجيل نتيجة الامتحان',
+            env('APP_URL', '').'/'.'test-results' => 'نتيجة الامتحانات',
+            env('APP_URL', '').'/'.'test-statements/create' => 'اضافه افاده',
         ];
     }
 
     public static function courseLinks()
     {
         return[
-            self::$baseUrl.'courses/create' => 'اضافه بيانات الكورس',
-            self::$baseUrl.'courses' => 'عرض/تعديل بيانات الكورسات',
-            self::$baseUrl.'course_groups/create' => 'تسجيل مواعيد الكورسات',
-            self::$baseUrl.'course_groups' => 'عرض مواعيد الكورسات',
-            self::$baseUrl.'course_enrollment/create' => 'تسجيل الطلاب علي الكورسات',
-            self::$baseUrl.'course_enrollment' => 'عرض الطلاب المسجلين',
+            env('APP_URL', '').'/'.'courses/create' => 'اضافه بيانات الكورس',
+            env('APP_URL', '').'/'.'courses' => 'عرض/تعديل بيانات الكورسات',
+            env('APP_URL', '').'/'.'course_groups/create' => 'تسجيل مواعيد الكورسات',
+            env('APP_URL', '').'/'.'course_groups' => 'عرض مواعيد الكورسات',
+            env('APP_URL', '').'/'.'course_enrollment/create' => 'تسجيل الطلاب علي الكورسات',
+            env('APP_URL', '').'/'.'course_enrollment' => 'عرض الطلاب المسجلين',
         ];
     }
 
     public static function diplomaLinks()
     {
         return[
-            self::$baseUrl.'diplomas/create' => 'اضافه بيانات الدبلومات',
-            self::$baseUrl.'diplomas' => 'عرض/تعديل بيانات الدبلومات',
-            self::$baseUrl.'diploma-groups/create' => 'تسجيل مواعيد الدبلومات',
-            self::$baseUrl.'diploma-groups' => 'عرض مواعيد الدبلومات',
-            self::$baseUrl.'diploma-enrollments/create' => 'تسجيل الطلاب علي الدبلومات',
-            self::$baseUrl.'diploma-enrollments' => 'عرض الطلاب المسجلين',
+            env('APP_URL', '').'/'.'diplomas/create' => 'اضافه بيانات الدبلومات',
+            env('APP_URL', '').'/'.'diplomas' => 'عرض/تعديل بيانات الدبلومات',
+            env('APP_URL', '').'/'.'diploma-groups/create' => 'تسجيل مواعيد الدبلومات',
+            env('APP_URL', '').'/'.'diploma-groups' => 'عرض مواعيد الدبلومات',
+            env('APP_URL', '').'/'.'diploma-enrollments/create' => 'تسجيل الطلاب علي الدبلومات',
+            env('APP_URL', '').'/'.'diploma-enrollments' => 'عرض الطلاب المسجلين',
 
         ];
     }
@@ -59,8 +58,8 @@ class SideBarLinks
     public static function instructorLinks()
     {
         return[
-            self::$baseUrl.'instructors/create' => 'اضافه بيانات المدرب',
-            self::$baseUrl.'instructors' => 'عرض/تعديل بيانات المدرب',
+            env('APP_URL', '').'/'.'instructors/create' => 'اضافه بيانات المدرب',
+           env('APP_URL', '').'/'.'instructors' => 'عرض/تعديل بيانات المدرب',
 
         ];
     }
@@ -68,15 +67,15 @@ class SideBarLinks
     public static function RoomLinks()
     {
         return[
-            self::$baseUrl.'rooms/create' => 'اضافه غرفه جديده',
-            self::$baseUrl.'rooms' => 'عرض/تعديل بيانات الغرف',
+            env('APP_URL', '').'/'.'rooms/create' => 'اضافه غرفه جديده',
+           env('APP_URL', '').'/'.'rooms' => 'عرض/تعديل بيانات الغرف',
         ];
     }
 
     public static function CalendarLinks()
     {
         return[
-            self::$baseUrl.'calendar' => 'عرض ال calendar',
+            env('APP_URL', '').'/'.'calendar' => 'عرض ال calendar',
 
         ];
     }
@@ -86,16 +85,27 @@ class SideBarLinks
     public static function employeeLinks()
     {
         return [
-            self::$baseUrl.'employees/create' =>'تسجيل موظف',
-            self::$baseUrl.'employees' => 'عرض/تعديل بيانات موظف'
+           env('APP_URL', '').'/'.'employees/create' =>'تسجيل موظف',
+            env('APP_URL', '').'/'.'employees' => 'عرض/تعديل بيانات موظف'
         ];
     }
 
     public static function jobLinks()
     {
         return [
-            self::$baseUrl.'jobs/create' =>'تسجيل وظيفة جديده',
-            self::$baseUrl.'jobs' => 'عرض/تعديل بيانات الوظيفه'
+           env('APP_URL', '').'/'.'jobs/create' =>'تسجيل وظيفة جديده',
+           env('APP_URL', '').'/'.'jobs' => 'عرض/تعديل بيانات الوظيفه'
+        ];
+    }
+
+    public static function financeLinks()
+    {
+        return [
+            env('APP_URL', '').'/'.'dept' =>'dept',
+            env('APP_URL', '').'/'.'finance' => 'finance management',
+            env('APP_URL', '').'/'.'expenses' => 'expenses',
+            env('APP_URL', '').'/'.'profit' => 'profit',
+            env('APP_URL', '').'/'.'revenues' => 'revenues',
         ];
     }
 

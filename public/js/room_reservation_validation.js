@@ -8,18 +8,7 @@ $(document).ready(function () {
                 tName: {
                     required: true,
                 },
-                sDate: {
-                    required: true,
-                },
-                eDate: {
-                    required: true,
-                },
-                sDay: {
-                    required: true,
-                },
-                eDay: {
-                    required: true,
-                },
+
                 check: {
                     required: true,
                 },
@@ -29,18 +18,6 @@ $(document).ready(function () {
                     required: "هذه الخانه مطلوبه",
                 },
                 tName: {
-                    required: "هذه الخانه مطلوبه",
-                },
-                sDate: {
-                    required: "هذه الخانه مطلوبه",
-                },
-                eDate: {
-                    required: "هذه الخانه مطلوبه",
-                },
-                sDay: {
-                    required: "هذه الخانه مطلوبه",
-                },
-                eDay: {
                     required: "هذه الخانه مطلوبه",
                 },
                 check: {
@@ -58,10 +35,12 @@ $(document).ready(function () {
                     error.insertAfter(element);
                 }
             },
-
             submitHandler: function (form) {
                 form.submit();
             }
 
         });
+    $('#roomReservation').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready

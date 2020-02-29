@@ -5,23 +5,8 @@
     <!-- style --->
         <link href="/css/diploma_style.css" rel="stylesheet"/>
         <title>Add a diploma group</title>
-        <style>
-            .error {
-                color: #b60000;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-            }
-            .errorMselector{
-                display: none;
-                color: #b60000;
-                font-size: 1rem;
-                font-weight: 400;
-                line-height: 1.5;
-            }
-        </style>
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -46,6 +31,7 @@
                                             @foreach($diplomas as $diploma)
                                                 <option data-content="{{ $diploma }}" value="{{ $diploma->id }}">{{ $diploma->name }}</option>
                                             @endforeach
+
                                         </select>
                                     </div>
                                 </div>
@@ -53,6 +39,7 @@
                                     <div class="col form-group">
                                         <label>قاعة الدبلومة</label>
                                         <select class="form-control" id="" name="room_id" required>
+
                                             <option value="">اختار</option>
                                             @foreach($rooms as $room)
                                                 <option value="{{ $room->id }}">{{ $room->name }}</option>
@@ -63,6 +50,7 @@
                                 <div class="form-row">
                                     <div class='col-sm-6 form-group'>
                                             <label> تاريخ بداية الدبلومة</label>
+                                        <span class="required">*</span>
                                             <div class='input-group date'>
                                                 <input id="datetimepicker" name="starts_at" class="form-control" type="text">
 
@@ -71,6 +59,7 @@
                                     </div>
                                         <div class="col-sm-6 form-group">
                                             <label>اسم المدرس</label>
+                                            <span class="required">*</span>
                                             <div class="dropdown " id="addInstructor" >
                                                 <button data-toggle="dropdown" class="dropdown-toggle btnInstructor py-1">
                                                     اسم المدرس <b class="caret"></b>

@@ -1,0 +1,86 @@
+/* error */
+.error {
+    color: #dc3545;
+    font-size: 1rem;
+    line-height: 1;
+}
+input.error ,select.error ,textarea.error {
+    border: 1px solid #dc3545;
+}
+
+/* diploma  */
+.mSelectError{
+    border: 1px solid #dc3545;
+}
+.errorMselector{
+    display: none;
+    color: #dc3545 ;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+/* img error */
+.photo{
+    display: none;
+    color: #dc3545;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+}
+/* course     */
+.mSelectError {
+    border: 1px solid #dc3545;
+}
+.photoError{
+    border: 2px solid #dc3545;
+}
+/* img error */
+.photo{
+    display: none;
+    color:#dc3545;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.errorMselector{
+    display: none;
+    color: #dc3545;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+/* instructor */
+/* input */
+#employeeCreate input:focus , #centerCreate input:focus , #form input:focus ,#courseGroupCreate input:focus ,
+#addGroup input:focus ,#formDiploma input:focus , #diplomaRegister input:focus ,
+#passwordForm input:focus , #addInstructor input:focus , #settingInstructor input:focus ,
+#editInstructor  input:focus , #fromJob input:focus , #formRoom  input:focus ,
+#roomReservation input:focus , #studentCreate input:focus ,#testEdit input:focus ,
+#testsCreate input:focus ,  #testEnrollCreate input:focus ,  #testGroupCreate input:focus ,#managerInfo input:focus,#centerInfo input:focus ,#password input:focus {
+    border-bottom: 1px solid #00C851;
+    -webkit-box-shadow: 0 1px 0 0 #00C851;
+    box-shadow: 0 1px 0 0 #00C851; }
+/* text area */
+#employeeCreate textarea:focus , #centerCreate textarea:focus , #form textarea:focus ,#courseGroupCreate textarea:focus ,
+#addGroup textarea:focus ,#formDiploma textarea:focus , #diplomaRegister textarea:focus ,
+#passwordForm textarea:focus , #addInstructor textarea:focus , #settingInstructor textarea:focus ,
+#editInstructor  textarea:focus , #fromJob textarea:focus , #formRoom  textarea:focus ,
+#roomReservation textarea:focus , #studentCreate textarea:focus ,#testEdit textarea:focus ,
+#testsCreate textarea:focus ,  #testEnrollCreate textarea:focus ,  #testGroupCreate textarea:focus ,#centerInfo textarea:focus ,#managerInfo textarea:focus {
+    border-bottom: 1px solid #00C851;
+    -webkit-box-shadow: 0 1px 0 0 #00C851;
+    box-shadow: 0 1px 0 0 #00C851; }
+/* select */
+
+#employeeCreate select:focus , #centerCreate select:focus , #form select:focus ,#courseGroupCreate select:focus ,
+#addGroup select:focus ,#formDiploma select:focus , #diplomaRegister select:focus ,
+#passwordForm select:focus , #addInstructor select:focus , #settingInstructor select:focus ,
+#editInstructor  select:focus , #fromJob select:focus , #formRoom  select:focus ,
+#roomReservation select:focus , #studentCreate select:focus ,#testEdit select:focus ,
+#testsCreate select:focus ,  #testEnrollCreate select:focus ,  #testGroupCreate select:focus {
+    border-bottom: 1px solid #00C851;
+    -webkit-box-shadow: 0 1px 0 0 #00C851;
+    box-shadow: 0 1px 0 0 #00C851; }

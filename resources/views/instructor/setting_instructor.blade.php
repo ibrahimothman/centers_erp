@@ -8,16 +8,8 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/instructor_style.css">
     <title>setting instructor</title>
-    <style>
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-    </style>
 </head>
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -45,6 +37,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-6  ">
                                             <label>الاسم باللغه العربيه</label>
+                                            <span class="required">*</span>
                                             <input type="text" name="name"  class='form-control'>
                                         </div>
                                         <hr>
@@ -52,7 +45,7 @@
 
                                         <div class=" col-sm-6 ">
                                             <label>الاسم باللغه الانجليزيه</label>
-
+                                            <span class="required">*</span>
                                             <input type="text" name="nameEn"  class='form-control'>
                                         </div>
 
@@ -84,6 +77,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-6  ">
                                             <label>رقم التليفون</label>
+                                            <span class="required">*</span>
                                             <input type="text" name="phoneNumber"  class='form-control'>
                                         </div>
                                         <hr>
@@ -116,6 +110,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-12  ">
                                             <label>العنوان</label>
+                                            <span class="required">*</span>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="2"
                                                       class="form-control" ></textarea>
                                         </div>
@@ -126,6 +121,7 @@
                                     <div class="form-row form-group">
                                         <div class=" col-sm-12  ">
                                             <label>نبذه عن</label>
+                                            <span class="required">*</span>
                                             <textarea name="bio" placeholder="نبذه عن " rows="3"
                                                       class="form-control"
                                                       style="  overflow-scrolling:auto; "></textarea>
@@ -153,8 +149,9 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
-
 @include('script')
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>

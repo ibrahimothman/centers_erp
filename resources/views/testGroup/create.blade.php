@@ -8,15 +8,6 @@
     -->
     <link href="{{url('employee')}}" rel="stylesheet">
     <title>test-time-add</title>
-    <style>
-
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        </style>
 </head>
 
 <body id="page-top">
@@ -42,7 +33,7 @@
                                     @csrf
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
-                                            <label for="validationCustom01"> اسم الامتحان </label>
+                                            <label class="s" for="validationCustom01"> اسم الامتحان </label>
                                             <input type="text" name="testName" value="{{$testName}}"  class="form-control" placeholder="اختار الامتحان"
                                                    id="validationCustom01" list="test" autocomplete="off"/>
                                             <datalist id="test">
@@ -75,8 +66,9 @@
                         <!-- /.container-fluid -->
                     </div>
                 </div>
+            </div>
                 <!-- End of Main Content -->
-
+        </div>
                 <!-- Footer -->
             @include('footer')
                 <!-- End of Footer -->
@@ -85,33 +77,11 @@
             <!-- End of Content Wrapper -->
 
         </div>
-        <!-- End of Page Wrapper -->
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i> </a>
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">هل تريد الخروج بالفعل</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-                    </div>
-                    <div class="modal-body">اضغط على الخروج اذا كنت ترغب قى  الخروج</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
-                        <a class="btn btn-primary" href="login.html">الخروج</a> </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<form id="add_people_form">
-    <input type="hidden" id="counter" value="1">
-    <button type="button" id="add_fields">+</button>
-    <div id="add_people_div"></div>
-    <button type="submit">Submit</button>
-</form>
+
+        <!-- End of Page Wrapper -->
+<!-- scroll top -->
+@include('scroll_top')
         <!-- script-->
     @include('script')
 <script src="{{url('js/jquery.min.js')}}"></script>
@@ -124,7 +94,7 @@
 
             $('input#addButton').on('click', function() {
                 var id = ($('.field .form-row').length + 1).toString();
-                $('.field').append(' <div class="form-row "> <div class="col-sm-6 form-group" "><label for="validationCustom01">   تاريخ الامتحان</label><div class="input-group-append"> <input id="datetimepicker' +id+'" name="test_time'+id+'" class="form-control datetimepicker"  placeholder="تاريخ الامتحان"    type="text" ><span class="fas fa-calendar-alt input-group-text start_date_calendar" aria-hidden="true "></span> </div></div><div class="col-sm-3 form-group "><label for="validationCustom01">  عدد المقاعد  </label><input type="number" name="seat'+id+'" class="form-control char"  id="seat'+id+'"   style="width: 100px" ></div></div></div>');
+                $('.field').append(' <div class="form-row "> <div class="col-sm-6 form-group" "><label for="validationCustom01">   تاريخ الامتحان</label><div class="input-group-append"> <input id="datetimepicker' +id+'" name="test_time'+id+'" class="form-control datetimepicker"  placeholder="تاريخ الامتحان"    type="text" ><span class="fas fa-calendar-alt input-group-text start_date_calendar" aria-hidden="true "></span> </div></div><div class="col-sm-6 form-group "><label for="validationCustom01">  عدد المقاعد  </label><input type="number" name="seat'+id+'" class="form-control char"  id="seat'+id+'"   style="width: 100px" ></div></div></div>');
                 $(".datetimepicker").datetimepicker();
             });
 

@@ -166,6 +166,25 @@
             </div>
         </div>
     </li>
+
+
+    <!-- finance -->
+    <li class="nav-item {{str_contains(Request::url(),'finance' )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#financeCollapse" aria-expanded="true" aria-controls="financeCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>الماليات</span>
+        </a>
+        <div id="financeCollapse" class="{{str_contains(Request::url(),'finance' )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                @foreach(\App\helper\SideBarLinks::financeLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 

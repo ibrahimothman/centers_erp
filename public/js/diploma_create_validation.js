@@ -11,16 +11,6 @@ $(document).ready(function () {
                 name: {
                     required: true,
                 },
-               num: {
-                    required: true,
-                    noSpace:true,
-                    number: true,
-                },
-               duration: {
-                   required: true,
-                    number: true,
-
-                },
                cost: {
                     required:true,
                     number: true,
@@ -33,16 +23,6 @@ $(document).ready(function () {
 
                 name: {
                     required: "هذه الخانه مطلوبه",
-                },
-
-               num: {
-                    required: "هذه الخانه مطلوبه",
-                    number:"ادخل الرقم الصحيح",
-                    noSpace:"غير مسموح بالمسافات"
-                },
-               duration: {
-                   required: "هذه الخانه مطلوبه",
-                   number:"ادخل الرقم الصحيح",
                 },
                cost: {
                     required: "هذه الخانه مطلوبه",
@@ -68,7 +48,9 @@ $(document).ready(function () {
             }
 
         });
+
     /* image1 validation */
+    /*
     $("#submit").click(function () {
         var img1=document.getElementById("customFile1");
         if (img1.files.length == 0) {
@@ -81,7 +63,7 @@ $(document).ready(function () {
         }
 
     });
-
+*/
 
     $("#submit").click(function (element) {
         if ($('input[type="checkbox"]').is(':checked')) {
@@ -94,7 +76,9 @@ $(document).ready(function () {
     });
 
 
-
+    $('#formDiploma').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready
 
 

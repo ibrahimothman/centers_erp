@@ -9,25 +9,8 @@
 
 
     <title> update register instructor</title>
-    <style>
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        /* img error */
-        .photo{
-            display: none;
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-        }
-    </style>
 </head>
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 
 
 <!-- Begin Page Content -->
@@ -63,6 +46,7 @@
                                     <div class="form-row form-group">
                                         <div class="col">
                                             <label>الاسم باللغه الانجليزيه</label>
+                                            <span class="required">*</span>
                                             <input type="text" name="nameEn" class="form-control"
                                                    placeholder="الاسم باللغه الانجليزيه" value="{{ $instructor->nameEn }}">
 
@@ -83,6 +67,7 @@
                                     <div class=" form-row form-group">
                                         <div class="col-sm-6  ">
                                             <label>رقم التليفون المحمول</label>
+                                            <span class="required">*</span>
                                             <input type="text" name="phoneNumber"
                                                    placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="{{ $instructor->phoneNumber }}">
                                         </div>
@@ -141,8 +126,6 @@
 
                                     </div>
 
-
-
                                     <div class="form-row image-upload">
                                         <div class="col-sm-8">
                                             <div class="custom-file">
@@ -170,6 +153,7 @@
                                         </div>
                                     </div>
                                     <div class="photo"></div>
+
                                     <br>
                                     <div class="form-row save">
                                         <div class="col-sm-6 mx-auto text-center">
@@ -194,9 +178,9 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
-
-
 @include('script')
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>

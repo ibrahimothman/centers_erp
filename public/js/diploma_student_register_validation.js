@@ -8,9 +8,6 @@ $(document).ready(function () {
                 selectDiploma: {
                     required: true,
                 },
-               time: {
-                    required: true,
-                },
             },
             messages: {
                name: {
@@ -19,13 +16,13 @@ $(document).ready(function () {
                 selectDiploma: {
                     required: "هذه الخانه مطلوبه",
                 },
-               time: {
-                    required: "هذه الخانه مطلوبه",
-                },
             },
             submitHandler: function (form) {
                 form.submit();
             }
 
         });
+    $('#form').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready

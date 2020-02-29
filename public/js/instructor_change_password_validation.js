@@ -48,4 +48,7 @@ $(document).ready(function () {
             }
 
         });
+    $('#passwordForm').on('keyup', function() {
+        $(this).validate();
+    });
 }); // end document.ready

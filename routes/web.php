@@ -104,6 +104,13 @@ Route::get('calendar', function(){
     return view('Calendar/calendar');
 });
 
+//------------------- Finance -------------
+Route::get('finance', function (){return view('financialMangement/financialManagement_show');});
+Route::get('dept', function (){return view('financialMangement/dept');});
+Route::get('profit', function (){return view('financialMangement/profit');});
+Route::get('outlay', function (){return view('financialMangement/outlay');});
+Route::get('revenues', function (){return view('financialMangement/revenues');});
+
 Route::get('set_role',function (){
     $roles = ['student.add','student.view','student.update','student.delete',
         'test.add','test.view','test.update','test.delete',

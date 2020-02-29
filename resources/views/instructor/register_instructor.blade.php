@@ -8,25 +8,8 @@
     <link rel="stylesheet" href="{{url("css/instructor_style.css")}}">
 
     <title>register instructor</title>
-    <style>
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        /* img error */
-        .photo{
-            display: none;
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-        }
-    </style>
 </head>
-<body class="bg-light">
+<body class="bg-light" id="page-top">
 
 
 <!-- Begin Page Content -->
@@ -65,6 +48,7 @@
                                     </div>
 
 
+
                                     <div class=" form-row form-group">
                                         <div class="col">
                                             <label>البريد الالكترونى </label>
@@ -75,12 +59,14 @@
                                     </div>
 
 
-                                    <div class=" form-row form-group">
-                                        <div class="col-sm-6  ">
-                                            <label>رقم التليفون المحمول</label>
-                                            <input type="text" name="phoneNumber"
-                                                   placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="">
-                                        </div>
+
+                            <div class=" form-row form-group">
+                                <div class="col-sm-6  ">
+                                    <label>رقم التليفون المحمول</label>
+                                    <span class="required">*</span>
+                                    <input type="text" name="phoneNumber"
+                                           placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="">
+                                </div>
 
                                         <div class="col-sm-6">
                                             <label>تليفون اخر </label>
@@ -136,6 +122,7 @@
 
 
 
+
                                     <div class="form-row image-upload">
                                         <div class="col-sm-8">
                                             <div class="custom-file">
@@ -183,6 +170,8 @@
         @include('footer')
     </div>
 </div>
+<!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- client side validation plugin -->

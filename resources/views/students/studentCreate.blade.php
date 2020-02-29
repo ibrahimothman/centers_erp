@@ -5,23 +5,6 @@
     <!-- Bootstrap CSS & js -->
     @include('library')
     <title>register a student</title>
-    <style>
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        /* img error */
-        .photo{
-            display: none;
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body id="page-top">
@@ -41,39 +24,61 @@
                     <div class="col-lg-8">
                         <div class="card mb-4">
                             <div class="card-header text-primary">
-                                تسجيل بيانات الطلاب            </div>
+                                تسجيل بيانات الطلاب
+                            </div>
                             <div class="card-body">
                                 <form action="{{ route('students.store') }}" method="post" enctype="multipart/form-data" id="studentCreate">
 
                                     @csrf
+                                    <!-- photo -->
+                                        <div class="form-row image-upload">
+                                            <div class="col-sm-8">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" accept="image/*" name="image1"
+                                                           id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                    <input type="file" class="custom-file-input" accept="image/*" name="image2"
+                                                           id="customFile2" src="" onchange="readURL(this, 2);" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center  ">
+                                            <div class="course-image-input">
+                                                <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                     alt="your image"/>
+                                                <p>صورة البطاقه</p>
+                                          <!--      <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
+                                            </div>
+                                            <div class="course-image-input">
+                                                <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                     alt="your image"/>
+                                                <p>الصوره الشخصيه</p>
+                                          <!--      <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
 
-                                    <div class="form-row">
+                                            </div>
+                                        </div>
+                                        <!-- end photo -->
+                                        <div class="form-row">
 
                                         <div class="col-sm-12 form-group">
 
                                             <label for="validationCustom01">الاسم باللغه العربيه</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="بالاسم باللغه العربيه "  value="{{ old('nameAr') }}" >
+                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('nameAr') }}" >
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
-
                                     </div>
-
                                     <div class="form-row">
-
                                         <div class="col-sm-12 form-group">
                                             <label for="validationCustom03">الاسم باللغه الانجليزيه</label>
+                                            <span class="required">*</span>
                                             <input type="text" name= "nameEn" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('nameEn') }}" >
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
-
-
                                     </div>
-
-
                                     <div class=" form-row ">
                                         <div class="col-sm-12 form-group">
                                         <label for="validationCustom05">البريد الالكترونى </label>
+                                            <span class="required">*</span>
                                         <input type="text" name="email" id="validationCustom05" placeholder="ادخل البريد الالكترونى " class="form-control" value="{{ old('email') }}">
                                         <div>{{ $errors->first('email') }}</div>
                                     </div>
@@ -82,6 +87,7 @@
                                     <div class=" form-row">
                                         <div class="col-sm-6 ">
                                             <label>رقم التليفون المحمول</label>
+                                            <span class="required">*</span>
                                             <input type="text" name="phoneNumber"  data-inputmask="'mask' : '(999) 99999999'"  placeholder="ادخل رقم التليفون المحمول"  class="form-control" value="{{ old('phoneNumber') }}">
                                             <div>{{ $errors->first('phoneNumber') }}</div>
                                         </div>
@@ -168,7 +174,6 @@
 
                                         <div class="col-sm-6  ">
                                             <label for="">الكليه </label>
-
                                             <select name="faculty" class="form-control" id="exampleFormControlSelect2">
                                                 <option value="">اختار</option>
                                                 @foreach($student->facultyOptions() as $faculty)
@@ -179,10 +184,8 @@
                                     </div>
                                     <div class=" form-row">
                                         <div class="col-sm-12 form-group ">
-                                            <label>skill card</label>
-                                            <span class="required">*</span>
-
-                                            <input type="text" value="{{ old('skillCardNumber') }}" placeholder="Enter skill card Id Here.." name="skillCardNumber" class="form-control" >
+                                            <label>كارت المهاره</label>
+                                            <input type="text" value="{{ old('skillCardNumber') }}" placeholder="ادخل الرقم" name="skillCardNumber" class="form-control" >
                                             <div>{{ $errors->first('skillCardNumber') }}</div>
                                         </div>
 
@@ -221,6 +224,7 @@
 
                                     <!-- end photo -->
 
+
                                     <div class="form-row save">
                                         <div class="col-sm-3  form-group">
                                         </div>
@@ -233,13 +237,9 @@
                                         </div>
                                     </div>
                                 </form>
-
-
                             </div>
                         </div>
                     </div>
-
-
                     <!-- /.container-fluid -->
                 </div>
             </div>
@@ -283,6 +283,7 @@
 <!-- client side validation page -->
 <script type='text/javascript' src="/js/students_create_validation.js"></script>
 <script>
+
         $(document).ready(function() {
             $(":input").inputmask();
 

@@ -4,16 +4,8 @@
     <!-- Bootstrap CSS & js -->
 @include('library')
     <title>Enrolling students in diploma</title>
-    <style>
-        .error {
-            color: #b60000;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-    </style>
 </head>
-<body>
+<body id="page-top">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -34,16 +26,20 @@
                                     <div class="col form-group">
                                         <label for="student-id">اسم الطالب</label>
                                         <input type="hidden" id="student_id" name="student_id">
+                                        <span class="required">*</span>
                                         <input type="text"  placeholder="اسم الطالب"  name="student_name" class="form-control" id="student_name" required>
                                         <div class="list-gpfrm-list" id="studentsList"></div>
                                         <span id="stuselector_error"></span>
                                         <div></div>
+
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="course-id">الدبلومة</label>
+                                        <span class="required">*</span>
                                         <select class="form-control" id="diploma_option" required name="selectDiploma">
+
                                             <option value="">اختار</option>
                                             @foreach($diplomas as $diploma)
                                                 <option data-content="{{ $diploma->groups }}" value="{{ $diploma->id }}">{{ $diploma->name }}</option>
@@ -55,6 +51,7 @@
                                     <div class="col form-group">
                                         <label >مواعيد الدبلومه</label>
                                         <select  class="form-control "  id="diploma_group_date" name="diploma_group_id" required>
+
                                             <option value="">اختار</option>
                                         </select>
                                     </div>
