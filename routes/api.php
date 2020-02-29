@@ -25,6 +25,7 @@ Route::group(['middleware' => ['before' => 'jwt.auth']], function (){
 
 });
     Route::apiResource('course_groups', '\App\Http\Controllers\Api\CourseGroupController');
+    Route::apiResource('course_enrollments', '\App\Http\Controllers\Api\CourseEnrollmentController');
 
 Route::get('search_student_by_name','StudentController@searchByName');
 Route::resource('courses','CoursesApi');
