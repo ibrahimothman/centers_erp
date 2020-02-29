@@ -27,7 +27,10 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = Auth::guard('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'error' => true,
+                'message' => 'Email or password is wrong'
+            ], 401);
         }
 
         return $this->respondWithToken($token);
