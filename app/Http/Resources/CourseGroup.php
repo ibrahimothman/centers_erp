@@ -16,7 +16,8 @@ class CourseGroup extends JsonResource
     public function toArray($request)
     {
         return [
-            'title' => $this->course->name,
+            'id' => $this->id,
+            'name' => $this->name,
             'start' => Utility::getDate($this->start_at),
             'end' => Utility::getDate($this->start_at),
         ];

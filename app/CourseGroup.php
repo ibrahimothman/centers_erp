@@ -2,12 +2,24 @@
 
 namespace App;
 
+use App\QueryFilter\CourseId;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 
 class CourseGroup extends Model
 {
     //
     protected $guarded = [];
+
+    public static function allGroups()
+    {
+        return app(Pipeline::class)
+            ->send(CourseGroup::all())
+            ->through([
+                CourseId::class,
+            ])
+            ->thenReturn();
+    }
 
     public function course()
     {
