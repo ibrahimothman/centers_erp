@@ -79,7 +79,7 @@ class Student extends ImageUploader
 
 
     public function courses(){
-        return $this->belongsToMany(CourseGroup::class);
+        return $this->belongsToMany(CourseGroup::class)->withTimestamps();
     }
 
     public function diplomas()
