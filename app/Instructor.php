@@ -4,12 +4,14 @@ namespace App;
 
 use App\helper\Constants;
 use App\helper\ImageUploader;
+use App\helper\MathParser\Math;
 use App\QueryFilter\Name;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+
 
 class Instructor extends ImageUploader
 {
@@ -85,6 +87,16 @@ class Instructor extends ImageUploader
             if($instructor->idImage) (new self)->deleteImage($instructor->idImage);
 
         });
+    }
+
+    public function getPaymentModelAttribute($model)
+    {
+        $newModel = json_decode($model, true);
+        $newModel['model_id'] = PaymentModel::findOrFail($newModel['model_id'])->name;
+        $mathParser =  Math::getInstance();
+        $mathParser->setVariables($newModel);
+        $newModel['salary'] = $mathParser->evaluate($newModel['salary']);
+        return $newModel;
     }
 
     public static function ApiFields(){

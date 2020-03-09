@@ -141,18 +141,37 @@ $(document).ready(function(){
 
 /* revenues page */
 // add btn revenues
-    $('input#addButtonIncome').on('click', function() {
+    $('#addButtonIncome').on('click', function() {
         var id = ($('.fieldIncome .form-row').length + 1).toString();
         $('.fieldIncome').append(' <div class="form-row "> ' +
-            '<div class="col-lg-3 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control" list="nameSelect"  name="nameStudent'+id+'" id="name'+id+'" /> <datalist id="nameSelect"> <option>احمد</option> <option>محمود</option></datalist></div>' +
-            ' <div class="col-lg-3 col-sm-4 form-group "><label>الكورس/الدبلومه </label><input placeholder="اختار" type="text" id="course'+id+'" class="form-control" name="course'+id+'" list="courseSelect"/><datalist id="courseSelect"><<option value="t"> full stack(جنيه600)</option></datalist></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label>  التكلفه </label><input type="text" name="cost'+id+'" class="form-control "  id="cost'+id+'"   ></div>' +
+            '<div class="col-lg-3 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control student-selector" list="studentList"  name="student'+id+'" id="student'+id+'" /> <datalist id="studentList"></datalist></div>' +
+            ' <div class="col-lg-3 col-sm-4 form-group "><label>الكورس/الدبلومه </label><input placeholder="اختار" type="text" id="diploma'+id+'" class="form-control" name="diploma'+id+'" list="diplomaList"/><datalist id="diplomaList"></datalist></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label>  التكلفه </label><input type="text" name="cost'+id+'" class="form-control "  id="cost'+id+'"  readonly ></div>' +
             '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع </label><input type="text" name="payIncome'+id+'" class="form-control payIncome "  id="payIncome'+id+'"   ></div>' +
-            ' <div class="col-lg-2 col-sm-4 form-group "><label>  الباقي </label><input type="text" name="noPayIncome'+id+'" class="form-control "  id="noPayIncome'+id+'"   ></div>' +
+            ' <div class="col-lg-2 col-sm-4 form-group "><label>  الباقي </label><input type="text" name="noPayIncome'+id+'" class="form-control "  id="noPayIncome'+id+'"   readonly></div>' +
             '</div></div>');
 
 
     });
+
+    $('.student-selector').on('input', function () {
+        // clear all previous data
+        console.log('student changed');
+        document.getElementById("diplomaList").innerHTML = "";
+        $("#diploma").val(null);
+        $('#cost').val(null);
+        $('#payIncome').val(null);
+        $('#noPayIncome').val(null);
+    });
+
+    $('#course').on('input', function () {
+        // clear all previous data
+        $('#cost').val(null);
+        $('#payIncome').val(null);
+        $('#noPayIncome').val(null);
+    });
+
+
     // sum
     $(document).on("keyup", ".payIncome", function() {
         var sumIncome = 0;
@@ -215,7 +234,7 @@ $(document).ready(function(){
         var sumIncome = 0;
         var taxValue = 0;
         $("#tax").each(function () {
-            sumIncome = $("#revenues").val() - $("#pay").val();
+            sumIncome = $("#revenues").val() - $("#expenses").val();
             taxValue = sumIncome * $("#tax").val() / 100;
         });
         $("#profit").val(sumIncome);

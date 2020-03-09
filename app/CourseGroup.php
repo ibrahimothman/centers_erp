@@ -14,7 +14,7 @@ class CourseGroup extends Model
     public static function allGroups()
     {
         return app(Pipeline::class)
-            ->send(CourseGroup::all())
+            ->send(CourseGroup::paginate())
             ->through([
                 CourseId::class,
             ])

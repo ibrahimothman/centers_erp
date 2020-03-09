@@ -77,4 +77,14 @@ class Center extends Model
         return $this->hasMany(Room::class)->latest();
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function paymentModels()
+    {
+        return $this->hasMany(PaymentModel::class);
+    }
+
 }

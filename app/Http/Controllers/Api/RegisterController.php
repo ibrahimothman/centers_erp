@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,23 +17,48 @@ class RegisterController extends Controller
     public function register(Request $request) {
         $validator = Validator::make($request->all(),
             [
-                'userName' => ['required'],
+                'name' => ['required', 'unique:users'],
                 'email' => ['required', 'unique:users'],
                 'password' => ['required'],
             ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);
+            $failedRules = $validator->failed();
+
+            if(isset($failedRules['name']['Unique'])){
+                return response()->json(['message' => 'this username is already existed'], 401);
+            }
+
+            if(isset($failedRules['email']['Unique'])){
+                return response()->json(['message' => 'this email is already existed'], 401);
+            }
         }
         $input = $request->all();
         User::create([
-            'name' => $input['userName'],
+            'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        $credentials = request(['email','password']);
+
+//        return response()->json($credentials);
+        if (! $token = Auth::guard('api')->attempt($credentials)) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Email or password is wrong'
+            ], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    private function respondWithToken($token)
+    {
         return response()->json([
-            'error'=>false,
-            'message'=>'Now you have an account',
-        ], 200);
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ]);
     }
 }

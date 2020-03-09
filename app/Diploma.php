@@ -46,6 +46,11 @@ class Diploma extends ImageUploader
         return $this->hasMany(DiplomaGroup::class);
     }
 
+    public function payments()
+    {
+        return $this->morphMany(Transaction::class, 'payFor');
+    }
+
     public function getDir()
     {
         return '/uploads/diplomas';

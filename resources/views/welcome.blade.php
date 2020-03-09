@@ -1,101 +1,140 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+@include('library')
+<!-- style  date picker-->
+    <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
+    <!-- style page -->
+    <link href="/css/financialManagement_style.css" rel="stylesheet"/>
+    <title>income</title>
 
-        <title>Laravel</title>
+</head>
+<body id="page-top">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+<div id="wrapper">
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+        @include('operationBar')
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-12">
+                    <div class="card mb-4 shadowed">
+                        <header>
+                            <div class="card-header text-primary form-title view-courses-title">
+                                <h3>الايرادات </h3>
+                            </div>
+                        </header>
+                        <div class="card-body">
+                            <!-- view section 1 -->
+                            <div id="section-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- select date -->
+                                        <form id="form">
+                                            @csrf
+                                            <div class="row title form-group">
+                                                <!-- date -->
+                                                <div class="  col-sm-6 title pb-3">
+                                                    <h5 class="text-primary  pt-1 pr-3 pl-0">التاريخ: </h5>
+                                                    <input id="date" name="date" class="form-control datetimepickerRevenues"  placeholder="التاريخ "    type="text" >
+                                                </div>
+                                                <!-- add pill -->
+                                                <div  class="form-group   mr-3  ">
+                                                    <input type='button' class="btn btn-success  "
+                                                           value=' + اضافه طالب ' id='addButtonIncome' name="addIncome"/>
+                                                </div>
+                                            </div>
+                                            <BR>
+                                            <!-- end -->
+                                            <!-- add row pill -->
+                                            <div class="fieldIncome">
+                                                <div class="form-row " id="data">
+                                                    <div class="col-lg-3 col-sm-4 form-group ">
+                                                        <label> نظام الدفع  </label>
+                                                        <select id="model_list">
+                                                            <option value="" >اختار نظام الدفع</option>
+                                                            @foreach($payment_models as $model)
+                                                                <option data-customValue="{{ $model }}" value="{{ $model->id }}">{{ $model->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+                                                </div>
+                                            </div>
+                                            <!-- end -->
+                                            <hr class=" border-primary">
+                                            <!-- sum -->
+                                            <div class="row form-group">
+                                                <h5 class="text-warning ">الايردات: </h5>
+                                                <div class="col-sm-4">
+                                                    <input type="number" name="sumIncome" id="sumIncome"  class="form-control"  readonly />
+                                                </div>
+                                            </div>
+                                            <!-- save -->
+                                            <div class="form-row save">
+                                                <div class="col-sm-6 mx-auto" style="width: 200px;">
+                                                    <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة
+                                                    </button>
+                                                    <button class="btn  btn-danger action-buttons" type="reset"> إلغاء
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- end form -->
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-
-
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                        </div>
+                    </div>
+                    <br>
+                    <!--  end revenues view -->
                 </div>
             </div>
         </div>
-    </body>
+        <!-- footer -->
+        @include('footer')
+    </div>
+</div>
+<!-- scroll top -->
+@include('scroll_top')
+<!-- script-->
+@include('script')
+<!-- date picker script -->
+<script src="{{url('js/jquery.datetimepicker.js')}}"></script>
+<!-- script style-->
+<script type='text/javascript' src="/js/financialManagement.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        var selected_model;
+        $('#model_list').on('change', function () {
+            $(".meta_data").remove();
+            selected_model = $(this).find('option:selected').data('customvalue');
+            $.each(selected_model.meta_data, function (key) {
+                $('#data').append("<div class='col-lg-3 col-sm-4 form-group meta_data'><label>"+ key +"</label><input name='"+ key +"' class='form-control '/></div>");
+            });
+
+        });
+
+        $('#form').submit(function (e) {
+            var meta_data = {};
+            meta_data['model__id'] = selected_model.id;
+            e.preventDefault();
+            $.each(selected_model.meta_data, function (key) {
+                meta_data[key] = $("input[name = "+ key +"]").val();
+            });
+
+            $.ajax({
+                url: "/update_instructor_payment",
+                type : "post",
+                data : {payment_model: JSON.stringify(meta_data), _token: "{{ csrf_token() }}"}
+
+            })
+        })
+    })
+</script>
+</body>
 </html>

@@ -2,9 +2,17 @@
 
 namespace App\Providers;
 
+use App\helper\mathParser\Math;
+use App\HourlyModel;
+use App\MonthlyModel;
+use App\SalaryModel;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use function foo\func;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,7 +22,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Collection::macro('filterByAccount', function($account){
+            return $this->filter(function ($value) use ($account){
+                return $value['account'] == $account;
+            });
+
+        });
+
+
     }
 
     /**

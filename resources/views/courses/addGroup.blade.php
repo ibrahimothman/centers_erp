@@ -19,7 +19,7 @@
 
     <form action="" method="post" enctype="multipart/form-data" id="addGroup">
         @csrf
-        <legend><span class="number">.</span> Group Registeration </legend>
+        <legend><span class="number">.</span> Group Registration </legend>
         <input type="text" name="course" placeholder="course *" required>
         <input type="date"  name="startDate" placeholder="start date *" required>
         <input type="text" name="instructor" placeholder="course instructor *" required>

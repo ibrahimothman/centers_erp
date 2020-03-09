@@ -11,105 +11,108 @@
 |
 */
 
-
-use App\Http\Resources\CourseGroup;
-use App\Http\Resources\TestGroup as TestGroupResource;
-use App\Instructor;
 use App\Role;
-use App\Room;
-use App\TestGroup;
-use App\Utility;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use function foo\func;
 
+$web_controllers_path = "\App\Http\Controllers\web";
+
 //------------------------ center -------------
-Route::resource('centers','CentersController');
+Route::resource('centers',"$web_controllers_path\CentersController");
 
 //--------------------------- employees ------------------
-Route::resource('employees','EmployeeController');
+Route::resource('employees',"$web_controllers_path\EmployeeController");
 
 // --------------------- students --------------------
-Route::get('/', 'StudentController@create' );
-Route::resource('students','StudentController');
+Route::get('/', "$web_controllers_path\StudentController@create" );
+Route::resource('students',"$web_controllers_path\StudentController");
 
-Route::get('students.table','StudentController@showTable')->name('students.table');
-Route::get('/search_student_by_name','StudentController@searchByName');
-//Route::get('students/image','Student@profileImage');
+Route::get('students.table',"$web_controllers_path\StudentController@showTable")->name('students.table');
+Route::get('/search_student_by_name',"$web_controllers_path\StudentController@searchByName");
 
 
 //---------------------- Tests-------------------
-Route::resource('tests','TestController');
-Route::get('all-tests','TestController@getTests');
+Route::resource('tests',"$web_controllers_path\TestController");
+Route::get('all-tests',"$web_controllers_path\TestController@getTests");
 
 //--------------------- Test Groups -------------------------
-Route::resource('test-groups','TestGroupController');
-Route::get('/get_test_groups','TestGroupController@getTestGroups');
-Route::post('/close_group','TestGroupController@closeGroup');
+Route::resource('test-groups',"$web_controllers_path\TestGroupController");
+Route::get('/get_test_groups',"$web_controllers_path\TestGroupController@getTestGroups");
+Route::post('/close_group',"$web_controllers_path\TestGroupController@closeGroup");
 
 //----------------------- Test Enrollment---------------
-Route::resource('test-enrollments','TestEnrollmentController');
-Route::get('get_tests_enrollments','TestEnrollmentController@getTestEnrollments');
-Route::delete('delete-test-enrollments','TestEnrollmentController@deleteEnrollment');
+Route::resource('test-enrollments',"$web_controllers_path\TestEnrollmentController");
+Route::get('get_tests_enrollments',"$web_controllers_path\TestEnrollmentController@getTestEnrollments");
+Route::delete('delete-test-enrollments',"$web_controllers_path\TestEnrollmentController@deleteEnrollment");
 
 //----------------------- test takes ------------
-Route::resource('test-takes','TestTakeController');
+Route::resource('test-takes',"$web_controllers_path\TestTakeController");
 
 //----------------------- test results ------------
-Route::resource('test-results','TestResultController');
+Route::resource('test-results',"$web_controllers_path\TestResultController");
 
 //----------------------- statement ------------
-Route::resource('test-statements','TestStatementController');
-Route::get('test-statements-preview/{statement}/{student}','TestStatementController@previewStatement');
+Route::resource('test-statements',"$web_controllers_path\TestStatementController");
+Route::get('test-statements-preview/{statement}/{student}',"$web_controllers_path\TestStatementController@previewStatement");
 
 
 
 //----------- courses ---------------
-Route::resource('courses','CoursesController');
-Route::resource('course_groups','CourseGroupController');
-Route::get('/get_course_groups','CourseGroupController@getCourseGroups');
-Route::resource('course_enrollment','CourseEnrollmentController');
-Route::get('get_course_enrollments','CourseEnrollmentController@getCourseEnrollments');
+Route::resource('courses',"$web_controllers_path\CoursesController");
+Route::resource('course_groups',"$web_controllers_path\CourseGroupController");
+Route::get('/get_course_groups',"$web_controllers_path\CourseGroupController@getCourseGroups");
+Route::resource('course_enrollment',"$web_controllers_path\CourseEnrollmentController");
+Route::get('get_course_enrollments',"$web_controllers_path\CourseEnrollmentController@getCourseEnrollments");
 
 // ----------------------- rooms----------------
-Route::resource('rooms','RoomsController');
-Route::get('available_begins_for_the_room','RoomsController@getAvailableBegins');
-Route::get('available_ends_for_the_room','RoomsController@getAvailableEnds');
-Route::get('/all-rooms','RoomsController@allRooms');
-Route::get('/rooms-calendar/{room}','RoomsController@showRoomCalendar');
+Route::resource('rooms',"$web_controllers_path\RoomsController");
+Route::get('available_begins_for_the_room',"$web_controllers_path\RoomsController@getAvailableBegins");
+Route::get('available_ends_for_the_room',"$web_controllers_path\RoomsController@getAvailableEnds");
+Route::get('/all-rooms',"$web_controllers_path\RoomsController@allRooms");
+Route::get('/rooms-calendar/{room}',"$web_controllers_path\RoomsController@showRoomCalendar");
 
 //------------------ Diplomas ---------------
-Route::resource('diplomas','DiplomaController');
+Route::resource('diplomas',"$web_controllers_path\DiplomaController");
 
 //----------------- Diploma Groups----------------
-Route::resource('diploma-groups', 'DiplomaGroupController');
+Route::resource('diploma-groups', "$web_controllers_path\DiplomaGroupController");
 
 //----------------- Diploma enrollment----------------
-Route::resource('diploma-enrollments', 'DiplomaEnrollmentController');
+Route::resource('diploma-enrollments', "$web_controllers_path\DiplomaEnrollmentController");
 
 // -------------------instructor----------------
-Route::resource('instructors','InstructorsController');
-Route::post('search_instructor','InstructorsController@searchInstructors');
-Route::get('/all-instructors','InstructorsController@allInstructors');
-Route::get('/instructors-calendar/{instructor}','InstructorsController@showInstructorCalendar');
+Route::resource('instructors',"$web_controllers_path\InstructorsController");
+Route::post('search_instructor',"$web_controllers_path\InstructorsController@searchInstructors");
+Route::get('/all-instructors',"$web_controllers_path\InstructorsController@allInstructors");
+Route::get('/instructors-calendar/{instructor}',"$web_controllers_path\InstructorsController@showInstructorCalendar");
+Route::post('update_instructor_payment',"$web_controllers_path\PaymentModelController@updateInstructorPayment");
 
 //-------------------- jobs ---------------------
-Route::resource('jobs','jobController');
+Route::resource('jobs',"$web_controllers_path\jobController");
 //-------------------- settings ---------------------
-Route::get('settings/instructorSettings','settingsController@instructorSettings');
-Route::get('settings/instructorPassReset','settingsController@instructorPassReset');
+Route::get('settings/instructorSettings',"$web_controllers_path\settingsController@instructorSettings");
+Route::get('settings/instructorPassReset',"$web_controllers_path\settingsController@instructorPassReset");
 
 Route::get('calendar', function(){
     return view('Calendar/calendar');
 });
 
 //------------------- Finance -------------
-Route::get('finance', function (){return view('financialMangement/financialManagement_show');});
-Route::get('dept', function (){return view('financialMangement/dept');});
-Route::get('profit', function (){return view('financialMangement/profit');});
-Route::get('outlay', function (){return view('financialMangement/outlay');});
-Route::get('revenues', function (){return view('financialMangement/revenues');});
+Route::resource('finance', "$web_controllers_path\FinanceController");
+Route::get('dept', function (){return view('financialManagement/dept');});
+Route::resource('profits', "$web_controllers_path\ProfitController");
+Route::resource('expenses', "$web_controllers_path\ExpensesController");
+Route::resource('revenues', "$web_controllers_path\RevenueController");
+Route::resource('transactions', "$web_controllers_path\TransactionController");
+Route::get('all_transactions', "$web_controllers_path\TransactionController@allTransactions");
+
+//---------------- payment model -----------------
+Route::resource('payment_models', "$web_controllers_path\PaymentModelController");
+
+Route::get('settings', function (){
+    return view('accountSetting/setting');
+});
 
 Route::get('set_role',function (){
     $roles = ['student.add','student.view','student.update','student.delete',

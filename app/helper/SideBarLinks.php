@@ -103,9 +103,9 @@ class SideBarLinks
         return [
             env('APP_URL', '').'/'.'dept' =>'dept',
             env('APP_URL', '').'/'.'finance' => 'finance management',
-            env('APP_URL', '').'/'.'expenses' => 'expenses',
+            env('APP_URL', '').'/'.'expenses/create' => 'expenses',
             env('APP_URL', '').'/'.'profit' => 'profit',
-            env('APP_URL', '').'/'.'revenues' => 'revenues',
+            env('APP_URL', '').'/'.'revenues/create' => 'revenues',
         ];
     }
 
