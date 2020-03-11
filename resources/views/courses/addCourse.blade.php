@@ -42,24 +42,24 @@
                                     </div>
                                 </div>
                                 <div class="d-flex  justify-content-center">
-                                    <div class="course-image-input" >
+                                    <div class="course-image-input">
                                         <div class="required-image-input">
-                                            <img  id="imageUploaded1"
-                                                  src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
-                                                  alt="your image"/>
+                                            <img id="imageUploaded1"
+                                                 src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                 alt="your image"/>
                                         </div>
 
                                         <p>صورة الدورة
-                                            <span class="required">*</span> </p>
+                                            <span class="required">*</span></p>
 
-                                        <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
+                                        <div id="photo1" class="photo">هذه الخانه مطلوبه</div>
                                     </div>
                                     <div class="course-image-input">
                                         <img id="imageUploaded2"
                                              src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                              alt="your image"/>
                                         <p>صورة الدورة</p>
-                           <!--             <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
+                                        <!--             <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
 
                                     </div>
                                     <div class="course-image-input">
@@ -67,13 +67,13 @@
                                              src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                              alt="your image"/>
                                         <p>صورة الدورة</p>
-                                   <!--     <div id="photo3" class="photo" >هذه الخانه مطلوبه</div> -->
+                                        <!--     <div id="photo3" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
                                     <div class="course-image-input">
                                         <img id="imageUploaded4"
                                              src="http://simpleicon.com/wp-content/uploads/video.svg" alt="your video"/>
                                         <p>ڤيديو الدورة</p>
-                                   <!--     <div id="photo4" class="photo" >هذه الخانه مطلوبه</div> -->
+                                        <!--     <div id="photo4" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -88,7 +88,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="course-id">كود الدورة</label>
                                         <input type="text" class="form-control" id="course-id" placeholder="كود الدورة "
-                                               value="" name="code" >
+                                               value="" name="code">
                                         <span id="test_course-id_error"></span>
                                         <div></div>
                                     </div>
@@ -112,7 +112,7 @@
                                             </div>
                                             <input type="text" class="form-control" id="course-chapter-1"
                                                    placeholder="محتوى الدورة " value="" name="course-chapter-1"
-                                                  >
+                                            >
                                             <span id="test_course-chapter-1_error"></span>
                                             <div></div>
                                         </div>
@@ -138,21 +138,23 @@
                                         </div>
                                         --}}
                                     <div class="col-sm-6 form-group">
-                                        <label for="instructor-name"  >
+                                        <label for="instructor-name">
                                             اسم المدرس</label>
                                         <span class="required">*</span>
                                         <div class="dropdown ">
                                             <button data-toggle="dropdown" class="dropdown-toggle btnInstructor py-1">
                                                 اسم المدرس <b class="caret"></b>
                                             </button>
-                                            <ul class=" dropdown-menu text-right " >
-                                                <li><label class="checkbox"><input type="checkbox"  name="check">احمد محمد</label>
+                                            <ul class=" dropdown-menu text-right ">
+                                                <li><label class="checkbox"><input type="checkbox" name="check">احمد
+                                                        محمد</label>
                                                 </li>
-                                                <li><label class="checkbox"><input type="checkbox" name="check">محمود مصطفي</label>
+                                                <li><label class="checkbox"><input type="checkbox" name="check">محمود
+                                                        مصطفي</label>
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div id="errorSelect"  class="errorMselector">هذه الخانه مطلوبه</div>
+                                        <div id="errorSelect" class="errorMselector">هذه الخانه مطلوبه</div>
                                         <span id="test_course-teacher_error"></span>
                                         <div></div>
 
@@ -160,7 +162,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="course-duration">مدة الدورة</label>
                                         <input type="number" min='0' class="form-control" id="course-duration"
-                                               placeholder="مدة الدورة " value="" name="duration" >
+                                               placeholder="مدة الدورة " value="" name="duration">
                                         <span id="test_course-duration_error"></span>
                                         <div></div>
                                     </div>
@@ -178,12 +180,23 @@
                                         <label for="course-group-cost">تكلفة الدورة المجمعة</label>
                                         <input type="number" min='0' class="form-control" id="course-group-cost"
                                                placeholder="تكلفة الدورة المجمعة " value="" name="course-group-cost"
-                                               >
+                                        >
                                         <span id="test_course-group-cost_error"></span>
                                         <div></div>
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <label>التصنيف</label>
+                                        <span class="required">*</span>
+                                        <select name="category" class="form-control">
+                                            <option value="">اختار</option>
+                                            <option value="web">ويب</option>
+                                            <option value="en">انجليزي</option>
+                                        </select>
 
+                                    </div>
+                                </div>
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <div class="custom-control custom-checkbox">
@@ -253,8 +266,6 @@
 
 <!-- client side validation page -->
 <script type='text/javascript' src="/js/course_create_validation.js"></script>
-
-
 <!-- script multi select-->
 
 <!--  end script-->
@@ -318,7 +329,7 @@
 --}}
 </script>
 
-<script >
+<script>
     //$(document).ready(function() {
     // $("#form").submit(function(e) {
     //     e.preventDefault();
