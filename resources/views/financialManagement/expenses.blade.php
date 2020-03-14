@@ -110,38 +110,20 @@
                                             <!-- end -->
                                             <!-- add row pill -->
                                             <div class="fieldPayroll">
-                                                <div class="form-row " id="data">
-                                                    <div class="col-lg-3 col-sm-4 form-group">
+                                                <div class="form-row " id="data1">
+                                                    <div class="col-lg-2 col-sm-4 form-group">
                                                         <label > التاريخ</label>
-                                                        <input type="date" id="datePayroll" name="datePayroll" class="form-control datePayroll">
+                                                        <input type="date" id="datePayroll" name="datePayroll" class="form-control datePayroll instructor_field">
                                                        </div>
                                                     <div class="col-lg-2 col-sm-4 form-group ">
                                                         <label> الاسم </label>
-                                                        <input placeholder="اختار" type="text" id="instructor" class="form-control" name="instructor" list="instructor_list"  />
+                                                        <input placeholder="اختار" type="text" id="instructor1" class="form-control instructor-selector instructor_field" name="instructor" list="instructor_list"  />
                                                         <datalist id="instructor_list">
                                                             @foreach($instructors as $instructor)
                                                                 <option data-id="{{ $instructor->id }}" data-customValue="{{ $instructor }}" value="{{ $instructor->nameAr }}"></option>
                                                             @endforeach
                                                         </datalist>
                                                     </div>
-{{--                                                    <div class="col-lg-2 col-sm-4 form-group ">--}}
-{{--                                                        <label> تصنيف</label>--}}
-{{--                                                        <select  name="money" class="form-control "  id="type"   >--}}
-{{--                                                            <option value=""> اختار</option>--}}
-{{--                                                            <option value="">كورس</option>--}}
-{{--                                                            <option value=""> ساعه</option>--}}
-{{--                                                            <option value="">الشهر</option>--}}
-{{--                                                        </select>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-lg-2 col-sm-4 form-group ">--}}
-{{--                                                        <label> المرتب </label><input type="text" name="payroll" class="form-control "  id="payroll"   >--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-lg-2 col-sm-4 form-group ">--}}
-{{--                                                        <label> المدفوع  </label><input type="text" name="payPayroll" class=" form-control payPayroll "  id="payPayroll"   >--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-lg-1 col-sm-4 form-group ">--}}
-{{--                                                        <label>الباقي  </label><input type="text" name="noPayPayroll" class="form-control "  id="noPayPayroll"   >--}}
-{{--                                                    </div>--}}
 
                                                 </div>
                                             </div>
@@ -190,62 +172,87 @@
 <script>
     $(document).ready(function () {
 
-        $("#instructor").on('input', function () {
-            $(".meta_data").remove();
+        $(document).on('input', '[id^=instructor]',  function () {
+            var id = $(this).attr('id')[10];
+            $(".meta_data"+id).remove();
             console.log("changed");
             var value = $(this).val();
             if (value !== '') {
                 var selected_instructor = $.parseJSON($('#instructor_list [value="' + value + '"]').attr('data-customValue'));
-                // console.log(selected_instructor);
+                console.log(selected_instructor);
                 $.each(selected_instructor.payment_model, function (key, value) {
-                    $('#data').append("<div class='col-lg-2 col-sm-4 form-group meta_data'><label>"+ key +"</label><input id='"+ key +"' value='"+value +"' class='form-control' readonly/></div>");
+                    console.log(key);
+                    $('#data'+id).append("<div class='col-lg-2 col-sm-4 form-group meta_data"+ id +"'><label>"+ key +"</label><input id='"+ key +id+"' value='"+value +"' class='form-control ' readonly/></div>");
                 });
                 // $('#data').append("<div class='col-lg-1 col-sm-4 form-group meta_data'><label>المستحق</label><input type='number' name='cost' class=' form-control'  id='cost' value='1000' readonly/></div>");
-                $('#data').append("<div class='col-lg-1 col-sm-4 form-group meta_data'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payIncome'  id='payIncome' /></div>");
-                $('#data').append("<div class='col-lg-1 col-sm-4 form-group meta_data'><label>الباقي</label><input type='number' name='noPayIncome' class='form-control '  id='noPayIncome'  readonly /></div>");
+                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payPayroll instructor_field'  id='payIncome"+ id +"' /></div>");
+                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>الباقي</label><input type='number' name='noPayIncome' class='form-control '  id='noPayIncome"+ id +"'  readonly /></div>");
 
             }
         });
 
-        $(document).on('keyup', '#payIncome',  function () {
-            var rest_of_cost = $('#salary').val() - $(this).val();
-            $('#noPayIncome').val(rest_of_cost);
+        $(document).on('keyup', '[id^=payIncome]',  function () {
+            var id = $(this).attr('id')[9];
+            console.log($('#salary'+id).val());
+            var rest_of_cost = $('#salary'+id).val() - $(this).val();
+            $('#noPayIncome'+id).val(rest_of_cost);
         });
 
         // submit form
         $("#salaries_form").submit(function (e) {
             e.preventDefault();
-            console.log("trying submitting form");
-            if($('#payIncome').val() && $('#datePayroll').val() && $('#instructor_list [value="' + $("#instructor").val() + '"]').attr("data-id")){
+            if(checkIfAllInputsFilled()){
                 $.ajax({
                     url: "{{ route("transactions.store") }}",
                     type: "post",
                     data: {
-                        meta_data: createTransactionMetaDataJSON(),
-                        account: 2,
-                        amount: $("#payIncome").val(),
-                        date: $("#datePayroll").val(),
+                        transactions : createTransactionMetaDataJSON(),
                         _token: "{{ csrf_token() }}"
                     },
-                    success : function (message) {
-                        alert(message);
+                    success : function (data) {
+                        alert(data.message);
+                        if(! data.error){
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        }
                     }
 
-
                 });
-            }else{
-                alert('fill in all fields');
-            }
-        });
+        }else{
+            alert('fill in all fields');
+        }
+    });
 
         function createTransactionMetaDataJSON() {
-            let meta_data = {};
-            meta_data ["payer_id"] = "1";
-            meta_data ["payer_type"] = "App\\Center";
-            meta_data ["payFor_id"] = $('#instructor_list [value="' + $("#instructor").val() + '"]').attr("data-id");
-            meta_data ["payFor_type"] = "App\\Instructor";
+            let transactions = [];
+            $(".instructor-selector").each(function (i, v) {
+                let transaction = {};
+                let meta_data = {};
+                meta_data["payer_id"] = "{{ Session('center_id') }}";
+                meta_data['payer_type'] = "App\\Center";
+                meta_data['payFor_id'] = $('#instructor_list [value="' + $("#instructor"+ (i+1)).val() + '"]').attr("data-id");
+                meta_data['payFor_type'] = "App\\Instructor";
 
-            return JSON.stringify(meta_data);
+                transaction['account'] = 2;
+                transaction['date'] = $("#datePayroll").val();
+                transaction['meta_data'] = meta_data;
+                transaction['amount'] =  $("#payIncome"+ (i+1)).val();
+
+                transactions.push(transaction);
+
+            });
+
+            return transactions;
+        }
+
+
+        function checkIfAllInputsFilled() {
+            var empty = $(".instructor_field").filter(function () {
+                return $(this).val().length === 0;
+            });
+
+            return empty.length === 0;
         }
     });
 

@@ -120,12 +120,8 @@ $(document).ready(function(){
     // add btn payroll
     $('input#addButtonPayroll').on('click', function() {
         var id = ($('.fieldPayroll .form-row').length + 1).toString();
-        $('.fieldPayroll').append(' <div class="form-row "> <div class="col-lg-3 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control" list="nameSelect"  name="nameInstructor'+id+'" id="nameInstructor'+id+'" /> <datalist id="nameSelect"> <option>احمد</option> <option>محمود</option></datalist></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label>  تصنيف </label><select  name="type'+id+'" class="form-control "  id="type'+id+'"   ><option value="">اختار</option><option value="">كورس</option><option value="">الساعه</option><option value="">الشهر</option></select></div>' +
-            ' <div class="col-lg-2 col-sm-4 form-group "><label> المرتب </label><input type="text" name="payroll'+id+'" class="form-control "  id="payroll'+id+'"   ></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع </label><input type="text" name="payPayroll'+id+'" class="form-control  payPayroll"  id="payPayroll'+id+'"   ></div>' +
-            ' <div class="col-lg-1 col-sm-4 form-group "><label>  الباقي </label><input type="text" name="noPayPayroll'+id+'" class="form-control "  id="noPayPayroll'+id+'"   ></div>' +
+        $('.fieldPayroll').append(' <div class="form-row " id="data'+id+'"> <div class="col-lg-3 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control  instructor_field" list="instructor_list"  name="instructor'+id+'" id="instructor'+id+'" /> <datalist id="instructor_list">' +
             '</div></div>');
     });
 
