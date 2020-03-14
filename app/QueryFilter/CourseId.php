@@ -14,7 +14,6 @@ class CourseId extends Filter
     protected function applyFilter($builder)
     {
         // TODO: Implement applyFilter() method.
-        return $builder->where(str::snake(class_basename($this)),
-            request(str::snake(class_basename($this))));
+        return $builder->where($this->getClassName(), request($this->getClassName()));
     }
 }

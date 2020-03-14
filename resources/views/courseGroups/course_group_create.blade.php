@@ -5,19 +5,7 @@
         <head>
             @include('library')
             <title>Add a Course group</title>
-<<<<<<< HEAD
-            <style>
-                .error {
-                    color: #b60000;
-                    font-size: 1rem;
-                    font-weight: 400;
-                    line-height: 1.5;
-                }
-                /* img error */
-            </style>
 
-=======
->>>>>>> 5fd34efe6a5dec94e20abebb8659abd5138dcb45
         </head>
         <body id="page-top">
             <div id="wrapper">

@@ -3,8 +3,9 @@
 namespace App;
 
 use App\helper\ImageUploader;
+use App\QueryFilter\CategoryId;
 use App\QueryFilter\Id;
-use Illuminate\Database\Eloquent\Model;
+use App\QueryFilter\Limit;
 use Illuminate\Pipeline\Pipeline;
 
 class Course extends ImageUploader
@@ -16,13 +17,16 @@ class Course extends ImageUploader
     public static function allCourses($center)
     {
         return app(Pipeline::class)
-            ->send($center->courses())
+            ->send($center ? $center->courses() : Course::query())
             ->through([
-                Id::class
+                Id::class,
+                CategoryId::class,
+
             ])
-            ->thenReturn()
-            ->get();
+            ->thenReturn()->paginate(request('limit')? request('limit') : 10);
     }
+
+
 
 
     public function center(){

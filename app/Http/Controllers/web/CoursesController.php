@@ -25,7 +25,7 @@ class CoursesController extends Controller
     public function index()
     {
         $center = Center::findOrFail(Session('center_id'));
-        $courses=$center->courses;
+        $courses=Course::allCourses($center);
         return view('courses/viewCourses')
             ->with('courses',$courses);
     }

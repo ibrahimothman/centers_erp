@@ -154,21 +154,23 @@ $(document).ready(function(){
 
     });
 
-    $('.student-selector').on('input', function () {
+    $(document).on('input', "[id^=student]",  function () {
         // clear all previous data
-        console.log('student changed');
+        var id = $(this).attr("id")[7];
+        // console.log('student changed');
         document.getElementById("diplomaList").innerHTML = "";
-        $("#diploma").val(null);
-        $('#cost').val(null);
-        $('#payIncome').val(null);
-        $('#noPayIncome').val(null);
+        $("#diploma"+id).val(null);
+        $('#cost'+id).val(null);
+        $('#payIncome'+id).val(null);
+        $('#noPayIncome'+id).val(null);
     });
 
-    $('#course').on('input', function () {
+    $(document).on('input', "[id^=diploma]",  function () {
         // clear all previous data
-        $('#cost').val(null);
-        $('#payIncome').val(null);
-        $('#noPayIncome').val(null);
+        var id = $(this).attr('id')[7];
+        $('#cost'+id).val(null);
+        $('#payIncome'+id).val(null);
+        $('#noPayIncome'+id).val(null);
     });
 
 

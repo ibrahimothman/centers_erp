@@ -23,6 +23,8 @@ class Course extends JsonResource
             'cost' => $this->cost,
             'content' => json_decode($this->content, true),
             'instructors' => InstructorResource::collection($this->instructors),
+            'images' => $this->images->pluck('url'),
+            'categories' => $this->categories,
 
         ];
     }

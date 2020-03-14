@@ -31,6 +31,14 @@ class Transaction extends Model
         return $this->belongsTo(Center::class);
     }
 
+
+    public function setMetaDataAttribute($value)
+    {
+        return $this->attributes['meta_data'] = json_encode($value);
+
+    }
+
+
     public function getMetaDataAttribute($value)
     {
         return json_decode($value, true);

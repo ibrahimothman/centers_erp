@@ -11,7 +11,7 @@ abstract class Filter
 {
     public function handle($request, Closure $next)
     {
-        if(! request()->has(str::snake(class_basename($this)))){
+        if(! request()->has($this->getClassName())){
             return $next($request);
         }
 
@@ -19,5 +19,9 @@ abstract class Filter
         return $this->applyFilter($builder);
     }
     protected abstract function applyFilter($builder);
+
+    public function getClassName(){
+        return str::snake(class_basename($this));
+    }
 
 }

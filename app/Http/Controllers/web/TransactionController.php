@@ -39,10 +39,16 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->all());
+//        dd($request->all()['transactions']);
         $center = Center::findOrFail(Session('center_id'));
-        $date = $this->validateTransaction($request);
-        $center->transactions()->create($date->validate());
+        $data = $this->validateTransaction($request);
+        if($data->fails()){
+            return response()->json('invalid data');
+        }
+        $transactions = $data->validate()['transactions'];
+        foreach ($transactions as $transaction){
+            $center->transactions()->create($transaction);
+        }
         return response()->json('transactions are successfully added :)');
     }
 
@@ -53,10 +59,15 @@ class TransactionController extends Controller
          * date, amount, account, meta-data
          * */
         return Validator::make($request->all(),[
-            'date' => 'required | date',
-            'amount' => 'required | integer',
-            'account' => 'required | integer',
-            'meta_data' => ['required']
+            'transactions' => ['required' , 'array'],
+            'transactions.*.account' => ['required', 'integer'],
+            'transactions.*.amount' => ['required', 'integer'],
+            'transactions.*.date' => ['required', 'date'],
+            'transactions.*.meta_data' => ['required', 'array'],
+            'transactions.*.meta_data.payer_id' => ['required', 'integer'],
+            'transactions.*.meta_data.payer_type' => ['required'],
+            'transactions.*.meta_data.payFor_id' => ['required', 'integer'],
+            'transactions.*.meta_data.payFor_type' => ['required'],
         ]);
     }
 }

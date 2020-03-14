@@ -28,7 +28,7 @@ Route::group(['middleware' => ['before' => 'jwt.auth']], function () use ($api_c
 Route::apiResource('course_groups', "$api_controller_path\CourseGroupController");
 
 Route::get('search_student_by_name','StudentController@searchByName');
-Route::resource('courses',"$api_controller_path\CoursesApi");
+Route::resource('courses',"$api_controller_path\CourseController");
 Route::resource('instructors',"$api_controller_path\InstructorApiController");
 Route::resource('categories',"$api_controller_path\CategoriesApiController");
 Route::resource('reviews',"$api_controller_path\ReviewsApiController");
