@@ -54,25 +54,26 @@
                                                     <div class="row form-group">
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">المصروفات: </h5>
-                                                            <input type="number" name="sumOutlayProfit" id="sumOutlayProfit"
-                                                                   class="form-control" readonly/>
+                                                            <input type="number" name="expenses" id="expenses"
+                                                                   class="form-control" value="{{ $transactions["expenses_amount"] }}" readonly/>
                                                         </div>
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الايرادات: </h5>
-                                                            <input type="number" name="sumRevenuesProfit" id="sumRevenuesProfit"
-                                                                   class="form-control" value="{{ $transactions['revenues_amount'] }}" readonly/>
+                                                            <input type="number" name="revenues" id="revenues"
+                                                                   class="form-control" value="{{ $transactions['revenues_amount'] }}"  readonly/>
                                                         </div>
                                                     </div>
+
                                                     <div class="row form-group">
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الارباح: </h5>
-                                                            <input type="number" name="sumOutlayProfit" id="sumOutlayProfit"
-                                                                   class="form-control" readonly/>
+                                                            <input type="number" name="profit" id="profit"
+                                                                   class="form-control" value="{{ $transactions['profit'] }}" readonly/>
                                                         </div>
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الضرائب: </h5>
-                                                            <input type="number" name="sumRevenuesProfit" id="sumRevenuesProfit"
-                                                                   class="form-control" readonly/>
+                                                            <input type="number" name="tax" id="tax"
+                                                                   class="form-control" value="20" readonly/>
                                                         </div>
                                                     </div>
                                                     <hr class=" border-primary">
@@ -80,8 +81,8 @@
                                                     <div class="row form-group title">
                                                         <div class=" col-sm-6">
                                                             <h5 class="text-warning ">صافي الربح: </h5>
-                                                            <input type="number" name="sumOutlay" id="sumOutlay"
-                                                                   class="form-control" readonly/>
+                                                            <input type="number" name="netProfit" id="netProfit"
+                                                                   class="form-control" value="{{ $transactions['net_profit'] }}" readonly/>
                                                         </div>
                                                         <div>
                                                         <button class="btn btn-success mt-4 "  id="showBtn"> عرض التفاصيل</button>
@@ -238,7 +239,7 @@
                                                                 <th class="th-sm"> الديون</th>
                                                             </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody id="student_table">
                                                             @php($revenue = 0)
                                                             @foreach($transactions->filterByAccount(1) as $transaction)
                                                                 @php($revenue += $transaction->amount)
@@ -768,5 +769,37 @@
 <script type='text/javascript' src="/js/financialManagement.js"></script>
 <!-- date picker script for modal -->
 <script src="{{url('js/jquery.datetimepicker.js')}}"></script>
+
+<script>
+
+    $(document).ready(function () {
+            // var start_date = "2019-03-01";
+            // var end_date = "2020-01-01";
+            //
+            // $.ajax({
+            //     url: "/all_transactions?start_date="+start_date+"&end_date="+end_date,
+            //     type: "get",
+            //     success: function (transactions) {
+            //          // fill inputs
+            //         $("#revenues").val(transactions.revenues_amount);
+            //         $("#expenses").val(transactions.expenses_amount);
+            //
+            //         var profit = transactions.revenues_amount - transactions.expenses_amount;
+            //         $("#profit").val(transactions.revenues_amount - transactions.expenses_amount);
+            //
+            //         $("#tax").val("20");
+            //         var taxValue = profit * $("#tax").val() / 100;
+            //
+            //         $("#netProfit").val(profit - taxValue);
+            //
+            //     }
+            // });
+
+
+        });
+
+
+</script>
+
 </body>
 </html>
