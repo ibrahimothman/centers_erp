@@ -3,6 +3,7 @@
 namespace App;
 
 use App\QueryFilter\CourseId;
+use App\QueryFilter\StudentId;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
@@ -14,11 +15,12 @@ class CourseGroup extends Model
     public static function allGroups()
     {
         return app(Pipeline::class)
-            ->send(CourseGroup::paginate())
+            ->send(CourseGroup::query())
             ->through([
                 CourseId::class,
+                StudentId::class,
             ])
-            ->thenReturn();
+            ->thenReturn()->paginate(request('limit')? request('limit'): 10 );
     }
 
     public function course()

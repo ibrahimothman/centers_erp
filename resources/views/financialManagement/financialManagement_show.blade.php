@@ -534,12 +534,12 @@
                                                     <div class="card-body ">
                                                         <div class="col-sm-12">
                                                             <div class="fRight">
-                                                                <h4>الارباح: <span> 5000 </span></h4>
-                                                                <h4>صافي الارباح: <span> 20000  </span></h4>
+                                                                <h4>الارباح: <span> {{ $transactions['profit'] }} </span></h4>
+                                                                <h4>صافي الارباح: <span> {{ $transactions['net_profit'] }}  </span></h4>
 
                                                             </div>
                                                             <div class="fLeft">
-                                                                <h4 >المصروفات: <span> 5000 </span></h4>
+                                                                <h4 >المصروفات: <span> {{ $transactions['expenses_amount'] }} </span></h4>
                                                                 <h4 >الايرادات: <span> {{ $transactions['revenues_amount'] }}  </span></h4>
                                                                 <h4>الضرائب: <span> 20% </span></h4>
                                                             </div>
@@ -634,18 +634,18 @@
                 <!--Body-->
                 <div class="modal-body">
                     <!--Body-->
-                    <form >
+                    <form id="date_form" >
                         <div class="form-row">
                             <label class="text-primary">من يوم</label>
                             <div class='input-group date'>
-                                <input id="datetimepickerModal1" name="date" class="form-control" type="text">
+                                <input id="datetimepickerModal1"  class="form-control" type="text">
 
                             </div>
                         </div>
                         <div class="form-row">
                             <label class="text-primary">الي يوم</label>
                             <div class='input-group date'>
-                                <input id="datetimepickerModal2" name="date" class="form-control" type="text">
+                                <input id="datetimepickerModal2"  class="form-control" type="text">
 
                             </div>
                         </div>
@@ -773,6 +773,16 @@
 <script>
 
     $(document).ready(function () {
+        $('#date_form').submit(function (e) {
+            // e.preventDefault();
+            var start_date = $("<input>")
+                .attr('type', 'hidden')
+                .attr('name', 'start_date')
+                .attr('value', $("#datetimepickerModal1").val());
+            var end_date = $("<input>").attr('type', 'hidden').attr('name', 'end_date').attr('value', $("#datetimepickerModal2").val());
+
+            $(this).append(start_date).append(end_date);
+        })
             // var start_date = "2019-03-01";
             // var end_date = "2020-01-01";
             //

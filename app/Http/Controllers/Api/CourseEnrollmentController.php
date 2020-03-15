@@ -17,8 +17,8 @@ class CourseEnrollmentController extends Controller
 
     public function index()
     {
-        $student = Student::findOrFail(request('student'));
-        return CourseEnrollmentResource::collection($student->courses);
+//        $student = Student::findOrFail(request('student'));
+        return CourseEnrollmentResource::collection(CourseGroup::allGroups());
     }
 
     public function store(Request $request)
