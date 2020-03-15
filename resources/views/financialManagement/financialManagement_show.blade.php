@@ -638,14 +638,14 @@
                         <div class="form-row">
                             <label class="text-primary">من يوم</label>
                             <div class='input-group date'>
-                                <input id="datetimepickerModal1"  class="form-control" type="text">
+                                <input id="datetimepickerModal1" name="start_date"  class="form-control" type="text">
 
                             </div>
                         </div>
                         <div class="form-row">
                             <label class="text-primary">الي يوم</label>
                             <div class='input-group date'>
-                                <input id="datetimepickerModal2"  class="form-control" type="text">
+                                <input id="datetimepickerModal2" name = "end_date" class="form-control" type="text">
 
                             </div>
                         </div>
@@ -773,16 +773,16 @@
 <script>
 
     $(document).ready(function () {
-        $('#date_form').submit(function (e) {
-            // e.preventDefault();
-            var start_date = $("<input>")
-                .attr('type', 'hidden')
-                .attr('name', 'start_date')
-                .attr('value', $("#datetimepickerModal1").val());
-            var end_date = $("<input>").attr('type', 'hidden').attr('name', 'end_date').attr('value', $("#datetimepickerModal2").val());
-
-            $(this).append(start_date).append(end_date);
-        })
+        // $('#date_form').submit(function (e) {
+        //     // e.preventDefault();
+        //     var start_date = $("<input>")
+        //         .attr('type', 'hidden')
+        //         .attr('name', 'start_date')
+        //         .attr('value', $("#datetimepickerModal1").val());
+        //     var end_date = $("<input>").attr('type', 'hidden').attr('name', 'end_date').attr('value', $("#datetimepickerModal2").val());
+        //
+        //     $(this).append(start_date).append(end_date);
+        // })
             // var start_date = "2019-03-01";
             // var end_date = "2020-01-01";
             //
