@@ -59,7 +59,8 @@ input.error ,select.error ,textarea.error {
 #passwordForm input:focus , #addInstructor input:focus , #settingInstructor input:focus ,
 #editInstructor  input:focus , #fromJob input:focus , #formRoom  input:focus ,
 #roomReservation input:focus , #studentCreate input:focus ,#testEdit input:focus ,
-#testsCreate input:focus ,  #testEnrollCreate input:focus ,  #testGroupCreate input:focus ,#managerInfo input:focus,#centerInfo input:focus ,#password input:focus {
+#testsCreate input:focus ,  #testEnrollCreate input:focus ,  #testGroupCreate input:focus ,
+#managerInfo input:focus,#centerInfo input:focus ,#password input:focus ,#addPayment input:focus {
     border-bottom: 1px solid #00C851;
     -webkit-box-shadow: 0 1px 0 0 #00C851;
     box-shadow: 0 1px 0 0 #00C851; }
@@ -80,7 +81,7 @@ input.error ,select.error ,textarea.error {
 #passwordForm select:focus , #addInstructor select:focus , #settingInstructor select:focus ,
 #editInstructor  select:focus , #fromJob select:focus , #formRoom  select:focus ,
 #roomReservation select:focus , #studentCreate select:focus ,#testEdit select:focus ,
-#testsCreate select:focus ,  #testEnrollCreate select:focus ,  #testGroupCreate select:focus {
+#testsCreate select:focus ,  #testEnrollCreate select:focus ,  #testGroupCreate select:focus ,#addPayment select:focus {
     border-bottom: 1px solid #00C851;
     -webkit-box-shadow: 0 1px 0 0 #00C851;
     box-shadow: 0 1px 0 0 #00C851; }

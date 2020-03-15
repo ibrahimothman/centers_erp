@@ -13,6 +13,9 @@ $(document).ready(function () {
                 cost: {
                     required: true,
                 },
+                category:{
+                    required:true,
+                }
             },
             messages: {
 
@@ -28,6 +31,10 @@ $(document).ready(function () {
                 cost: {
                     required: "هذه الخانه مطلوبه",
                 },
+                category: {
+                    required: "هذه الخانه مطلوبه",
+
+                }
             },
 
 
