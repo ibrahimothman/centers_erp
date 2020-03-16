@@ -25,37 +25,46 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form id="addPayment">
-                                <div class="form-row">
+                            <form id="addPayment" enctype="multipart/form-data" action="{{ route('payments.store') }}" method="post">
+                                @csrf
+
+                                <div class="form-row" id="payable">
                                     <div class="col form-group">
-                                        <label>اسم المدرس</label>
+                                        <label>ااختار</label>
                                         <span class="required">*</span>
-                                        <select class="form-control" id="instructor" name="name" required>
-                                            <option value="">اختار</option>
-                                            <option value="احمد">احمد</option>
-                                            <option value="محمد">محمد</option>
+                                        <select class="form-control" id="payable_type" name="payable_type" required>
+                                            <option value="0">اختار</option>
+                                            <option data-extra="{{ $instructors }}" value="App\Instructor">مدرسين</option>
+                                            <option data-extra="{{ $employees }}" value="App\Employee">موظفين</option>
+
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
+                                    <div class="col form-group">
+                                        <label>االاسم</label>
+                                        <span class="required">*</span>
+                                        <select class="form-control" id="payable_list" name="payable_id" required>
+                                            <option value="0">اختار</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row" id="model_form">
                                     <div class="col form-group">
                                         <label>نظام المحاسبه</label>
                                         <span class="required">*</span>
-                                        <select class="form-control" id="selectType" name="type" >
-                                            <option value="">اختار</option>
-                                            <option value="month">الشهر</option>
-                                            <option value="hour">الساعه</option>
-                                            <option value="course">الكورس</option>
+                                        <select class="form-control" id="payment_models" name="payment_model" required>
+                                            <option value="0">اختار</option>
+                                            @foreach($payment_models as $payment_model)
+                                                <option data-extra="{{ $payment_model }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group hide ">
-                                    <div class='col-sm-6'>
-                                        <label>المرتب</label>
-                                        <span class="required">*</span>
-                                             <input class="form-control payType" type="text" name="money">
-                                    </div>
-                                </div>
+
+
                                 <br>
                                 <!-- save -->
                                 <div class="form-row save">
@@ -89,20 +98,30 @@
 <script>
 // add payment value
     $(function() {
-        var select = $('#selectType'),
-            pay =  $('.hide');
-        select.on('change', function() {
-            var selected=$(this).find(':selected').val();
-            pay.show();
-            if (selected =="hour"){
-                $(".payType").attr("placeholder"," ادخل سعر الساعه");
-           }else if(selected =="month"){
-                $(".payType").attr("placeholder","ادخل مرتب الشهر");
-            }else if(selected =="course"){
-                $(".payType").attr("placeholder","ادخل ثمن الكورس");
-            }else if(selected ==""){
-                pay.hide();
-            }
+
+        $("#payable").change(function () {
+            $('#payable_list').empty();
+            $('#payable_list').append("<option value='0'>اختار</option>");
+            var selected_payable = $.parseJSON($(this).find(':selected').attr("data-extra"));
+            $.each(selected_payable, function (i, payable) {
+                $('#payable_list').append("<option value='"+ payable.id +"'>"+ payable.nameAr +"</option>");
+            });
+        });
+
+        $("#payment_models").on('change', function() {
+            $('.meta_data').remove();
+            var selected_model = $.parseJSON($(this).find(':selected').attr("data-extra"));
+            console.log(selected_model);
+            $.each(selected_model.meta_data, function (key, value) {
+                $('#model_form').after("<div class='row form-group meta_data'>" +
+                    "<div class='col-sm-6'>" +
+                    "<label>"+ key +"</label>" +
+                    "<span class='required'>*</span>" +
+                    "<input class='form-control payType' type='text' name='meta_data["+ key +"]' id='"+ key +"'>" +
+                    "</div>" +
+                    "</div>");
+            })
+
         });
     });
     //end

@@ -120,7 +120,18 @@
                                     </div>
 
 
-
+                                    <div class="form-row  " id="model_form" >
+                                        <div class="col form-group">
+                                            <label>نظام المحاسبه</label>
+                                            <span class="required">*</span>
+                                            <select class="form-control" id="payment_models" name="payment_model" required>
+                                                <option value="0">اختار</option>
+                                                @foreach($payment_models as $payment_model)
+                                                    <option data-extra="{{ $payment_model }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
 
                                     <div class="form-row image-upload">
@@ -203,6 +214,23 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+
+    $("#payment_models").on('change', function() {
+        $('.meta_data').remove();
+        var selected_model = $.parseJSON($(this).find(':selected').attr("data-extra"));
+        $.each(selected_model.meta_data, function (key, value) {
+            console.log(key);
+            $('#model_form').after("<div class='row form-group meta_data'>" +
+                "<div class='col-sm-12'>" +
+                "<label>"+ key +"</label>" +
+                "<span class='required'>*</span>" +
+                "<input class='form-control payType' type='text' name='payment_model_meta_data["+ key +"]' id='"+ key +"'>" +
+                "</div>" +
+                "</div>");
+        })
+
+    });
 </script>
 
 

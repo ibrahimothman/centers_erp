@@ -89,15 +89,36 @@ class Instructor extends ImageUploader
         });
     }
 
-    public function getPaymentModelAttribute($model)
+    public function paymentModel()
     {
-        $newModel = json_decode($model, true);
-        $newModel['model_id'] = PaymentModel::findOrFail($newModel['model_id'])->name;
+        return $this->belongsTo(PaymentModel::class);
+    }
+
+
+    public function setPaymentModelMetaDataAttribute($meta_data)
+    {
+        return $this->attributes['payment_model_meta_data'] = json_encode($meta_data,JSON_UNESCAPED_UNICODE );
+    }
+
+    public function getPaymentModelMetaDataAttribute($meta_data)
+    {
+        return json_decode($meta_data, true);
+    }
+
+    public function getPaymentModelAttribute($paymentModel)
+    {
+
+        $paymentModel = PaymentModel::findOrFail($paymentModel);
+        $paymentModel = json_decode($paymentModel, true);
+        $newModel['model'] = $paymentModel['name'];
         $mathParser =  Math::getInstance();
-        $mathParser->setVariables($newModel);
-        $newModel['salary'] = $mathParser->evaluate($newModel['salary']);
+        $mathParser->setVariables($this->payment_model_meta_data);
+        $newModel['salary'] = $mathParser->evaluate($paymentModel['salary']);
         return $newModel;
     }
+
+
+
 
     public static function ApiFields(){
         return ['instructors.id','nameAr','nameEn','image','bio'];

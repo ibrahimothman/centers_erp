@@ -16,8 +16,6 @@ class ExpensesController extends Controller
         $instructors = $center->instructors;
 //        return json_encode($instructors);
         return view('financialManagement/expenses', compact('instructors'));
-////        foreach (json_decode(PaymentModel::find(1)->extra_keys, true) as $key=>$value){
-////            echo $key;
-////        }
+
     }
 }

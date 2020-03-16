@@ -120,8 +120,8 @@ $(document).ready(function(){
     // add btn payroll
     $('input#addButtonPayroll').on('click', function() {
         var id = ($('.fieldPayroll .form-row').length + 1).toString();
-        $('.fieldPayroll').append(' <div class="form-row " id="data'+id+'"> <div class="col-lg-3 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control  instructor_field" list="instructor_list"  name="instructor'+id+'" id="instructor'+id+'" /> <datalist id="instructor_list">' +
+        $('.fieldPayroll').append(' <div class="form-row " id="data'+id+'"> <div class="col-lg-2 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control instructor-selector instructor_field" list="instructor_list"  name="instructor'+id+'" id="instructor'+id+'" /> <datalist id="instructor_list">' +
             '</div></div>');
     });
 

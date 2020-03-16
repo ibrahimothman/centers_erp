@@ -479,7 +479,7 @@
                                                                 <tr>
                                                                     <td>{{ $transaction->payFor()->nameAr }}</td>
                                                                     <td>{{ $transaction->payFor()->payment_model['salary'] }}</td>
-                                                                    <td> {{ $transaction->payFor()->payment_model['model_id'] }}</td>
+                                                                    <td> {{ $transaction->payFor()->payment_model['model'] }}</td>
                                                                     <td>{{ $transaction->amount }}</td>
                                                                     <td>{{ $transaction->payFor()->payment_model['salary'] - $transaction->amount }}</td>
                                                                     <td>{{ $transaction->created_at }}</td>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\Instructor;
+use App\PaymentModel;
 use App\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -36,7 +37,8 @@ class InstructorsController extends Controller
      */
     public function create()
     {
-        return view('instructor/register_instructor');
+        $payment_models = Center::findOrFail(Session('center_id'))->paymentModels;
+        return view('instructor/register_instructor', compact('payment_models'));
     }
 
     /**
@@ -48,11 +50,12 @@ class InstructorsController extends Controller
     public function store(Request $request)
     {
 
+//        dd($request->all());
         $data = $this->validateRequest('');
 
         // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
-
+//        PaymentModel::findOrFail($data['payment_model'])->instructors()->create(Arr::except($data,['payment_model', 'state','city','address']));
         $instructor=Instructor::create(Arr::except($data,['state','city','address']));
         $instructor->address()->create([
             'state' => $data['state'],
@@ -72,10 +75,10 @@ class InstructorsController extends Controller
      */
     public function show(Instructor $instructor)
     {
-//        return json_encode($instructor);
+        return json_encode($instructor);
 
-        return view('instructor/overview_instructor')
-            ->with('instructor',$instructor);
+//        return view('instructor/overview_instructor')
+//            ->with('instructor',$instructor);
 
     }
 
@@ -134,6 +137,8 @@ class InstructorsController extends Controller
             'city' => 'required',
             'address' => 'required',
             'bio' => 'nullable',
+            'payment_model' => ['required', 'integer'],
+            'payment_model_meta_data' => ['required', 'array'],
         ]);
     }
 

@@ -26,6 +26,12 @@ class CreateInstructorTable extends Migration
             $table->string('idImage')->nullable();
             $table->string('bio')->nullable();
 
+            $table->unsignedBigInteger('payment_model')->default(0);
+            $table->longText('payment_model_meta_data');
+
+            $table->foreign('payment_model')->references('id')
+                ->on('payment_models');
+
 
             $table->timestamps();
         });

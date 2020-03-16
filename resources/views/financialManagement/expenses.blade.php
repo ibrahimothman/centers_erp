@@ -117,7 +117,7 @@
                                                        </div>
                                                     <div class="col-lg-2 col-sm-4 form-group ">
                                                         <label> الاسم </label>
-                                                        <input placeholder="اختار" type="text" id="instructor1" class="form-control instructor-selector instructor_field" name="instructor" list="instructor_list"  />
+                                                        <input placeholder="اختار" type="text" id="instructor1" class="form-control instructor-selector instructor_field" name="instructor1" list="instructor_list"  />
                                                         <datalist id="instructor_list">
                                                             @foreach($instructors as $instructor)
                                                                 <option data-id="{{ $instructor->id }}" data-customValue="{{ $instructor }}" value="{{ $instructor->nameAr }}"></option>
@@ -175,18 +175,17 @@
         $(document).on('input', '[id^=instructor]',  function () {
             var id = $(this).attr('id')[10];
             $(".meta_data"+id).remove();
-            console.log("changed");
             var value = $(this).val();
             if (value !== '') {
                 var selected_instructor = $.parseJSON($('#instructor_list [value="' + value + '"]').attr('data-customValue'));
-                console.log(selected_instructor);
+                // console.log(selected_instructor);
                 $.each(selected_instructor.payment_model, function (key, value) {
-                    console.log(key);
+                    // console.log(key);
                     $('#data'+id).append("<div class='col-lg-2 col-sm-4 form-group meta_data"+ id +"'><label>"+ key +"</label><input id='"+ key +id+"' value='"+value +"' class='form-control ' readonly/></div>");
                 });
                 // $('#data').append("<div class='col-lg-1 col-sm-4 form-group meta_data'><label>المستحق</label><input type='number' name='cost' class=' form-control'  id='cost' value='1000' readonly/></div>");
-                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payPayroll instructor_field'  id='payIncome"+ id +"' /></div>");
-                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>الباقي</label><input type='number' name='noPayIncome' class='form-control '  id='noPayIncome"+ id +"'  readonly /></div>");
+                $('#data'+id).append("<div class='col-lg-2 col-sm-4 form-group meta_data"+ id +"'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payPayroll instructor_field'  id='payIncome"+ id +"' /></div>");
+                $('#data'+id).append("<div class='col-lg-2 col-sm-4 form-group meta_data"+ id +"'><label>الباقي</label><input type='number' name='noPayIncome' class='form-control '  id='noPayIncome"+ id +"'  readonly /></div>");
 
             }
         });
