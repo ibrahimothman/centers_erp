@@ -53,7 +53,7 @@ class Course extends ImageUploader
     }
 
     public function categories(){
-        return $this->belongsToMany(Category::class);
+        return $this->morphToMany(Category::class, 'categorical', 'categorical');
     }
 
 

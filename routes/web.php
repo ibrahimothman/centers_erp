@@ -67,6 +67,9 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
     Route::resource('course_enrollment',"$web_controllers_path\CourseEnrollmentController");
     Route::get('get_course_enrollments',"$web_controllers_path\CourseEnrollmentController@getCourseEnrollments");
 
+    //-------------------- categories -----------------------
+    Route::resource('categories', "$web_controllers_path\CategoryController");
+
     // ----------------------- rooms----------------
     Route::resource('rooms',"$web_controllers_path\RoomsController");
     Route::get('available_begins_for_the_room',"$web_controllers_path\RoomsController@getAvailableBegins");

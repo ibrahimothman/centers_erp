@@ -33,6 +33,10 @@ class Test extends Model
 
     }
 
+    public function categories()
+    {
+        return $this->morphToMany(Category::class, 'categorical', 'categorical');
+    }
     public function statement()
     {
         return $this->hasOne(TestStatement::class);

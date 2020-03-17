@@ -45,7 +45,7 @@ class TransactionController extends Controller
         /*
          * date, amount, account, meta-data
          * */
-        return Validator::make($request->all(),[
+        $validator =  Validator::make($request->all(),[
             'transactions' => ['required' , 'array'],
             'transactions.*.account' => ['required', 'integer'],
             'transactions.*.amount' => ['required', 'integer'],
@@ -57,5 +57,7 @@ class TransactionController extends Controller
             'transactions.*.meta_data.payFor_id' => ['required', 'integer'],
             'transactions.*.meta_data.payFor_type' => ['required'],
         ]);
+
+        return $validator;
     }
 }

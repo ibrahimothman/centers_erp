@@ -10,9 +10,28 @@ class Category extends Model
 
     protected $guarded = [];
 
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id')->with('children');
+    }
+
+    public function center()
+    {
+        return $this->belongsTo(Center::class);
+    }
 
     public function courses(){
-        return $this->belongsToMany(Course::class);
+        return $this->morphedByMany(Course::class, 'categorical', 'categorical');
+    }
+
+    public function tests()
+    {
+        return $this->morphedByMany(Test::class, 'categorical', 'categorical');
     }
 
 }

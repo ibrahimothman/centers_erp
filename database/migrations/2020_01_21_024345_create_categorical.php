@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CategoryCourse extends Migration
+class CreateCategorical extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CategoryCourse extends Migration
      */
     public function up()
     {
-        Schema::create('category_course', function (Blueprint $table) {
+        Schema::create('categorical', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->unsignedBigInteger('categorical_id');
+            $table->string('categorical_type');
 
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')
                 ->references('id')
-                ->on('categories');
+                ->on('categories')->onDelete('cascade');
 
 
-            $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')
-                ->references('id')
-                ->on('courses');
 
             $table->timestamps();
         });
