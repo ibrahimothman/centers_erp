@@ -6,12 +6,14 @@ use App\Center;
 use App\Http\Controllers\Controller;
 use App\PaymentModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use mysql_xdevapi\Session;
 
 class ExpensesController extends Controller
 {
     public function create()
     {
+
         $center = Center::FindOrFail(Session('center_id'));
         $instructors = $center->instructors;
         foreach ($instructors as $instructor){
