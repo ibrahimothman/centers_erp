@@ -197,6 +197,7 @@
 
                 transaction['account'] = 1;
                 transaction['date'] = $("#date").val();
+                transaction['rest'] = $("#noPayIncome"+ (i+1)).val();
                 transaction['meta_data'] = meta_data;
                 transaction['amount'] =  $("#payIncome"+ (i+1)).val();
 

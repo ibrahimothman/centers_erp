@@ -124,13 +124,11 @@
             url: "/all_transactions?start_date="+start_date+"&end_date="+end_date,
             type: "get",
             success: function (transactions) {
-                // clear all for fields
-                $("#profit").val("");
-                $("#tax").val("");
-                $("#netProfit").val("");
-                // fill inputs
                 $("#revenues").val(transactions.revenues_amount);
                 $("#expenses").val(transactions.expenses_amount);
+                $("#profit").val(transactions.profit);
+                $("#tax").val(transactions.tax);
+                $("#netProfit").val(transactions.net_profit);
             }
         });
     });
