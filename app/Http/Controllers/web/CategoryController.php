@@ -61,6 +61,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+        return response()->json('successfully deleted', 200);
     }
 
     private function validateRequest(Request $request)
