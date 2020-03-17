@@ -39,10 +39,12 @@ class TransactionRepository
         });
 
         $profit = $revenues_amount - $expenses_amount;
-        $net_profit = $profit - $profit * .02;
+        $tax = abs($profit) * .2;
+        $net_profit = $profit - $tax;
         $transactions['revenues_amount'] = $revenues_amount;
         $transactions['expenses_amount'] = $expenses_amount;
         $transactions['profit'] = $profit;
+        $transactions['tax'] = $tax;
         $transactions['net_profit'] = $net_profit;
         return $transactions;
     }
