@@ -169,8 +169,13 @@
                         transactions : createTransactionMetaDataJSON(),
                         _token: "{{ csrf_token() }}"
                     },
-                    success : function (message) {
-                      alert(message);
+                    success : function (data) {
+                      alert(data.message);
+                        if(! data.error){
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        }
                     }
 
 

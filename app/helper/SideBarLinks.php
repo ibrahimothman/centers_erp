@@ -35,10 +35,10 @@ class SideBarLinks
         return[
             env('APP_URL', '').'/'.'courses/create' => 'اضافه بيانات الكورس',
             env('APP_URL', '').'/'.'courses' => 'عرض/تعديل بيانات الكورسات',
-            env('APP_URL', '').'/'.'course_groups/create' => 'تسجيل مواعيد الكورسات',
-            env('APP_URL', '').'/'.'course_groups' => 'عرض مواعيد الكورسات',
-            env('APP_URL', '').'/'.'course_enrollment/create' => 'تسجيل الطلاب علي الكورسات',
-            env('APP_URL', '').'/'.'course_enrollment' => 'عرض الطلاب المسجلين',
+//            env('APP_URL', '').'/'.'course_groups/create' => 'تسجيل مواعيد الكورسات',
+//            env('APP_URL', '').'/'.'course_groups' => 'عرض مواعيد الكورسات',
+//            env('APP_URL', '').'/'.'course_enrollment/create' => 'تسجيل الطلاب علي الكورسات',
+//            env('APP_URL', '').'/'.'course_enrollment' => 'عرض الطلاب المسجلين',
         ];
     }
 

@@ -17,6 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedSmallInteger('account');
             $table->unsignedDecimal('amount');
+            $table->unsignedDecimal('rest');
             $table->date('date');
             $table->longText('meta_data');
             $table->unsignedBigInteger('center_id');

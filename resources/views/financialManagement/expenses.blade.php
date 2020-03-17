@@ -184,16 +184,17 @@
                     $('#data'+id).append("<div class='col-lg-2 col-sm-4 form-group meta_data"+ id +"'><label>"+ key +"</label><input id='"+ key +id+"' value='"+value +"' class='form-control ' readonly/></div>");
                 });
                 // $('#data').append("<div class='col-lg-1 col-sm-4 form-group meta_data'><label>المستحق</label><input type='number' name='cost' class=' form-control'  id='cost' value='1000' readonly/></div>");
-                $('#data'+id).append("<div class='col-lg-2 col-sm-4 form-group meta_data"+ id +"'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payPayroll instructor_field'  id='payIncome"+ id +"' /></div>");
-                $('#data'+id).append("<div class='col-lg-2 col-sm-4 form-group meta_data"+ id +"'><label>الباقي</label><input type='number' name='noPayIncome' class='form-control '  id='noPayIncome"+ id +"'  readonly /></div>");
+                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المستحق</label><input type='number' value='"+ selected_instructor.total +"' name='total' class=' form-control   '  id='total"+ id +"' readonly/></div>");
+                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payPayroll instructor_field'  id='payIncome"+ id +"' /></div>");
+                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>الباقي</label><input type='number' name='noPayIncome' class='form-control '  id='noPayIncome"+ id +"'  readonly /></div>");
 
             }
         });
 
         $(document).on('keyup', '[id^=payIncome]',  function () {
             var id = $(this).attr('id')[9];
-            console.log($('#salary'+id).val());
-            var rest_of_cost = $('#salary'+id).val() - $(this).val();
+            // console.log($('#total'+id).val());
+            var rest_of_cost = $('#total'+id).val() - $(this).val();
             $('#noPayIncome'+id).val(rest_of_cost);
         });
 
@@ -234,6 +235,7 @@
                 meta_data['payFor_type'] = "App\\Instructor";
 
                 transaction['account'] = 2;
+                transaction['rest'] = $('#noPayIncome'+ (i+1)).val();
                 transaction['date'] = $("#datePayroll").val();
                 transaction['meta_data'] = meta_data;
                 transaction['amount'] =  $("#payIncome"+ (i+1)).val();

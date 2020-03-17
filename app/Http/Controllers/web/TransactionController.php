@@ -26,6 +26,7 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
+//        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
         $data = $this->validateTransaction($request);
         if($data->fails()){
@@ -48,6 +49,7 @@ class TransactionController extends Controller
             'transactions' => ['required' , 'array'],
             'transactions.*.account' => ['required', 'integer'],
             'transactions.*.amount' => ['required', 'integer'],
+            'transactions.*.rest' => ['required', 'integer'],
             'transactions.*.date' => ['required', 'date'],
             'transactions.*.meta_data' => ['required', 'array'],
             'transactions.*.meta_data.payer_id' => ['required', 'integer'],
