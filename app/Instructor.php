@@ -5,6 +5,7 @@ namespace App;
 use App\helper\Constants;
 use App\helper\ImageUploader;
 use App\helper\MathParser\Math;
+use App\helper\PaymentModelHelper;
 use App\QueryFilter\Name;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
@@ -107,14 +108,7 @@ class Instructor extends ImageUploader
 
     public function getPaymentModelAttribute($paymentModel)
     {
-
-        $paymentModel = PaymentModel::findOrFail($paymentModel);
-        $paymentModel = json_decode($paymentModel, true);
-        $newModel['model'] = $paymentModel['name'];
-        $mathParser =  Math::getInstance();
-        $mathParser->setVariables($this->payment_model_meta_data);
-        $newModel['salary'] = $mathParser->evaluate($paymentModel['salary']);
-        return $newModel;
+        PaymentModelHelper::getPaymentModelAttribute($this, $paymentModel);
     }
 
 

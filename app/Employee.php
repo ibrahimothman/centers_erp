@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\helper\mathParser\Math;
+use App\helper\PaymentModelHelper;
 use Illuminate\Database\Eloquent\Model;
 use function foo\func;
 
@@ -23,7 +25,7 @@ class Employee extends Model
 
     public function centers()
     {
-        return $this->belongsToMany(Center::class);
+        return $this->belongsTo(Center::class);
     }
 
     public function jobs()
@@ -34,6 +36,23 @@ class Employee extends Model
     public function paymentModel()
     {
         return $this->belongsTo(PaymentModel::class);
+    }
+
+    public function setPaymentModelMetaDataAttribute($meta_data)
+    {
+        return $this->attributes['payment_model_meta_data'] = json_encode($meta_data,JSON_UNESCAPED_UNICODE );
+    }
+
+    public function getPaymentModelMetaDataAttribute($meta_data)
+    {
+        return json_decode($meta_data, true);
+    }
+
+    public function getPaymentModelAttribute($paymentModel)
+    {
+
+        PaymentModelHelper::getPaymentModelAttribute($this, $paymentModel);
+
     }
 
     protected static function boot()

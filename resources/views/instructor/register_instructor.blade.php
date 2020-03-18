@@ -120,6 +120,7 @@
                                     </div>
 
 
+                                    <!-- payment model -->
                                     <div class="form-row  " id="model_form" >
                                         <div class="col form-group">
                                             <label>نظام المحاسبه</label>

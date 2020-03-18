@@ -67,18 +67,11 @@ class InstructorsController extends Controller
         return redirect('instructors/'.$instructor->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Instructor $instructor)
     {
-        return json_encode($instructor);
-
-//        return view('instructor/overview_instructor')
-//            ->with('instructor',$instructor);
+        $courses = $instructor->courses()->where('center_id', Session('center_id'))->get();
+        return view('instructor/overview_instructor', compact('instructor', 'courses'));
 
     }
 

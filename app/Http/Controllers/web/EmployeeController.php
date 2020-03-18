@@ -5,9 +5,9 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 
 use App\Center;
-use App\Employee;
-use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
 class EmployeeController extends Controller
@@ -33,7 +33,8 @@ class EmployeeController extends Controller
         //
         $center = Center::findOrFail(Session('center_id'));
         $jobs = $center->jobs;
-        return view('employee.create', compact('jobs'));
+        $payment_models = $center->paymentModels;
+        return view('employee.create', compact('jobs', 'payment_models'));
     }
 
     /**
@@ -45,15 +46,16 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         // todo 1) create user account for this employee
+//        dd($request->all());
 //        $user = User::create($this->validateRequest());
 
         // 2) create an employee related to that user
-        $data = $this->validateRequest();
-        $employee = Employee::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phoneNumber' => $data['phoneNumber'],
-        ]);
+        $data = $this->validateRequest($request);
+
+        $data = $data->validate();
+        $center = Center::findOrFail(Session('center_id'));
+        $employee=$center->employees()->create(Arr::except($data,['state','city','address']));
+
 
         // create address
         $employee->address()->create([
@@ -62,11 +64,9 @@ class EmployeeController extends Controller
             'address' => $data['address'],
         ]);
 
-        // save job
-        $employee->jobs()->syncWithoutDetaching($data['job']);
+        // todo 2) save employee's jobs
+        // $employee->jobs()->syncWithoutDetaching($data['job']);
 
-        // attach employee to center
-        $employee->centers()->syncWithoutDetaching(Center::findOrFail(Session('center_id')));
         dd('ok');
     }
 
@@ -115,16 +115,23 @@ class EmployeeController extends Controller
         //
     }
 
-    private function validateRequest()
+    private function validateRequest($request)
     {
-        return request()->validate([
-            'name' => ['required', 'string', 'max:255','unique:employees,name'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:employees,email'],
-            'phoneNumber' => 'required',
-            'job' => 'required',
-            'state' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'address' => ['required', 'string'],
+        return Validator::make($request->all(),[
+            'idNumber' => 'required|digits:14',
+//            'image' => ' sometimes |nullable|image|file | max:10000',
+//            'idImage' => 'sometimes |nullable|image|file | max:10000',
+            'phoneNumber' => 'required|regex:/(01)[0-9]{9}/',
+            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
+            'passportNumber' => 'sometimes',
+            'state' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+            'payment_model' => ['required', 'integer'],
+            'payment_model_meta_data' => ['required', 'array'],
+            'name' => 'required| unique:employees,name,NULL,id,center_id,'.Session('center_id'),
+//            'job' => 'required',
+
         ]);
     }
 }

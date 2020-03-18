@@ -74,7 +74,7 @@ class CategoryController extends Controller
     private function validateRequest(Request $request)
     {
         return Validator::make($request->all(),[
-            'name' => 'unique:categories,name,NULL,id,center_id,' . Session('center_id'),
+            'name' => 'required | unique:categories,name,NULL,id,center_id,' . Session('center_id'),
             'parent_id' => ['sometimes'],
         ]);
     }

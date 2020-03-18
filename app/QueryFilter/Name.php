@@ -13,6 +13,7 @@ class Name extends Filter
     protected function applyFilter($builder)
     {
         // TODO: Implement applyFilter() method.
-        return $builder->where('nameAr','like', '%' . request($this->getClassName()) . '%');
+        return $builder->where('nameAr','like', '%' . request($this->getClassName()) . '%')
+            ->orwhere('nameEn', 'like', '%' . request($this->getClassName()) . '%');
     }
 }

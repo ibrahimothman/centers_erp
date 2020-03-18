@@ -57,7 +57,6 @@
 
                 <div class="spldishes-grids">
                     <!-- Owl-Carousel -->
-                    @php($courses=$instructor->courses)
                     @for($i=0;$i<count($courses);$i+=3)
                     <div class="row pb-4">
 

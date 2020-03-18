@@ -48,7 +48,7 @@ class CoursesController extends Controller
         $center = Center::findOrFail(Session('center_id'));
 
         $data = $this->getValidatedCourseData('');
-        $course_data = Arr::except($data,['images','instructors']);
+        $course_data = Arr::except($data,['images','instructors', 'categories']);
 
         // create the course
         $course = $center->courses()->create($course_data);
@@ -59,9 +59,9 @@ class CoursesController extends Controller
         }
 
         // attach the course to the categories
-//        foreach ($data['categories'] as $category){
-//            $course->categories()->syncWithoutDetaching($category);
-//        }
+        foreach ($data['categories'] as $category){
+            $course->categories()->syncWithoutDetaching($category);
+        }
 
         // upload images
         $this->uploadImages($request,$course);
@@ -148,7 +148,7 @@ class CoursesController extends Controller
                 'content'=>'required',
                 'images'=>'required|array',
                 'instructors'=>'required|array',
-//                'categories'=>'required|array',
+                'categories'=>'required|array',
             ]);
 
 

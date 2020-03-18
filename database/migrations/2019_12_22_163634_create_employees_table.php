@@ -16,12 +16,24 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('center_id');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phoneNumber');
+            $table->string('phoneNumber')->unique();
+            $table->string('idNumber')->unique();
+            $table->string('phoneNumberSec')->nullable();
+            $table->string('passportNumber')->nullable();
+            $table->string('image')->nullable();
+            $table->string('idImage')->nullable();
+
+            $table->unsignedBigInteger('payment_model');
+            $table->longText('payment_model_meta_data');
+
+            $table->foreign('payment_model')->references('id')
+                ->on('payment_models');
             $table->timestamps();
 
-//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('center_id')->references('id')->on('centers')->onDelete('cascade');
         });
     }
 
