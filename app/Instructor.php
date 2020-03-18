@@ -108,7 +108,7 @@ class Instructor extends ImageUploader
 
     public function getPaymentModelAttribute($paymentModel)
     {
-        PaymentModelHelper::getPaymentModelAttribute($this, $paymentModel);
+        return PaymentModelHelper::getPaymentModelAttribute($paymentModel, $this->payment_model_meta_data);
     }
 
 

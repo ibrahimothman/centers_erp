@@ -113,15 +113,23 @@
                                                 <div class="form-row " id="data1">
                                                     <div class="col-lg-2 col-sm-4 form-group">
                                                         <label > التاريخ</label>
-                                                        <input type="date" id="datePayroll" name="datePayroll" class="form-control datePayroll instructor_field">
+                                                        <input type="date" id="datePayroll" name="datePayroll" class="form-control datePayroll required_field">
                                                        </div>
+
+                                                    <div class="col-lg-2 col-sm-4 form-group ">
+                                                        <label> اختار </label>
+                                                        <input placeholder="اختار" type="text" id="instructor_employee1" class="form-control pay_for_selector required_field" name="list1" list="list"  />
+                                                        <datalist id="list">
+                                                            <option data-type="App\Instructor"  data-customValue="{{ $instructors }}" value="المدربين"></option>
+                                                            <option data-type="App\Employee" data-customValue="{{ $employees }}" value="الموظفين"></option>
+                                                        </datalist>
+                                                    </div>
+
                                                     <div class="col-lg-2 col-sm-4 form-group ">
                                                         <label> الاسم </label>
-                                                        <input placeholder="اختار" type="text" id="instructor1" class="form-control instructor-selector instructor_field" name="instructor1" list="instructor_list"  />
-                                                        <datalist id="instructor_list">
-                                                            @foreach($instructors as $instructor)
-                                                                <option data-id="{{ $instructor->id }}" data-customValue="{{ $instructor }}" value="{{ $instructor->nameAr }}"></option>
-                                                            @endforeach
+                                                        <input placeholder="اختار" type="text" id="pay_for1" class="form-control  required_field" name="pay_for1" list="pay_for_list1"  />
+                                                        <datalist id="pay_for_list1">
+
                                                         </datalist>
                                                     </div>
 
@@ -172,20 +180,38 @@
 <script>
     $(document).ready(function () {
 
-        $(document).on('input', '[id^=instructor]',  function () {
-            var id = $(this).attr('id')[10];
+        $(document).on('input', '[id^=instructor_employee]',  function (){
+            var id = $(this).attr('id')[19];
+            $('#pay_for_list'+id).html('');
+            $('#pay_for'+id).val('');
+            var value = $(this).val();
+            if (value !== '') {
+                var selected = $.parseJSON($('#list [value="' + value + '"]').attr('data-customValue'));
+                var type = $('#list [value="' + value + '"]').attr('data-type');
+                $.each(selected, function (key, member) {
+                    $('#pay_for_list'+id).append($("<option></option>")
+                        .data('custom', member)
+                        .data('type', type)
+                        .val(member.nameAr));
+                });
+            }
+        });
+
+        $(document).on('input', '[id^=pay_for]',  function () {
+            var id = $(this).attr('id')[7];
+            console.log(id);
             $(".meta_data"+id).remove();
             var value = $(this).val();
             if (value !== '') {
-                var selected_instructor = $.parseJSON($('#instructor_list [value="' + value + '"]').attr('data-customValue'));
-                // console.log(selected_instructor);
-                $.each(selected_instructor.payment_model, function (key, value) {
-                    // console.log(key);
-                    $('#data'+id).append("<div class='col-lg-2 col-sm-4 form-group meta_data"+ id +"'><label>"+ key +"</label><input id='"+ key +id+"' value='"+value +"' class='form-control ' readonly/></div>");
+                var selected_pay_for_type = $('#pay_for_list'+id+' [value="' + value + '"]').data('type');
+                var selected_pay_for = $('#pay_for_list'+id+' [value="' + value + '"]').data('custom');
+                console.log(selected_pay_for_type);
+                $.each(selected_pay_for.payment_model, function (key, value) {
+                    console.log(key);
+                    $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>"+ key +"</label><input id='"+ key +id+"' value='"+value +"' class='form-control ' readonly/></div>");
                 });
-                // $('#data').append("<div class='col-lg-1 col-sm-4 form-group meta_data'><label>المستحق</label><input type='number' name='cost' class=' form-control'  id='cost' value='1000' readonly/></div>");
-                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المستحق</label><input type='number' value='"+ selected_instructor.total +"' name='total' class=' form-control   '  id='total"+ id +"' readonly/></div>");
-                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payPayroll instructor_field'  id='payIncome"+ id +"' /></div>");
+                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المستحق</label><input type='number' value='"+ selected_pay_for.total +"' name='total' class=' form-control   '  id='total"+ id +"' readonly/></div>");
+                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payPayroll required_field'  id='payIncome"+ id +"' /></div>");
                 $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>الباقي</label><input type='number' name='noPayIncome' class='form-control '  id='noPayIncome"+ id +"'  readonly /></div>");
 
             }
@@ -226,19 +252,20 @@
 
         function createTransactionMetaDataJSON() {
             let transactions = [];
-            $(".instructor-selector").each(function (i, v) {
+            $(".pay_for_selector").each(function (i, v) {
                 let transaction = {};
                 let meta_data = {};
                 meta_data["payer_id"] = "{{ Session('center_id') }}";
                 meta_data['payer_type'] = "App\\Center";
-                meta_data['payFor_id'] = $('#instructor_list [value="' + $("#instructor"+ (i+1)).val() + '"]').attr("data-id");
-                meta_data['payFor_type'] = "App\\Instructor";
+                meta_data['payFor_id'] = $('#pay_for_list'+ (i+1) +' [value="' + $("#pay_for"+ (i+1)).val() + '"]').data("custom").id;
+                meta_data['payFor_type'] = $('#pay_for_list'+(i+1)+' [value="' + $("#pay_for"+ (i+1)).val() + '"]').data('type');
 
                 transaction['account'] = 2;
                 transaction['rest'] = $('#noPayIncome'+ (i+1)).val();
                 transaction['date'] = $("#datePayroll").val();
                 transaction['meta_data'] = meta_data;
                 transaction['amount'] =  $("#payIncome"+ (i+1)).val();
+                transaction['deserved_amount'] =  $("#salary"+ (i+1)).val();
 
                 transactions.push(transaction);
 
@@ -249,7 +276,7 @@
 
 
         function checkIfAllInputsFilled() {
-            var empty = $(".instructor_field").filter(function () {
+            var empty = $(".required_field").filter(function () {
                 return $(this).val().length === 0;
             });
 

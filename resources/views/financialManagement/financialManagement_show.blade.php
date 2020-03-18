@@ -246,10 +246,10 @@
                                                                 <tr>
                                                                     <td>{{ $transaction->payer()->nameAr }}</td>
                                                                     <td>{{ $transaction->payFor()->name }}</td>
-                                                                    <td>{{ $transaction->payFor()->cost }}</td>
+                                                                    <td>{{ $transaction->deserved_amount }}</td>
                                                                     <td>{{ $transaction->amount }}</td>
-                                                                    <td>{{ $transaction->payFor()->cost - $transaction->amount }}</td>
-                                                                    <td>{{ $transaction->created_at }}</td>
+                                                                    <td>{{ $transaction->rest}}</td>
+                                                                    <td>{{ $transaction->date }}</td>
                                                                     <td>
                                                                         <a href=""
                                                                            class=" btn btn-outline-primary  py-1 px-2 "><i
@@ -465,6 +465,7 @@
                                                                 <th class="th-sm">الاسم</th>
                                                                 <th class="th-sm">المرتب</th>
                                                                 <th class="th-sm">تصنيف</th>
+                                                                <th class="th-sm">المستحق</th>
                                                                 <th class="th-sm">المدفوع</th>
                                                                 <th class="th-sm">الباقي</th>
                                                                 <th class="th-sm">التاريخ</th>
@@ -478,11 +479,12 @@
                                                                 @php($total_salaries += $transaction->amount)
                                                                 <tr>
                                                                     <td>{{ $transaction->payFor()->nameAr }}</td>
-                                                                    <td>{{ $transaction->payFor()->payment_model['salary'] }}</td>
+                                                                    <td>{{ $transaction->deserved_amount }}</td>
                                                                     <td> {{ $transaction->payFor()->payment_model['model'] }}</td>
+                                                                    <td> {{ $transaction->amount + $transaction->rest }}</td>
                                                                     <td>{{ $transaction->amount }}</td>
-                                                                    <td>{{ $transaction->payFor()->payment_model['salary'] - $transaction->amount }}</td>
-                                                                    <td>{{ $transaction->created_at }}</td>
+                                                                    <td>{{ $transaction->rest }}</td>
+                                                                    <td>{{ $transaction->date }}</td>
                                                                     <td>
                                                                         <a href=""
                                                                            class=" btn btn-outline-primary  py-1 px-2 "><i

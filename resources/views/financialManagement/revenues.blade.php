@@ -200,6 +200,7 @@
                 transaction['rest'] = $("#noPayIncome"+ (i+1)).val();
                 transaction['meta_data'] = meta_data;
                 transaction['amount'] =  $("#payIncome"+ (i+1)).val();
+                transaction['deserved_amount'] =  $("#cost"+ (i+1)).val();
 
                 transactions.push(transaction);
 

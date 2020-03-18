@@ -8,14 +8,14 @@ use App\helper\mathParser\Math;
 
 class PaymentModelHelper
 {
-    public static function getPaymentModelAttribute($model, $paymentModel)
+    public static function getPaymentModelAttribute($paymentModel, $paymentModelMetaData)
     {
 
         $paymentModel = \App\PaymentModel::findOrFail($paymentModel);
         $paymentModel = json_decode($paymentModel, true);
         $newModel['model'] = $paymentModel['name'];
         $mathParser =  Math::getInstance();
-        $mathParser->setVariables($model->payment_model_meta_data);
+        $mathParser->setVariables($paymentModelMetaData);
         $newModel['salary'] = $mathParser->evaluate($paymentModel['salary']);
         return $newModel;
     }

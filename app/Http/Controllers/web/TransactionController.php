@@ -50,6 +50,7 @@ class TransactionController extends Controller
             'transactions.*.account' => ['required', 'integer'],
             'transactions.*.amount' => ['required', 'integer'],
             'transactions.*.rest' => ['required', 'integer'],
+            'transactions.*.deserved_amount' => ['required', 'integer'],
             'transactions.*.date' => ['required', 'date'],
             'transactions.*.meta_data' => ['required', 'array'],
             'transactions.*.meta_data.payer_id' => ['required', 'integer'],
