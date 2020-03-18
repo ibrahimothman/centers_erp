@@ -104,31 +104,6 @@
 
         })
     }
-    function displayCategories(categories) {
-        console.log(categories);
-        $.each(categories, function (i, category) {
-            // console.log(category.name);
-            var lines = '';
-            lines += "<tr data-id='"+ category.id +"' >";
-            lines += "<td>" + category.name + "</td><td><button class='btn btn-primary btn-xs btn-edit '>تعديل</button></td>";
-            lines += "<td class='add'><input type='button' class=' btn  btn-warning  addbtn' value='  اضافه تصنيف '><div class='addnew'></div></td>";
-            lines += "<td class='newROW'>" ;
-            $.each(category.children, function (i, child) {
-                lines += "<div class='field row mx-3'><span>" + child.name + "<button type='button' class='ml-2 mb-1 close' onclick='deleteCategory("+ child.id +")'  data-dismiss='toast' aria-label='Close'><span style='color:red;' aria-hidden='true'>&times;</span></button></span></div>";
-            });
-            lines += "</td>";
-            lines += "<td><button class='btn btn-danger btn-xs btn-delete'>حذف</button></td></tr>";
-            $(".data-table tbody").append(lines);
-        })
-    }
-
-    // save form in table
-    $("form").submit(function (e) {
-        e.preventDefault();
-        var name = $("input[name='name']").val();
-        addNewCategory(name, null);
-        $("input[name='name']").val('');
-    });
 
     function deleteCategory(category_id, target) {
         $.ajax({
@@ -142,6 +117,56 @@
         })
     }
 
+    function updateCategory(category_id, new_name) {
+        $.ajax({
+            url: "/categories/"+category_id,
+            type: "put",
+            data: {category_id: category_id, name: new_name,  _token: "{{ csrf_token() }}"},
+            success: function () {
+                // console.log(date);
+                // $('#category'+(category_id)).remove();
+                var row = $('tr[data-id="' + category_id + '"]');
+                row.find("td:eq(0)").text(new_name);
+                row.attr('data-name', new_name);
+                row.find(".btn-edit").show();
+                row.find(".btn-update").remove();
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.responseText);
+            }
+
+        })
+    }
+
+    function displayCategories(categories) {
+        console.log(categories);
+        $.each(categories, function (i, category) {
+            // console.log(category.name);
+            var lines = '';
+            lines += "<tr data-name='"+ category.name +"' data-id='"+ category.id +"' >";
+            lines += "<td >" + category.name + "</td><td><button class='btn btn-primary btn-xs btn-edit '>تعديل</button></td>";
+            lines += "<td class='add'><input type='button' class=' btn  btn-warning  addbtn' value='  اضافه تصنيف '><div class='addnew'></div></td>";
+            lines += "<td class='newROW'>" ;
+            $.each(category.children, function (i, child) {
+                lines += "<div class='field row mx-3'><span>" + child.name + "<button type='button' class='ml-2 mb-1 close' onclick='deleteCategory("+ child.id +")'  data-dismiss='toast' aria-label='Close'><span style='color:red;' aria-hidden='true'>&times;</span></button></span></div>";
+            });
+            lines += "</td>";
+            lines += "<td><button class='btn btn-danger btn-xs btn-delete'>حذف</button></td></tr>";
+            $(".data-table tbody").append(lines);
+        })
+    }
+
+
+
+    // save form in table
+    $("form").submit(function (e) {
+        e.preventDefault();
+        var name = $("input[name='name']").val();
+        addNewCategory(name, null);
+        $("input[name='name']").val('');
+    });
+
     //delete row
     $("body").on("click", ".btn-delete", function () {
         var parent_id = $(this).closest('tr').attr('data-id');
@@ -152,17 +177,21 @@
     //edit category
     $("body").on("click", ".btn-edit", function () {
         var name = $(this).parents("tr").attr('data-name');
+        var category_id = $(this).parents("tr").attr('data-id');
         $(this).parents("tr").find("td:eq(0)").html('<input name="edit_name" value="' + name + '">');
         $(this).parents("tr").find("td:eq(1)").prepend("<button class='btn btn-primary btn-xs btn-update'>تحديث</button>")
         $(this).hide();
     });
+
+
+
     //update value of category
     $("body").on("click", ".btn-update", function () {
-        var name = $(this).parents("tr").find("input[name='edit_name']").val();
-        $(this).parents("tr").find("td:eq(0)").text(name);
-        $(this).parents("tr").attr('data-name', name);
-        $(this).parents("tr").find(".btn-edit").show();
-        $(this).parents("tr").find(".btn-update").remove();
+        var new_name = $(this).parents("tr").find("input[name='edit_name']").val();
+        var category_id = $(this).parents("tr").attr('data-id');
+        console.log('categoty id: '+category_id+ '/ new name: '+new_name);
+        updateCategory(category_id, new_name);
+
     });
     // add new sub category in row
     $(document).on('click', '.addbtn', function () {
@@ -178,12 +207,7 @@
 
 
             }
-            //delete sub category in row
-            $(".close").click(function () {
-                console.log('sadasd');
-                // deleteCategory();
-                $(this).parents(".field").remove();
-            }) ;
+
         });
         // cancel button which add new sub category
         $(".cancel").click(function () {

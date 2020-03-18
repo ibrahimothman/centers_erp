@@ -31,8 +31,10 @@ class CategoryController extends Controller
     {
         $data = $this->validateRequest($request);
 
-        if(isset($data->errors()->messages()['name'])){
-            return response()->json('this category name is already existed', 400);
+        if($data->fails()) {
+            if (isset($data->errors()->messages()['name'])) {
+                return response()->json('this category name is already existed', 400);
+            }
         }
 
         $category = Center::findOrFail(Session('center_id'))->categories()->create($data->validate());
@@ -52,9 +54,17 @@ class CategoryController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         //
+        $data = $this->validateRequest($request);
+        if($data->fails()) {
+            if (isset($data->errors()->messages()['name'])) {
+                return response()->json('this category name is already existed', 400);
+            }
+        }
+        $category->update($data->validate());
+
     }
 
 
