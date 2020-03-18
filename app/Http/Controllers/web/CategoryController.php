@@ -20,7 +20,7 @@ class CategoryController extends Controller
 
     public function allCategories()
     {
-        return CategoryRepository::getInstance()->allCategories();
+        return response()->json(CategoryRepository::getInstance()->allCategories());
     }
 
 

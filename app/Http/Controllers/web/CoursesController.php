@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Center;
 use App\Course;
 use App\Image;
+use App\repository\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -35,8 +36,8 @@ class CoursesController extends Controller
     {
         $center=Center::findOrFail(Session("center_id"));
         $instructors= $center->instructors;
-        return view('courses/addCourse')
-            ->with('instructors',$instructors);
+        $categories = CategoryRepository::getInstance()->allCategories();
+        return view('courses/addCourse', compact('instructors', 'categories'));
 
 
     }
@@ -56,6 +57,11 @@ class CoursesController extends Controller
         foreach ($data['instructors'] as $instructor_id){
             $course->instructors()->syncWithoutDetaching($instructor_id);
         }
+
+        // attach the course to the categories
+//        foreach ($data['categories'] as $category){
+//            $course->categories()->syncWithoutDetaching($category);
+//        }
 
         // upload images
         $this->uploadImages($request,$course);
@@ -142,6 +148,7 @@ class CoursesController extends Controller
                 'content'=>'required',
                 'images'=>'required|array',
                 'instructors'=>'required|array',
+//                'categories'=>'required|array',
             ]);
 
 

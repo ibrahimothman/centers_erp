@@ -148,9 +148,8 @@
 
                                             <ul class=" dropdown-menu text-right " >
                                                 @foreach($instructors as $instructor)
-                                                    <li ><label class="checkbox"><input value="{{ $instructor->id }}"  type="checkbox">{{$instructor->nameAr}}</label></li>
+                                                    <li ><label class="checkbox"><input value="{{ $instructor->id }}" class="instructors" type="checkbox">{{$instructor->nameAr}}</label></li>
                                                 @endforeach
-
 
                                             </ul>
                                         </div>
@@ -185,18 +184,26 @@
                                         <div></div>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col-sm-6">
-                                        <label>التصنيف</label>
-                                        <span class="required">*</span>
-                                        <select name="category" class="form-control">
-                                            <option value="">اختار</option>
-                                            <option value="web">ويب</option>
-                                            <option value="en">انجليزي</option>
-                                        </select>
+                                <!-- categories -->
+                                <div class="col-sm-6 form-group">
+                                    <label for="instructor-name">
+                                        التصنيف</label>
+                                    <span class="required">*</span>
+                                    <div class="dropdown ">
+                                        <button data-toggle="dropdown" class="dropdown-toggle btnInstructor py-1">
+                                            التصنيف <b class="caret"></b>
+                                        </button>
 
-
+                                        <ul class=" dropdown-menu text-right " >
+                                            @foreach($categories as $category)
+                                                @include('categories.show', ['$category' => $category])
+                                            @endforeach
+                                        </ul>
                                     </div>
+                                    <div id="errorSelect" class="errorMselector">هذه الخانه مطلوبه</div>
+                                    <span id="test_course-teacher_error"></span>
+                                    <div></div>
+
                                 </div>
 
 
@@ -269,9 +276,14 @@
                     fd.append('images[]',file.files[0]);
                }
             });
-            $('input[type="checkbox"]').each(function () {
+            $('.instructors[type="checkbox"]').each(function () {
                 if(this.checked)
                     fd.append('instructors[]',$(this).val());
+            });
+
+            $('.categories[type="checkbox"]').each(function () {
+                if(this.checked)
+                    fd.append('categories[]',$(this).val());
             });
 
 

@@ -22,7 +22,7 @@ class CategoryRepository
     {
         $center = Center::findOrFail(Session('center_id'));
         $categories = $center->categories()->with('children')->where('parent_id', null)->get();
-        return response()->json($categories);
+        return $categories;
     }
 
 }
