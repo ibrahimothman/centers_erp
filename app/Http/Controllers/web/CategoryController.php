@@ -5,6 +5,7 @@ namespace App\Http\Controllers\web;
 use App\Category;
 use App\Center;
 use App\Http\Controllers\Controller;
+use App\repository\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
@@ -14,16 +15,12 @@ class CategoryController extends Controller
 
     public function index()
     {
-        //
-        $center = Center::findOrFail(Session('center_id'));
-        $categories = $center->categories()->with('children')->where('parent_id', null)->get();
-        return response()->json($categories);
+        return view('categories.add_category');
     }
 
-
-    public function create()
+    public function allCategories()
     {
-        return view('categories.add_category');
+        return CategoryRepository::getInstance()->allCategories();
     }
 
 

@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
 
     //-------------------- categories -----------------------
     Route::resource('categories', "$web_controllers_path\CategoryController");
+    Route::get('all_categories', "$web_controllers_path\CategoryController@allCategories");
 
     // ----------------------- rooms----------------
     Route::resource('rooms',"$web_controllers_path\RoomsController");

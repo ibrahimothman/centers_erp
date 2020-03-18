@@ -96,7 +96,7 @@
 
     function loadAllCategories() {
         $.ajax({
-            url: "{{ route('categories.index') }}",
+            url: "/all_categories/",
             type: "get",
             success: function (categories) {
                 displayCategories(categories);
