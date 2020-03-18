@@ -15,9 +15,10 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->default(1);
             $table->unsignedBigInteger('center_id');
-            $table->string('name');
+            $table->string('nameAr');
+            $table->string('nameEn');
             $table->string('phoneNumber')->unique();
             $table->string('idNumber')->unique();
             $table->string('phoneNumberSec')->nullable();

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\web;
 
+use App\Employee;
 use App\Http\Controllers\Controller;
 
 use App\Center;
+use App\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
@@ -19,8 +21,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-//        (Employee::findOrFail(1)->delete();
-//        dd'deleted');
+        $center = Center::findOrFail(Session('center_id'));
+        $employees = Employee::allEmployees($center);
+        return view("employee/index", compact('employees'));
     }
 
     /**
@@ -46,7 +49,6 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         // todo 1) create user account for this employee
-//        dd($request->all());
 //        $user = User::create($this->validateRequest());
 
         // 2) create an employee related to that user
@@ -67,7 +69,7 @@ class EmployeeController extends Controller
         // todo 2) save employee's jobs
         // $employee->jobs()->syncWithoutDetaching($data['job']);
 
-        dd('ok');
+        return redirect('/employees');
     }
 
     /**
@@ -129,7 +131,8 @@ class EmployeeController extends Controller
             'address' => 'required',
             'payment_model' => ['required', 'integer'],
             'payment_model_meta_data' => ['required', 'array'],
-            'name' => 'required| unique:employees,name,NULL,id,center_id,'.Session('center_id'),
+            'nameAr' => 'required| unique:employees,nameAr,NULL,id,center_id,'.Session('center_id'),
+            'nameEn' => 'required| unique:employees,nameEn,NULL,id,center_id,'.Session('center_id'),
 //            'job' => 'required',
 
         ]);

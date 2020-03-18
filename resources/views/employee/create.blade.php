@@ -27,10 +27,17 @@
                                     <form action="{{ route('employees.store') }}" method="post" id="employeeCreate">
                                         @csrf
                                         <div class="form-row">
-                                            <label>الاسم </label>
+                                            <label>الاسم باللغه العربيه </label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="name" placeholder="الاسم " value="{{ old('name') }}">
-                                            <div>{{ $errors->first('name') }}</div>
+                                            <input type="text" class="form-control" name="nameAr" placeholder="الاسم " value="{{ old('nameAr') }}">
+                                            <div>{{ $errors->first('nameAr') }}</div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <label>الاسم باللغه الانجليزيه </label>
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" name="nameEn" placeholder="الاسم " value="{{ old('nameEn') }}">
+                                            <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
 
 

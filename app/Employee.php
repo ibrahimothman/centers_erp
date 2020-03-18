@@ -4,7 +4,9 @@ namespace App;
 
 use App\helper\mathParser\Math;
 use App\helper\PaymentModelHelper;
+use App\QueryFilter\Name;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 use function foo\func;
 
 class Employee extends Model
@@ -16,6 +18,17 @@ class Employee extends Model
         return[
             'admin','not admin'
         ];
+    }
+
+    public static function allEmployees($center)
+    {
+        return App(Pipeline::class)
+            ->send($center->employees())
+            ->through([
+                Name::class
+            ])
+            ->thenReturn()
+            ->paginate(request('limit')? request('limit') : 10);
     }
 
     public function address()
