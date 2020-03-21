@@ -32,10 +32,7 @@
                                                     <i class="fas fa-edit"></i>
                                                     تعديل البيانات المركز
                                                     <i class="fas fa-angle-double-left  "></i> </a>
-                                                <a href="#" id="manager" class="list-group-item">
-                                                    <i class="fas fa-user-edit"></i>
-                                                    تعديل بيانات المدير
-                                                    <i class="fas fa-angle-double-left "></i> </a>
+
                                                 <a href="#" id="pass" class="list-group-item">
                                                     <i class="fas fa-key"></i>
                                                     تغير الباسورد
@@ -64,17 +61,24 @@
                                         <div class="card mb-4">
                                             <header>
                                                 <div class="card-header text-primary form-title">
-                                                    تعديل بيانات المركز
+                                                     بيانات المركز
                                                 </div>
                                             </header>
 
                                             <div class="card-body">
-                                                <form id="centerInfo">
+                                                @if(Session('center_id'))
+                                                    <form id="centerInfo" action="{{ route('centers.update', $center) }}" method="post" enctype="multipart/form-data">
+                                                        @method('put')
+                                                @else
+                                                     <form id="centerInfo" action="{{ route('centers.store') }}" method="post" enctype="multipart/form-data">
+
+                                                  @endif
+                                                    @csrf
                                                     <div class="form-row image-upload">
                                                         <div class="col-sm-8">
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input"
-                                                                       accept="image/*" name="image1"
+                                                                       accept="image/*" name="image"
                                                                        id="customFile1" src=""
                                                                        onchange="readURL(this, 1);">
                                                             </div>
@@ -83,7 +87,7 @@
                                                     <div class="d-flex justify-content-center  ">
                                                         <div class="logo-image-input">
                                                             <img id="imageUploaded1"
-                                                                 src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                                 src="{{ $center ? $center->image :  'http://simpleicon.com/wp-content/uploads/camera-2.svg'}}"
                                                                  alt="your image"/>
                                                             <p>شعار المركز</p>
                                                         </div>
@@ -91,26 +95,41 @@
                                                     <div class="form-row form-group">
                                                         <label>اسم المركز</label>
                                                         <span class="required">*</span>
-                                                        <input type="text" name="centerName" class='form-control'
+                                                        <input type="text" name="name" value="{{ $center? $center->name : old('name') }}" class='form-control'
                                                                placeholder='ادخل اسم المركز'>
                                                     </div>
+
+
                                                     <div class="form-row form-group">
                                                         <label>الموقع</label>
                                                         <span class="required">*</span>
-                                                        <input type="text" name="" class='form-control'
+                                                        <input type="text" name="location" value="{{ $center && $center->location? $center->location: old('location')  }}" class='form-control'
                                                                placeholder='ادخل الموقع'>
                                                     </div>
                                                     <div class="form-row form-group">
                                                         <label>نبذه عن المركز</label>
                                                         <span class="required">*</span>
-                                                        <textarea name="bio" placeholder="نبذه عن " rows="3"
+                                                        <textarea name="about_center" placeholder="نبذه عن " rows="3"
                                                                   class="form-control"
-                                                                  style="  overflow-scrolling:auto; "></textarea>
+                                                                  style="  overflow-scrolling:auto; ">{{ $center && $center->about_center? $center->about_center: old('about_center')  }}</textarea>
+                                                    </div>
+                                                    <div class="form-row form-group">
+                                                        <label>اسم المدير</label>
+                                                        <span class="required">*</span>
+                                                        <input type="text" name="manager_name" value="{{ $center && $center->manager_name? $center->manager_name: old('manager_name')  }}" class='form-control'
+                                                               placeholder='ادخل اسم المدير'>
+                                                    </div>
+                                                    <div class="form-row form-group">
+                                                        <label>نبذه عن المدير</label>
+                                                        <span class="required">*</span>
+                                                        <textarea name="about_manager" placeholder="نبذه عن " rows="3"
+                                                                  class="form-control"
+                                                                  style="  overflow-scrolling:auto; ">{{ $center && $center->about_manager? $center->about_manager: old('about_manager')  }}</textarea>
                                                     </div>
                                                     <div class="form-row save">
                                                         <div class="col-sm-6 mx-auto text-center">
                                                             <button class="btn btn-primary" type="submit" id="submit">
-                                                                حفظ
+                                                                {{ Session('center_id')? 'تعديل' : 'حفظ' }}
                                                             </button>
                                                             <button class="btn  btn-danger" type="reset"> الغاء</button>
                                                         </div>
@@ -121,44 +140,7 @@
                                         </div>
                                         <!-- /.container-fluid -->
                                     </section><!-- end center info -->
-                                    <!-- manager info -->
-                                    <section class="managerInfoSection">
-                                        <div class="card mb-4">
-                                            <header>
-                                                <div class="card-header text-primary form-title">
-                                                    تعديل بيانات المدير
-                                                </div>
-                                            </header>
-                                            <div class="card-body">
-                                                <form id="managerInfo">
-                                                    <div class="form-row form-group">
-                                                        <label>اسم المدير</label>
-                                                        <span class="required">*</span>
-                                                        <input type="text" name="managerName" class='form-control'
-                                                               placeholder='ادخل اسم المدير'>
-                                                    </div>
-                                                    <div class="form-row form-group">
-                                                        <label>نبذه عن المدير</label>
-                                                        <span class="required">*</span>
-                                                        <textarea name="bioManager" placeholder="نبذه عن " rows="3"
-                                                                  class="form-control"
-                                                                  style="  overflow-scrolling:auto; "></textarea>
-                                                    </div>
-                                                    <div class="form-row save">
-                                                        <div class="col-sm-6 mx-auto text-center">
-                                                            <button class="btn btn-primary" type="submit" id="submit">
-                                                                حفظ
-                                                            </button>
-                                                            <button class="btn  btn-danger" type="reset"> الغاء</button>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <!-- /.container-fluid -->
-                                    </section>
-                                    <!-- manager info -->
+
                                     <!-- password -->
                                     <section class="passwordSection">
                                         <div class="card mb-4">

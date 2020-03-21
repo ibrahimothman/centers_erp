@@ -109,4 +109,12 @@ class SideBarLinks
         ];
     }
 
+    public static function settingLinks()
+    {
+        return [
+            url('/').'/'.'settings' =>'الاعدادات',
+
+        ];
+    }
+
 }

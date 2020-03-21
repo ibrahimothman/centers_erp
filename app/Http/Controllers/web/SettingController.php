@@ -18,13 +18,11 @@ class SettingController extends Controller
 
     public function index()
     {
-        return view('accountSetting/setting');
+
+        $center = Auth::user()->center;
+        return view('account_settings/setting', compact('center'));
     }
 
-    public function create()
-    {
-        return view('accountSetting/setting');
-    }
 
 
 }

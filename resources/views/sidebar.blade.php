@@ -185,6 +185,23 @@
         </div>
     </li>
 
+    <!-- settings -->
+    <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::settingLinks() )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#settingsCollapse" aria-expanded="true" aria-controls="settingsCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>الاعدادات</span>
+        </a>
+        <div id="settingsCollapse" class="{{array_key_exists(Request::url(),\App\helper\SideBarLinks::settingLinks() )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                @foreach(\App\helper\SideBarLinks::settingLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 

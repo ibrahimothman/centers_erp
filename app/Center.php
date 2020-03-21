@@ -3,13 +3,14 @@
 namespace App;
 
 use App\Events\NewCenterHasCreated;
+use App\helper\ImageUploader;
 use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use mysql_xdevapi\Session;
 
-class Center extends Model
+class Center extends ImageUploader
 {
     protected $guarded = [];
     public static $ApiFields=['id','name'];
@@ -24,14 +25,11 @@ class Center extends Model
             ->thenReturn()->get();
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::created(function ($center)
-        {
-            Session(['center_id' => $center->id]);
-//            dd(Center::findOrFail(Session('center_id')));
-        });
+    public function setImageAttribute($image){
+        $this->deleteImage($this->image);
+        $original = $this->saveImage($image);
+        return $this->attributes['image'] = url($this->getDir()."/".$original);
+
     }
 
     public function owner()
@@ -92,4 +90,9 @@ class Center extends Model
         return $this->hasMany(PaymentModel::class);
     }
 
+    public function getDir()
+    {
+        // TODO: Implement getDir() method.
+        return '/uploads/profiles';
+    }
 }

@@ -23,10 +23,10 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
     //-------------------- settings ---------------------
     Route::resource('settings', "$web_controllers_path\SettingController");
 
+        //------------------------ center -------------
+        Route::resource('centers', "$web_controllers_path\CenterController");
     Route::group(['middleware' => 'center'], function ()use ($web_controllers_path){
 
-        //------------------------ center -------------
-        Route::resource('centers', "$web_controllers_path\CentersController");
 
         //--------------------------- employees ------------------
         Route::resource('employees', "$web_controllers_path\EmployeeController");

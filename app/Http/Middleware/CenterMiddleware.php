@@ -17,7 +17,7 @@ class CenterMiddleware
     public function handle($request, Closure $next)
     {
         if(! Auth::user()->center){
-            return redirect('settings/create');
+            return redirect('profiles/create');
         }
         Session(['center_id' => Auth::user()->center->id]);
         return $next($request);
