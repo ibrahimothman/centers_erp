@@ -97,9 +97,9 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
     //-------------------- jobs ---------------------
     Route::resource('jobs',"$web_controllers_path\jobController");
     //-------------------- settings ---------------------
-    Route::get('settings/instructorSettings',"$web_controllers_path\settingsController@instructorSettings");
-    Route::get('settings/instructorPassReset',"$web_controllers_path\settingsController@instructorPassReset");
+    Route::resource('settings',"$web_controllers_path\SettingController");
 
+    // ------------------------- Calendar -----------------------
     Route::get('calendar', function(){
         return view('Calendar/calendar');
     });
@@ -117,9 +117,7 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
     Route::resource('payment_models', "$web_controllers_path\PaymentModelController");
     Route::resource('payments', "$web_controllers_path\PaymentController");
 
-    Route::get('settings', function (){
-        return view('accountSetting/setting');
-    });
+
 });
 
 Route::get('set_role',function (){

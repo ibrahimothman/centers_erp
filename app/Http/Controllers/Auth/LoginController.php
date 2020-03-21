@@ -51,7 +51,7 @@ class LoginController extends Controller
             Session(['center_id' => Auth::user()->center->id]);
         }else {
             // redirect user to centers.create
-            return redirect('centers/create');
+            return redirect('settings/create');
         }
     }
 }
