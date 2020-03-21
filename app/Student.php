@@ -6,7 +6,10 @@ use App\helper\Constants;
 use App\helper\ImageUploader;
 use App\QueryFilter\Name;
 use App\QueryFilter\Sort;
+use App\Rules\DegreeRule;
+use App\Rules\FacultyRule;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -113,6 +116,49 @@ class Student extends ImageUploader
     public function getDir()
     {
         return '/uploads/profiles';
+    }
+
+    public static function rules(Request $request)
+    {
+
+        if($request->isMethod('post')){
+            return [
+                'nameAr' => 'required|unique:students,nameAr',
+                'nameEn' => 'required|unique:students,nameEn',
+                'email' => 'required|unique:students,email',
+                'idNumber' => 'required|digits:14|unique:students,idNumber',
+                'image' => ' required|image|file | max:10000',
+                'idImage' => 'required|image|file | max:10000',
+                'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber',
+                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
+                'passportNumber' => 'sometimes',
+                'state' => 'required',
+                'city' => 'required',
+                'address' => 'required',
+                'degree' => ['required',new DegreeRule],
+                'faculty' => ['required',new FacultyRule],
+                'skillCardNumber' => 'required|unique:students,skillCardNumber',
+            ];
+        }else{
+            $student_id = $request->route('student')->id;
+            return[
+                'nameAr' => 'sometimes|unique:students,nameAr,'.$student_id,
+                'nameEn' => 'sometimes|unique:students,nameEn,'.$student_id,
+                'email' => 'sometimes|unique:students,email,'.$student_id,
+                'idNumber' => 'sometimes|digits:14|unique:students,idNumber,'.$student_id,
+                'image' => ' sometimes|image|file | max:10000',
+                'idImage' => 'sometimes|image|file | max:10000',
+                'phoneNumber' => 'sometimes|regex:/(01)[0-9]{9}/|unique:students,phoneNumber,'.$student_id,
+                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
+                'passportNumber' => 'sometimes',
+                'state' => 'sometimes',
+                'city' => 'sometimes',
+                'address' => 'sometimes',
+                'degree' => ['sometimes',new DegreeRule],
+                'faculty' => ['sometimes',new FacultyRule],
+                'skillCardNumber' => 'sometimes|unique:students,skillCardNumber,'.$student_id,
+            ];
+        }
     }
 
 }

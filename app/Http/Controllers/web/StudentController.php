@@ -88,7 +88,7 @@ class StudentController extends Controller
         // check if user has rights to add a new student
 
 //        $this->authorize('create',Student::class);
-        $data = $this->validateRequest('');
+        $data = $this->validateRequest($request);
 
         // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
@@ -141,14 +141,14 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Student $student)
+    public function update(Request $request, Student $student)
     {
 
 //        $this->authorize('update',$student);
 
         // todo delete prev image from profiles dir
 
-        $data = $this->validateRequest($student->id);
+        $data = $this->validateRequest($request);
         // create a new student
         $student->update(Arr::except($data,['state','city','address']));
 
@@ -179,25 +179,9 @@ class StudentController extends Controller
 
 
 
-    private function validateRequest($user_id)
+    private function validateRequest(Request $request)
     {
-        return request()->validate([
-            'nameAr' => 'required|unique:students,nameAr,'.$user_id,
-            'nameEn' => 'required|unique:students,nameEn,'.$user_id,
-            'email' => 'required|unique:students,email,'.$user_id,
-            'idNumber' => 'required|digits:14|unique:students,idNumber,'.$user_id,
-            'image' => ' required|image|file | max:10000',
-            'idImage' => 'required|image|file | max:10000',
-            'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber,'.$user_id,
-            //'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
-            'passportNumber' => 'sometimes',
-            'state' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'degree' => 'required',
-            'faculty' => 'required',
-            'skillCardNumber' => 'required|unique:students,skillCardNumber,'.$user_id,
-        ]);
+        return request()->validate(Student::rules($request));
     }
 
 

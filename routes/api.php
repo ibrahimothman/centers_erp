@@ -11,9 +11,9 @@ Route::group([
     Route::post('refresh', "$api_controller_path\AuthController@refresh");
     Route::post('me', "$api_controller_path\AuthController@me");
 
+    Route::post('register', "$api_controller_path\RegisterController@register");
 });
 
-Route::post('register', "$api_controller_path\RegisterController@register");
 
 Route::group(['middleware' => ['before' => 'jwt.auth']], function () use ($api_controller_path){
     Route::apiResource('students', "$api_controller_path\StudentApiController");

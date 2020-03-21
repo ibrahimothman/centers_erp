@@ -29,23 +29,24 @@ class StudentApiController extends Controller
 
         $student_data = $this->validateRequest($request);
         if($student_data->fails()){
-            return response()->json($student_data->errors(), 400);
+            $errorString = $student_data->messages()->all()[0];
+            return response()->json(['message' => $errorString], 400);
         }
 
         // create a new student
         $student = Student::create(Arr::except($student_data->validate(),['state','city','address']));
-
-        // attach student with center
+//
+//        // attach student with center
         $student->address()->create([
             'state' => $request->all()['state'],
             'city' => $request->all()['city'],
             'address' => $request->all()['address'],
         ]);
-
-        // fetch center from session
-        $center = Auth::user()->center;
-        // attach the student to the center
-        $center->students()->syncWithoutDetaching($student);
+//
+//         todo fetch center from session
+//        $center = Auth::user()->center;
+//        // attach the student to the center
+//        $center->students()->syncWithoutDetaching($student);
         return new StudentResource($student);
 
 
@@ -61,16 +62,18 @@ class StudentApiController extends Controller
     {
         $student_data = $this->validateRequest($request);
         if($student_data->fails()){
-            return response()->json($student_data->errors(), 400);
+            $errorString = $student_data->messages()->all()[0];
+            return response()->json(['message' => $errorString], 400);
         }
         // create a new student
         $student->update(Arr::except($student_data->validate(),['state','city','address']));
 
         // update address
+
         $student->address()->update([
-            'state' => $request->all()['state'],
-            'city' => $request->all()['city'],
-            'address' => $request->all()['address'],
+            'state' => $request->has('state')? $request->all()['state']: $student->address->state,
+            'city' => $request->has('city')? $request->all()['city']: $student->address->city,
+            'address' => $request->has('address')? $request->all()['address']: $student->address->address,
         ]);
 //
         return new StudentResource($student);
@@ -87,25 +90,9 @@ class StudentApiController extends Controller
 
     private function validateRequest(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'nameAr' => 'required|unique:students,nameAr',
-            'nameEn' => 'required|unique:students,nameEn',
-            'email' => 'required|unique:students,email',
-            'idNumber' => 'required|digits:14|unique:students,idNumber,',
-            'image' => ' required|image|file | max:10000',
-            'idImage' => 'required|image|file | max:10000',
-            'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber',
-            //'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
-            'passportNumber' => 'sometimes',
-            'state' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'degree' => ['required',new DegreeRule],
-            'faculty' => ['required',new FacultyRule],
-            'skillCardNumber' => 'required|unique:students,skillCardNumber',
-        ]);
-
+        $validator = Validator::make($request->all(), Student::rules($request));
         return $validator;
 
     }
+
 }

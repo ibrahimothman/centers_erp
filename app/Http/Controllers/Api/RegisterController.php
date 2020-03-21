@@ -25,12 +25,23 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             $failedRules = $validator->failed();
 
-            if(isset($failedRules['name']['Unique'])){
-                return response()->json(['message' => 'this username is already existed'], 401);
+            if(isset($failedRules['name']['Required'])){
+                return response()->json(['message' => 'this username field is required'], 400);
             }
 
+            if(isset($failedRules['name']['Unique'])){
+                return response()->json(['message' => 'this username is already existed'], 400);
+            }
+
+            if(isset($failedRules['email']['Required'])){
+                return response()->json(['message' => 'this email field is required'], 400);
+            }
             if(isset($failedRules['email']['Unique'])){
-                return response()->json(['message' => 'this email is already existed'], 401);
+                return response()->json(['message' => 'this email is already existed'], 400);
+            }
+
+            if(isset($failedRules['password']['Required'])){
+                return response()->json(['message' => 'this password field is required'], 400);
             }
         }
         $input = $request->all();

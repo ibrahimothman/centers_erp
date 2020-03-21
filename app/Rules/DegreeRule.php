@@ -37,6 +37,6 @@ class DegreeRule implements Rule
      */
     public function message()
     {
-        return 'valid Faculties are : '.implode(',', Student::degreeOptions());
+        return 'valid degrees are : '.implode(',', Student::degreeOptions());
     }
 }
