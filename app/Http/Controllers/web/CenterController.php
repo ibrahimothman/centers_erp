@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 
 use App\Center;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use mysql_xdevapi\Session;
@@ -16,7 +17,11 @@ class CenterController extends Controller
         $this->middleware('auth');
     }
 
-
+    public function show(Center $center)
+    {
+        $expenses = Collection::make($center->expenses);
+        dd($expenses->where('id', 3));
+    }
 
     public function store(Request $request)
     {

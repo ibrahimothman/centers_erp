@@ -51,7 +51,7 @@
                                                 <div class="form-row ">
                                                     <div class="col-lg-3 col-sm-4 form-group ">
                                                         <label> الاسم  </label>
-                                                        <input placeholder="اختار" type="text" id="student1" class="form-control student-selector required_field" name="student" list="studentList"   />
+                                                        <input placeholder="اختار" type="text" id="student1" class="form-control student-selector required_field" name="student" list="studentList" autocomplete="off"   />
                                                         <datalist id="studentList">
                                                             @foreach($students as $student)
                                                                 <option data-id="{{ $student->id }}" data-customValue="{{ $student }}" value="{{ $student->nameAr }}"></option>

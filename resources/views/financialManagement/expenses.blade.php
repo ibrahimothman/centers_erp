@@ -34,7 +34,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <!-- select date -->
-                                        <form>
+                                        <form id="expenses_form">
                                         <div class="row">
                                             <div class=" col">
                                         <!-- add pill -->
@@ -52,16 +52,22 @@
                                                     <input type="date" id="dateOutlay" name="dateOutlay" class="form-control dateOutlay">
                                                    </div>
                                                 <div class="col-lg-3 col-sm-6 form-group ">
-                                                    <label> الفاتوره  </label><input type="text" name="bill" class="form-control "  id="bill"   >
+                                                    <label> تحت بند  </label>
+                                                    <input type="text" placeholder="اختار" name="account" class="form-control "  id="account1" autocomplete="off" list="account_list"  >
+                                                    <datalist id="account_list">
+                                                        @foreach($expenses as $account)
+                                                            <option data-account-id="{{ $account['id'] }}" value="{{ $account['name'] }}"></option>
+                                                        @endforeach
+                                                    </datalist>
                                                 </div>
                                                 <div class="col-lg-3 col-sm-4 form-group ">
-                                                    <label> المطلوب سداده </label><input type="text" name="money" class="form-control "  id="money"   >
+                                                    <label> المطلوب سداده </label><input type="text" name="deserved_amount" class="form-control "  id="deserved_amount1"   >
                                                 </div>
                                                 <div class="col-lg-2 col-sm-4 form-group ">
-                                                    <label> المدفوع  </label><input type="text" name="payOutlay" class=" form-control payOutlay"  id="payOutlay"   >
+                                                    <label> المدفوع  </label><input type="text" name="amount" class=" form-control payOutlay"  id="amount1"   >
                                                 </div>
                                                 <div class="col-lg-1 col-sm-4 form-group ">
-                                                    <label>الباقي  </label><input type="text" name="noPay" class="form-control "  id="noPay"   >
+                                                    <label>الباقي  </label><input type="text" name="noPay" class="form-control "  id="noPay1"   >
                                                 </div>
 
                                             </div>
@@ -283,6 +289,12 @@
             return empty.length === 0;
         }
     });
+
+    $('#expenses_form').submit(function (e) {
+        e.preventDefault();
+
+
+    })
 
 
 </script>

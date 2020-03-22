@@ -90,17 +90,18 @@ class StudentController extends Controller
 //        $this->authorize('create',Student::class);
         $data = $this->validateRequest($request);
 
+
         // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
 
         // create a new student
-        $student = Student::create(Arr::except($data,['state','city','address']));
+        $student = Student::create(Arr::except($data->validate(),['state','city','address']));
 
         // attach student with center
         $student->address()->create([
-            'state' => $data['state'],
-            'city' => $data['city'],
-            'address' => $data['address'],
+            'state' => $request->all()['state'],
+            'city' => $request->all()['city'],
+            'address' => $request->all()['address'],
         ]);
 
         $center->students()->syncWithoutDetaching($student);
@@ -149,26 +150,22 @@ class StudentController extends Controller
         // todo delete prev image from profiles dir
 
         $data = $this->validateRequest($request);
+
         // create a new student
-        $student->update(Arr::except($data,['state','city','address']));
+        $student->update(Arr::except($data->validate(),['state','city','address']));
 
         // update address
+
         $student->address()->update([
-            'state' => $data['state'],
-            'city' => $data['city'],
-            'address' => $data['address'],
+            'state' => $request->has('state')? $request->all()['state']: $student->address->state,
+            'city' => $request->has('city')? $request->all()['city']: $student->address->city,
+            'address' => $request->has('address')? $request->all()['address']: $student->address->address,
         ]);
 
         return redirect("/students/$student->id")->with('success','updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Student $student)
+  function destroy(Student $student)
     {
         //policy
 //        $this->authorize('delete',$student);
@@ -181,7 +178,7 @@ class StudentController extends Controller
 
     private function validateRequest(Request $request)
     {
-        return request()->validate(Student::rules($request));
+        return Validator::make($request->all(), Student::rules($request));
     }
 
 

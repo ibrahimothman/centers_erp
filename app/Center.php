@@ -32,6 +32,16 @@ class Center extends ImageUploader
 
     }
 
+    public function getRevenuesAttribute($revenues)
+    {
+        return json_decode($revenues, true);
+    }
+
+    public function getExpensesAttribute($expenses)
+    {
+        return json_decode($expenses, true);
+    }
+
     public function owner()
     {
         return $this->belongsTo(User::class);

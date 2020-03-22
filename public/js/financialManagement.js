@@ -102,9 +102,11 @@ $(document).ready(function(){
     $('input#addButton').on('click', function() {
         var id = ($('.field .form-row').length + 1).toString();
         $('.field').append(' <div class="form-row "> <div class="col-lg-3 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="dateOutlay'+id+'" name="dateOutlay'+id+'" class="form-control dateOutlay"></div></div>' +
-            '<div class="col-lg-3 col-sm-4 form-group "><label> الفاتوره  </label><input type="text" name="bill'+id+'" class="form-control "  id="bill'+id+'"   ></div>' +
-            ' <div class="col-lg-3 col-sm-4 form-group "><label> المطلوب سداده </label><input type="text" name="money'+id+'" class="form-control "  id="money'+id+'"   ></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع  </label><input type="text" name="payOutlay'+id+'" class="form-control payOutlay "  id="payOutlay'+id+'"   ></div>' +
+            '<div class="col-lg-3 col-sm-4 form-group "><label> تحت بند  </label><input type="text" placeholder="اختار" name="account'+id+'" class="form-control "  id="account'+id+'" list="account_list"  >' +
+            '<datalist id="account_list"></datalist> '+
+            '</div>' +
+            ' <div class="col-lg-3 col-sm-4 form-group "><label> المطلوب سداده </label><input type="text" name="deserved_amount'+id+'" class="form-control "  id="deserved_amount'+id+'"   ></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع  </label><input type="text" name="amount'+id+'" class="form-control payOutlay "  id="amount'+id+'"   ></div>' +
             '<div class="col-lg-1 col-sm-4 form-group "><label>الباقي  </label><input type="text" name="noPay'+id+'" class="form-control "  id="noPay'+id+'"   ></div>' +
             '</div></div>');
     });
@@ -115,7 +117,14 @@ $(document).ready(function(){
             sumOutlay += +$(this).val();
         });
         $("#sumOutlay").val(sumOutlay);
+        var id = $(this).attr('id')[6];
+        var rest_of_cost = $('#deserved_amount'+id).val() - $('#amount'+id).val();
+        $('#noPay'+id).val(rest_of_cost);
+
     });
+
+
+
     // Payroll
     // add btn payroll
     $('input#addButtonPayroll').on('click', function() {

@@ -14,7 +14,12 @@ class FinanceController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $transactions = TransactionRepository::getInstance()->fetchTransactions($center);
-//        return json_encode($transactions);
-        return view('financialManagement/financialManagement_show', compact('transactions'));
+//        foreach ($transactions as $transaction){
+//            echo $transaction->payFor();
+//        }
+//        dd($transactions);
+//        echo count($transactions);
+        return json_encode($transactions[count($transactions) -6]);
+//        return view('financialManagement/financialManagement_show', compact('transactions'));
     }
 }

@@ -130,7 +130,7 @@ class Student extends ImageUploader
                 'image' => ' required|image|file | max:10000',
                 'idImage' => 'required|image|file | max:10000',
                 'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber',
-                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
+//                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
                 'passportNumber' => 'sometimes',
                 'state' => 'required',
                 'city' => 'required',

@@ -37,7 +37,7 @@
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             الملف الشخصى
                         </a>
-                        <a class="dropdown-item" href="/settings/profile">
+                        <a class="dropdown-item" href="/settings">
                             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                             الاعدادات
                         </a>

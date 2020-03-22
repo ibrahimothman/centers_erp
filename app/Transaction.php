@@ -53,6 +53,8 @@ class Transaction extends Model
 
     public function payFor()
     {
-        return $this->meta_data['payFor_type']::find($this->meta_data['payFor_id']);
+        if($this->meta_data['payFor_type'] != 'null')
+            return $this->meta_data['payFor_type']::find($this->meta_data['payFor_id']);
+        else return "null";
     }
 }

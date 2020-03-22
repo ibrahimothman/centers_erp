@@ -28,7 +28,7 @@ class RevenueController extends Controller
         // get students with diplomas in which they enroll
         $center = Center::findOrFail(Session('center_id'));
         $students = $center->students()->with('diplomas.diploma')->get();
-//        return response()->json($students);r
+//        return response()->json($students);
         return view("financialManagement/revenues", compact('students'));
     }
 }
