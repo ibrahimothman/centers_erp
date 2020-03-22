@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class TransactionController extends Controller
 {
@@ -30,7 +31,7 @@ class TransactionController extends Controller
         $center = Center::findOrFail(Session('center_id'));
         $data = $this->validateTransaction($request);
         if($data->fails()){
-            return response()->json(['message' => 'invalid data', 'error' => true]);
+            return $data->errors()->messages();
         }
         $transactions = $data->validate()['transactions'];
         foreach ($transactions as $transaction){
@@ -47,7 +48,7 @@ class TransactionController extends Controller
          * */
         $validator =  Validator::make($request->all(),[
             'transactions' => ['required' , 'array'],
-            'transactions.*.account' => ['required', 'integer'],
+            'transactions.*.account_id' => ['required', 'integer'],
             'transactions.*.amount' => ['required', 'integer'],
             'transactions.*.rest' => ['required', 'integer'],
             'transactions.*.deserved_amount' => ['required', 'integer'],
@@ -55,8 +56,8 @@ class TransactionController extends Controller
             'transactions.*.meta_data' => ['required', 'array'],
             'transactions.*.meta_data.payer_id' => ['required', 'integer'],
             'transactions.*.meta_data.payer_type' => ['required'],
-            'transactions.*.meta_data.payFor_id' => ['required', 'integer'],
-            'transactions.*.meta_data.payFor_type' => ['required'],
+            'transactions.*.meta_data.payFor_id' => ['sometimes', 'nullable', 'integer', ],
+            'transactions.*.meta_data.payFor_type' => ['sometimes'],
         ]);
 
         return $validator;

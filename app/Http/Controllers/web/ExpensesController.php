@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Center;
+use App\FinanceAccount;
 use App\Http\Controllers\Controller;
 use App\PaymentModel;
 use App\repository\EmployeeRepository;
@@ -22,14 +23,14 @@ class ExpensesController extends Controller
         $employees = EmployeeRepository::getInstance()->allEmployees();
 
 
-        $expenses = Collection::make($center->expenses);
+        $accounts = FinanceAccount::all()->where('parent_id', 6);
 //         return $expenses;
 //        foreach ($expenses as $account){
 //            echo $account['name'];
 //        }
 
         return view('financialManagement/expenses'
-            , compact('instructors', 'employees', 'expenses'));
+            , compact('instructors', 'employees', 'accounts'));
 
     }
 }

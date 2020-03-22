@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Center;
+use App\FinanceAccount;
 use App\helper\mathParser\Math;
 use App\HourlyModel;
 use App\MonthlyModel;
@@ -25,9 +26,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Collection::macro('filterByAccount', function($account){
-            return $this->filter(function ($value) use ($account){
-                return $value['account'] == $account;
+        Collection::macro('filterByAccount', function($account, $isParent){
+            return $this->filter(function ($transaction) use ($account, $isParent){
+                if(!$isParent)
+                    return FinanceAccount::find($transaction['account_id'])['id'] == $account;
+                else return FinanceAccount::find($transaction['account_id'])['parent_id'] == $account;
+
             });
 
         });

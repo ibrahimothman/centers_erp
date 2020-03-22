@@ -17,7 +17,7 @@ class Transaction extends Model
     public static function allTransactions($center)
     {
         return App(Pipeline::class)
-            ->send($center->transactions())
+            ->send($center->transactions()->latest())
             ->through([
                 Account::class,
                 StartDate::class,
@@ -30,6 +30,12 @@ class Transaction extends Model
     {
         return $this->belongsTo(Center::class);
     }
+
+    public function account()
+    {
+        return $this->belongsTo(FinanceAccount::class, 'account_id');
+    }
+
 
 
     public function setMetaDataAttribute($value)
@@ -53,8 +59,9 @@ class Transaction extends Model
 
     public function payFor()
     {
-        if($this->meta_data['payFor_type'] != 'null')
+        if(! is_null($this->meta_data['payFor_type'])){
             return $this->meta_data['payFor_type']::find($this->meta_data['payFor_id']);
-        else return "null";
+        }
+
     }
 }

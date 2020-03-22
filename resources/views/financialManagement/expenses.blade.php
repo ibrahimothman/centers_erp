@@ -49,25 +49,25 @@
                                             <div class="form-row ">
                                                 <div class="col-lg-3 col-sm-6  form-group">
                                                     <label for="validationCustom01"> التاريخ</label>
-                                                    <input type="date" id="dateOutlay" name="dateOutlay" class="form-control dateOutlay">
+                                                    <input type="date" id="dateOutlay1" name="dateOutlay" class="form-control dateOutlay">
                                                    </div>
                                                 <div class="col-lg-3 col-sm-6 form-group ">
                                                     <label> تحت بند  </label>
-                                                    <input type="text" placeholder="اختار" name="account" class="form-control "  id="account1" autocomplete="off" list="account_list"  >
+                                                    <input type="text" placeholder="اختار" name="account" class="form-control expenses_field expenses_required"  id="account1" autocomplete="off" list="account_list"  >
                                                     <datalist id="account_list">
-                                                        @foreach($expenses as $account)
+                                                        @foreach($accounts as $account)
                                                             <option data-account-id="{{ $account['id'] }}" value="{{ $account['name'] }}"></option>
                                                         @endforeach
                                                     </datalist>
                                                 </div>
                                                 <div class="col-lg-3 col-sm-4 form-group ">
-                                                    <label> المطلوب سداده </label><input type="text" name="deserved_amount" class="form-control "  id="deserved_amount1"   >
+                                                    <label> المطلوب سداده </label><input type="text" autocomplete="off" name="deserved_amount" class="form-control expenses_required"  id="deserved_amount1"   >
                                                 </div>
                                                 <div class="col-lg-2 col-sm-4 form-group ">
-                                                    <label> المدفوع  </label><input type="text" name="amount" class=" form-control payOutlay"  id="amount1"   >
+                                                    <label> المدفوع  </label><input type="text" autocomplete="off" name="amount" class=" form-control payOutlay expenses_required"  id="amount1"   >
                                                 </div>
                                                 <div class="col-lg-1 col-sm-4 form-group ">
-                                                    <label>الباقي  </label><input type="text" name="noPay" class="form-control "  id="noPay1"   >
+                                                    <label>الباقي  </label><input type="text" autocomplete="off" name="noPay" class="form-control "  id="noPay1"   >
                                                 </div>
 
                                             </div>
@@ -119,21 +119,21 @@
                                                 <div class="form-row " id="data1">
                                                     <div class="col-lg-2 col-sm-4 form-group">
                                                         <label > التاريخ</label>
-                                                        <input type="date" id="datePayroll" name="datePayroll" class="form-control datePayroll required_field">
+                                                        <input type="date" id="datePayroll1" name="datePayroll1" class="form-control datePayroll required_field">
                                                        </div>
 
                                                     <div class="col-lg-2 col-sm-4 form-group ">
                                                         <label> اختار </label>
                                                         <input placeholder="اختار" type="text" id="instructor_employee1" class="form-control pay_for_selector required_field" name="list1" list="list"  />
                                                         <datalist id="list">
-                                                            <option data-type="App\Instructor"  data-customValue="{{ $instructors }}" value="المدربين"></option>
-                                                            <option data-type="App\Employee" data-customValue="{{ $employees }}" value="الموظفين"></option>
+                                                            <option data-account="4" data-type="App\Instructor"  data-customValue="{{ $instructors }}" value="المدربين"></option>
+                                                            <option data-account="5" data-type="App\Employee" data-customValue="{{ $employees }}" value="الموظفين"></option>
                                                         </datalist>
                                                     </div>
 
                                                     <div class="col-lg-2 col-sm-4 form-group ">
                                                         <label> الاسم </label>
-                                                        <input placeholder="اختار" type="text" id="pay_for1" class="form-control  required_field" name="pay_for1" list="pay_for_list1"  />
+                                                        <input placeholder="اختار" autocomplete="off" type="text" id="pay_for1" class="form-control  required_field" name="pay_for1" list="pay_for_list1"  />
                                                         <datalist id="pay_for_list1">
 
                                                         </datalist>
@@ -238,7 +238,7 @@
                     url: "{{ route("transactions.store") }}",
                     type: "post",
                     data: {
-                        transactions : createTransactionMetaDataJSON(),
+                        transactions : createSalaryTransactionMetaDataJSON(),
                         _token: "{{ csrf_token() }}"
                     },
                     success : function (data) {
@@ -256,7 +256,7 @@
         }
     });
 
-        function createTransactionMetaDataJSON() {
+        function createSalaryTransactionMetaDataJSON() {
             let transactions = [];
             $(".pay_for_selector").each(function (i, v) {
                 let transaction = {};
@@ -266,9 +266,9 @@
                 meta_data['payFor_id'] = $('#pay_for_list'+ (i+1) +' [value="' + $("#pay_for"+ (i+1)).val() + '"]').data("custom").id;
                 meta_data['payFor_type'] = $('#pay_for_list'+(i+1)+' [value="' + $("#pay_for"+ (i+1)).val() + '"]').data('type');
 
-                transaction['account'] = 2;
+                transaction['account_id'] = $('#list [value="' + $("#instructor_employee"+ (i+1)).val() + '"]').attr("data-account");
                 transaction['rest'] = $('#noPayIncome'+ (i+1)).val();
-                transaction['date'] = $("#datePayroll").val();
+                transaction['date'] = $("#datePayroll"+(i+1)).val();
                 transaction['meta_data'] = meta_data;
                 transaction['amount'] =  $("#payIncome"+ (i+1)).val();
                 transaction['deserved_amount'] =  $("#salary"+ (i+1)).val();
@@ -288,13 +288,56 @@
 
             return empty.length === 0;
         }
+
+
+        $('#expenses_form').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "{{ route("transactions.store") }}",
+                type: "post",
+                data: {
+                    transactions : createExpensesTransactionMetaDataJSON(),
+                    _token: "{{ csrf_token() }}"
+                },
+                success : function (data) {
+                    alert(data.message);
+                    // if(! data.error){
+                    //     setTimeout(function () {
+                    //         location.reload();
+                    //     }, 1000);
+                    // }
+                }
+
+            });
+
+
+        });
+
+        function createExpensesTransactionMetaDataJSON() {
+            let transactions = [];
+            $(".expenses_field").each(function (i, v) {
+                let transaction = {};
+                let meta_data = {};
+                meta_data["payer_id"] = "{{ Session('center_id') }}";
+                meta_data['payer_type'] = "App\\Center";
+                meta_data["payFor_id"] = null;
+                meta_data['payFor_type'] = null;
+
+
+                transaction['account_id'] = $('#account_list [value="' + $("#account"+ (i+1)).val() + '"]').attr("data-account-id");
+                transaction['rest'] = $('#noPay'+ (i+1)).val();
+                transaction['date'] = $("#dateOutlay"+(i+1)).val();
+                transaction['meta_data'] = meta_data;
+                transaction['amount'] =  $("#amount"+ (i+1)).val();
+                transaction['deserved_amount'] =  $("#deserved_amount"+ (i+1)).val();
+
+                transactions.push(transaction);
+
+            });
+
+            return transactions;
+        }
     });
-
-    $('#expenses_form').submit(function (e) {
-        e.preventDefault();
-
-
-    })
 
 
 </script>
