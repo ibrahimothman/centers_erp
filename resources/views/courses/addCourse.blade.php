@@ -1,10 +1,11 @@
 <!doctype html>
-
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
 @include('library')
-<!--style multi select-->
+<!-- category plugin -->
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--style multi select-->
     <link rel="stylesheet" href="/css/multiSelect.css">
     <title>Add a Course</title>
 </head>
@@ -126,15 +127,15 @@
                                 </fieldset>
                                 <div class="form-row">
                                     {{--
-                                        <div class="col-sm-6 form-group">
-                                        <label for="instructor-name">اسم المدرس</label>
-                                        <select class="form-control" id="instructor-name" multiple required>
-                                            @foreach($instructors as $instructor)
-                                                <option value="{{$instructor->id}}">{{$instructor->name}}</option>
-                                            @endforeach
+                                                                            <div class="col-sm-6 form-group">
+                                                                                                              <label for="instructor-name">اسم المدرس</label>
+                                                                                                                                                       <select class="form-control" id="instructor-name" multiple required>
+                                        @foreach($instructors as $instructor)
+                                        <option value="{{$instructor->id}}">{{$instructor->name}}</option>
+                                        @endforeach
                                         </select>
-                                            <span id="test_course-teacher_error"></span>
-                                            <div></div>
+                                        <span id="test_course-teacher_error"></span>
+                                        <div></div>
                                         </div>
                                         --}}
                                     <div class="col-sm-6 form-group">
@@ -189,14 +190,10 @@
                                     <div class="col-sm-6">
                                         <label>التصنيف</label>
                                         <span class="required">*</span>
-                                        <select name="category" class="form-control">
-                                            <option value="">اختار</option>
-                                            <option value="web">ويب</option>
-                                            <option value="en">انجليزي</option>
-                                        </select>
-
+                                        <div class="dropdown dropdown-tree" id="firstDropDownTree"></div>
                                     </div>
                                 </div>
+                                <br>
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
                                         <div class="custom-control custom-checkbox">
@@ -260,72 +257,70 @@
 @include('scroll_top')
 <!-- script-->
 @include('script')
+<!--  course and category script plugin  -->
 <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
-
 <!-- client side validation page -->
 <script type='text/javascript' src="/js/course_create_validation.js"></script>
-<!-- script multi select-->
-
 <!--  end script-->
 <script>
     {{--
     $(document).ready(function () {
-        $("#submit").click(function () {
-            var courseName = $("#course-name").val();
-            var courseCode = $("#course-id").val();
-            var courseDescription = $("#course-description").val();
-            var courseDuration = $("#course-duration").val();
-            var courseCost = $("#course-cost").val();
-            var teamCost = $("#course-group-cost").val();
-            // var instructorId = $("#instructor-name").val();
-            var courseChapter = $("#course-chapter-1").val();
-            var chapterDesc = $("#chapter-1-desc").val();
+    $("#submit").click(function () {
+        var courseName = $("#course-name").val();
+        var courseCode = $("#course-id").val();
+        var courseDescription = $("#course-description").val();
+        var courseDuration = $("#course-duration").val();
+        var courseCost = $("#course-cost").val();
+        var teamCost = $("#course-group-cost").val();
+    // var instructorId = $("#instructor-name").val();
+        var courseChapter = $("#course-chapter-1").val();
+        var chapterDesc = $("#chapter-1-desc").val();
 
-            let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
-            let chapterDescription = [...$('fieldset textarea')];
-            let chapterName = [...$('fieldset input')];
+        let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+    let chapterDescription = [...$('fieldset textarea')];
+        let chapterName = [...$('fieldset input')];
 
-            chapterName.forEach(function (chapter, chapterIndex) {
-                let chapterInfo = {};
-                chapterInfo.name = chapterName[chapterIndex].value;
-                chapterInfo.description = chapterDescription[chapterIndex].value;
+        chapterName.forEach(function (chapter, chapterIndex) {
+        let chapterInfo = {};
+        chapterInfo.name = chapterName[chapterIndex].value;
+        chapterInfo.description = chapterDescription[chapterIndex].value;
 
-                chapters.push(chapterInfo);
-            });
-
-
-            $.ajax({
-                url: "/courses",
-                method: "POST",
-                data: {
-                    name: courseName, code: courseCode, description: courseDescription,
-                    duration: courseDuration, cost: courseCost, content: JSON.stringify(chapters),
-                    teamCost: teamCost,
-                    instructor_id: 1, _token: "{{ csrf_token() }}"
-                },
-                dataType: "json",
-                success: function (data) {
-                    // console.log(data);
-                    document.getElementById('form').reset();
-                    alert(data);
-                },
-                error: function (error) {
-                    if (error.status == 422) {// validation
-                        // loop through the errors and show them to the user
-                        $.each(error.responseJSON.errors, function (i, error) {
-                            // error is message
-                            // i is element's name
-                            console.log(error);
-                            var element = $(document).find('[name="' + i + '"]');
-                            element.after($('<span style="color: red;">' + error[0] + '</span>'));
-                        });
-                    }
-                }
-            });
-        });
+        chapters.push(chapterInfo);
     });
+
+
+$.ajax({
+    url: "/courses",
+    method: "POST",
+    data: {
+        name: courseName, code: courseCode, description: courseDescription,
+        duration: courseDuration, cost: courseCost, content: JSON.stringify(chapters),
+        teamCost: teamCost,
+        instructor_id: 1, _token: "{{ csrf_token() }}"
+    },
+    dataType: "json",
+    success: function (data) {
+// console.log(data);
+    document.getElementById('form').reset();
+alert(data);
+},
+    error: function (error) {
+    if (error.status == 422) {// validation
+// loop through the errors and show them to the user
+                        $.each(error.responseJSON.errors, function (i, error) {
+// error is message
+// i is element's name
+console.log(error);
+    var element = $(document).find('[name="' + i + '"]');
+    element.after($('<span style="color: red;">' + error[0] + '</span>'));
+});
+}
+}
+});
+});
+});
 --}}
 </script>
 
@@ -402,5 +397,4 @@
     // });
 </script>
 </body>
-
 </html>
