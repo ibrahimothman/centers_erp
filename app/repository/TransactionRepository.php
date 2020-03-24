@@ -30,7 +30,7 @@ class TransactionRepository
     {
 
         $transactions = Transaction::allTransactions($center);
-
+//
         $summary = $this->fetchMonthlyFinanceSummary($transactions);
         $finance = $this->countRevenuesAndExpenses($transactions);
         $revenues_amount = $finance['revenues_amount'];
@@ -39,13 +39,14 @@ class TransactionRepository
         $profit = $revenues_amount - $expenses_amount;
         $tax = abs($profit) * .2;
         $net_profit = $profit - $tax;
-        $result['transactions'] = $transactions;
-        $result['transactions']['revenues_amount'] = $revenues_amount;
-        $result['transactions']['expenses_amount'] = $expenses_amount;
-        $result['transactions']['profit'] = $profit;
-        $result['transactions']['tax'] = $tax;
-        $result['transactions']['net_profit'] = $net_profit;
-        $result['summary'] = $summary;
+
+
+        $result['transactions'] = $this->fetchMonthlyFinanceSummary($transactions);
+        $result['finance']['revenues_amount'] = $revenues_amount;
+        $result['finance']['expenses_amount'] = $expenses_amount;
+        $result['finance']['profit'] = $profit;
+        $result['finance']['tax'] = $tax;
+        $result['finance']['net_profit'] = $net_profit;
 
         return $result;
     }
@@ -83,6 +84,7 @@ class TransactionRepository
             foreach ($months as $month => $transactions) {
                 $temp = [];
                 $temp['date'] = $month;
+                $temp['transactions'] = $transactions;
                 $finance = $this->countRevenuesAndExpenses($transactions);
                 $revenues_amount = $finance['revenues_amount'];
                 $expenses_amount = $finance['expenses_amount'];

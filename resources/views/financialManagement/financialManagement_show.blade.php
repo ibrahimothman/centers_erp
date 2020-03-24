@@ -55,12 +55,12 @@
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">المصروفات: </h5>
                                                             <input type="number" name="expenses" id="expenses"
-                                                                   class="form-control" value="{{ $transactions['transactions']["expenses_amount"] }}" readonly/>
+                                                                   class="form-control" value="{{ $results['finance']["expenses_amount"] }}" readonly/>
                                                         </div>
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الايرادات: </h5>
                                                             <input type="number" name="revenues" id="revenues"
-                                                                   class="form-control" value="{{ $transactions['transactions']['revenues_amount'] }}"  readonly/>
+                                                                   class="form-control" value="{{ $results['finance']['revenues_amount'] }}"  readonly/>
                                                         </div>
                                                     </div>
 
@@ -68,7 +68,7 @@
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الارباح: </h5>
                                                             <input type="number" name="profit" id="profit"
-                                                                   class="form-control" value="{{ $transactions['transactions']['profit'] }}" readonly/>
+                                                                   class="form-control" value="{{ $results['finance']['profit'] }}" readonly/>
                                                         </div>
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الضرائب: </h5>
@@ -82,7 +82,7 @@
                                                         <div class=" col-sm-6">
                                                             <h5 class="text-warning ">صافي الربح: </h5>
                                                             <input type="number" name="netProfit" id="netProfit"
-                                                                   class="form-control" value="{{ $transactions['transactions']['net_profit'] }}" readonly/>
+                                                                   class="form-control" value="{{ $results['finance']['net_profit'] }}" readonly/>
                                                         </div>
                                                         <div>
                                                         <button class="btn btn-success mt-4 "  id="showBtn"> عرض التفاصيل</button>
@@ -111,13 +111,13 @@
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                @foreach($transactions['summary'] as $summary)
+                                                                                @foreach($results['transactions'] as $result)
                                                                                     <tr>
-                                                                                        <td>{{ $summary['date'] }}</td>
-                                                                                        <td>{{ $summary['revenues_amount']}}</td>
-                                                                                        <td>{{ $summary['expenses_amount']}}</td>
-                                                                                        <td>{{ $summary['tax'] }}</td>
-                                                                                        <td>{{ $summary['net_profit'] }}</td>
+                                                                                        <td>{{ $result['date'] }}</td>
+                                                                                        <td>{{ $result['revenues_amount']}}</td>
+                                                                                        <td>{{ $result['expenses_amount']}}</td>
+                                                                                        <td>{{ $result['tax'] }}</td>
+                                                                                        <td>{{ $result['net_profit'] }}</td>
                                                                                         <td>
                                                                                             <a href=""
                                                                                                class=" btn btn-outline-primary  py-1 px-2 "><i
@@ -199,36 +199,38 @@
                                                             </thead>
                                                             <tbody id="student_table">
                                                             @php($revenue = 0)
-                                                            @foreach($transactions['transactions']->filterByAccount(3, false) as $transaction)
-                                                                @php($revenue += $transaction->amount)
-                                                                <tr>
-                                                                    <td>{{ $transaction->payer()->nameAr }}</td>
-                                                                    <td>{{ $transaction->payFor()->name }}</td>
-                                                                    <td>{{ $transaction->deserved_amount }}</td>
-                                                                    <td>{{ $transaction->amount }}</td>
-                                                                    <td>{{ $transaction->rest}}</td>
-                                                                    <td>{{ $transaction->date }}</td>
-                                                                    <td>
-                                                                        <a href=""
-                                                                           class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                                                    class="fas fa-edit m-0 "></i> </a>
+                                                            @foreach($results['transactions'] as $result)
+                                                                @foreach($result['transactions']->filterByAccount(3, false) as $transaction)
+                                                                    @php($revenue += $transaction->amount)
+                                                                    <tr>
+                                                                        <td>{{ $transaction->payer()->nameAr }}</td>
+                                                                        <td>{{ $transaction->payFor()->name }}</td>
+                                                                        <td>{{ $transaction->deserved_amount }}</td>
+                                                                        <td>{{ $transaction->amount }}</td>
+                                                                        <td>{{ $transaction->rest}}</td>
+                                                                        <td>{{ $transaction->date }}</td>
+                                                                        <td>
+                                                                            <a href=""
+                                                                               class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                                                        class="fas fa-edit m-0 "></i> </a>
 
-                                                                    </td>
-                                                                    <td>
-                                                                        <form>
-                                                                            <button type="submit"
-                                                                                    class="btn btn-outline-danger py-1 px-2">
-                                                                                <i class="fas fa-trash-alt m-0"></i>
-                                                                            </button>
-                                                                        </form>
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href=""
-                                                                           class=" btn btn-outline-primary  py-1 px-2 ">
-                                                                            <i class="fas fa-money-check-alt"></i> </a>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
+                                                                        </td>
+                                                                        <td>
+                                                                            <form>
+                                                                                <button type="submit"
+                                                                                        class="btn btn-outline-danger py-1 px-2">
+                                                                                    <i class="fas fa-trash-alt m-0"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href=""
+                                                                               class=" btn btn-outline-primary  py-1 px-2 ">
+                                                                                <i class="fas fa-money-check-alt"></i> </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                             @endforeach
 
                                                             </tbody>
 
@@ -292,35 +294,37 @@
                                                             </thead>
                                                             <tbody>
                                                             @php($total_expenses = 0)
-                                                            @foreach($transactions['transactions']->filterByAccount(6,true) as $transaction)
-                                                                @php($total_expenses += $transaction->amount)
-                                                                <tr>
-                                                                    <td>{{ $transaction->account->name }}</td>
-                                                                    <td>{{$transaction->deserved_amount}}</td>
-                                                                    <td> {{ $transaction->amount }}</td>
-                                                                    <td>{{ $transaction->rest }}</td>
-                                                                    <td>{{ $transaction->date }}</td>
-                                                                    <td>
-                                                                        <a href=""
-                                                                           class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                            @foreach($results['transactions'] as $result)
+                                                                @foreach($result['transactions']->filterByAccount(6,true) as $transaction)
+                                                                    @php($total_expenses += $transaction->amount)
+                                                                    <tr>
+                                                                        <td>{{ $transaction->account->name }}</td>
+                                                                        <td>{{$transaction->deserved_amount}}</td>
+                                                                        <td> {{ $transaction->amount }}</td>
+                                                                        <td>{{ $transaction->rest }}</td>
+                                                                        <td>{{ $transaction->date }}</td>
+                                                                        <td>
+                                                                            <a href=""
+                                                                               class=" btn btn-outline-primary  py-1 px-2 "><i
                                                                                     class="fas fa-edit m-0 "></i> </a>
 
-                                                                    </td>
-                                                                    <td>
-                                                                        <form>
-                                                                            <button type="submit"
-                                                                                    class="btn btn-outline-danger py-1 px-2">
-                                                                                <i class="fas fa-trash-alt m-0"></i>
-                                                                            </button>
-                                                                        </form>
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href=""
-                                                                           class=" btn btn-outline-primary  py-1 px-2 ">
-                                                                            <i class="fas fa-money-check-alt"></i> </a>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
+                                                                        </td>
+                                                                        <td>
+                                                                            <form>
+                                                                                <button type="submit"
+                                                                                        class="btn btn-outline-danger py-1 px-2">
+                                                                                    <i class="fas fa-trash-alt m-0"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href=""
+                                                                               class=" btn btn-outline-primary  py-1 px-2 ">
+                                                                                <i class="fas fa-money-check-alt"></i> </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                             @endforeach
                                                             </tbody>
 
                                                         </table>
@@ -374,31 +378,33 @@
                                                             </thead>
                                                             <tbody>
                                                             @php($total_salaries = 0)
-                                                            @foreach($transactions['transactions']->filterByAccount(4, false) as $transaction)
-                                                                @php($total_salaries += $transaction->amount)
-                                                                <tr>
-                                                                    <td>{{ $transaction->payFor()->nameAr }}</td>
-                                                                    <td>{{ $transaction->deserved_amount }}</td>
-                                                                    <td> {{ $transaction->payFor()->payment_model['model'] }}</td>
-                                                                    <td> {{ $transaction->amount + $transaction->rest }}</td>
-                                                                    <td>{{ $transaction->amount }}</td>
-                                                                    <td>{{ $transaction->rest }}</td>
-                                                                    <td>{{ $transaction->date }}</td>
-                                                                    <td>
-                                                                        <a href=""
-                                                                           class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                                                    class="fas fa-edit m-0 "></i> </a>
+                                                            @foreach($results['transactions'] as $result)
+                                                                @foreach($result['transactions']->filterByAccount(4, false) as $transaction)
+                                                                    @php($total_salaries += $transaction->amount)
+                                                                    <tr>
+                                                                        <td>{{ $transaction->payFor()->nameAr }}</td>
+                                                                        <td>{{ $transaction->deserved_amount }}</td>
+                                                                        <td> {{ $transaction->payFor()->payment_model['model'] }}</td>
+                                                                        <td> {{ $transaction->amount + $transaction->rest }}</td>
+                                                                        <td>{{ $transaction->amount }}</td>
+                                                                        <td>{{ $transaction->rest }}</td>
+                                                                        <td>{{ $transaction->date }}</td>
+                                                                        <td>
+                                                                            <a href=""
+                                                                               class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                                                        class="fas fa-edit m-0 "></i> </a>
 
-                                                                    </td>
-                                                                    <td>
-                                                                        <form>
-                                                                            <button type="submit"
-                                                                                    class="btn btn-outline-danger py-1 px-2">
-                                                                                <i class="fas fa-trash-alt m-0"></i>
-                                                                            </button>
-                                                                        </form>
-                                                                    </td>
-                                                                </tr>
+                                                                        </td>
+                                                                        <td>
+                                                                            <form>
+                                                                                <button type="submit"
+                                                                                        class="btn btn-outline-danger py-1 px-2">
+                                                                                    <i class="fas fa-trash-alt m-0"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
                                                             @endforeach
 
                                                             </tbody>
@@ -422,7 +428,7 @@
                                 </div>
                                 <!-- end section 4 payroll -->
                                 <!-- section4 payroll -->
-                                <div id="section-4"  >
+                                <div id="section-5"  >
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <div class="card border-primary p-3 ">
@@ -454,31 +460,33 @@
                                                                     </thead>
                                                                     <tbody>
                                                                     @php($total_salaries = 0)
-                                                                    @foreach($transactions['transactions']->filterByAccount(5, false) as $transaction)
-                                                                        @php($total_salaries += $transaction->amount)
-                                                                        <tr>
-                                                                            <td>{{ $transaction->payFor()->nameAr }}</td>
-                                                                            <td>{{ $transaction->deserved_amount }}</td>
-                                                                            <td> {{ $transaction->payFor()->payment_model['model'] }}</td>
-                                                                            <td> {{ $transaction->amount + $transaction->rest }}</td>
-                                                                            <td>{{ $transaction->amount }}</td>
-                                                                            <td>{{ $transaction->rest }}</td>
-                                                                            <td>{{ $transaction->date }}</td>
-                                                                            <td>
-                                                                                <a href=""
-                                                                                   class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                                                        class="fas fa-edit m-0 "></i> </a>
+                                                                    @foreach($results['transactions'] as $result)
+                                                                        @foreach($result['transactions']->filterByAccount(5, false) as $transaction)
+                                                                            @php($total_salaries += $transaction->amount)
+                                                                            <tr>
+                                                                                <td>{{ $transaction->payFor()->nameAr }}</td>
+                                                                                <td>{{ $transaction->deserved_amount }}</td>
+                                                                                <td> {{ $transaction->payFor()->payment_model['model'] }}</td>
+                                                                                <td> {{ $transaction->amount + $transaction->rest }}</td>
+                                                                                <td>{{ $transaction->amount }}</td>
+                                                                                <td>{{ $transaction->rest }}</td>
+                                                                                <td>{{ $transaction->date }}</td>
+                                                                                <td>
+                                                                                    <a href=""
+                                                                                       class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                                                            class="fas fa-edit m-0 "></i> </a>
 
-                                                                            </td>
-                                                                            <td>
-                                                                                <form>
-                                                                                    <button type="submit"
-                                                                                            class="btn btn-outline-danger py-1 px-2">
-                                                                                        <i class="fas fa-trash-alt m-0"></i>
-                                                                                    </button>
-                                                                                </form>
-                                                                            </td>
-                                                                        </tr>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <form>
+                                                                                        <button type="submit"
+                                                                                                class="btn btn-outline-danger py-1 px-2">
+                                                                                            <i class="fas fa-trash-alt m-0"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
                                                                     @endforeach
 
                                                                     </tbody>

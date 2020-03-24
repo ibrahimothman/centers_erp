@@ -8,6 +8,7 @@ $(document).ready(function(){
         $("#section-3").css("display","block");
         $("#section-4").css("display","block");
         $("#section-5").css("display","block");
+        $("#section-6").css("display","block");
     });
     // show content outlay
     $("#outlayShow").click(function(){
@@ -16,6 +17,7 @@ $(document).ready(function(){
         $("#section-3").css("display","block");
         $("#section-4").css("display","none");
         $("#section-5").css("display","none");
+        $("#section-6").css("display","none");
     });
     // show content payroll
     $("#payrollShow").click(function(){
@@ -23,7 +25,9 @@ $(document).ready(function(){
         $("#section-2").css("display","none");
         $("#section-3").css("display","none");
         $("#section-4").css("display","block");
-        $("#section-5").css("display","none");
+        $("#section-5").css("display","block");
+        $("#section-6").css("display","none");
+
     });
     // show content  revenues
     $("#revenuesShow").click(function(){
@@ -32,6 +36,7 @@ $(document).ready(function(){
         $("#section-3").css("display","none");
         $("#section-4").css("display","none");
         $("#section-5").css("display","none");
+        $("#section-6").css("display","none");
     });
     // show content  profit
     $("#profitShowBtn").click(function(){
@@ -40,6 +45,7 @@ $(document).ready(function(){
         $("#section-3").css("display","none");
         $("#section-4").css("display","none");
         $("#section-5").css("display","none");
+        $("#section-6").css("display","none");
     });
     // show content  profit
     $("#details").click(function(){
@@ -47,6 +53,7 @@ $(document).ready(function(){
         $("#section-2").css("display","none");
         $("#section-3").css("display","none");
         $("#section-4").css("display","none");
+        $("#section-5").css("display","none");
         $("#section-5").css("display","block");
     });
     // end

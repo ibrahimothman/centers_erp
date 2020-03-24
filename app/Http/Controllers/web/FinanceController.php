@@ -14,11 +14,12 @@ class FinanceController extends Controller
     public function index()
     {
         $center = Center::findOrFail(Session('center_id'));
-        $transactions = TransactionRepository::getInstance()->fetchTransactions($center);
+        $results = TransactionRepository::getInstance()->fetchTransactions($center);
         $accounts = FinanceAccount::with('children')->where('parent_id', null)->get();
 
-//        return json_encode($transactions);
+
+//        return $results['transactions'][0]['expenses_amount'];
         return view('financialManagement/financialManagement_show'
-            , compact('transactions'));
+            , compact('results'));
     }
 }
