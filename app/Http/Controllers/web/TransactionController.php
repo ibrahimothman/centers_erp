@@ -27,11 +27,10 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
         $data = $this->validateTransaction($request);
         if($data->fails()){
-            return $data->errors()->messages();
+            return response()->json(['message' => 'invalid data'], 400);
         }
         $transactions = $data->validate()['transactions'];
         foreach ($transactions as $transaction){

@@ -195,7 +195,7 @@
                 meta_data['payFor_id'] = $('#diplomaList [value="' + $("#diploma"+ (i+1)).val() + '"]').attr("data-id");
                 meta_data['payFor_type'] = "App\\Diploma";
 
-                transaction['account'] = 3;
+                transaction['account_id'] = 3;
                 transaction['date'] = $("#date").val();
                 transaction['rest'] = $("#noPayIncome"+ (i+1)).val();
                 transaction['meta_data'] = meta_data;

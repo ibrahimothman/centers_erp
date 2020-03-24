@@ -6,6 +6,9 @@ namespace App\repository;
 
 use App\Center;
 use App\Transaction;
+use DateInterval;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TransactionRepository
 {
@@ -25,29 +28,76 @@ class TransactionRepository
 
     public function fetchTransactions($center)
     {
-        $transactions = Transaction::allTransactions($center);
-        $revenues_amount = 0;
-        $expenses_amount = 0; $transactions->filter(function ($value) use (&$revenues_amount, &$expenses_amount){
-            if($value->account->parent->id == 1){
-                $revenues_amount += $value->amount;
-                return true;
-            }
-            else if($value->account->parent->id == 2){
-                $expenses_amount += $value->amount;
-            }
 
-        });
+        $transactions = Transaction::allTransactions($center);
+
+        $summary = $this->fetchMonthlyFinanceSummary($transactions);
+        $finance = $this->countRevenuesAndExpenses($transactions);
+        $revenues_amount = $finance['revenues_amount'];
+        $expenses_amount = $finance['expenses_amount'];
 
         $profit = $revenues_amount - $expenses_amount;
         $tax = abs($profit) * .2;
         $net_profit = $profit - $tax;
-        $transactions['revenues_amount'] = $revenues_amount;
-        $transactions['expenses_amount'] = $expenses_amount;
-        $transactions['profit'] = $profit;
-        $transactions['tax'] = $tax;
-        $transactions['net_profit'] = $net_profit;
-//
-        return $transactions;
+        $result['transactions'] = $transactions;
+        $result['transactions']['revenues_amount'] = $revenues_amount;
+        $result['transactions']['expenses_amount'] = $expenses_amount;
+        $result['transactions']['profit'] = $profit;
+        $result['transactions']['tax'] = $tax;
+        $result['transactions']['net_profit'] = $net_profit;
+        $result['summary'] = $summary;
+
+        return $result;
     }
 
+    /*
+     * count revenues_amount and expenses_amount for incoming transactions
+     * */
+    private function countRevenuesAndExpenses($transactions)
+    {
+        $revenues_amount = 0;
+        $expenses_amount = 0;
+        foreach ($transactions as $transaction) {
+            $account = $transaction->account;
+            while ($account->parent_id != null) {
+                if ($account->parent_id == 1) {
+                    $revenues_amount += $transaction->amount;
+                } else if ($account->parent->id == 2) {
+                    $expenses_amount += $transaction->amount;
+                }
+                $account = $account->parent;
+            }
+        }
+        $finance['revenues_amount'] = $revenues_amount;
+        $finance['expenses_amount'] = $expenses_amount;
+        return $finance;
+    }
+
+    public function fetchMonthlyFinanceSummary($transactions)
+    {
+        $months = $transactions->groupBy(function ($val) {
+                return Carbon::parse($val->date)->format('Y/m');
+            });
+
+            $finance_summary = [];
+            foreach ($months as $month => $transactions) {
+                $temp = [];
+                $temp['date'] = $month;
+                $finance = $this->countRevenuesAndExpenses($transactions);
+                $revenues_amount = $finance['revenues_amount'];
+                $expenses_amount = $finance['expenses_amount'];
+                $profit = $revenues_amount - $expenses_amount;
+                $tax = abs($profit) * .2;
+                $net_profit = $profit - $tax;
+
+                $temp['revenues_amount'] = $revenues_amount;
+                $temp['expenses_amount'] = $expenses_amount;
+                $temp['tax'] = $tax;
+                $temp['net_profit'] = $net_profit;
+
+                $finance_summary[] = $temp;
+            }
+
+            return $finance_summary;
+    }
 }

@@ -17,7 +17,7 @@ class Transaction extends Model
     public static function allTransactions($center)
     {
         return App(Pipeline::class)
-            ->send($center->transactions()->latest())
+            ->send($center->transactions()->orderBy('date', 'asc'))
             ->through([
                 Account::class,
                 StartDate::class,

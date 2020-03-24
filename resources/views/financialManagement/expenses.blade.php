@@ -301,11 +301,11 @@
                 },
                 success : function (data) {
                     alert(data.message);
-                    // if(! data.error){
-                    //     setTimeout(function () {
-                    //         location.reload();
-                    //     }, 1000);
-                    // }
+                    if(! data.error){
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+                    }
                 }
 
             });

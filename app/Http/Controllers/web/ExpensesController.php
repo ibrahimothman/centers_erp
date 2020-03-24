@@ -18,16 +18,9 @@ class ExpensesController extends Controller
     public function create()
     {
 
-        $center = Center::FindOrFail(Session('center_id'));
         $instructors = InstructorRepository::getInstance()->allInstructors();
         $employees = EmployeeRepository::getInstance()->allEmployees();
-
-
         $accounts = FinanceAccount::all()->where('parent_id', 6);
-//         return $expenses;
-//        foreach ($expenses as $account){
-//            echo $account['name'];
-//        }
 
         return view('financialManagement/expenses'
             , compact('instructors', 'employees', 'accounts'));

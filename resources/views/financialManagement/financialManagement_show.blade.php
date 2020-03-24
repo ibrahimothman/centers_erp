@@ -55,12 +55,12 @@
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">المصروفات: </h5>
                                                             <input type="number" name="expenses" id="expenses"
-                                                                   class="form-control" value="{{ $transactions["expenses_amount"] }}" readonly/>
+                                                                   class="form-control" value="{{ $transactions['transactions']["expenses_amount"] }}" readonly/>
                                                         </div>
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الايرادات: </h5>
                                                             <input type="number" name="revenues" id="revenues"
-                                                                   class="form-control" value="{{ $transactions['revenues_amount'] }}"  readonly/>
+                                                                   class="form-control" value="{{ $transactions['transactions']['revenues_amount'] }}"  readonly/>
                                                         </div>
                                                     </div>
 
@@ -68,7 +68,7 @@
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الارباح: </h5>
                                                             <input type="number" name="profit" id="profit"
-                                                                   class="form-control" value="{{ $transactions['profit'] }}" readonly/>
+                                                                   class="form-control" value="{{ $transactions['transactions']['profit'] }}" readonly/>
                                                         </div>
                                                         <div class="col-sm-6 ">
                                                             <h5 class="text-warning ">الضرائب: </h5>
@@ -82,7 +82,7 @@
                                                         <div class=" col-sm-6">
                                                             <h5 class="text-warning ">صافي الربح: </h5>
                                                             <input type="number" name="netProfit" id="netProfit"
-                                                                   class="form-control" value="{{ $transactions['net_profit'] }}" readonly/>
+                                                                   class="form-control" value="{{ $transactions['transactions']['net_profit'] }}" readonly/>
                                                         </div>
                                                         <div>
                                                         <button class="btn btn-success mt-4 "  id="showBtn"> عرض التفاصيل</button>
@@ -111,71 +111,29 @@
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                <tr>
-                                                                                    <td>1/2020</td>
-                                                                                    <td>10000</td>
-                                                                                    <td>5000</td>
-                                                                                    <td>1000</td>
-                                                                                    <td>9000</td>
-                                                                                    <td>
-                                                                                        <a href=""
-                                                                                           class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                                                                    class="fas fa-edit m-0 "></i> </a>
+                                                                                @foreach($transactions['summary'] as $summary)
+                                                                                    <tr>
+                                                                                        <td>{{ $summary['date'] }}</td>
+                                                                                        <td>{{ $summary['revenues_amount']}}</td>
+                                                                                        <td>{{ $summary['expenses_amount']}}</td>
+                                                                                        <td>{{ $summary['tax'] }}</td>
+                                                                                        <td>{{ $summary['net_profit'] }}</td>
+                                                                                        <td>
+                                                                                            <a href=""
+                                                                                               class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                                                                        class="fas fa-edit m-0 "></i> </a>
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <form>
-                                                                                            <button type="submit"
-                                                                                                    class="btn btn-outline-danger py-1 px-2">
-                                                                                                <i class="fas fa-trash-alt m-0"></i>
-                                                                                            </button>
-                                                                                        </form>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <!-- second row -->
-                                                                                <tr>
-                                                                                    <td>2/2020</td>
-                                                                                    <td>10000</td>
-                                                                                    <td>5000</td>
-                                                                                    <td>1000</td>
-                                                                                    <td>9000</td>
-                                                                                    <td>
-                                                                                        <a href=""
-                                                                                           class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                                                                    class="fas fa-edit m-0 "></i> </a>
-
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <form>
-                                                                                            <button type="submit"
-                                                                                                    class="btn btn-outline-danger py-1 px-2">
-                                                                                                <i class="fas fa-trash-alt m-0"></i>
-                                                                                            </button>
-                                                                                        </form>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <!-- third row -->
-                                                                                <tr>
-                                                                                    <td>3/2020</td>
-                                                                                    <td>10000</td>
-                                                                                    <td>5000</td>
-                                                                                    <td>1000</td>
-                                                                                    <td>9000</td>
-                                                                                    <td>
-                                                                                        <a href=""
-                                                                                           class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                                                                    class="fas fa-edit m-0 "></i> </a>
-
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <form>
-                                                                                            <button type="submit"
-                                                                                                    class="btn btn-outline-danger py-1 px-2">
-                                                                                                <i class="fas fa-trash-alt m-0"></i>
-                                                                                            </button>
-                                                                                        </form>
-                                                                                    </td>
-                                                                                </tr>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <form>
+                                                                                                <button type="submit"
+                                                                                                        class="btn btn-outline-danger py-1 px-2">
+                                                                                                    <i class="fas fa-trash-alt m-0"></i>
+                                                                                                </button>
+                                                                                            </form>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                 @endforeach
                                                                                 </tbody>
 
                                                                             </table>
@@ -241,7 +199,7 @@
                                                             </thead>
                                                             <tbody id="student_table">
                                                             @php($revenue = 0)
-                                                            @foreach($transactions->filterByAccount(3, false) as $transaction)
+                                                            @foreach($transactions['transactions']->filterByAccount(3, false) as $transaction)
                                                                 @php($revenue += $transaction->amount)
                                                                 <tr>
                                                                     <td>{{ $transaction->payer()->nameAr }}</td>
@@ -334,7 +292,7 @@
                                                             </thead>
                                                             <tbody>
                                                             @php($total_expenses = 0)
-                                                            @foreach($transactions->filterByAccount(6,true) as $transaction)
+                                                            @foreach($transactions['transactions']->filterByAccount(6,true) as $transaction)
                                                                 @php($total_expenses += $transaction->amount)
                                                                 <tr>
                                                                     <td>{{ $transaction->account->name }}</td>
@@ -416,7 +374,7 @@
                                                             </thead>
                                                             <tbody>
                                                             @php($total_salaries = 0)
-                                                            @foreach($transactions->filterByAccount(4, false) as $transaction)
+                                                            @foreach($transactions['transactions']->filterByAccount(4, false) as $transaction)
                                                                 @php($total_salaries += $transaction->amount)
                                                                 <tr>
                                                                     <td>{{ $transaction->payFor()->nameAr }}</td>
@@ -496,7 +454,7 @@
                                                                     </thead>
                                                                     <tbody>
                                                                     @php($total_salaries = 0)
-                                                                    @foreach($transactions->filterByAccount(5, false) as $transaction)
+                                                                    @foreach($transactions['transactions']->filterByAccount(5, false) as $transaction)
                                                                         @php($total_salaries += $transaction->amount)
                                                                         <tr>
                                                                             <td>{{ $transaction->payFor()->nameAr }}</td>
@@ -543,86 +501,39 @@
                                     </div>
                                 </div>
                                 <!-- end section 4 payroll -->
-                                <!-- section5 profit -->
-                                    <div id="section-5">
-                                        <div class="row  mb-3">
-                                            <div class="col-sm-12">
-                                                <div class="card border-primary p-3 ">
-                                                    <div class="card-header text-primary bg-transparent border-primary ">
-                                                        <h5 class="fRight">   الربح</h5>
-                                                            <div class="btn-group print-btn ">
-                                                                <button type="button" class="btn btn-success fLeft" data-toggle="modal" data-target="#printModal">طباعه</button>
-                                                            </div>
-                                                    </div>
-                                                    <div class="card-body ">
-                                                        <div class="col-sm-12">
-                                                            <div class="fRight">
-                                                                <h4>الارباح: <span> {{ $transactions['profit'] }} </span></h4>
-                                                                <h4>صافي الارباح: <span> {{ $transactions['net_profit'] }}  </span></h4>
+{{--                                <!-- section5 profit -->--}}
+{{--                                    <div id="section-5">--}}
+{{--                                        <div class="row  mb-3">--}}
+{{--                                            <div class="col-sm-12">--}}
+{{--                                                <div class="card border-primary p-3 ">--}}
+{{--                                                    <div class="card-header text-primary bg-transparent border-primary ">--}}
+{{--                                                        <h5 class="fRight">   الربح</h5>--}}
+{{--                                                            <div class="btn-group print-btn ">--}}
+{{--                                                                <button type="button" class="btn btn-success fLeft" data-toggle="modal" data-target="#printModal">طباعه</button>--}}
+{{--                                                            </div>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="card-body ">--}}
+{{--                                                        <div class="col-sm-12">--}}
+{{--                                                            <div class="fRight">--}}
+{{--                                                                <h4>الارباح: <span> {{ $transactions['profit'] }} </span></h4>--}}
+{{--                                                                <h4>صافي الارباح: <span> {{ $transactions['net_profit'] }}  </span></h4>--}}
 
-                                                            </div>
-                                                            <div class="fLeft">
-                                                                <h4 >المصروفات: <span> {{ $transactions['expenses_amount'] }} </span></h4>
-                                                                <h4 >الايرادات: <span> {{ $transactions['revenues_amount'] }}  </span></h4>
-                                                                <h4>الضرائب: <span> 20% </span></h4>
-                                                            </div>
-                                                            <br>
-                                                            <!-- table -->
-                                                            <div class="table-responsive ">
-                                                                <table id="dtBasicExample"
-                                                                       class="table table-striped table-bordered table-sm"
-                                                                       cellspacing="0"
-                                                                       width="100%">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th class="th-sm">الشهر</th>
-                                                                        <th class="th-sm">التاريخ</th>
-                                                                        <th class="th-sm">الايرادات</th>
-                                                                        <th class="th-sm">تفاصيل الايرادات</th>
-                                                                        <th class="th-sm">المصروفات</th>
-                                                                        <th class="th-sm">تفاصيل المصروفات</th>
-
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td>يناير</td>
-                                                                        <td>2/1/2020</td>
-                                                                        <td>300</td>
-                                                                        <td>طلاب</td>
-                                                                        <td>1000</td>
-                                                                        <td>الايجار</td>
-                                                                    </tr>
-                                                                    <!-- second row -->
-                                                                    <tr>
-                                                                        <td>يناير</td>
-                                                                        <td>2/1/2020</td>
-                                                                        <td>300</td>
-                                                                        <td>طلاب</td>
-                                                                        <td>1000</td>
-                                                                        <td>الايجار</td>
-                                                                    </tr>
-                                                                    <!-- third row -->
-                                                                    <tr>
-                                                                        <td>يناير</td>
-                                                                        <td>2/1/2020</td>
-                                                                        <td>300</td>
-                                                                        <td>طلاب</td>
-                                                                        <td>1000</td>
-                                                                        <td>الايجار</td>
-                                                                    </tr>
-                                                                    </tbody>
-
-                                                                </table>
-                                                                <!-- end table -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end section 5 profit -->
+{{--                                                            </div>--}}
+{{--                                                            <div class="fLeft">--}}
+{{--                                                                <h4 >المصروفات: <span> {{ $transactions['expenses_amount'] }} </span></h4>--}}
+{{--                                                                <h4 >الايرادات: <span> {{ $transactions['revenues_amount'] }}  </span></h4>--}}
+{{--                                                                <h4>الضرائب: <span> 20% </span></h4>--}}
+{{--                                                            </div>--}}
+{{--                                                            <br>--}}
+{{--                                                            --}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <!-- end section 5 profit -->--}}
                                 <!-- end card -->
                             </div>
                             <br>
