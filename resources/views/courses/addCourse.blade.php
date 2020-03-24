@@ -24,8 +24,7 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form method="post" action="{{url('/courses')}}" enctype="multipart/form-data" id="form">
-                                @csrf
+                            <form id="form">
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
@@ -251,19 +250,12 @@
     $(document).ready(function () {
 
         $("#submit").click(function () {
-            var ins=$('#instructors-list').find('li').map(function()
-            {
-                return $(this).val()
-            }).get().join(',');
-            console.log("ins"+ins);
-            // return;
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
             var courseDescription = $("#course-description").val();
             var courseDuration = $("#course-duration").val();
             var courseCost = $("#course-cost").val();
             var teamCost = $("#course-group-cost").val();
-            // var instructorId = $("#instructor-name").val();
             var courseChapter = $("#course-chapter-1").val();
             var chapterDesc = $("#chapter-1-desc").val();
             let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
@@ -317,15 +309,16 @@
                     document.getElementById('form').reset();
                 },
                 error: function (error) {
-                    if (error.status == 422) {// validation
+                    if (error.status == 400) {// validation
+                        console.log(error);
                         // loop through the errors and show them to the user
-                        $.each(error.responseJSON.errors, function (i, error) {
-                            // error is message
-                            // i is element's name
-                            console.log(error);
-                            var element = $(document).find('[name="' + i + '"]');
-                            element.after($('<span style="color: red;">' + error[0] + '</span>'));
-                        });
+                        // $.each(error.responseJSON.errors, function (i, error) {
+                        //     // error is message
+                        //     // i is element's name
+                        //     console.log(error);
+                        //     var element = $(document).find('[name="' + i + '"]');
+                        //     element.after($('<span style="color: red;">' + error[0] + '</span>'));
+                        // });
                     }
                 }
             });

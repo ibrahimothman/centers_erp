@@ -6,6 +6,7 @@ use App\helper\ImageUploader;
 use App\QueryFilter\CategoryId;
 use App\QueryFilter\Id;
 use App\QueryFilter\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 
 class Course extends ImageUploader
@@ -79,6 +80,38 @@ class Course extends ImageUploader
             $this->images()->create([
                 'url' => url("/uploads/courses/".$original)
             ]);
+        }
+    }
+
+    public static function rules(Request $request)
+    {
+        if($request->isMethod('post')){
+            return[
+                'name'=>'required',
+                'code'=>'required',
+                'duration'=>'required',
+                'cost'=>'required',
+                'teamCost'=>'nullable',
+                'description'=>'required',
+                'content'=>'required',
+                'images'=>'required|array',
+                'instructors'=>'required|array',
+//                'categories'=>'required|array',
+            ];
+        }else{
+            $course_id = $request->route('course')->id;
+            return[
+                'name'=>'required',
+                'code'=>'required',
+                'duration'=>'required',
+                'cost'=>'required',
+                'teamCost'=>'nullable',
+                'description'=>'required',
+                'content'=>'required',
+                'images'=>'sometimes|array',
+                'instructors'=>'required|array',
+//                'categories'=>'required|array',
+            ];
         }
     }
 

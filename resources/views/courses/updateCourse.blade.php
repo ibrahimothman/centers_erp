@@ -218,6 +218,7 @@
             fd.append('cost', courseCost);
             fd.append('content', JSON.stringify(chapters));
             fd.append('teamCost', teamCost);
+            fd.append('_method', 'put');
 
             $.ajaxSetup({
                 headers: {
@@ -227,15 +228,17 @@
 
             $.ajax({
                 url: "/courses/{{$course->id}}",
-                type : "patch",
+                type : "post",
                 data : fd,
                 contentType : false,
                 processData : false,
                 dataType: "json",
-                success: function (data) {
+                success: function (course) {
                     // console.log(data);
                     // document.getElementById('form').reset();
                     // alert(data);
+                    location.href = '/courses/'+course.id;
+                    document.getElementById('form').reset();
                 },
                 error: function (error) {
                     if (error.status == 422) {// validation
