@@ -40,7 +40,7 @@
                                     <th>الفئه</th>
                                     <th>تعديل الفئه</th>
                                     <th>اضافه</th>
-                                    <th>التصنيف الفرعي</th>
+                                    <th>التصنيف الفرعي 1 / التصنيف الفرعي2</th>
                                     <th>حذف</th>
                                     </thead>
                                     <tbody>
@@ -208,6 +208,7 @@
 
             }
 
+
         });
         // cancel button which add new sub category
         $(".cancel").click(function () {
@@ -216,6 +217,30 @@
         // hide input sub category
         $(".save-btn").click(function () {
             newSub.html('');
+        });
+    });
+    // add new second  sub category in row -----tree------
+    $(document).on('click', '.categorybtn2', function () {
+        var newSub2 = $(this).closest('section').find(".addnew2").html("<div class='row m-2' ><input class='category2' type='text' name='category2'  required><button type='submit' class='btn btn-success save2'>حفظ</button><button type='reset' class='btn btn-danger cancel2'>الغاء</button> </div>");
+        $(".save2").click(function () {
+            var a2 = $(this).closest('section').find($(".category2")).val();
+            // if value empty
+            if (a2 != '') {
+                $(this).closest('section').find(".area").append("<fieldset style='float: left'><div class='field2 row mx-3 px-2' style='background-color: #e9f2f8; margin-bottom: 2px'><span>" + a2 + "</span><div><button type='button' class='ml-2 mb-1 close close2' data-dismiss='toast' aria-label='Close'><span style='color:red;' aria-hidden='sectionue'>&times;</span></button></div></div></fieldset>");
+                $(this).closest('section').find(newSub2).html('');
+            }
+            //delete sub category in row
+            if ($(".close2").click(function () {
+                $(this).parents(".field2").remove();
+            })) ;
+        });
+        // cancel button which add new sub category
+        $(".cancel2").click(function () {
+            $(this).closest('section').find(newSub2).html('');
+        });
+        // hid input sub category
+        $(".save-btn").click(function () {
+            newSub2.html('');
         });
     });
 </script>

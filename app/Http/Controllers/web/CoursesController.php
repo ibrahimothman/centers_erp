@@ -37,6 +37,7 @@ class CoursesController extends Controller
         $center=Center::findOrFail(Session("center_id"));
         $instructors= $center->instructors;
         $categories = CategoryRepository::getInstance()->allCategories();
+        return $categories;
         return view('courses/addCourse', compact('instructors', 'categories'));
 
 
