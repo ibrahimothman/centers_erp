@@ -184,27 +184,12 @@
                                         <div></div>
                                     </div>
                                 </div>
-{{--<<<<<<< HEAD--}}
-{{--                                <!-- categories -->--}}
-{{--                                <div class="col-sm-6 form-group">--}}
-{{--                                    <label for="instructor-name">--}}
-{{--                                        التصنيف</label>--}}
-{{--                                    <span class="required">*</span>--}}
-{{--                                    <div class="dropdown ">--}}
-{{--                                        <button data-toggle="dropdown" class="dropdown-toggle btnInstructor py-1">--}}
-{{--                                            التصنيف <b class="caret"></b>--}}
-{{--                                        </button>--}}
-{{--=======--}}
+
                                 <div class="form-row">
                                     <div class="col-sm-6">
                                         <label>التصنيف</label>
                                         <span class="required">*</span>
                                         <div class="dropdown dropdown-tree" id="firstDropDownTree"></div>
-                                    </div>
-                                </div>
-                                <br>
-
-
 
                                     </div>
                                     <div id="errorSelect" class="errorMselector">هذه الخانه مطلوبه</div>
@@ -212,7 +197,7 @@
                                     <div></div>
 
                                 </div>
-
+                                <br>
 
                                 <div class="form-row save">
 
@@ -312,13 +297,13 @@
                     if (error.status == 400) {// validation
                         console.log(error);
                         // loop through the errors and show them to the user
-                        // $.each(error.responseJSON.errors, function (i, error) {
-                        //     // error is message
-                        //     // i is element's name
-                        //     console.log(error);
-                        //     var element = $(document).find('[name="' + i + '"]');
-                        //     element.after($('<span style="color: red;">' + error[0] + '</span>'));
-                        // });
+                        $.each(error.errors, function (i, error_message) {
+                            // error is message
+                            // i is element's name
+                            console.log('name: '+ i+ 'message: '+ error_message);
+                            // var element = $(document).find('[name="' + i + '"]');
+                            // element.after($('<span style="color: red;">' + error[0] + '</span>'));
+                        });
                     }
                 }
             });

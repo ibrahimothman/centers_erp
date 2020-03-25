@@ -47,27 +47,25 @@ class CoursesController extends Controller
     {
 //        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
-
+//
         $data = $this->getValidatedCourseData($request);
         if($data->fails()){
-            return response()->json(['message' => 'invalid data'], 400);
+            return response()->json(['message' => 'invalid data', 'errors' => $data->errors()->messages()], 400);
         }
-        $course_data = Arr::except($data->validate(),['images','instructors']);
 
         // create the course
+        $course_data = Arr::except($data->validate(),['images','instructors']);
         $course = $center->courses()->create($course_data);
 
         // attach the course to the instructors
-        foreach ($data->validate()['instructors'] as $instructor_id){
-            $course->instructors()->sync($instructor_id);
-        }
+        $course->instructors()->sync($request->all()['instructors']);
+
 
         // attach the course to the categories
-//        foreach ($data->validate()['categories'] as $category){
-//            $course->categories()->syncWithoutDetaching($category);
-//        }
+//        $course->categories()->sync($request->all()['categories']);
 
-        // upload images
+
+//        // upload images
         $this->uploadImages($request,$course);
         return $course;
     }
@@ -115,16 +113,16 @@ class CoursesController extends Controller
         $course->update($course_data);
 
         // update instructors
-        if(isset($data->validate()['instructors'])) {
-            $course->instructors()->sync($data->validate()['instructors']);
+        if(isset($request->all()['instructors'])) {
+            $course->instructors()->sync($request->all()['instructors']);
         }
 
         // update categories
-        if (isset($data->validate()['categories'])) {
-            foreach ($data->validate()['categories'] as $category) {
-                $course->categories()->syncWithoutDetaching($category);
-            }
-        }
+//        if (isset($data->validate()['categories'])) {
+//            foreach ($data->validate()['categories'] as $category) {
+//                $course->categories()->syncWithoutDetaching($category);
+//            }
+//        }
 
         $this->uploadImages($request,$course);
         return $course;
@@ -154,6 +152,7 @@ class CoursesController extends Controller
     }
 
     private function getValidatedCourseData(Request $request){
+//        echo 'validate';
         return Validator::make($request->all(),Course::rules($request));
     }
 

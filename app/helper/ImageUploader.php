@@ -13,10 +13,15 @@ abstract class ImageUploader extends Model
 
     public abstract function getDir();
 
+    private function getPath()
+    {
+        return public_path($this->getDir());
+    }
+
     public function saveImage($image)
     {
         // create courses dir if not existed
-        $path = public_path($this->getDir());
+        $path = $this->getPath();
         if (!is_dir($path)) {
             mkdir($path,0777,true);
         }

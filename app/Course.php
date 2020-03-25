@@ -6,8 +6,10 @@ use App\helper\ImageUploader;
 use App\QueryFilter\CategoryId;
 use App\QueryFilter\Id;
 use App\QueryFilter\Limit;
+use App\Rules\UniquePerCenter;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use mysql_xdevapi\Session;
 
 class Course extends ImageUploader
 {
@@ -87,8 +89,8 @@ class Course extends ImageUploader
     {
         if($request->isMethod('post')){
             return[
-                'name'=>'required',
-                'code'=>'required',
+                'name'=>['required', new UniquePerCenter(Course::class, '')],
+                'code'=>'required | unique:courses,code,NULL,id,center_id,' . Session('center_id'),
                 'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',
@@ -98,10 +100,11 @@ class Course extends ImageUploader
                 'instructors'=>'required|array',
 //                'categories'=>'required|array',
             ];
-        }else{
+        }
+        else{
             $course_id = $request->route('course')->id;
             return[
-                'name'=>'required',
+                'name'=>['required', new UniquePerCenter(Course::class, $course_id)],
                 'code'=>'required',
                 'duration'=>'required',
                 'cost'=>'required',

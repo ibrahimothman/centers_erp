@@ -127,8 +127,8 @@ class Student extends ImageUploader
                 'nameEn' => 'required|unique:students,nameEn',
                 'email' => 'required|unique:students,email',
                 'idNumber' => 'required|digits:14|unique:students,idNumber',
-                'image' => ' required|image|file | max:10000',
-                'idImage' => 'required|image|file | max:10000',
+                'image' => ' sometimes|image|file | max:10000',
+                'idImage' => 'sometimes|image|file | max:10000',
                 'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber',
 //                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
                 'passportNumber' => 'sometimes',
@@ -137,7 +137,7 @@ class Student extends ImageUploader
                 'address' => 'required',
                 'degree' => ['required',new DegreeRule],
                 'faculty' => ['required',new FacultyRule],
-                'skillCardNumber' => 'required|unique:students,skillCardNumber',
+//                'skillCardNumber' => 'required|unique:students,skillCardNumber',
             ];
         }else{
             $student_id = $request->route('student')->id;
@@ -156,7 +156,7 @@ class Student extends ImageUploader
                 'address' => 'sometimes',
                 'degree' => ['sometimes',new DegreeRule],
                 'faculty' => ['sometimes',new FacultyRule],
-                'skillCardNumber' => 'sometimes|unique:students,skillCardNumber,'.$student_id,
+//                'skillCardNumber' => 'sometimes|unique:students,skillCardNumber,'.$student_id,
             ];
         }
     }
