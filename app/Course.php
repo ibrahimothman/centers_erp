@@ -90,7 +90,7 @@ class Course extends ImageUploader
         if($request->isMethod('post')){
             return[
                 'name'=>['required', new UniquePerCenter(Course::class, '')],
-                'code'=>'required | unique:courses,code,NULL,id,center_id,' . Session('center_id'),
+                'code'=>['required', new UniquePerCenter(Course::class, '')],
                 'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',
@@ -105,7 +105,7 @@ class Course extends ImageUploader
             $course_id = $request->route('course')->id;
             return[
                 'name'=>['required', new UniquePerCenter(Course::class, $course_id)],
-                'code'=>'required',
+                'code'=>['required', new UniquePerCenter(Course::class, $course_id)],
                 'duration'=>'required',
                 'cost'=>'required',
                 'teamCost'=>'nullable',

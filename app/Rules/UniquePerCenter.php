@@ -11,6 +11,7 @@ class UniquePerCenter implements Rule
 {
     private $id;
     private $table;
+    private $attribute;
 
     /**
      * Create a new rule instance.
@@ -35,8 +36,9 @@ class UniquePerCenter implements Rule
      */
     public function passes($attribute, $value)
     {
+        $this->attribute = $attribute;
         return $this->table::where('center_id', Session('center_id'))
-                    ->where('name', $value)
+                    ->where($attribute, $value)
                     ->where('id' , '<>', $this->id)->count() == 0? true: false;
     }
 
@@ -47,6 +49,6 @@ class UniquePerCenter implements Rule
      */
     public function message()
     {
-        return 'This name is already taken';
+        return "This $this->attribute is already taken";
     }
 }

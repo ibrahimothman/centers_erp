@@ -8,6 +8,7 @@ use App\QueryFilter\Name;
 use App\QueryFilter\Sort;
 use App\Rules\DegreeRule;
 use App\Rules\FacultyRule;
+use App\Rules\UniquePerCenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
@@ -123,13 +124,14 @@ class Student extends ImageUploader
 
         if($request->isMethod('post')){
             return [
-                'nameAr' => 'required|unique:students,nameAr',
-                'nameEn' => 'required|unique:students,nameEn',
-                'email' => 'required|unique:students,email',
-                'idNumber' => 'required|digits:14|unique:students,idNumber',
+                'nameAr' => ['required', new UniquePerCenter(Student::class, '')],
+                'nameEn' => ['required', new UniquePerCenter(Student::class, '')],
+                'email' => ['required', new UniquePerCenter(Student::class, '')],
+
+                'idNumber' => ['required', 'digits:14', new UniquePerCenter(Student::class, '')],
                 'image' => ' sometimes|image|file | max:10000',
                 'idImage' => 'sometimes|image|file | max:10000',
-                'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber',
+                'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/', new UniquePerCenter(Student::class, '')],
 //                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
                 'passportNumber' => 'sometimes',
                 'state' => 'required',
@@ -137,18 +139,18 @@ class Student extends ImageUploader
                 'address' => 'required',
                 'degree' => ['required',new DegreeRule],
                 'faculty' => ['required',new FacultyRule],
-//                'skillCardNumber' => 'required|unique:students,skillCardNumber',
+                'skillCardNumber' => 'sometimes|unique:students,skillCardNumber',
             ];
         }else{
             $student_id = $request->route('student')->id;
             return[
-                'nameAr' => 'sometimes|unique:students,nameAr,'.$student_id,
-                'nameEn' => 'sometimes|unique:students,nameEn,'.$student_id,
-                'email' => 'sometimes|unique:students,email,'.$student_id,
-                'idNumber' => 'sometimes|digits:14|unique:students,idNumber,'.$student_id,
+                'nameAr' => ['required', new UniquePerCenter(Student::class, $student_id)],
+                'nameEn' => ['required', new UniquePerCenter(Student::class, $student_id)],
+                'email' => ['required', new UniquePerCenter(Student::class, $student_id)],
+                'idNumber' => ['required', 'digits:14', new UniquePerCenter(Student::class, $student_id)],
                 'image' => ' sometimes|image|file | max:10000',
                 'idImage' => 'sometimes|image|file | max:10000',
-                'phoneNumber' => 'sometimes|regex:/(01)[0-9]{9}/|unique:students,phoneNumber,'.$student_id,
+                'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/', new UniquePerCenter(Student::class, $student_id)],
                 'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
                 'passportNumber' => 'sometimes',
                 'state' => 'sometimes',
@@ -156,7 +158,7 @@ class Student extends ImageUploader
                 'address' => 'sometimes',
                 'degree' => ['sometimes',new DegreeRule],
                 'faculty' => ['sometimes',new FacultyRule],
-//                'skillCardNumber' => 'sometimes|unique:students,skillCardNumber,'.$student_id,
+                'skillCardNumber' => 'sometimes|unique:students,skillCardNumber,'.$student_id,
             ];
         }
     }
