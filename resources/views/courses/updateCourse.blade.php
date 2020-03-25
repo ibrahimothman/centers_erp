@@ -176,9 +176,12 @@
 
 <script>
     $(document).ready(function () {
-        console.log("ready");
+
         $("#submit").click(function (e) {
             e.preventDefault();
+
+            // clear all previous validation errors
+            $('.errors').remove();
 
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
@@ -241,14 +244,13 @@
                     document.getElementById('form').reset();
                 },
                 error: function (error) {
-                    if (error.status == 422) {// validation
+                    if (error.status == 400) {// validation
                         // loop through the errors and show them to the user
-                        $.each(error.responseJSON.errors, function (i, error) {
+                        $.each(error.responseJSON.errors, function (i, error_message) {
                             // error is message
                             // i is element's name
-                            console.log(error);
                             var element = $(document).find('[name="' + i + '"]');
-                            element.after($('<span style="color: red;">' + error[0] + '</span>'));
+                            element.after($('<span class="errors" style="color: red;">' + error_message + '</span>'));
                         });
                     }
                 }

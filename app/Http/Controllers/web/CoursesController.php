@@ -108,6 +108,9 @@ class CoursesController extends Controller
         }
 
         $data = $this->getValidatedCourseData($request);
+        if($data->fails()){
+            return response()->json(['message' => 'invalid data', 'errors' => $data->errors()->messages()], 400);
+        }
         $course_data = Arr::except($data->validate(),['images','instructors']);
 
         $course->update($course_data);

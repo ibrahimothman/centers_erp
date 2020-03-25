@@ -235,6 +235,10 @@
     $(document).ready(function () {
 
         $("#submit").click(function () {
+
+            // clear all previous validation errors
+            $('.errors').remove();
+
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
             var courseDescription = $("#course-description").val();
@@ -257,6 +261,7 @@
             var fd = new FormData();
             $('input[type="file"]').each(function (index, file) {
                if(file.files.length != 0){
+                   console.log(file.files[0]);
                     fd.append('images[]',file.files[0]);
                }
             });
@@ -295,14 +300,12 @@
                 },
                 error: function (error) {
                     if (error.status == 400) {// validation
-                        console.log(error);
                         // loop through the errors and show them to the user
-                        $.each(error.errors, function (i, error_message) {
+                        $.each(error.responseJSON.errors, function (i, error_message) {
                             // error is message
                             // i is element's name
-                            console.log('name: '+ i+ 'message: '+ error_message);
-                            // var element = $(document).find('[name="' + i + '"]');
-                            // element.after($('<span style="color: red;">' + error[0] + '</span>'));
+                            var element = $(document).find('[name="' + i + '"]');
+                            element.after($('<span class="errors" style="color: red;">' + error_message + '</span>'));
                         });
                     }
                 }

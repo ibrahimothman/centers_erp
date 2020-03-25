@@ -12,6 +12,7 @@
 */
 
 use App\Role;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use function foo\func;
@@ -138,7 +139,13 @@ Route::get('set_role',function (){
 });
 
 
+Route::get('test', function (Request $request){
+    return view('categories.show');
+});
 
+Route::post('test', function (Request $request){
+   dd($request->all());
+});
 
 
 Auth::routes(['register' => true]);
