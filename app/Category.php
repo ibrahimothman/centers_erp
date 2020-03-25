@@ -20,6 +20,16 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id')->with('children');
     }
 
+    public function getChildrenIds()
+    {
+        $ids = [$this->id];
+        foreach ($this->children as $child){
+            $ids = array_merge($ids, $child->getChildrenIds());
+        }
+
+        return $ids;
+    }
+
     public function center()
     {
         return $this->belongsTo(Center::class);

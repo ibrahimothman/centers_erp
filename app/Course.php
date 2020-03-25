@@ -26,7 +26,8 @@ class Course extends ImageUploader
                 CategoryId::class,
 
             ])
-            ->thenReturn()->paginate(request('limit')? request('limit') : 10);
+            ->thenReturn()
+            ->paginate(request('limit')? request('limit') : 10);
     }
 
 
