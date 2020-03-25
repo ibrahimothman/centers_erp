@@ -15,7 +15,9 @@ class CategoryId extends Filter
         // TODO: Implement applyFilter() method.
 
         return $builder->whereHas('categories', function ($query){
-            $query->whereIn($this->getClassName(), Category::find(request($this->getClassName()))->getChildrenIds());
+            $query
+                ->whereIn($this->getClassName(),
+                    Category::find(request($this->getClassName()))? Category::find(request($this->getClassName()))->getChildrenIds(): []);
         });
     }
 }
