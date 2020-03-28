@@ -138,6 +138,9 @@ Route::get('set_role',function (){
     }
 });
 
+Route::resource('invites',"$web_controllers_path\InvitationController");
+Route::get('process',"$web_controllers_path\InvitationController@processInvitation");
+
 
 
 Auth::routes(['verify' => true]);

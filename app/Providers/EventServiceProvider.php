@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Events\NewCenterHasCreated;
+use App\Events\NewInvitationHasCreated;
 use App\Listeners\CreateAdminJobForNewCenter;
 use App\Listeners\CreateEmployeeForCenterOwner;
 use App\Listeners\LogVerifiedUser;
+use App\Listeners\SendUserInvitaion;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,8 +24,8 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'Illuminate\Auth\Events\Verified' => [
-            LogVerifiedUser::class,
+        NewInvitationHasCreated::class => [
+            SendUserInvitaion::class,
         ],
 
     ];
