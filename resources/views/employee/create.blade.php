@@ -60,18 +60,18 @@
 
 
                                         </div>
-{{--                                        <div class="form-row">--}}
-{{--                                            <div class="col ">--}}
-{{--                                                <label>الوظيفه </label>--}}
-{{--                                                <span class="required">*</span>--}}
-{{--                                                <select name="job" class="form-control">--}}
-{{--                                                    <option value="" selected>اختار وظيفة</option>--}}
-{{--                                                    @foreach($jobs as $job)--}}
-{{--                                                        <option value="{{ $job->id }}">{{ $job->name }}</option>--}}
-{{--                                                    @endforeach--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        <div class="form-row">
+                                            <div class="col ">
+                                                <label>الوظيفه </label>
+                                                <span class="required">*</span>
+                                                <select name="job" class="form-control">
+                                                    <option value="" selected>اختار وظيفة</option>
+                                                    @foreach($jobs as $job)
+                                                        <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
 
                                         <div class=" form-row form-group">
                                             <div class="col-sm-6 ">

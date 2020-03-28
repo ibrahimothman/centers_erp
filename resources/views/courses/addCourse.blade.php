@@ -296,7 +296,6 @@
                     // console.log(data);
                     // alert(data);
                     location.href = '/courses/'+course.id;
-                    document.getElementById('form').reset();
                 },
                 error: function (error) {
                     if (error.status == 400) {// validation

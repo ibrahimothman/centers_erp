@@ -8,6 +8,7 @@ use App\Center;
 use App\Job;
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
 class jobController extends Controller
@@ -43,10 +44,15 @@ class jobController extends Controller
     public function store(Request $request)
     {
         $center = Center::findOrFail(Session('center_id'));
-        $job = $center->jobs()->create(['name' => $request->job_name]);
-        $job->roles()->syncWithoutDetaching($request->roles_ids);
 
-        return "job has successfully added";
+        $data = $this->validateRequest($request);
+        if($data->fails()){
+            return response()->json(['message' => "invalid data", 'errors' => $data->errors()->messages()], 400);
+        }
+        $job = $center->jobs()->create($data->validate());
+//        $job->roles()->syncWithoutDetaching($request->roles_ids);
+
+        return response()->json(['message' => "job has successfully added"], 200);
 
     }
 
@@ -93,5 +99,10 @@ class jobController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function validateRequest(Request $request)
+    {
+        return Validator::make($request->all(), Job::rules($request));
     }
 }

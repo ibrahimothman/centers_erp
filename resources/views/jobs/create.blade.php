@@ -14,106 +14,8 @@
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
-{{--<<<<<<< HEAD--}}
-{{--        @include('operationBar')--}}
-
-
-{{--<section>--}}
-{{--    <div class="container-fluid text-right">--}}
-{{--        <div class="row">--}}
-{{--            <div class="col-lg-2"></div>--}}
-{{--            <div class="col-lg-8">--}}
-{{--                <div class="card mb-4">--}}
-{{--                    <div class="card-body">--}}
-{{--                        <form enctype="multipart/form-data" id="from">--}}
-{{--                            @csrf--}}
-{{--                            <div class="form-group">--}}
-{{--                                <label>اسم الوظيفه</label>--}}
-{{--                                <input type="text" class="form-control" id="job_name" name="job_name" placeholder="اسم الوظيفه">--}}
-{{--                            </div>--}}
-
-{{--                            <div class="card ">--}}
-{{--                                <div class="card-body">--}}
-{{--                                    @for($i = 0; $i < count($roles)/4; $i++)--}}
-{{--                                        <div class="row">--}}
-{{--                                            @for($j = $i * 4; $j < ($i + 1) * 4; $j++)--}}
-{{--                                                <div class="col">--}}
-{{--                                                    <input  name="check"  type="checkbox" value="{{ $roles[$j]->id }}">--}}
-{{--                                                    <label>{{ $roles[$j]->name }}</label>--}}
-{{--                                                </div>--}}
-{{--                                            @endfor--}}
-{{--                                        </div>--}}
-{{--                                    @endfor--}}
-
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col">--}}
-{{--                                            <input type="checkbox" onClick="selectall(this)">--}}
-{{--                                            <label>تحديد الكل</label>--}}
-{{--                                        </div>--}}
-{{--=======--}}
     @include('operationBar')
-    {{-- old version --}}
-        {{--
-   <section>
-       <div class="container-fluid text-right">
-           <div class="row">
-               <div class="col-lg-2"></div>
-               <div class="col-lg-8">
-                   <div class="card mb-4">
-                       <div class="card-body">
-                           <form enctype="multipart/form-data" id="from">
-                               @csrf
-                               <div class="form-group">
-                                   <label>اسم الوظيفه</label>
-                                   <input type="text" class="form-control" id="job_name" name="job_name" placeholder="اسم الوظيفه">
-                               </div>
 
-                               <div class="card ">
-                                   <div class="card-body">
-
-                                       @for($i = 0; $i < count($roles)/4; $i++)
-                                           <div class="row">
-                                               @for($j = $i * 4; $j < ($i + 1) * 4; $j++)
-                                                   <div class="col">
-                                                       <input  name="check"  type="checkbox" value="{{ $roles[$j]->id }}">
-                                                       <label>{{ $roles[$j]->name }}</label>
-                                                   </div>
-                                               @endfor
-                                           </div>
-                                       @endfor
-
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="checkbox" onClick="selectall(this)">
-                                        <label>تحديد الكل</label>
->>>>>>> 5fd34efe6a5dec94e20abebb8659abd5138dcb45
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <br>
-
-                        <div class="form-row save">
-
-                            <div class="col-sm-6 mx-auto text-center" style="width: 200px;">
-                                <button class="btn btn-primary" type="submit"  onclick="submitJob();" id="submit_job">اضافه</button>
-                                <button class="btn  btn-danger" type="reset"> الغاء</button>
-
-
-                            </div>
-
-                        </div>
-
-                        <br>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
---}}
     <!-- new version -->
         <!-- Page Heading -->
         <div class="container-fluid ">
@@ -127,12 +29,11 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form enctype="multipart/form-data" id="fromJob">
-                                @csrf
+                            <form id="fromJob">
                                 <div class="form-group">
                                     <label>اسم الوظيفه</label>
                                     <span class="required">*</span>
-                                    <input type="text" class="form-control" id="job_name" name="job_name"
+                                    <input type="text" class="form-control" id="name" name="name"
                                            placeholder="اسم الوظيفه">
                                 </div>
                                 <!-- table -->
@@ -178,8 +79,8 @@
                                 <br>
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto text-center" style="width: 200px;">
-                                        <button class="btn btn-primary" type="submit" onclick="submitJob();"
-                                                id="submit_job">اضافه
+                                        <button class="btn btn-primary" type="submit"
+                                                id="submit">اضافه
                                         </button>
                                         <button class="btn  btn-danger" type="reset"> الغاء</button>
                                     </div>
@@ -210,38 +111,51 @@
 <script type='text/javascript' src="/js/jobs_create_validation.js"></script>
 <script>
 
-    function submitJob() {
-        var job_name = document.getElementById('job_name').value;
+    $('#fromJob').submit(function (e) {
+        e.preventDefault();
+        $('.errors').remove();
+        var job_name = $('#name').val();
         if(job_name.length === 0){
             alert('enter job name');
         }else {
-            var checkBoxes = document.getElementsByName('check');
-            var selected_roles_ids = [];
-            for (var i = 0; i < checkBoxes.length; i++) {
-                // And stick the checked ones onto an array...
-                if (checkBoxes[i].checked) {
-                    console.log(checkBoxes[i].value);
-                    selected_roles_ids.push(checkBoxes[i].value);
-                }
-            }
+            // var checkBoxes = document.getElementsByName('check');
+            // var selected_roles_ids = [];
+            // for (var i = 0; i < checkBoxes.length; i++) {
+            //     // And stick the checked ones onto an array...
+            //     if (checkBoxes[i].checked) {
+            //         console.log(checkBoxes[i].value);
+            //         selected_roles_ids.push(checkBoxes[i].value);
+            //     }
+            // }
 
 
             $.ajax({
                 type: 'POST',
                 url: '/jobs',
                 data: {
-                    job_name: job_name,
-                    roles_ids: selected_roles_ids,
+                    name: job_name,
                     "_token": "{{csrf_token()}}"
                 },
                 success: function (response) {
-                    alert(response);
-                    document.getElementById('from').reset();
+                    alert(response.message);
+                    location.reload();
+                },
+                error: function (error) {
+                    if (error.status == 400) {// validation
+                        // loop through the errors and show them to the user
+                        $.each(error.responseJSON.errors, function (i, error_message) {
+                            // error is message
+                            // i is element's name
+                            var element = $(document).find('[name="' + i + '"]');
+                            element.after($('<span class="errors" style="color: red;">' + error_message + '</span>'));
+                        });
+                    }
                 }
+
             });
         }
 
-    }
+    });
 
 </script>
 
