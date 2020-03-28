@@ -19,7 +19,7 @@ use function foo\func;
 
 $web_controllers_path = "\App\Http\Controllers\web";
 
-Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
+Route::group(['middleware' => ['auth', 'verified']], function () use ($web_controllers_path){
 
     //-------------------- settings ---------------------
     Route::resource('settings', "$web_controllers_path\SettingController");
@@ -140,5 +140,5 @@ Route::get('set_role',function (){
 
 
 
-Auth::routes(['register' => true]);
+Auth::routes(['verify' => true]);
 

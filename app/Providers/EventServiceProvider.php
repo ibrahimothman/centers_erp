@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\NewCenterHasCreated;
 use App\Listeners\CreateAdminJobForNewCenter;
 use App\Listeners\CreateEmployeeForCenterOwner;
+use App\Listeners\LogVerifiedUser;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        'Illuminate\Auth\Events\Verified' => [
+            LogVerifiedUser::class,
         ],
 
     ];

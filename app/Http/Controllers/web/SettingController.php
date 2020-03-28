@@ -8,6 +8,7 @@ use App\Center;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Session;
 
 class SettingController extends Controller
 {
@@ -20,6 +21,7 @@ class SettingController extends Controller
     {
 
         $center = Auth::user()->center;
+//        dd(Session('center_id'));
         return view('account_settings/setting', compact('center'));
     }
 
