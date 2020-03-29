@@ -3,32 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Category;
+use App\Http\Resources\Category as CategoryResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 
 class CategoriesApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $limit =Input::get('limit');
-        if ($limit==null)$limit=5;
-        $categories=Category::where('parent_id',0)
-        ->paginate($limit)
-        ->toArray();
-        $categories['categories']=$categories['data'];
-        unset($categories['data']);
-
-        for ($i=0;$i<count($categories['categories']);$i++){
-            $categories['categories'][$i]['subCategories']=
-                Category::where('parent_id',$categories['categories'][$i]['id'])->get();
-        }
-        return response()->json($categories);
+        return CategoryResource::collection(Category::allCategories(null));
     }
 
     /**

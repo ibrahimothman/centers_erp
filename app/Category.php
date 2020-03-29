@@ -2,13 +2,28 @@
 
 namespace App;
 
+use App\QueryFilter\CategoryId;
+use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 
 class Category extends Model
 {
     protected $hidden = array('pivot');
 
     protected $guarded = [];
+
+    public static function allCategories($center)
+    {
+        return app(Pipeline::class)
+            ->send($center ? $center->categories() : Category::query())
+            ->through([
+                Id::class,
+
+            ])
+            ->thenReturn()
+            ->paginate(request('limit')? request('limit') : 10);
+    }
 
     public function parent()
     {

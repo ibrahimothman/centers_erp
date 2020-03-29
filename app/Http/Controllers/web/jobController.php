@@ -43,6 +43,7 @@ class jobController extends Controller
      */
     public function store(Request $request)
     {
+
         $center = Center::findOrFail(Session('center_id'));
 
         $data = $this->validateRequest($request);
@@ -50,7 +51,6 @@ class jobController extends Controller
             return response()->json(['message' => "invalid data", 'errors' => $data->errors()->messages()], 400);
         }
         $job = $center->jobs()->create($data->validate());
-//        $job->roles()->syncWithoutDetaching($request->roles_ids);
 
         return response()->json(['message' => "job has successfully added"], 200);
 
@@ -59,12 +59,11 @@ class jobController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Job $job)
     {
-        //
     }
 
     /**

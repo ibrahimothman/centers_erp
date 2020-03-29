@@ -37,7 +37,7 @@
                                            placeholder="اسم الوظيفه">
                                 </div>
                                 <!-- table -->
-                                <table id="dtBasicExample" class="table table-striped table-bordered table-sm"
+                                <table id="roles_list" class="table table-striped table-bordered table-sm roles_list"
                                        cellspacing="0"
                                        width="100%">
                                     <thead>
@@ -118,22 +118,13 @@
         if(job_name.length === 0){
             alert('enter job name');
         }else {
-            // var checkBoxes = document.getElementsByName('check');
-            // var selected_roles_ids = [];
-            // for (var i = 0; i < checkBoxes.length; i++) {
-            //     // And stick the checked ones onto an array...
-            //     if (checkBoxes[i].checked) {
-            //         console.log(checkBoxes[i].value);
-            //         selected_roles_ids.push(checkBoxes[i].value);
-            //     }
-            // }
-
 
             $.ajax({
                 type: 'POST',
                 url: '/jobs',
                 data: {
                     name: job_name,
+                    roles: createRolesJson(),
                     "_token": "{{csrf_token()}}"
                 },
                 success: function (response) {
@@ -156,6 +147,32 @@
         }
 
     });
+
+    function createRolesJson() {
+        let roles = [];
+        $('.roles_list tr').each(function (i, row) {
+            if($(row).find('th').eq($(this).index(i)).text() !== '#') {
+                let temp_roles = {};
+                temp_roles['scope'] = $(row).find('th').eq($(this).index(i)).text();
+
+                var checkedBoxes = $(row).find(':checkbox');
+                var values = '';
+
+                checkedBoxes.each(function (i, checkbox) {
+                    if($(this).prop('checked')){
+                        values += '1';
+                    }else values += '0';
+
+                });
+
+                temp_roles['value'] = values;
+                roles.push(temp_roles);
+            }
+
+        });
+
+        return roles;
+    }
 
 </script>
 

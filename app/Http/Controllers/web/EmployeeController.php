@@ -56,7 +56,7 @@ class EmployeeController extends Controller
 
         $data = $data->validate();
         $center = Center::findOrFail(Session('center_id'));
-        $employee=$center->employees()->create(Arr::except($data,['state','city','address']));
+        $employee=$center->employees()->create(Arr::except($data,['state','city','address', 'job']));
 
 
         // create address
@@ -67,7 +67,7 @@ class EmployeeController extends Controller
         ]);
 
         // todo 2) save employee's jobs
-        // $employee->jobs()->syncWithoutDetaching($data['job']);
+         $employee->jobs()->syncWithoutDetaching($data['job']);
 
         return redirect('/employees');
     }
@@ -124,7 +124,7 @@ class EmployeeController extends Controller
 //            'image' => ' sometimes |nullable|image|file | max:10000',
 //            'idImage' => 'sometimes |nullable|image|file | max:10000',
             'phoneNumber' => 'required|regex:/(01)[0-9]{9}/',
-            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
+//            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
             'passportNumber' => 'sometimes',
             'state' => 'required',
             'city' => 'required',
@@ -133,7 +133,7 @@ class EmployeeController extends Controller
             'payment_model_meta_data' => ['required', 'array'],
             'nameAr' => 'required| unique:employees,nameAr,NULL,id,center_id,'.Session('center_id'),
             'nameEn' => 'required| unique:employees,nameEn,NULL,id,center_id,'.Session('center_id'),
-//            'job' => 'required',
+            'job' => 'sometimes',
 
         ]);
     }

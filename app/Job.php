@@ -21,9 +21,14 @@ class Job extends Model
         return $this->belongsToMany(Employee::class);
     }
 
-    public function roles()
+    public function setRolesAttribute($roles)
     {
-        return $this->belongsToMany(Role::class)->withTimestamps();
+        return $this->attributes['roles'] = json_encode($roles, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getRolesAttribute($roles)
+    {
+        return json_decode($roles, true);
     }
 
     public static function rules(Request $request)
@@ -31,7 +36,9 @@ class Job extends Model
         if($request->isMethod('post')){
             return [
                 'name' => ['required', new UniquePerCenter(Job::class, '')],
-                'roles' => ['sometimes', 'array']
+                'roles' => ['sometimes', 'array'],
+                'roles.*.scope' => ['required'],
+                'roles.*.value' => ['required'],
             ];
         }
     }

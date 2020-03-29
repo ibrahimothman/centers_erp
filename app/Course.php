@@ -79,7 +79,6 @@ class Course extends ImageUploader
     {
         foreach ($images as $image) {
             $original = $this->saveImage($image);
-//            echo $original;
             $this->images()->create([
                 'url' => url("/uploads/courses/".$original)
             ]);
