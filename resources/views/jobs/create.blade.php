@@ -129,7 +129,9 @@
                 },
                 success: function (response) {
                     alert(response.message);
-                    location.reload();
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
                 },
                 error: function (error) {
                     if (error.status == 400) {// validation

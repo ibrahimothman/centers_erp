@@ -18,13 +18,30 @@ class Job extends Model
 
     public function employees()
     {
-        return $this->belongsToMany(Employee::class);
+        return $this->belongsToMany(Employee::class)->withTimestamps;
     }
 
     public function setRolesAttribute($roles)
     {
-        return $this->attributes['roles'] = json_encode($roles, JSON_UNESCAPED_UNICODE);
+
+        $newRoles = [];
+        foreach ($roles as $role){
+            $role['scope'] = $this->setRoleScopeOptions()[$role['scope']];
+            $newRoles[] = $role;
+        }
+        return $this->attributes['roles'] = json_encode($newRoles, JSON_UNESCAPED_UNICODE);
     }
+
+    private function setRoleScopeOptions()
+    {
+        return[
+            'الطلاب' => 'students',
+            'الامتحانات' => 'tests',
+            'المدربين' => 'instructors',
+        ];
+    }
+
+
 
     public function getRolesAttribute($roles)
     {

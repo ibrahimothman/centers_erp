@@ -31,8 +31,7 @@ class jobController extends Controller
     public function create()
     {
         //
-        $roles = Role::all();
-        return view('jobs.create', compact('roles'));
+        return view('jobs.create');
     }
 
     /**

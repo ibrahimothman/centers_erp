@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\Instructor;
+use App\Rules\UniquePerCenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
@@ -55,6 +56,7 @@ class EmployeeController extends Controller
         $data = $this->validateRequest($request);
 
         $data = $data->validate();
+
         $center = Center::findOrFail(Session('center_id'));
         $employee=$center->employees()->create(Arr::except($data,['state','city','address', 'job']));
 
@@ -69,18 +71,15 @@ class EmployeeController extends Controller
         // todo 2) save employee's jobs
          $employee->jobs()->syncWithoutDetaching($data['job']);
 
-        return redirect('/employees');
+        return redirect("/employees/$employee->id");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function show(Employee $employee)
     {
         //
+//        return json_encode($employee);
+
     }
 
     /**
@@ -131,8 +130,8 @@ class EmployeeController extends Controller
             'address' => 'required',
             'payment_model' => ['required', 'integer'],
             'payment_model_meta_data' => ['required', 'array'],
-            'nameAr' => 'required| unique:employees,nameAr,NULL,id,center_id,'.Session('center_id'),
-            'nameEn' => 'required| unique:employees,nameEn,NULL,id,center_id,'.Session('center_id'),
+            'nameAr' => ['required', new UniquePerCenter(Employee::class, '')],
+            'nameEn' => ['required', new UniquePerCenter(Employee::class, '')],
             'job' => 'sometimes',
 
         ]);
