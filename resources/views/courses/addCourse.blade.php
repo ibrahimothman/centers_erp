@@ -185,17 +185,7 @@
                                         <div></div>
                                     </div>
                                 </div>
-{{--<<<<<<< HEAD--}}
-{{--                                <!-- categories -->--}}
-{{--                                <div class="col-sm-6 form-group">--}}
-{{--                                    <label for="instructor-name">--}}
-{{--                                        التصنيف</label>--}}
-{{--                                    <span class="required">*</span>--}}
-{{--                                    <div class="dropdown ">--}}
-{{--                                        <button data-toggle="dropdown" class="dropdown-toggle btnInstructor py-1">--}}
-{{--                                            التصنيف <b class="caret"></b>--}}
-{{--                                        </button>--}}
-{{--=======--}}
+
                                 <div class="form-row">
                                     <div class="col-sm-6">
                                         <label>التصنيف</label>
@@ -205,17 +195,10 @@
                                 </div>
                                 <br>
 
-
-
-                                    </div>
                                     <div id="errorSelect" class="errorMselector">هذه الخانه مطلوبه</div>
                                     <span id="test_course-teacher_error"></span>
                                     <div></div>
-
-                                </div>
-
-
-                                <div class="form-row save">
+                                    <div class="form-row save">
 
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
                                         <hr/>
@@ -231,8 +214,7 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
-            </div>
-        </div>
+
         @include('footer')
     </div>
 </div>

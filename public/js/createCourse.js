@@ -292,12 +292,8 @@ var arr1 = [
     {
         title: "html",
         href: "#1",
-        dataAttrs: [{title: "dataattr1", data: "value1"}, {title: "dataattr2", data: "value2"}, {
-            title: "dataattr3",
-            data: "value3"
-        }]
-    }
-    ,
+        dataAttrs: [{title: "dataattr1", data: "value1"}, {title: "dataattr2", data: "value2"}, {   title: "dataattr3", data: "value3"  }] }
+        ,
     {
         title: "css",
         href: "#2",

@@ -63,7 +63,7 @@
 @include('script')
 
 <script type="text/javascript">
-
+    {{--
     $(document).ready(function () {
        loadAllCategories();
     });
@@ -92,6 +92,43 @@
             }
         });
     }
+--}}
+//add tree
+$(document).ready(function () {
+    loadAllCategories();
+});
+function addNewCategory(name, parent_id){
+    $.ajax({
+        url: "{{ route('categories.store') }}",
+        type: "post",
+        data: {name: name, parent_id: parent_id, _token: "{{ csrf_token() }}"},
+        success: function (category) {
+            this.category_id = category.id;
+
+            // add parent category
+            if(parent_id == null) {
+                displayCategories(category);
+            }
+            // add sub_category
+            else{
+                var row = $('tr[data-id="' + parent_id + '"]');
+                row.find(".newROW").append("<section> <div id='category"+ category[0].id +"' class='field row mx-3 px-2' style=' background-color: #ced4da; margin-bottom: 2px;'><span>" + category[0].name + "</span><div><a class='categorybtn2' STYLE='color:#1e7e34;'><i class='fas fa-plus-circle'></i></a><button type='button'  class='ml-2 mb-1 close' onclick='deleteCategory("+ category[0].id +")' data-dismiss='toast' aria-label='Close'><span style='color:red;' aria-hidden='true'>&times;</span></button></div><div class='addnew2'  style='margin-top: 15px'></div><div class='area'></div></div></section>");
+                row.find(".add .addnew").html('');
+
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.responseText);
+        }
+    });
+}
+
+
+
+
+
+
+
 
 
     function loadAllCategories() {
@@ -138,7 +175,7 @@
 
         })
     }
-
+/*
     function displayCategories(categories) {
         console.log(categories);
         $.each(categories, function (i, category) {
@@ -157,7 +194,25 @@
         })
     }
 
-
+*/
+// add tree
+    function displayCategories(categories) {
+        console.log(categories);
+        $.each(categories, function (i, category) {
+            // console.log(category.name);
+            var lines = '';
+            lines += "<tr data-name='"+ category.name +"' data-id='"+ category.id +"' >";
+            lines += "<td >" + category.name + "</td><td><button class='btn btn-primary btn-xs btn-edit '>تعديل</button></td>";
+            lines += "<td class='add'><input type='button' class=' btn  btn-warning  addbtn' value='  اضافه تصنيف '><div class='addnew'></div></td>";
+            lines += "<td class='newROW'>" ;
+            $.each(category.children, function (i, child) {
+                lines += "  <section> <div class='field row mx-3 px-2' style=' background-color: #ced4da; margin-bottom: 2px;'><span>" + child.name + "</span><div><a class='categorybtn2' STYLE='color:#1e7e34;'><i class='fas fa-plus-circle'></i></a><button type='button' class='ml-2 mb-1 close' onclick='deleteCategory("+ child.id +")'  data-dismiss='toast' aria-label='Close'><span style='color:red;' aria-hidden='true'>&times;</span></button></div><div class='addnew2'  style='margin-top: 15px'></div><div class='area'></div></div></section>";
+            });
+            lines += "</td>";
+            lines += "<td><button class='btn btn-danger btn-xs btn-delete'>حذف</button></td></tr>";
+            $(".data-table tbody").append(lines);
+        })
+    }
 
     // save form in table
     $("form").submit(function (e) {
@@ -193,6 +248,7 @@
         updateCategory(category_id, new_name);
 
     });
+
     // add new sub category in row
     $(document).on('click', '.addbtn', function () {
         var newSub = $(this).closest('tr').find(".add .addnew").html("<div class='row m-2' ><input class='category' type='text' name='name' value='' required><button type='submit' class='btn btn-success save'>حفظ</button><button type='reset' class='btn btn-danger cancel'>الغاء</button> </div>");
@@ -210,7 +266,8 @@
 
 
         });
-        // cancel button which add new sub category
+
+    // cancel button which add new sub category
         $(".cancel").click(function () {
             $(this).closest('tr').find(newSub).html('');
         });
