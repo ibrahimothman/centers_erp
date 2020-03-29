@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'jobs' => ['sometimes'],
         ]);
     }
 
@@ -64,11 +65,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+//        dd(json_decode($data['jobs'], true));
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        if(isset($data['jobs'])){
+            foreach (json_decode($data['jobs'], true) as $job) {
+                $user->jobs()->syncWithoutDetaching($job['id']);
+            }
+        }
+
+        return $user;
     }
 
 

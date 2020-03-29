@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\NewInvitationHasCreated;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use function GuzzleHttp\Psr7\str;
 
@@ -12,6 +13,23 @@ class Invitation extends Model
     protected $fillable = [
         'email', 'token', 'accepted', 'accepted_at'
     ];
+
+    public function addNew($data)
+    {
+        $invitation = $this->create($data);
+        if(isset($data['jobs'])){
+            $invitation->jobs()->attach($data['jobs']);
+            return $invitation->load('jobs');
+        }
+
+        return $invitation;
+
+    }
+
+    public function jobs()
+    {
+        return $this->belongsToMany(Job::class)->withTimestamps();
+    }
 
     protected static function boot()
     {

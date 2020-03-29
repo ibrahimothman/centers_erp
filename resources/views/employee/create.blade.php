@@ -40,6 +40,12 @@
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
 
+                                        <div class="form-row">
+                                            <label>الايميل</label>
+                                            <input type="text" class="form-control" name="email" placeholder="ادخل الايميل " value="{{ old('email') }}">
+                                            <div>{{ $errors->first('email') }}</div>
+                                        </div>
+
 
                                         <div class=" form-row ">
                                             <div class="col-6 ">
@@ -63,9 +69,8 @@
                                         <div class="form-row">
                                             <div class="col ">
                                                 <label>الوظيفه </label>
-                                                <span class="required">*</span>
-                                                <select name="job" class="form-control">
-                                                    <option value="" selected>اختار وظيفة</option>
+                                                <select name="jobs" class="form-control">
+                                                    <option >اختار وظيفة</option>
                                                     @foreach($jobs as $job)
                                                         <option value="{{ $job->id }}">{{ $job->name }}</option>
                                                     @endforeach
@@ -127,6 +132,16 @@
                                                         <option data-extra="{{ $payment_model }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- user invitation checkbox-->
+                                        <div class="form-row">
+                                            <div class="col-sm-6 form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input part-of-diploma" name="send_invitation" id="send_invitation">
+                                                    <label class="custom-control-label" for="send_invitation">دعوة هذا الموظف ليكون مستخدم</label>
+                                                </div>
                                             </div>
                                         </div>
 

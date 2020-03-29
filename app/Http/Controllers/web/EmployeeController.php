@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\Instructor;
+use App\Invitation;
 use App\Rules\UniquePerCenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -58,7 +59,7 @@ class EmployeeController extends Controller
         $data = $data->validate();
 
         $center = Center::findOrFail(Session('center_id'));
-        $employee=$center->employees()->create(Arr::except($data,['state','city','address', 'job']));
+        $employee=$center->employees()->create(Arr::except($data,['state','city','address', 'jobs', 'send_invitation']));
 
 
         // create address
@@ -69,9 +70,19 @@ class EmployeeController extends Controller
         ]);
 
         // todo 2) save employee's jobs
-         $employee->jobs()->syncWithoutDetaching($data['job']);
+//        if (isset($data['job'])) {
+//            $employee->jobs()->syncWithoutDetaching($data['job']);
+//        }
 
-        return redirect("/employees/$employee->id");
+         // if this employee is wanted to be a user, send him an user invitation
+        if(isset($data['send_invitation'])){
+            $invitation = (new \App\Invitation)->addNew([
+                'email' => $data['email'],
+                'jobs' => $data['jobs']
+            ]);
+        }
+
+        return redirect("/employees");
     }
 
 
@@ -119,12 +130,12 @@ class EmployeeController extends Controller
     private function validateRequest($request)
     {
         return Validator::make($request->all(),[
-            'idNumber' => 'required|digits:14',
+            'idNumber' => ['required', 'digits:14',  new UniquePerCenter(Employee::class, '')],
 //            'image' => ' sometimes |nullable|image|file | max:10000',
 //            'idImage' => 'sometimes |nullable|image|file | max:10000',
-            'phoneNumber' => 'required|regex:/(01)[0-9]{9}/',
+            'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/',new UniquePerCenter(Employee::class, '')],
 //            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
-            'passportNumber' => 'sometimes',
+            'passportNumber' => ['sometimes', new UniquePerCenter(Employee::class, '')],
             'state' => 'required',
             'city' => 'required',
             'address' => 'required',
@@ -132,7 +143,9 @@ class EmployeeController extends Controller
             'payment_model_meta_data' => ['required', 'array'],
             'nameAr' => ['required', new UniquePerCenter(Employee::class, '')],
             'nameEn' => ['required', new UniquePerCenter(Employee::class, '')],
-            'job' => 'sometimes',
+            'email' => ['sometimes', new UniquePerCenter(Employee::class, '')],
+            'jobs' => 'sometimes',
+            'send_invitation' => 'sometimes',
 
         ]);
     }

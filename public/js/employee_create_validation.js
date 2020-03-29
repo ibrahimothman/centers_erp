@@ -10,7 +10,6 @@ $(document).ready(function () {
                     required: true,
                 },
                email:{
-                   required: true,
                  email: true
                },
                 phoneNumber: {
@@ -19,9 +18,6 @@ $(document).ready(function () {
                     number: true,
                     minlength: 11,
                     maxlength:11
-                },
-                job: {
-                    required: true,
                 },
 
                 address: {

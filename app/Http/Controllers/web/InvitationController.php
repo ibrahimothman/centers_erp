@@ -10,19 +10,9 @@ use Illuminate\Support\Carbon;
 class InvitationController extends Controller
 {
 
-    public function create()
-    {
-        return view('invitation.create');
-    }
-    public function store(Request $request)
-    {
-       $invitation = Invitation::create($request->all());
-       return view('invitation.sent', compact('invitation'));
-    }
-
     public function processInvitation(Request $request)
     {
-        $invitation = Invitation::where('token', $request->token)->first();
+        $invitation = Invitation::with('jobs')->where('token', $request->token)->first();
         if($invitation){
             $invitation->update(['accepted' => 1, 'accepted_at' => Carbon::now()->toDateTimeString()]);
             return view('auth.register')->with(['invitation' => $invitation]);

@@ -16,9 +16,14 @@ class Job extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function employees()
+    public function users()
     {
-        return $this->belongsToMany(Employee::class)->withTimestamps;
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    public function invitations()
+    {
+        return $this->belongsToMany(Invitation::class)->withTimestamps();
     }
 
     public function setRolesAttribute($roles)

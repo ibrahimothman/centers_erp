@@ -31,6 +31,11 @@ class Employee extends Model
             ->paginate(request('limit')? request('limit') : 10);
     }
 
+    // employee could be an user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function address()
     {
         return $this->morphOne(Address::class,'addressable');
@@ -41,10 +46,7 @@ class Employee extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function jobs()
-    {
-        return $this->belongsToMany(Job::class)->withTimestamps();
-    }
+
 
     public function paymentModel()
     {

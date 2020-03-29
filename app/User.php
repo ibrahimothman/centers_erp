@@ -64,4 +64,15 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->hasOne(Center::class);
     }
 
+    public function jobs()
+    {
+        return $this->belongsToMany(Job::class)->withTimestamps();
+    }
+
+    // user could be an employee
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
 }
