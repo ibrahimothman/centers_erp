@@ -12,6 +12,7 @@ use App\Rules\UniquePerCenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use mysql_xdevapi\Session;
 
 class EmployeeController extends Controller
@@ -50,12 +51,9 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        // todo 1) create user account for this employee
-//        $user = User::create($this->validateRequest());
 
         // 2) create an employee related to that user
         $data = $this->validateRequest($request);
-
         $data = $data->validate();
 
         $center = Center::findOrFail(Session('center_id'));
@@ -69,10 +67,6 @@ class EmployeeController extends Controller
             'address' => $data['address'],
         ]);
 
-        // todo 2) save employee's jobs
-//        if (isset($data['job'])) {
-//            $employee->jobs()->syncWithoutDetaching($data['job']);
-//        }
 
          // if this employee is wanted to be a user, send him an user invitation
         if(isset($data['send_invitation'])){
@@ -129,7 +123,7 @@ class EmployeeController extends Controller
 
     private function validateRequest($request)
     {
-        return Validator::make($request->all(),[
+        $v = Validator::make($request->all(),[
             'idNumber' => ['required', 'digits:14',  new UniquePerCenter(Employee::class, '')],
 //            'image' => ' sometimes |nullable|image|file | max:10000',
 //            'idImage' => 'sometimes |nullable|image|file | max:10000',
@@ -143,10 +137,17 @@ class EmployeeController extends Controller
             'payment_model_meta_data' => ['required', 'array'],
             'nameAr' => ['required', new UniquePerCenter(Employee::class, '')],
             'nameEn' => ['required', new UniquePerCenter(Employee::class, '')],
-            'email' => ['sometimes', new UniquePerCenter(Employee::class, '')],
-            'jobs' => 'sometimes',
-            'send_invitation' => 'sometimes',
+            'send_invitation' => 'sometimes'
 
         ]);
+
+        $v->sometimes('email', ['required', 'email', new UniquePerCenter(Employee::class, '')], function ($input){
+            return $input->send_invitation;
+        });
+
+        $v->sometimes('jobs', ['required', Rule::notIn([0])], function ($input){
+            return $input->send_invitation;
+        });
+        return $v;
     }
 }

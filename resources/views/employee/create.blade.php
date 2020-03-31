@@ -70,11 +70,12 @@
                                             <div class="col ">
                                                 <label>الوظيفه </label>
                                                 <select name="jobs" class="form-control">
-                                                    <option >اختار وظيفة</option>
+                                                    <option value="0">اختار وظيفة</option>
                                                     @foreach($jobs as $job)
                                                         <option value="{{ $job->id }}">{{ $job->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                <div>{{ $errors->first('jobs') }}</div>
                                             </div>
                                         </div>
 

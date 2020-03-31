@@ -46,6 +46,7 @@ class UniquePerCenter implements Rule
      */
     public function passes($attribute, $value)
     {
+        if(is_null($value)) $value = '';
         $this->attribute = $attribute;
         $relation = $this->relation;
         if($this->oneToMany) {
