@@ -12,7 +12,7 @@
                         @csrf
 
                         @isset($invitation)
-                            <input hidden name="jobs" value="{{ $invitation->jobs }}">
+                            <input hidden name="invitation_token" value="{{ $invitation->token }}">
                         @endisset
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>

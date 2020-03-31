@@ -354,7 +354,7 @@
       'private' => NULL,
       'passphrase' => NULL,
     ),
-    'ttl' => 1,
+    'ttl' => 120,
     'refresh_ttl' => 20160,
     'algo' => 'HS256',
     'required_claims' => 
@@ -475,7 +475,7 @@
   ),
   'queue' => 
   array (
-    'default' => 'sync',
+    'default' => 'database',
     'connections' => 
     array (
       'sync' => 
@@ -485,7 +485,7 @@
       'database' => 
       array (
         'driver' => 'database',
-        'table' => 'jobs',
+        'table' => 'queue_jobs',
         'queue' => 'default',
         'retry_after' => 90,
       ),

@@ -7,7 +7,7 @@ use App\Events\NewInvitationHasCreated;
 use App\Listeners\CreateAdminJobForNewCenter;
 use App\Listeners\CreateEmployeeForCenterOwner;
 use App\Listeners\LogVerifiedUser;
-use App\Listeners\SendUserInvitaion;
+use App\Listeners\SendUserInvitation;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -25,7 +25,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         NewInvitationHasCreated::class => [
-            SendUserInvitaion::class,
+            SendUserInvitation::class,
         ],
 
     ];

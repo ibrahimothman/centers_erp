@@ -3,8 +3,10 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notification;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
@@ -59,6 +61,15 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return [];
     }
 
+    /*
+     * override sendEmailVerificationNotification
+     * send email via a verifyEmail job
+     * */
+    public function sendEmailVerificationNotification()
+    {
+        \App\Jobs\VerifyEmail::dispatch($this);
+    }
+
     public function center()
     {
         return $this->hasOne(Center::class);
@@ -72,7 +83,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     // user could be an employee
     public function employee()
     {
+
         return $this->belongsTo(Employee::class);
     }
+
+
 
 }

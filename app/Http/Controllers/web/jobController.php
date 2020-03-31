@@ -42,6 +42,7 @@ class jobController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
 
         $center = Center::findOrFail(Session('center_id'));
 
