@@ -6,9 +6,10 @@ use App\Rules\UniquePerCenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class Job extends Model
+class CenterJob extends Model
 {
     //
+    protected $table = 'centerJobs';
     protected $guarded = [];
 
     public function center()
@@ -18,12 +19,12 @@ class Job extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class, 'job_user')->withTimestamps();
     }
 
     public function invitations()
     {
-        return $this->belongsToMany(Invitation::class)->withTimestamps();
+        return $this->belongsToMany(Invitation::class, 'invitation_job')->withTimestamps();
     }
 
     public function setRolesAttribute($roles)
@@ -57,7 +58,7 @@ class Job extends Model
     {
         if($request->isMethod('post')){
             return [
-                'name' => ['required', new UniquePerCenter(Job::class, '')],
+                'name' => ['required', new UniquePerCenter(CenterJob::class, '')],
                 'roles' => ['sometimes', 'array'],
                 'roles.*.scope' => ['required'],
                 'roles.*.value' => ['required'],
