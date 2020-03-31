@@ -16,10 +16,11 @@ class CenterMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(! Auth::user()->center){
+        if(! Auth::user()->center && count(Auth::user()->jobs) == 0){
             return redirect('settings');
         }
-        Session(['center_id' => Auth::user()->center->id]);
+        
+        Session(['center_id' => Auth::user()->center? Auth::user()->center->id : Auth::user()->jobs->first()->center->id]);
         return $next($request);
     }
 }

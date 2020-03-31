@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Invitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class InvitationController extends Controller
 {
@@ -16,6 +17,7 @@ class InvitationController extends Controller
             ->where('accepted', 0)
             ->first();
         if($invitation){
+            Auth::logout();
             return view('auth.register')->with(['invitation' => $invitation]);
         }
 
