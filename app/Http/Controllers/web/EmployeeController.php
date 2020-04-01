@@ -93,6 +93,7 @@ class EmployeeController extends Controller
     {
         //
 
+        return view('employee.show', compact('employee'));
 
     }
 
@@ -137,6 +138,7 @@ class EmployeeController extends Controller
             ]);
         }
 
+        return redirect('employees/'.$employee->id);
 
     }
 

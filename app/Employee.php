@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\helper\Constants;
 use App\helper\mathParser\Math;
 use App\helper\PaymentModelHelper;
 use App\QueryFilter\Name;
@@ -56,7 +57,7 @@ class Employee extends Model
 
     public function paymentModel()
     {
-        return $this->belongsTo(PaymentModel::class);
+        return $this->belongsTo(PaymentModel::class, 'payment_model');
     }
 
     public function setPaymentModelMetaDataAttribute($meta_data)
@@ -127,5 +128,11 @@ class Employee extends Model
             ];
 
         }
+    }
+
+    public function getImage($key)
+    {
+        $imagePath = ($this->$key) ? $this->$key : Constants::getInstructorPlaceholderImage();
+        return  $imagePath;
     }
 }
