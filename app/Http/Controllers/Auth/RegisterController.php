@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Employee;
 use App\Invitation;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -89,6 +90,9 @@ class RegisterController extends Controller
                 if($invitation->jobs){
                     $user->jobs()->syncWithoutDetaching($invitation->jobs);
                 }
+
+                // update employee_userID
+                Employee::where('email', $invitation->email)->update(['user_id' => $user->id]);
             }
         }
 

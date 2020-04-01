@@ -91,7 +91,7 @@
                                                 <p><img class="img-fluid rounded-circle  " src="{{ is_null($employees[$j]->image)? App\helper\Constants::getInstructorPlaceholderImage() : $employees[$j]->image}}" width="100"
                                                         height="100" alt="card image"></p>
                                                 <h4 class="card-title">{{$employees[$j]->nameAr}}</h4>
-                                                <a href="/employees/{{$employees[$j]->id}}" class="btn btn-primary btn-sm">قراءه المزيد</a>
+                                                <a href="/employees/{{$employees[$j]->id}}/edit" class="btn btn-primary btn-sm">قراءه المزيد</a>
                                             </div>
                                         </div>
                                     </div>

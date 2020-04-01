@@ -37,10 +37,11 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        $employee = new Employee();
         $center = Center::findOrFail(Session('center_id'));
         $jobs = $center->jobs;
         $payment_models = $center->paymentModels;
-        return view('employee.create', compact('jobs', 'payment_models'));
+        return view('employee.create', compact('employee', 'jobs', 'payment_models'));
     }
 
     /**
@@ -57,7 +58,7 @@ class EmployeeController extends Controller
         $data = $data->validate();
 
         $center = Center::findOrFail(Session('center_id'));
-        $employee=$center->employees()->create(Arr::except($data,['state','city','address', 'jobs', 'send_invitation']));
+        $employee=$center->employees()->create(Arr::except($data,['state','city','address', 'job', 'send_invitation']));
 
 
         // create address
@@ -67,12 +68,19 @@ class EmployeeController extends Controller
             'address' => $data['address'],
         ]);
 
+        // attach employee with related job
+        if(isset($data['job'])){
+             $employee->update([
+                 'job_id' => $data['job']
+             ]);
+        }
 
-         // if this employee is wanted to be a user, send him an user invitation
+
+        // if this employee is wanted to be a user, send him an user invitation
         if(isset($data['send_invitation'])){
             $invitation = (new \App\Invitation)->addNew([
                 'email' => $data['email'],
-                'jobs' => $data['jobs']
+                'jobs' => $data['job']
             ]);
         }
 
@@ -83,31 +91,23 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         //
-//        return json_encode($employee);
+
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function edit(Employee $employee)
     {
-        //
+        $center = Center::findOrFail(Session('center_id'));
+        $jobs = $center->jobs;
+        $payment_models = $center->paymentModels;
+        return view('employee.update', compact('employee', 'jobs', 'payment_models'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Employee $employee)
     {
         //
+        dd($request->all());
     }
 
     /**
@@ -137,6 +137,8 @@ class EmployeeController extends Controller
             'payment_model_meta_data' => ['required', 'array'],
             'nameAr' => ['required', new UniquePerCenter(Employee::class, '')],
             'nameEn' => ['required', new UniquePerCenter(Employee::class, '')],
+            'email' => ['sometimes', 'email', new UniquePerCenter(Employee::class, '')],
+            'job' => ['sometimes', Rule::notIn([0])],
             'send_invitation' => 'sometimes'
 
         ]);
@@ -145,7 +147,7 @@ class EmployeeController extends Controller
             return $input->send_invitation;
         });
 
-        $v->sometimes('jobs', ['required', Rule::notIn([0])], function ($input){
+        $v->sometimes('job', ['required', Rule::notIn([0])], function ($input){
             return $input->send_invitation;
         });
         return $v;
