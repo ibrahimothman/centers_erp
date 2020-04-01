@@ -22,6 +22,9 @@ class InstructorRepository
         $center = Center::findOrFail(Session('center_id'));
         $instructors = $center->instructors;
         foreach ($instructors as $instructor){
+
+            $instructor->payment_model = $instructor->getPaymentModel($instructor->payment_model);
+
             $rest = $center->transactions()->where("meta_data->payFor_type", "App\Instructor")
                 ->where("meta_data->payFor_id", "$instructor->id")->latest()->first()['rest'];
 

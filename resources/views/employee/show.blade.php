@@ -75,7 +75,7 @@
                                                         <tr class="table-danger profile" >
 
                                                             <td>الاسم </td>
-                                                            <td>ا{{$employee->nameAr}}</td>
+                                                            <td>{{$employee->nameAr}}</td>
                                                             <td>{{$employee->nameEn}}
 
 

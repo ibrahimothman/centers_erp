@@ -101,14 +101,11 @@ class Instructor extends ImageUploader
         return $this->attributes['payment_model_meta_data'] = json_encode($meta_data,JSON_UNESCAPED_UNICODE );
     }
 
-    public function getPaymentModelMetaDataAttribute($meta_data)
-    {
-        return json_decode($meta_data, true);
-    }
 
-    public function getPaymentModelAttribute($paymentModel)
+    public function getPaymentModel($paymentModel)
     {
-        return PaymentModelHelper::getPaymentModelAttribute($paymentModel, $this->payment_model_meta_data);
+        return PaymentModelHelper::getPaymentModelAttribute($paymentModel,
+            json_decode($this->payment_model_meta_data, true));
     }
 
 

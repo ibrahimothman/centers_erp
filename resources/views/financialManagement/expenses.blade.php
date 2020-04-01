@@ -195,6 +195,7 @@
                 var selected = $.parseJSON($('#list [value="' + value + '"]').attr('data-customValue'));
                 var type = $('#list [value="' + value + '"]').attr('data-type');
                 $.each(selected, function (key, member) {
+                    // console.log("member: "+member);
                     $('#pay_for_list'+id).append($("<option></option>")
                         .data('custom', member)
                         .data('type', type)
@@ -210,7 +211,10 @@
             var value = $(this).val();
             if (value !== '') {
                 var selected_pay_for_type = $('#pay_for_list'+id+' [value="' + value + '"]').data('type');
+                console.log("type: "+selected_pay_for_type);
                 var selected_pay_for = $('#pay_for_list'+id+' [value="' + value + '"]').data('custom');
+                console.log("detail: "+selected_pay_for.payment_model);
+{{--                {{ PaymentModelHelper::getPaymentModelAttribute() }}--}}
                 console.log(selected_pay_for_type);
                 $.each(selected_pay_for.payment_model, function (key, value) {
                     console.log(key);

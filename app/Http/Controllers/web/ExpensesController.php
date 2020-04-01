@@ -22,6 +22,7 @@ class ExpensesController extends Controller
         $employees = EmployeeRepository::getInstance()->allEmployees();
         $accounts = FinanceAccount::all()->where('parent_id', 6);
 
+
         return view('financialManagement/expenses'
             , compact('instructors', 'employees', 'accounts'));
 

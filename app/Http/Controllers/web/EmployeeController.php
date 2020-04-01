@@ -143,9 +143,11 @@ class EmployeeController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
         //
+        $employee->delete();
+        return back();
     }
 
     private function validateRequest(Request $request)
