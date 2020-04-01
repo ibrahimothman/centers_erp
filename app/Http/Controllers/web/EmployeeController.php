@@ -55,6 +55,7 @@ class EmployeeController extends Controller
 
         // 2) create an employee related to that user
         $data = $this->validateRequest($request);
+
         $data = $data->validate();
 
         $center = Center::findOrFail(Session('center_id'));
@@ -69,7 +70,7 @@ class EmployeeController extends Controller
         ]);
 
         // attach employee with related job
-        if(isset($data['job'])){
+        if($data['job'] != "0"){
              $employee->update([
                  'job_id' => $data['job']
              ]);
@@ -98,6 +99,7 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
+//        dd($employee->payment_model_meta_data);
         $center = Center::findOrFail(Session('center_id'));
         $jobs = $center->jobs;
         $payment_models = $center->paymentModels;
@@ -107,49 +109,64 @@ class EmployeeController extends Controller
     public function update(Request $request, Employee $employee)
     {
         //
-        dd($request->all());
+        $data = $this->validateRequest($request);
+        $data = $data->validate();
+        $employee->update(Arr::except($data,['state','city','address', 'job', 'send_invitation']));
+
+
+        // create address
+        $employee->address()->update([
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+        ]);
+
+        // attach employee with related job
+        if($data['job'] != "0"){
+            $employee->update([
+                'job_id' => $data['job']
+            ]);
+        }
+
+
+        // if this employee is wanted to be a user, send him an user invitation
+        if(isset($data['send_invitation'])){
+            $invitation = (new \App\Invitation)->addNew([
+                'email' => $data['email'],
+                'jobs' => $data['job']
+            ]);
+        }
+
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //
     }
 
-    private function validateRequest($request)
+    private function validateRequest(Request $request)
     {
-        $v = Validator::make($request->all(),[
-            'idNumber' => ['required', 'digits:14',  new UniquePerCenter(Employee::class, '')],
-//            'image' => ' sometimes |nullable|image|file | max:10000',
-//            'idImage' => 'sometimes |nullable|image|file | max:10000',
-            'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/',new UniquePerCenter(Employee::class, '')],
-//            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
-            'passportNumber' => ['sometimes', new UniquePerCenter(Employee::class, '')],
-            'state' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'payment_model' => ['required', 'integer'],
-            'payment_model_meta_data' => ['required', 'array'],
-            'nameAr' => ['required', new UniquePerCenter(Employee::class, '')],
-            'nameEn' => ['required', new UniquePerCenter(Employee::class, '')],
-            'email' => ['sometimes', 'email', new UniquePerCenter(Employee::class, '')],
-            'job' => ['sometimes', Rule::notIn([0])],
-            'send_invitation' => 'sometimes'
-
-        ]);
-
-        $v->sometimes('email', ['required', 'email', new UniquePerCenter(Employee::class, '')], function ($input){
-            return $input->send_invitation;
-        });
-
+        $v = Validator::make($request->all(),Employee::rules($request));
         $v->sometimes('job', ['required', Rule::notIn([0])], function ($input){
             return $input->send_invitation;
         });
+
+        if($request->isMethod('post')){
+            $v->sometimes('email', ['required', 'email', new UniquePerCenter(Employee::class, '')], function ($input){
+                return $input->send_invitation;
+            });
+
+        }
+        else{
+            $employee_id = $request->route('employee')->id;
+            $v->sometimes('email', ['required', 'email', new UniquePerCenter(Employee::class, $employee_id)], function ($input){
+                return $input->send_invitation;
+            });
+
+        }
+
         return $v;
     }
 }

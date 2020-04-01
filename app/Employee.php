@@ -5,6 +5,8 @@ namespace App;
 use App\helper\mathParser\Math;
 use App\helper\PaymentModelHelper;
 use App\QueryFilter\Name;
+use App\Rules\UniquePerCenter;
+use http\Client\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use function foo\func;
@@ -62,17 +64,17 @@ class Employee extends Model
         return $this->attributes['payment_model_meta_data'] = json_encode($meta_data,JSON_UNESCAPED_UNICODE );
     }
 
-    public function getPaymentModelMetaDataAttribute($meta_data)
-    {
-        return json_decode($meta_data, true);
-    }
+//    public function getPaymentModelMetaDataAttribute($meta_data)
+//    {
+//        return json_decode($meta_data, true);
+//    }
 
-    public function getPaymentModelAttribute($paymentModel)
-    {
-
-       return PaymentModelHelper::getPaymentModelAttribute($paymentModel, $this->payment_model_meta_data);
-
-    }
+//    public function getPaymentModelAttribute($paymentModel)
+//    {
+//
+//       return PaymentModelHelper::getPaymentModelAttribute($paymentModel, $this->payment_model_meta_data);
+//
+//    }
 
     protected static function boot()
     {
@@ -80,5 +82,50 @@ class Employee extends Model
         static::deleting(function($employee){
             $employee->address->delete();
         });
+    }
+
+    public static function rules(\Illuminate\Http\Request $request)
+    {
+        if($request->isMethod('post')){
+            return[
+                'idNumber' => ['required', 'digits:14',  new UniquePerCenter(Employee::class, '')],
+//            'image' => ' sometimes |nullable|image|file | max:10000',
+//            'idImage' => 'sometimes |nullable|image|file | max:10000',
+                'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/',new UniquePerCenter(Employee::class, '')],
+//            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
+                'passportNumber' => ['sometimes', new UniquePerCenter(Employee::class, '')],
+                'state' => 'required',
+                'city' => 'required',
+                'address' => 'required',
+                'payment_model' => ['required', 'integer'],
+                'payment_model_meta_data' => ['required', 'array'],
+                'nameAr' => ['required', new UniquePerCenter(Employee::class, '')],
+                'nameEn' => ['required', new UniquePerCenter(Employee::class, '')],
+                'email' => ['nullable', 'email', new UniquePerCenter(Employee::class, '')],
+                'job' => 'sometimes',
+                'send_invitation' => 'sometimes'
+            ];
+        }else{
+            $employee_id = $request->route('employee')->id;
+            return[
+                'idNumber' => ['required', 'digits:14',  new UniquePerCenter(Employee::class, $employee_id)],
+//            'image' => ' sometimes |nullable|image|file | max:10000',
+//            'idImage' => 'sometimes |nullable|image|file | max:10000',
+                'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/',new UniquePerCenter(Employee::class, $employee_id)],
+//            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
+                'passportNumber' => ['sometimes', new UniquePerCenter(Employee::class, $employee_id)],
+                'state' => 'required',
+                'city' => 'required',
+                'address' => 'required',
+                'payment_model' => ['required', 'integer'],
+                'payment_model_meta_data' => ['required', 'array'],
+                'nameAr' => ['required', new UniquePerCenter(Employee::class, $employee_id)],
+                'nameEn' => ['required', new UniquePerCenter(Employee::class, $employee_id)],
+                'email' => ['nullable', 'email', new UniquePerCenter(Employee::class, $employee_id)],
+                'job' => 'sometimes',
+                'send_invitation' => 'sometimes'
+            ];
+
+        }
     }
 }

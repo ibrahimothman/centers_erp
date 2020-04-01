@@ -76,7 +76,7 @@
                                                     <option value="{{ $job->id }}" {{ $employee->job_id == $job->id ? 'selected' : ''}}>{{ $job->name }}</option>
                                                 @endforeach
                                             </select>
-                                            <div>{{ $errors->first('jobs') }}</div>
+                                            <div>{{ $errors->first('job') }}</div>
                                         </div>
                                     </div>
 
@@ -131,7 +131,7 @@
                                             <select class="form-control" id="payment_models" name="payment_model" required>
                                                 <option value="0">اختار</option>
                                                 @foreach($payment_models as $payment_model)
-                                                    <option data-extra="{{ $payment_model }}" value="{{ $payment_model->id }}" {{ $employee->payment_model['model'] == $payment_model->name ? 'selected' : ''}}>{{ $payment_model->name }}</option>
+                                                    <option data-extra="{{ $employee->payment_model == $payment_model->id? $employee->payment_model_meta_data :  $payment_model->meta_data }}" value="{{ $payment_model->id }}" {{ $employee->payment_model == $payment_model->id ? 'selected' : ''}}>{{ $payment_model->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -140,10 +140,16 @@
                                     <!-- user invitation checkbox-->
                                     <div class="form-row">
                                         <div class="col-sm-6 form-group">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input part-of-diploma" name="send_invitation" id="send_invitation">
-                                                <label class="custom-control-label" for="send_invitation">دعوة هذا الموظف ليكون مستخدم</label>
-                                            </div>
+                                            @if($employee->user)
+                                                <div>
+                                                    <label  >هذا الموظف تم دعوته من قبل</label>
+                                                </div>
+                                            @else
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input part-of-diploma" name="send_invitation" id="send_invitation">
+                                                    <label class="custom-control-label" for="send_invitation">دعوة هذا الموظف ليكون مستخدم</label>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -204,27 +210,27 @@
 
 
     $(document).ready(function () {
-        var selected_model = $.parseJSON($("#payment_models").find(':selected').attr("data-extra"));
-        console.log(selected_model);
-        drawPaymentModelOptions(selected_model);
+        var selected_model_meta_data = $.parseJSON($("#payment_models").find(':selected').attr("data-extra"));
+        console.log(selected_model_meta_data);
+        drawPaymentModelOptions(selected_model_meta_data);
     });
 
     $("#payment_models").on('change', function() {
         // console.log('change');
         $('.meta_data').remove();
-        var selected_model = $.parseJSON($(this).find(':selected').attr("data-extra"));
-        drawPaymentModelOptions(selected_model);
+        var selected_model_meta_data = $.parseJSON($(this).find(':selected').attr("data-extra"));
+        drawPaymentModelOptions(selected_model_meta_data);
 
 
     });
 
-    function drawPaymentModelOptions(payment_model) {
-        $.each(payment_model.meta_data, function (key, value) {
+    function drawPaymentModelOptions(payment_model_meta_data) {
+        $.each(payment_model_meta_data, function (key, value) {
             $('#model_form').after("<div class='row form-group meta_data'>" +
                 "<div class='col-sm-12'>" +
                 "<label>"+ key +"</label>" +
                 "<span class='required'>*</span>" +
-                "<input class='form-control payType' type='text' name='payment_model_meta_data["+ key +"]' id='"+ key +"'>" +
+                "<input class='form-control payType' type='text' value='"+ value +"' name='payment_model_meta_data["+ key +"]' id='"+ key +"'>" +
                 "</div>" +
                 "</div>");
         })

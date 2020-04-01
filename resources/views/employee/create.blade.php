@@ -75,7 +75,7 @@
                                                         <option value="{{ $job->id }}">{{ $job->name }}</option>
                                                     @endforeach
                                                 </select>
-                                                <div>{{ $errors->first('jobs') }}</div>
+                                                <div>{{ $errors->first('job') }}</div>
                                             </div>
                                         </div>
 
@@ -130,7 +130,7 @@
                                                 <select class="form-control" id="payment_models" name="payment_model" required>
                                                     <option value="0">اختار</option>
                                                     @foreach($payment_models as $payment_model)
-                                                        <option data-extra="{{ $payment_model }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
+                                                        <option data-extra="{{ $payment_model->meta_data }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -202,13 +202,13 @@
 <script>
     $("#payment_models").on('change', function() {
         $('.meta_data').remove();
-        var selected_model = $.parseJSON($(this).find(':selected').attr("data-extra"));
-        $.each(selected_model.meta_data, function (key, value) {
+        var selected_model_meta_data = $.parseJSON($(this).find(':selected').attr("data-extra"));
+        $.each(selected_model_meta_data, function (key, value) {
             $('#model_form').after("<div class='row form-group meta_data'>" +
                 "<div class='col-sm-12'>" +
                 "<label>"+ key +"</label>" +
                 "<span class='required'>*</span>" +
-                "<input class='form-control payType' type='text' name='payment_model_meta_data["+ key +"]' id='"+ key +"'>" +
+                "<input class='form-control payType' type='text' value='"+ value +"' name='payment_model_meta_data["+ key +"]' id='"+ key +"'>" +
                 "</div>" +
                 "</div>");
         })
