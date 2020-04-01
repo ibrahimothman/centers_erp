@@ -452,7 +452,7 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'smtp.gmail.com',
+    'host' => 'smtp.hostinger.ae',
     'port' => '587',
     'from' => 
     array (
@@ -460,8 +460,8 @@
       'name' => 'TrainingHub',
     ),
     'encryption' => 'TLS',
-    'username' => 'ibrahimothmanre@gmail.com',
-    'password' => '796ikiaommmaamon',
+    'username' => 'traininghub@yohady.com',
+    'password' => '123654789',
     'sendmail' => '/usr/sbin/sendmail -bs',
     'markdown' => 
     array (

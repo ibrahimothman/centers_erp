@@ -83,7 +83,7 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {z
+    {
         // todo : attach student to the center
         // check if user has rights to add a new student
 

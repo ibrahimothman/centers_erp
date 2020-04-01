@@ -124,7 +124,7 @@ class Student extends ImageUploader
 
         if($request->isMethod('post')){
             return [
-                z 'city' => 'required',
+                 'city' => 'required',
                 'address' => 'required',
                 'degree' => ['required',new DegreeRule],
                 'faculty' => ['required',new FacultyRule],
