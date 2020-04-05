@@ -275,7 +275,7 @@
                                                                             type="submit" id="submit">الخروج
                                                                     </button>
                                                                     <button class="btn  btn-danger action-buttons"
-                                                                            type="reset"> إلغاء
+                                                                            type="button" data-dismiss="modal"> إلغاء
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -307,8 +307,5 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
 <script type='text/javascript' src="/js/setting_validation.js"></script>
-
-
-
 </body>
 </html>

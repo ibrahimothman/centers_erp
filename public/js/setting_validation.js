@@ -3,18 +3,30 @@ $(document).ready(function () {
     $('#centerInfo').validate(
         {
             rules: {
-                centerName: {
+                name: {
                     required: true,
                 },
-                bio: {
+                about_center: {
+                    required: true,
+                },
+                manager_name: {
+                    required: true,
+                },
+                about_manager: {
                     required: true,
                 },
             },
             messages: {
-                centerName: {
+              name: {
                     required: "هذه الخانه مطلوبه",
                 },
-                bio: {
+                about_center: {
+                    required: "هذه الخانه مطلوبه",
+                },
+                manager_name: {
+                    required: "هذه الخانه مطلوبه",
+                },
+                about_manager: {
                     required: "هذه الخانه مطلوبه",
                 },
 
@@ -84,34 +96,3 @@ $(document).ready(function () {
             $(this).validate();
         });
     }); // end document.ready
-    //----------------- manager info -------//
-$(document).ready(function () {
-    $('#managerInfo').validate(
-        {
-            rules: {
-                managerName: {
-                    required: true,
-                },
-                bioManager: {
-                    required: true,
-                },
-            },
-            messages: {
-                managerName: {
-                    required: "هذه الخانه مطلوبه",
-                },
-                bioManager: {
-                    required: "هذه الخانه مطلوبه",
-                },
-
-            },
-            submitHandler: function (form) {
-                form.submit();
-            }
-
-        });
-    /* real time validate */
-    $('#managerInfo').on('keyup', function() {
-        $(this).validate();
-    });
-}); // end document.ready
