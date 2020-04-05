@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     @include('library')
+    <!-- Bootstrap CSS & js -->
+        <link rel="stylesheet" href="/css/employee.css">
     <title>add a new admin</title>
 </head>
 <body id="page-top">
@@ -26,22 +27,21 @@
                                 <div class="card-body">
                                     <form action="{{ route('employees.store') }}" method="post" id="employeeCreate">
                                         @csrf
-                                        <div class="form-row">
+                                        <div class="form-row form-group">
                                             <label>الاسم باللغه العربيه </label>
                                             <span class="required">*</span>
                                             <input type="text" class="form-control" name="nameAr" placeholder="الاسم " value="{{ old('nameAr') }}">
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
 
-                                        <div class="form-row">
+                                        <div class="form-row form-group">
                                             <label>الاسم باللغه الانجليزيه </label>
-                                            <span class="required">*</span>
                                             <input type="text" class="form-control" name="nameEn" placeholder="الاسم " value="{{ old('nameEn') }}">
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
 
 
-                                        <div class=" form-row ">
+                                        <div class=" form-row form-group">
                                             <div class="col-6 ">
                                                 <label>رقم التليفون </label>
                                                 <span class="required">*</span>
@@ -88,9 +88,7 @@
                                                 <div>{{ $errors->first('passportNum') }}</div>
                                             </div>
                                         </div>
-                                        <br>
-
-                                        <div class="form-row">
+                                   <div class="form-row form-group">
 
                                             <div class="col  ">
                                                 <label>البلد </label>
@@ -108,7 +106,7 @@
                                             </div>
                                         </div>
 
-                                        <div class=" form-row">
+                                        <div class=" form-row form-group">
                                             <label>العنوان</label>
                                             <span class="required">*</span>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="3"
@@ -122,14 +120,29 @@
                                                 <label>نظام المحاسبه</label>
                                                 <span class="required">*</span>
                                                 <select class="form-control" id="payment_models" name="payment_model" required>
-                                                    <option value="0">اختار</option>
+                                                    <option value="">اختار</option>
                                                     @foreach($payment_models as $payment_model)
                                                         <option data-extra="{{ $payment_model }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-
+                                            <div class="form-row form-group">
+                                                <div class="col-sm-6">
+                                                <label>
+                                                    <input type="radio" class="option-input radio"
+                                                           name="example" checked/>
+                                                   يعمل
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>
+                                                    <input type="radio" class="option-input radio"
+                                                           name="example"/>
+                                                 لا يعمل
+                                                </label>
+                                            </div>
+                                            </div>
                                         <br>
                                         <div class="form-row save">
                                             <div class="col-sm-6 mx-auto text-center">

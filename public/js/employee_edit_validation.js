@@ -3,7 +3,7 @@ $(document).ready(function () {
     $.validator.addMethod("noSpace", function(value, element) {
         return value.indexOf(" ") < 0 && value != "";
     }, "No space please and don't leave it empty");
-    $('#employeeCreate').validate(
+    $('#employeeEdit').validate(
         {
             rules: {
                 nameAr: {
@@ -63,7 +63,7 @@ $(document).ready(function () {
             }
 
         });
-    $('#employeeCreate').on('focus', function() {
+    $('#employeeEdit').on('focus', function() {
         $(this).validate();
 
     });
