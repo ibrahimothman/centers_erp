@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-
     @include('library')
     <!-- Bootstrap CSS & js -->
         <link rel="stylesheet" href="{{url("css/bootstrap.min.css")}}">
     <link rel="stylesheet" href="{{url("css/instructor_style.css")}}">
-
     <title>register instructor</title>
 </head>
 <body class="bg-light" id="page-top">
-
-
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
         @include('operationBar')
         <section>
-
             <div class="container-fluid   text-right">
-
         <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-lg-8">
@@ -29,8 +23,33 @@
                         تسجيل بيانات المدرب
                     </div>
                             <div class="card-body">
-                                <form action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data">
+                                <form id="addInstructor" action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data">
                                     @csrf
+
+                                    <div class="form-row image-upload">
+                                        <div class="col-sm-8">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
+                                                       id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
+                                                       id="customFile2" src="" onchange="readURL(this, 2);" required>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center  ">
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                 alt="your image"/>
+                                            <p>صورة البطاقه</p>
+                                        </div>
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                 alt="your image"/>
+                                            <p>الصوره الشخصيه</p>
+                                        </div>
+                                    </div>
                                     <div class="form-row form-group">
                                         <div class="col-sm-12 ">
                                             <label>الاسم باللغه العربيه</label>
@@ -46,9 +65,6 @@
                                                    placeholder="الاسم باللغه الانجليزيه" value="">
                                         </div>
                                     </div>
-
-
-
                                     <div class=" form-row form-group">
                                         <div class="col">
                                             <label>البريد الالكترونى </label>
@@ -88,7 +104,6 @@
                                            class="form-control ">
                                 </div>
                             </div>
-                            <br>
                             <div class="form-row form-group">
                                 <div class="col-sm-6  ">
                                     <label>البلد </label>
@@ -113,8 +128,6 @@
 
                                     <div class=" form-row  form-group">
                                         <label>نبذه عن</label>
-                                        <span class="required">*</span>
-
                                         <textarea name="bio" placeholder="نبذه عن " rows="3"
                                                   class="form-control" style="  overflow-scrolling:auto; "></textarea>
                                     </div>
@@ -126,7 +139,7 @@
                                             <label>نظام المحاسبه</label>
                                             <span class="required">*</span>
                                             <select class="form-control" id="payment_models" name="payment_model" required>
-                                                <option value="0">اختار</option>
+                                                <option value="">اختار</option>
                                                 @foreach($payment_models as $payment_model)
                                                     <option data-extra="{{ $payment_model }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
                                                 @endforeach
@@ -134,29 +147,20 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="form-row image-upload">
-                                        <div class="col-sm-8">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
-                                                       id="customFile1" src="" onchange="readURL(this, 1);" required>
-                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
-                                                       id="customFile2" src="" onchange="readURL(this, 2);" required>
-
-
-                                            </div>
+                                    <div class="form-row form-group">
+                                        <div class="col-sm-6">
+                                            <label>
+                                                <input type="radio" class="option-input radio"
+                                                       name="example" checked/>
+                                                يعمل
+                                            </label>
                                         </div>
-                                    </div>
-                                    <div class="d-flex justify-content-center  ">
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
-                                                 alt="your image"/>
-                                            <p>صورة البطاقه</p>
-                                        </div>
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
-                                                 alt="your image"/>
-                                            <p>الصوره الشخصيه</p>
+                                        <div class="col-sm-6">
+                                            <label>
+                                                <input type="radio" class="option-input radio"
+                                                       name="example"/>
+                                                لا يعمل
+                                            </label>
                                         </div>
                                     </div>
                                     <br>

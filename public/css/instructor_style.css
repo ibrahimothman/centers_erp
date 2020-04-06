@@ -23,24 +23,43 @@ span.type {
 }
 
 /* overview instructor */
-img[class="profilePhoto"] {
-    max-width: 200px;
-    max-height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: double 4px transparent;
-    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #007bff, #fff);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 70%;
+    height: 100%;
+    margin-bottom: 10px;
 }
 
-a:hover {
-    text-decoration: none;
+.profile-head h5{
+    color: #333;
 }
+.profile-head h6{
+    color: #0062cc;
+}
+.profile-rating span{
+    color: #495057;
 
+}
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
 
-/*-- //card --*/
+    border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #0062cc;
+}
+.profile-head a{
+    font-size: 20px;
+}
+.profile-tab p{
+    color: #0062cc;
+}
+/*  card*/
 
 .g1 {
     position: relative;
@@ -53,7 +72,6 @@ a:hover {
     bottom: 0px;
     z-index: 999;
     background: rgba(5, 5, 3, 0.78);
-    padding: 2em 2em;
     transition: all 0.8s;
     -webkit-transition: all 0.8s;
     -moz-transition: all 0.8s;
@@ -90,6 +108,7 @@ a:hover {
     }
 }
 
+
 /* register instructor and update */
 .image-upload {
     height: 200px;
@@ -122,6 +141,54 @@ a:hover {
     border-radius: 3px;
     align-self: center;
 }
+/* radio button */
+.option-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    top: 13.33333px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 35px;
+    width: 35px;
+    transition: all 0.15s ease-out 0s;
+    background: #cbd1d8;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    outline: none;
+    position: relative;
+    z-index: 1000;
+}
+.option-input:hover {
+    background: #9faab7;
+}
+.option-input:checked {
+    background: #007bff;
+}
+.option-input:checked::before {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    content: '✔';
+    display: inline-block;
+    font-size: 26.66667px;
+    text-align: center;
+    line-height: 40px;
+}
+.option-input.radio {
+    border-radius: 50%;
+}
+.option-input.radio::after {
+    border-radius: 50%;
+}
+
 /* view all instructor */
 
 /* dropdown */

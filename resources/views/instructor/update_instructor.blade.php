@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-
     @include('library')
     <!-- Bootstrap CSS & js -->
         <link rel="stylesheet" href="{{url("css/bootstrap.min.css")}}">
     <link rel="stylesheet" href="{{url("css/instructor_style.css")}}">
-
-
     <title> update register instructor</title>
 </head>
 <body class="bg-light" id="page-top">
-
-
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
         @include('operationBar')
         <section>
-
             <div class="container-fluid   text-right">
 
                 <div class="row">
@@ -27,13 +21,36 @@
                     <div class="col-lg-8">
                         <div class="card mb-4">
                             <div class="card-header text-primary">
-                                تسجيل بيانات المدرب
+                                تعديل بيانات المدرب
                             </div>
                             <div class="card-body">
-                                <form action="{{route('instructors.update', $instructor->id)}}" method="post" enctype="multipart/form-data">
+                                <form   id="editInstructor" action="{{route('instructors.update', $instructor->id)}}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('patch')
+                                    <div class="form-row image-upload">
+                                        <div class="col-sm-8">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
+                                                       id="customFile1" src="{{ $instructor->getImage("idImage") }}" onchange="readURL(this, 1);" required>
+                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
+                                                       id="customFile2" src="{{ $instructor->getImage("image") }}" onchange="readURL(this, 2);" required>
 
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center  ">
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded1" src="{{ $instructor->getImage("idImage") }}"
+                                                 alt="your image"/>
+                                            <p>صورة البطاقه</p>
+                                        </div>
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded2" src="{{ $instructor->getImage("image") }}"
+                                                 alt="your image"/>
+                                            <p >الصوره الشخصيه</p>
+                                        </div>
+                                    </div>
                                     <div class="form-row form-group">
                                         <div class="col-sm-12 ">
                                             <label>الاسم باللغه العربيه</label>
@@ -46,14 +63,11 @@
                                     <div class="form-row form-group">
                                         <div class="col">
                                             <label>الاسم باللغه الانجليزيه</label>
-                                            <span class="required">*</span>
                                             <input type="text" name="nameEn" class="form-control"
                                                    placeholder="الاسم باللغه الانجليزيه" value="{{ $instructor->nameEn }}">
 
                                         </div>
                                     </div>
-
-
                                     <div class=" form-row form-group">
                                         <div class="col">
                                             <label>البريد الالكترونى </label>
@@ -62,8 +76,6 @@
                                                    class="form-control" value="{{ $instructor->email }}">
                                         </div>
                                     </div>
-
-
                                     <div class=" form-row form-group">
                                         <div class="col-sm-6  ">
                                             <label>رقم التليفون المحمول</label>
@@ -92,7 +104,6 @@
                                                    class="form-control ">
                                         </div>
                                     </div>
-                                    <br>
 
                                     <div class="form-row form-group">
                                         <div class="col-sm-6  ">
@@ -119,41 +130,10 @@
 
                                     <div class=" form-row  form-group">
                                         <label>نبذه عن</label>
-                                        <span class="required">*</span>
-
                                         <textarea name="bio" placeholder="نبذه عن " rows="3"
                                                   class="form-control" style="  overflow-scrolling:auto; ">{{ $instructor->bio }}</textarea>
 
                                     </div>
-
-                                    <div class="form-row image-upload">
-                                        <div class="col-sm-8">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
-                                                       id="customFile1" src="{{ $instructor->getImage("idImage") }}" onchange="readURL(this, 1);" required>
-                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
-                                                       id="customFile2" src="{{ $instructor->getImage("image") }}" onchange="readURL(this, 2);" required>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-center  ">
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded1" src="{{ $instructor->getImage("idImage") }}"
-                                                 alt="your image"/>
-                                            <p>صورة البطاقه</p>
-                                            <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
-                                        </div>
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded2" src="{{ $instructor->getImage("image") }}"
-                                                 alt="your image"/>
-                                            <p >الصوره الشخصيه</p>
-                                            <div id="photo2" class="photo" >هذه الخانه مطلوبه</div>
-                                        </div>
-                                    </div>
-                                    <div class="photo"></div>
-
                                     <br>
                                     <div class="form-row save">
                                         <div class="col-sm-6 mx-auto text-center">
@@ -212,7 +192,5 @@
         }
     }
 </script>
-
-
 </body>
 </html>

@@ -17,7 +17,6 @@ $(document).ready(function () {
                     required: true,
                 },
                 nameEn: {
-                    required: true,
                     validUsername: true
                 },
 
@@ -49,9 +48,10 @@ $(document).ready(function () {
                 address: {
                     required: true
                 },
-               bio: {
+                payment_model: {
                     required: true
-                },
+                }
+
             },
             messages: {
 
@@ -59,7 +59,6 @@ $(document).ready(function () {
                     required: "هذه الخانه مطلوبه",
                 },
                 nameEn: {
-                    required: "هذه الخانه مطلوبه",
                     validUsername: "مسموح بالكتابه بالانجليزي فقط"
                 },
 
@@ -91,9 +90,10 @@ $(document).ready(function () {
                 address: {
                     required: "هذه الخانه مطلوبه",
                 },
-               bio: {
+
+                payment_model:{
                     required: "هذه الخانه مطلوبه",
-                },
+                }
             },
 
             submitHandler: function (form) {

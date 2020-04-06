@@ -3,7 +3,7 @@
 <head>
 @include('library')
 <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/employee.css">
+   <link rel="stylesheet" href="/css/employee.css">
    <title>employee profile</title>
 </head>
 <body id="page-top">
