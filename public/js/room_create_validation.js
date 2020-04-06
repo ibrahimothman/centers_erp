@@ -2,13 +2,10 @@ $(document).ready(function () {
     $('#formRoom').validate(
         {
             rules: {
-                roomName: {
-                    required: true,
-                    number:true
-                },
-                location: {
+               name: {
                     required: true,
                 },
+
 
                 char: {
 
@@ -20,12 +17,10 @@ $(document).ready(function () {
                 },
             },
             messages: {
-                roomName: {
+               name: {
                     required: "هذه الخانه مطلوبه",
                 },
-                location: {
-                    required: "هذه الخانه مطلوبه",
-                },
+
                 char: {
 
                     number: "ادخل عدد"

@@ -1,6 +1,8 @@
 
 <div class="form-row form-group">
-    <div class="col-3 ">اسم الغرفه</div>
+    <div class="col-3 ">اسم الغرفه
+    <span class="required">*</span>
+    </div>
     <div class="col-9 ">
         <input type="text" value="{{ old('name') ?? $room->name }}" name="name" class='form-control'
                placeholder='ادخل اسم الغرفه'>
@@ -45,6 +47,7 @@
     </div>
 </div>
 <br>
+{{--
 <h6>محتويات الغرفه</h6>
 <div class="card ">
     <div class="card-body">
@@ -69,14 +72,33 @@
     </div>
 </div>
 <br>
+--}}
+<h6> اضف امكانيات المعمل</h6>
+<div class="card ">
+    <div class="card-body">
+        <div class=" row smiley-wrapper justify-content-center">
+            <div class="smiley " id="addBtn">
+                <div name="add">
+                    <button class="btn btn-primary" name="option"> <span >كاميرات مراقبه</span></button>
+                </div>
+                <div name="add">
+                    <button class="btn btn-primary" name="option"> <span >تكيف</span></button>
+                </div>
+                <div name="add">
+                    <button class="btn btn-primary" name="option"> <span >دتاشو</span></button>
+                </div>
+                <div name="add">
+                    <button class="btn btn-primary" name="option"> <span >واي فاي</span></button>
+                </div>
+            </div>
+        </div>
+        <Br>
+        <div class=" row">
+            <div class="col text-center">
+                <fieldset  name="message"  style="min-height: 100px;" id="reply-messsage" class="markItUpEditor "></fieldset>
 
-
-<script>
-    function selectAll(source) {
-        var checkboxes = document.getElementsByClassName('extra-class');
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-            checkboxes[i].checked = source.checked;
-        }
-    }
-</script>
-
+            </div>
+        </div>
+    </div>
+</div>
+<br>

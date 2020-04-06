@@ -1,5 +1,5 @@
 body {
-    direction: rtl;
+    direction: ltr;
     font-family: 'GESSTwoLight-Light' !important;
 }
 
@@ -7,11 +7,6 @@ a:hover {
     text-decoration: none;
 }
 /* room view */
-
-
-.addRoom{
-    background-color: #fff;
-}
     /* card */
 .motionCard {
     position: relative;
