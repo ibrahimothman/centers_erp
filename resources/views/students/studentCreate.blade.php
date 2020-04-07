@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Bootstrap CSS & js -->
     @include('library')
     <title>register a student</title>
 </head>
-
 <body id="page-top">
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
     @include('operationBar')
-
         <!-- Main Content -->
         <div id="content">
 <!-- Begin Page Content -->
             <div class="container-fluid">
-
                 <div class="row">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8">
@@ -46,13 +42,11 @@
                                                 <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                                      alt="your image"/>
                                                 <p>صورة البطاقه</p>
-                                          <!--      <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
                                             </div>
                                             <div class="course-image-input">
                                                 <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                                      alt="your image"/>
                                                 <p>الصوره الشخصيه</p>
-                                          <!--      <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
 
                                             </div>
                                         </div>
@@ -114,26 +108,6 @@
 
                                     </div>
                                     <br>
-
-                                  {{--  <div class=" form-row ">
-                                        <div class="col-sm-6" >
-
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="image" id="customFile1" src="{{ old('image') }}" >
-                                                <label class="custom-file-label" for="customFile">صوره الشخصيه</label>
-                                                <div>{{ $errors->first('image') }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 ">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="idPicture" src="{{ old('idPicture') }}" id="customFile2">
-                                                <label class="custom-file-label" for="customFile">صوره  البطاقه </label>
-                                                <div>{{ $errors->first('idPicture') }}</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                  --}}
                                     <div class="form-row">
                                         <div class="col-sm-12  ">
 
@@ -190,16 +164,7 @@
                                         </div>
 
                                     </div>
-                                   <!-- photo -->
-
-
-
-
-
-                                    <!-- end photo -->
-
-
-                                    <div class="form-row save">
+                              <div class="form-row save">
                                         <div class="col-sm-3  form-group">
                                         </div>
                                         <div class="col-sm-6  form-group">
@@ -218,7 +183,7 @@
                 </div>
             </div>
             <!-- End of Main Content -->
-
+        </div>
             <!-- Footer -->
         @include('footer')
             <!-- End of Footer -->
@@ -226,30 +191,8 @@
         <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">هل تريد الخروج بالفعل</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">اضغط على الخروج اذا كنت ترغب قى  الخروج</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
-                    <a class="btn btn-primary" href="login.html">الخروج</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <!-- scroll top -->
+@include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- client side validation plugin -->

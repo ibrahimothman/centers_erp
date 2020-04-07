@@ -1,36 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <!-- Bootstrap CSS & js -->
     @include('library')
     <link href="{{url('employee')}}" rel="stylesheet">
     <script wesrc="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <title>students</title>
-
-
 </head>
-
 <body id="page-top">
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
-
     @include('operationBar')
-
         <!-- Main Content -->
         <div id="content">
             <!-- Page Heading -->
-
             <div class="container-fluid">
-
                 <div class="col-md-12">
                     <div class="card">
-
                         <div class="card-header text-primary">
                             <div class="row  ">
                                 <div class="col-md-6">
@@ -51,12 +40,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-
                             <div class="row cont-header">
-
                                 <div class="col-md-6">
-
-
                                 </div>
                                 <div class="col-md-6">
 
@@ -94,7 +79,6 @@
                                 </div>
 
                             </div>
-
 
                             {{--                            @foreach($students as $students)--}}
                             <div class="row cont-det" id="ddd">
@@ -145,7 +129,6 @@
                                 </div>
                             </div>
 {{--                            {{$students->links()}}--}}
-
                         </div>
                     </div>
                 </div>
@@ -162,12 +145,8 @@
     </div>
 </div>
 <!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
+<!-- scroll top -->
+@include('scroll_top')
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -190,8 +169,6 @@
 
 @include('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
 <!-- Custom scripts for search-->
 
 <script>
@@ -302,7 +279,5 @@
         });
     }
 </script>
-
 </body>
-
 </html>

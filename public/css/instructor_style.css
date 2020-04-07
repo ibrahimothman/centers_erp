@@ -60,7 +60,6 @@ span.type {
     color: #0062cc;
 }
 /*  card*/
-
 .g1 {
     position: relative;
     display: block;
@@ -85,7 +84,7 @@ span.type {
     transform: scale(0);
 }
 
-.g1:hover .agile-dish-caption {
+.g1 .agile-dish-caption {
     display: block;
     -webkit-transform: scale(1);
     -moz-transform: scale(1);

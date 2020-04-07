@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Bootstrap CSS & js -->
     @include('library')
@@ -12,10 +11,7 @@
     <link href="{{url('vendor/datatables/datatables.min.css')}}" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
     <title>students</title>
-
-
 </head>
-
 <body id="page-top">
 <!-- Begin Page Content -->
 <div id="wrapper">
@@ -23,44 +19,29 @@
     <div id="content-wrapper" class="d-flex flex-column">
     @include('operationBar')
             <!-- Page Heading -->
-
             <div class="container-fluid">
-
                 <div class="col-md-12">
                     <div class="card">
-
                         <div class="card-header text-primary">
-
                             <div class="row  ">
-
                                 <div class="col-md-6">
                                     بيانات الطلاب
-
                                 </div>
-
                                 <div class="col-md-6 grid-view ">
 
                                     <button type="button" class="btn ">
                                         <a href="#">
                                             <i class="fas fa-th-list"></i>  </a>
+                                    </button>
                                         <button type="button" class="btn ">
                                             <a href="{{ route('students.index') }}">
-
                                                 <i class="fas fa-th"></i>
                                             </a>
                                         </button>
                                 </div>
-
-
                             </div>
-
-
-
-
-
                         </div>
                         <div class="card-body">
-
 
                             <div class="table-responsive row x_content">
                                 <table id="datatable-buttons" class="table table-striped table-bordered display  hover">
@@ -72,7 +53,6 @@
                                     <thead class="table-primary">
                                     <tr>
                                         <th>#</th>
-
                                         <th>الاسم باللغه العربيه</th>
                                         <th>الاسم باللغه الانجليزيه</th>
                                         <th>البريد الالكترونى </th>
@@ -84,12 +64,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-
                                     @foreach($students as $student)
                                         <tr>
                                             <td>{{$student->id}}</td>
-
                                             <td>{{$student->nameAr}}</td>
                                             <td>{{$student->nameEn}}</td>
                                             <td>{{$student->email}}</td>
@@ -97,8 +74,15 @@
                                             <td>{{$student->phoneNumber}}</td>
                                             <td>{{$student->idNumber}}</td>
                                             <td>
-                                                <a href="/students/{{$student->id}}" class="view-item" > <i class="fas fa-info-circle"></i></a>
-                                                <a href="/students/{{$student->id}}/edit" class="view-item" > <i class="fas fa-user-edit"></i></a></td>
+                                                <a href="/students/{{$student->id}}/edit"
+                                                   class=" btn btn-outline-primary  py-1 px-1 ">
+                                                    <i class="fas fa-edit  "></i> </a>
+                                                <a href="/students/{{$student->id}}" class="btn btn-outline-success  py-1 px-1 "><i
+                                                            class="fas fa-eye "></i></a>
+                                                <button type="submit" class="btn btn-outline-danger py-1 px-1 ">
+                                                    <i class="fas fa-trash-alt "></i>
+                                                </button>
+                                            </td>
 
                                         </tr>
                                     @endforeach
@@ -110,28 +94,19 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- /.container-fluid -->
-
-
+            </div>
                 <!-- End of Main Content -->
-
                 <!-- Footer -->
             @include('footer')
                 <!-- End of Footer -->
-
-            </div>
             <!-- End of Content Wrapper -->
         </div>
-
     </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
+@include('scroll_top')
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -203,9 +178,6 @@
         }
 
     </script>
-
-
-
 </body>
 
 </html>
