@@ -50,7 +50,7 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label >مواعيد الدبلومه</label>
-                                        <select  class="form-control "  id="diploma_group_date" name="diploma_group_id" required>
+                                        <select  class="form-control "  id="diploma_group_date" name="diploma_group_id">
 
                                             <option value="">اختار</option>
                                         </select>

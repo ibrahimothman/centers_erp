@@ -41,7 +41,6 @@
                                              src="{{ $diploma->image }}"
                                              alt="your image"/>
                                         <p>صورة الدبلومة</p>
-                                     <!--   <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
                                     <div class="course-image-input">
                                         <img id="imageUploaded4"
@@ -110,7 +109,12 @@
                                         </div>
                                     </div>
                                 </fieldset>
-
+                                <div class=" form-row">
+                                    <div class="col-sm-4 form-group">
+                                        <label class="text-primary"> اضافه عرض  الدبلومه</label>
+                                        <input type="number" min='0' class="form-control" id="cost"   placeholder="عرض  20% ">
+                                    </div>
+                                </div>
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
                                         <button class="btn btn-primary action-buttons" type="submit" id="submit"> تعديل

@@ -48,6 +48,7 @@
                             <tr>
                                 <th class="th-sm">اسم الطالب</th>
                                 <th class="th-sm">اسم الدبلومه</th>
+                                <th class="th-sm">اسم المدرب</th>
                                 <th class="th-sm">المعاد</th>
                                 <th class="th-sm"> تعديل</th>
                                 <th class="th-sm"> ازاله</th>
@@ -60,6 +61,7 @@
                                         <tr>
                                             <td>{{ $student->nameAr }}</td>
                                             <td>{{ $diploma->name }}</td>
+                                            <td></td>
                                             <td>{{ $group->starts_at }}</td>
                                             <td>
                                                 <a href="" class=" btn btn-outline-primary  py-1 px-2 "><i

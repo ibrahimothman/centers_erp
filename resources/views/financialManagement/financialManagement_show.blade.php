@@ -510,7 +510,7 @@
                                 </div>
                                 <!-- end section 4 payroll -->
 {{--                                <!-- section5 profit -->--}}
-{{--                                    <div id="section-5">--}}
+{{--                                    <div id="section-6">--}}
 {{--                                        <div class="row  mb-3">--}}
 {{--                                            <div class="col-sm-12">--}}
 {{--                                                <div class="card border-primary p-3 ">--}}
@@ -620,7 +620,7 @@
 
         <div class="modal-content " id="contentForPrint">
             <div class="modal-body">
-                <div id="section-5">
+                <div id="section-6">
                     <div class="row  mb-3">
                         <div class="col-sm-12">
                             <div class="card  p-3 ">
@@ -749,6 +749,8 @@
 
 
         });
+
+
 
 
 </script>

@@ -26,6 +26,7 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="name">اسم الدبلومة</label>
+                                        <span class="required">*</span>
                                         <select class="form-control" id="diplomas_options" name="diploma_id" required>
                                             <option value="">اختار</option>
                                             @foreach($diplomas as $diploma)
@@ -38,6 +39,7 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label>قاعة الدبلومة</label>
+                                       <span class="required">*</span>
                                         <select class="form-control" id="" name="room_id" required>
 
                                             <option value="">اختار</option>
@@ -50,7 +52,6 @@
                                 <div class="form-row">
                                     <div class='col-sm-6 form-group'>
                                             <label> تاريخ بداية الدبلومة</label>
-                                        <span class="required">*</span>
                                             <div class='input-group date'>
                                                 <input id="datetimepicker" name="starts_at" class="form-control" type="text">
 

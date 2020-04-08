@@ -266,13 +266,15 @@
                 <!-- End of Main Content -->
             </div>
         </div>
+
                 <!-- Footer -->
             @include('footer')
                 <!-- End of Footer -->
                 <!-- End of Content Wrapper -->
             </div>
             <!-- End of Page Wrapper -->
-        </div>
+</div>
+
         <!-- scroll top -->
         @include('scroll_top')
             <!-- Logout Modal-->

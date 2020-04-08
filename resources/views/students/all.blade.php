@@ -135,13 +135,13 @@
             </div>
             <!-- /.container-fluid -->
             <!-- End of Main Content -->
-
+        </div>
+        <!-- End of Content Wrapper -->
             <!-- Footer -->
         @include('footer')
             <!-- End of Footer -->
 
-        </div>
-        <!-- End of Content Wrapper -->
+
     </div>
 </div>
 <!-- End of Page Wrapper -->

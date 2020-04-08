@@ -6,9 +6,9 @@ $(document).ready(function () {
                 name: {
                     required: true,
                 },
-                date: {
+                room: {
                     required: true,
-                    date:true,
+
                 },
 
             },
@@ -17,9 +17,8 @@ $(document).ready(function () {
                     required: "هذه الخانه مطلوبه",
                 },
 
-                date: {
+                room: {
                     required: "هذه الخانه مطلوبه",
-                    date:"ادخل التاريخ الصحيح"
                 },
 
             },

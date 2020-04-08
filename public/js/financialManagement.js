@@ -54,7 +54,7 @@ $(document).ready(function(){
         $("#section-3").css("display","none");
         $("#section-4").css("display","none");
         $("#section-5").css("display","none");
-        $("#section-5").css("display","block");
+        $("#section-6").css("display","block");
     });
     // end
     // select year btn

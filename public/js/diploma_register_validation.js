@@ -3,24 +3,24 @@ $(document).ready(function () {
         {
 
             rules: {
-                name: {
+                diploma_id: {
                     required: true,
                 },
-              date: {
+                room_id:{
                     required: true,
-                  date:true,
                 },
+
 
             },
             messages: {
-                name: {
+                diploma_id: {
+                    required: "هذه الخانه مطلوبه",
+                },
+                room_id: {
                     required: "هذه الخانه مطلوبه",
                 },
 
-               date: {
-                    required: "هذه الخانه مطلوبه",
-                   date:"ادخل التاريخ الصحيح"
-                },
+
 
             },
             errorPlacement: function (error, element) {

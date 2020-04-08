@@ -2,7 +2,7 @@ $(document).ready(function () {
     $('#form').validate(
         {
             rules: {
-                name: {
+                student_id: {
                     required: true,
                 },
                 selectDiploma: {
@@ -10,7 +10,7 @@ $(document).ready(function () {
                 },
             },
             messages: {
-               name: {
+                student_id: {
                     required: "هذه الخانه مطلوبه",
                 },
                 selectDiploma: {

@@ -28,11 +28,11 @@
 
     <script src="{{url('js/jquery.min.js')}}"></script>
 
+    <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
+    <script src="{{url('js/jquery.datetimepicker.js')}}"></script>
 </head>
 <body>
 
-<link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
-<script src="{{url('js/jquery.datetimepicker.js')}}"></script>
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -43,7 +43,6 @@
 
         <!-- Main Content -->
         <div id="content">
-
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -59,10 +58,6 @@
                         </div>
                     </div>
                 </form>
-
-                @include('tobbar')
-
-
 <div id="statement">
     <style type="text/css">
     @page{
