@@ -111,8 +111,8 @@
                                 </fieldset>
                                 <div class=" form-row">
                                     <div class="col-sm-4 form-group">
-                                        <label class="text-primary"> اضافه عرض  الدبلومه</label>
-                                        <input type="number" min='0' class="form-control" id="cost"   placeholder="عرض  20% ">
+                                        <label class="text-primary"> اضافه خصم الدبلومه</label>
+                                        <input type="number" min='0' class="form-control" id="cost"   placeholder="خصم  20% ">
                                     </div>
                                 </div>
                                 <div class="form-row save">

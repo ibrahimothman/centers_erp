@@ -29,7 +29,9 @@
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
                             <div class="dropdown-menu"> <a class="dropdown-item" href="#">السعر</a>
-                                <a class="dropdown-item" href="#">المده</a> </div>
+                                <a class="dropdown-item" href="#">المده</a>
+                                <a class="dropdown-item" href="#">الخصم</a>
+                            </div>
                         </div>
                         <div class="btn-group p-3 ">
                             <input type="text" class="form-control " name="x" placeholder="ابحث">
@@ -50,7 +52,7 @@
                                             <div class="col-md-8">
                                                 <div class="card-body">
                                                     <div class="view-courses-title">
-                                                        <h5 class="card-title text-primary">{{ $diploma->name }}</h5>
+                                                        <h5 class="card-title text-primary">{{ $diploma->name }} <span class="text-warning " style="font-size: 15px">خصم 20%</span></h5>
                                                         <form>
                                                             <a href="{{ route('diplomas.edit', $diploma->id) }}" class=" btn btn-outline-primary  py-1 px-2"><i
                                                                         class="fas fa-edit m-0 "></i> </a>
@@ -88,4 +90,3 @@
 </body>
 
 </html>
-
