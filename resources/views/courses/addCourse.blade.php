@@ -214,7 +214,8 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
-
+            </div>
+        </div>
         @include('footer')
     </div>
 </div>
@@ -315,7 +316,43 @@
     });
 
 </script>
+<script>
+    /* --------value of category -------*/
 
+
+/* second child */
+    var arr2 = [
+        {
+            title: "sql",
+        }
+        ,
+        {
+            title: "php",
+
+        }
+        ,
+        {
+            title: "laravel",
+
+        }
+    ];
+/* first child */
+    var arr1 = [
+
+        {
+            title: "back",
+            data: arr2
+        }
+    ];
+    /* parent */
+    var arr = [
+
+            {
+                title: "web",
+                data: arr1
+            }
+        ];
+    </script>
 
 </body>
 
