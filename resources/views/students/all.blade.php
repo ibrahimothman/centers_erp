@@ -28,6 +28,7 @@
 
             <div class="container-fluid">
 
+
                 <div class="col-md-12">
                     <div class="card">
 
@@ -105,7 +106,7 @@
                                     @php($m = 0)
                                     @for($y = 0; $size > 0; $y++)
                                         <div class="card-deck">
-                                            @for($z = 0; $z < 3 && $z < $size; $z++,$m++)
+                                            @for($z = 0; $z < 4 && $z < $size; $z++,$m++)
 
                                                 <div class="card card-sh  border-primary mb-3" style="max-width: 18rem;">
 
@@ -139,7 +140,7 @@
 
                                                 </div>
                                             @endfor
-                                            @php($size -= 3)
+                                            @php($size -= 4)
                                         </div>
                                     @endfor
                                 </div>
@@ -239,12 +240,12 @@
                 for(y = 0; size > 0; y++){
                     lines += "<div class='card-deck'>";
                     var z;
-                    for(z = 0; z <3 && z < size; z++,m++){
+                    for(z = 0; z <4 && z < size; z++,m++){
                         lines += "<div class='card card-sh border-primary mb-3' style='max-width:18rem'>";
                         lines += "<div class='card-header bg-transparent border-primary'>"+response[m].nameAr+"</div>";
-                        lines += "<div class='card-body'";
+                        lines += "<div class='card-body'>";
                         lines += "<p class='card-text'>";
-                        lines +=  "<img src="+"'/uploads/profiles/"+response[m].image+"' alt='' class='rounded-circle img-profile-contact float-right img-responsive'>";
+                        lines +=  "<img src="+"'"+response[m].image+"' alt='' class='rounded-circle img-profile-contact float-right img-responsive'>";
                         lines+= "<ul class='list-unstyled contact-det'>";
                         lines+=  "<li><i class='fas fa-envelope btn-circle'></i>البريد الالكترونى<br>"+response[m].email+"</li>";
                         lines+=  "<li><i class='fa fa-phone btn-circle'></i>التليفون:<span>"+response[m].phoneNumber+"</span></li>";
@@ -253,9 +254,10 @@
                         lines += "<button type='button' onclick='deleteStudent("+response[m].id+")' class='btn btn-success btn-xs'><i class='fas fa-trash-alt'></i> </button>";
                         lines += " <a href='students/"+response[m].id+ "' class='btn btn-primary btn-xs'><i class='fa fa-user'></i>الملف الشخصي</a></div>";
                         lines += "</form>";
+                        lines += "</div>";
 
                     }
-                    size -= 3;
+                    size -= 4;
                     lines += "</div>";
                 }
                 $('#sss').html(lines);
