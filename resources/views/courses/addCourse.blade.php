@@ -25,6 +25,7 @@
                         </header>
                         <div class="card-body">
                             <form id="form">
+                                @csrf
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
@@ -214,17 +215,20 @@
 <!-- script-->
 @include('script')
 <!--  course and category script plugin  -->
-<script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
+<script type='text/javascript' src="{{url('js/createCourse.js')}}">
+</script>
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
-<script type='text/javascript' src="/js/course_create_validation.js"></script>
+{{--<script type='text/javascript' src="/js/course_create_validation.js"></script>--}}
 <!--  end script-->
 <script>
     $(document).ready(function () {
 
+
         $("#submit").click(function () {
 
+            var selected_categories_ids = getSelectedCategoriesIds();
             // clear all previous validation errors
             $('.errors').remove();
 
@@ -259,11 +263,6 @@
                     fd.append('instructors[]',$(this).val());
             });
 
-            $('.categories[type="checkbox"]').each(function () {
-                if(this.checked)
-                    fd.append('categories[]',$(this).val());
-            });
-
 
             fd.append('_token',"{{ csrf_token() }}");
             fd.append('name',courseName);
@@ -273,6 +272,9 @@
             fd.append('cost', courseCost);
             fd.append('content', JSON.stringify(chapters));
             fd.append('teamCost', teamCost);
+            selected_categories_ids.forEach(function (id) {
+                fd.append('categories[]', id);
+            });
 
             $.ajax({
                 url: "/courses",
@@ -284,7 +286,7 @@
                 success: function (course) {
                     // console.log(data);
                     // alert(data);
-                    location.href = '/courses/'+course.id;
+                    // location.href = '/courses/'+course.id;
                 },
                 error: function (error) {
                     if (error.status == 400) {// validation

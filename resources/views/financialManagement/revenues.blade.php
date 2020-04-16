@@ -127,7 +127,7 @@
     $(document).ready(function () {
 
         $(document).on('input', "[id^=student]",  function () {
-            var id = $(this).attr('id')[7];
+            var id = $(this).attr('id').substring(7);
             // console.log("changed");
             var value = $(this).val();
             if(value !== '') {

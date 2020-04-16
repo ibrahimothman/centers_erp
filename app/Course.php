@@ -98,7 +98,7 @@ class Course extends ImageUploader
                 'content'=>'required',
                 'images'=>'required|array',
                 'instructors'=>'required|array',
-//                'categories'=>'required|array',
+                'categories'=>'required | array',
             ];
         }
         else{

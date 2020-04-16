@@ -54,7 +54,7 @@ class CoursesController extends Controller
         }
 
         // create the course
-        $course_data = Arr::except($data->validate(),['images','instructors']);
+        $course_data = Arr::except($data->validate(),['images','instructors', 'categories']);
         $course = $center->courses()->create($course_data);
 
         // attach the course to the instructors
@@ -62,7 +62,7 @@ class CoursesController extends Controller
 
 
         // attach the course to the categories
-//        $course->categories()->sync($request->all()['categories']);
+        $course->categories()->sync($request->all()['categories']);
 
 
 //        // upload images
