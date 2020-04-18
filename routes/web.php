@@ -80,7 +80,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
         // ----------------------- rooms----------------
         Route::resource('rooms', "$web_controllers_path\RoomsController");
         Route::get('available_begins_for_the_room', "$web_controllers_path\RoomsController@getAvailableBegins");
-        Route::get('available_ends_for_the_room', "$web_controllers_path\RoomsController@getAvailableEnds");
+        Route::get('available_rooms', "$web_controllers_path\RoomsController@getAvailableRooms");
         Route::get('/all-rooms', "$web_controllers_path\RoomsController@allRooms");
         Route::get('/rooms-calendar/{room}', "$web_controllers_path\RoomsController@showRoomCalendar");
 
@@ -99,6 +99,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
         Route::get('/all-instructors', "$web_controllers_path\InstructorsController@allInstructors");
         Route::get('/instructors-calendar/{instructor}', "$web_controllers_path\InstructorsController@showInstructorCalendar");
         Route::post('update_instructor_payment', "$web_controllers_path\PaymentModelController@updateInstructorPayment");
+        Route::get('available_begins_for_the_instructor', "$web_controllers_path\InstructorsController@getAvailableBegins");
+        Route::get('available_ends_for_the_instructor', "$web_controllers_path\InstructorsController@getAvailableEnds");
 
         //-------------------- jobs ---------------------
         Route::resource('jobs', "$web_controllers_path\jobController");

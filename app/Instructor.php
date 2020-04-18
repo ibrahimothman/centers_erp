@@ -26,6 +26,7 @@ class Instructor extends ImageUploader
             ->send($center->instructors())
             ->through([
                 Name::class
+
             ])
             ->thenReturn()
             ->paginate(5);
@@ -50,7 +51,19 @@ class Instructor extends ImageUploader
 
     public function diplomaGroups()
     {
-        return $this->belongsToMany(DiplomaGroup::class)->withTimestamps();
+        return $this->hasMany(DiplomaGroup::class);
+    }
+
+    public function busyTimes()
+    {
+        $groups = $this->diplomaGroups;
+        $busyTimes = [];
+        foreach ($groups as $group){
+            foreach ($group->times as $time){
+                $busyTimes[] = $time;
+            }
+        }
+        return collect($busyTimes);
     }
 
     public function address()
@@ -107,7 +120,6 @@ class Instructor extends ImageUploader
         return PaymentModelHelper::getPaymentModelAttribute($paymentModel,
             json_decode($this->payment_model_meta_data, true));
     }
-
 
 
 

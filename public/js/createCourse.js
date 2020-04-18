@@ -22,34 +22,41 @@ function addChapterInput(num) {
 
 function addDayInCourse(num) {
     return `
+
     <hr/>
-     <div class="col-sm-4 form-group">
+     <div class="col-sm-3 form-group">
         <label for="validationCustom01">   اختر اليوم</label>
         <div class='input-group date'>
 
-        <input id="course-day-${num}" name="course-day[]" onchange="onDayChanged(${num})"  onclick="onDayClicked(${num})" class="form-control" type="text" >
+        <input id="diploma-day-${num}" name="diploma-days[]"   onclick="onDayClicked(${num})" class="form-control" type="text" >
         
         <span class="input-group-addon">
            <span class="glyphicon glyphicon-calendar"></span>
         </span>
         </div>
       </div>
-    <div class="col-sm-4 form-group">
-        <label for="course-day-${num}-begin"> بداية المحاضرة</label>
-        <select class="form-control" id="course-day-${num}-begin"  name="course-begin[]" onchange="onBeginChanged(${num})" required>
+    <div class="col-sm-3 form-group">
+        <label for="diploma-day-${num}-begin"> بداية المحاضرة</label>
+        <select class="form-control" id="diploma-day-begin-${num}"  name="diploma-begins[]" " required>
             
         </select>
-            <span id="test_course-day-${num}-begin_error"></span>
+            <span id="test_diploma-day-${num}-begin_error"></span>
             <div></div>
     </div>
-    <div class="col-sm-4 form-group">
-        <label for="course-day-${num}-end"> نهاية المحاضرة</label>
-        <select class="form-control" id="course-day-${num}-end" name="course-end[]" required>
+    <div class="col-sm-3 form-group">
+        <label for="diploma-day-${num}-end"> نهاية المحاضرة</label>
+        <select class="form-control" id="diploma-day-end-${num}" name="diploma-ends[]" required>
             
         </select>
-            <span id="test_course-day-${num}-end_error"></span>
+            <span id="test_diploma-day-${num}-end_error"></span>
             <div></div>
     </div>
+    <div class="col-sm-3 form-group">
+       <label for="validationCustom01">اختر الغرفه</label>
+       <select class="form-control" id="diploma-room-${num}" name="diploma-rooms[]"required></select>
+    </div>
+    
+    
     `
 }
 

@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Center;
 use App\Instructor;
 use App\PaymentModel;
+use App\repository\InstructorRepository;
 use App\Room;
+use App\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Input;
@@ -161,5 +163,30 @@ class InstructorsController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         return $center->instructors;
+    }
+
+    public function getAvailableBegins()
+    {
+        if(request()->ajax()){
+            $instructor_id = request('instructor_id');
+            $day = request('day');
+            return InstructorRepository::getInstance()->getAvailableBegins($instructor_id, $day);
+        }
+
+        return null;
+
+    }
+
+    public function getAvailableEnds()
+    {
+        if(request()->ajax()){
+            $instructor_id = request('instructor_id');
+            $day_id = request('day');
+            $begin_id = request('begin');
+            return InstructorRepository::getInstance()->getAvailableEnds($instructor_id, $day_id, $begin_id);
+        }
+
+        return null;
+
     }
 }

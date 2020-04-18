@@ -13,9 +13,9 @@ class DiplomaGroup extends Model
         return $this->belongsTo(Diploma::class);
     }
 
-    public function instructors()
+    public function instructor()
     {
-        return $this->belongsToMany(Instructor::class)->withTimestamps();
+        return $this->belongsTo(Instructor::class);
     }
 
     public function students()
@@ -23,8 +23,13 @@ class DiplomaGroup extends Model
         return $this->belongsToMany(Student::class)->withTimestamps();
     }
 
-    public function room()
+//    public function rooms()
+//    {
+//        return $this->belongsToMany(Room::class, 'timeables');
+//    }
+
+    public function times()
     {
-        return $this->belongsTo(Room::class);
+        return $this->morphToMany(Time::class, 'timeable', 'timeables');
     }
 }

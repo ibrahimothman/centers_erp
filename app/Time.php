@@ -10,15 +10,16 @@ class Time extends Model
 
     protected $guarded = [];
 
-    public function course_groups()
+    public function diploma_groups()
     {
-        return $this->belongsToMany(CourseGroup::class);
+        return $this->morphedByMany(DiplomaGroup::class, 'timeable');
     }
 
     public function rooms()
     {
-        return $this->belongsToMany(Room::class)->withTimestamps();
+        return $this->belongsToMany(Room::class, 'timeables')->withTimestamps();
     }
+
 
 
     public static function days()

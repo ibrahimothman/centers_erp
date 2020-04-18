@@ -110,6 +110,9 @@
     });
 
     $(document).ready(function () {
+
+        console.log($('#add-more-days').parent().parent().parent());
+
         $('#diplomas_options').on('change', function () {
             $('#instructor_options').empty();
             var instructors = {};
