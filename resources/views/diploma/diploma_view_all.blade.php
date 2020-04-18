@@ -51,10 +51,12 @@
                                                 <div class="card-body">
                                                     <div class="view-courses-title">
                                                         <h5 class="card-title text-primary">{{ $diploma->name }}</h5>
-                                                        <form>
+                                                        <form method="post" action="{{ route('diplomas.destroy', ['diploma_id' => $diploma->id]) }}">
+                                                            @csrf
+                                                            @method('delete')
                                                             <a href="{{ route('diplomas.edit', $diploma->id) }}" class=" btn btn-outline-primary  py-1 px-2"><i
                                                                         class="fas fa-edit m-0 "></i> </a>
-                                                            <button type="submit" class="btn btn-outline-danger py-1 px-2">
+                                                            <button type="submit"  class="btn btn-outline-danger py-1 px-2">
                                                                 <i class="fas fa-trash-alt m-0"></i></button>
                                                         </form>
                                                     </div>
