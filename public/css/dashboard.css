@@ -1,0 +1,155 @@
+/* report */
+.state{
+    background: #fff;
+    height: 6em;
+    padding:1em;
+    margin:1em 0;
+    -webkit-transition: margin 0.5s ease,box-shadow 0.5s ease; /* Safari */
+    transition: margin 0.5s ease,box-shadow 0.5s ease;
+    -moz-box-shadow:0px 0.2em 0.4em rgb(0, 0, 0,0.8);
+    -webkit-box-shadow:0px 0.2em 0.4em rgb(0, 0, 0,0.8);
+    box-shadow:0px 0.2em 0.4em rgb(0, 0, 0,0.8);
+}
+.student , .course , .diploma , .instructors ,.test{
+    height: 11em;
+
+}
+.state:hover{
+    margin-top:0.5em;
+    -moz-box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8);
+    -webkit-box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8);
+    box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8);
+}
+.state i{
+    font-size:2.5em;
+}
+.state div{
+    width: calc(100% - 3.5em);
+    display: block;
+    float:right;
+    text-align:right;
+}
+.state div b {
+    font-size:2.2em;
+    width: 100%;
+    padding-top:0px;
+    margin-top:-0.2em;
+    margin-bottom:-0.2em;
+    display: block;
+}
+.state div span {
+    font-size:1em;
+    width: 100%;
+    color: rgb(0, 0, 0,0.8); !important;
+    display: block;
+
+}
+
+.state.left div{
+    float:left;
+    text-align:left;
+}
+.pink{
+    color:#fc4b6c;
+}
+.yellow{
+    color: #ffb22b;
+}
+
+.green{
+    color: #00ad45;
+}
+.Purple{
+    color: #7460ee;
+}
+.foshia{
+    color:#c9006a;
+}
+.red{
+    color: #dc4e41;
+}
+.orange{
+    color: #00c8c8;
+}
+
+.deeppink{
+    color: #c9006a;
+
+}
+/*== DEMO STYLING END ==*/
+
+
+.social-counter{
+    padding: 10px;
+    display: block;
+}
+
+.count{
+    display: block;
+    padding: 7px 5px;
+
+    transition: all 0.5s ease;
+}
+
+.count:hover{
+    background: rgba(0,0,0,0.033);
+    transform: scale(1.065);
+}
+
+.count .icon{
+    background: #aaa;
+    display: inline-block;
+    float: left;
+    color: white;
+    font-size: 22px;
+    margin-left: 5px;
+    text-align: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    text-shadow: 0 0 3px rgba(0,0,0,0.2);
+    display: table;
+}
+.count .icon i{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.count p{
+    display: inline-block;
+    font-size: 13px;
+    color: #888;
+    margin: 11px;
+}
+.count p span{
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding-right: 2px;
+}
+
+/*== COLORS ==*/
+.facebook .icon{background:#3b5999;}
+.facebook .icon i{padding-top:2px;}
+
+.twitter .icon{background:#55acee;}
+.twitter .icon i{padding-top:2px;}
+
+.linked .icon{background: #0094BC;}
+.linked .icon i{padding-top:2px;}
+
+
+.best i{
+    font-size:2.5em;
+    color:#ffb22b;
+}
+.view-courses-title{
+    display: flex;
+    justify-content: space-between;
+}
+@media (max-width: 576px) {
+    .state .hideSM {
+        display: none;
+    }
+
+}
