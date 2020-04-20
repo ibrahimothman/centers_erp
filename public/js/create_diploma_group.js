@@ -20,15 +20,26 @@ function fillTimes(results, num, prefix) {
 
 function makeCall(url, method, data, callback, prefix, num) {
 
+    // console.log(url);
     $.ajax({
         url : url,
         type : method,
         data : data,
         success : function (results) {
-            // console.log(ends);
             callback(results, num, prefix);
         }
+    });
+}
+function makeCall(url, method, data, callback, prefix, num) {
 
+    // console.log(url);
+    $.ajax({
+        url : url,
+        type : method,
+        data : data,
+        success : function (results) {
+            callback(results, num, prefix);
+        }
     });
 }
 
@@ -39,19 +50,21 @@ $('#selected_diploma').on('change', function () {
 });
 
 
-
+var current_val = "";
 $(document).on('change', '[id^=diploma-day-]', function () {
    var num = $(this).attr('id').split('-')[2];
-   $('#diploma-day-begin-'+num).empty();
-   $('#diploma-day-end-'+num).empty();
-   $('#diploma-room-'+num).empty();
-    var data = {
-        instructor_id: $('#instructor-options').val(),
-        day : $(this).val()
-    };
-    makeCall('/available_begins_for_the_instructor', 'GET', data, fillTimes,'begin',num);
+   if(current_val !== $(this).val()) {
+       current_val = $(this).val();
+       $('#diploma-day-begin-' + num).empty();
+       $('#diploma-day-end-' + num).empty();
+       $('#diploma-room-' + num).empty();
+       var data = {
+           instructor_id: $('#instructor-options').val(),
+           day: $(this).val()
+       };
+       makeCall('/available_begins_for_the_instructor', 'GET', data, fillTimes, 'begin', num);
+   }
 });
-
 
 
 $(document).on('change', '[id^=diploma-day-begin-]', function () {
@@ -83,7 +96,6 @@ $(document).on('change', '[id^=diploma-day-end-]', function () {
         begin: $('#diploma-day-begin-'+num).val(),
         end: $('#diploma-day-end-'+num).val()
     };
-    console.log(data);
     makeCall('/available_rooms', 'GET', data, fillRooms,'room', num);
 });
 

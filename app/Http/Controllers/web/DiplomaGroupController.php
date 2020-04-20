@@ -11,9 +11,11 @@ use App\DiplomaGroup;
 use App\Instructor;
 use App\Room;
 use App\Time;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
 class DiplomaGroupController extends Controller
@@ -31,6 +33,9 @@ class DiplomaGroupController extends Controller
     {
 
         $center = Center::findOrFail(Session('center_id'));
+
+//        $groups = $center->diploma_groups();
+//        return json_encode($groups);
         $diplomas = Diploma::with('courses.instructors')->where('center_id', $center->id)->get();
 //        return json_encode($diplomas);
 //        $instructor = $center->instructors->first();
@@ -44,9 +49,32 @@ class DiplomaGroupController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
-        $group = DiplomaGroup::create(Arr::except($request->all(), ['instructors']));
-        $group->instructors()->sync($request->all()['instructors']);
+//        dd($request->all());
+        $data = $this->validateCourseGroupData($request);
+//        if($data->fails()){
+//            dd($data->errors()->messages());
+//        }
+        $center = Center::findOrFail(Session('center_id'));
+////        dd($data);
+        $data = $data->validate();
+        $group = $center->diplomas()->findOrFail($data['diploma'])->groups()->create([
+            'instructor_id' => $data['instructor_id'],
+            'starts_at' => $data['starts_at']
+        ]);
+
+        // create times
+        $times = Time::addTimes($data['diploma-days'],$data['diploma-begins'],$data['diploma-ends']);
+//        dd($times);
+        $times_rooms = [];
+        foreach ($times as $i => $time){
+            $temp['time_id'] = $time->id;
+            $temp['room_id'] = $data['diploma-rooms'][$i];
+
+            $times_rooms[] = $temp;
+        }
+
+
+        $group->times()->sync($times_rooms);
 
         return redirect("diploma-groups");
     }
@@ -55,5 +83,11 @@ class DiplomaGroupController extends Controller
     {
         DiplomaGroup::findOrFail($group)->delete();
         return redirect('diploma-groups');
+    }
+
+    private function validateCourseGroupData(Request $request)
+    {
+
+        return Validator::make($request->all(), DiplomaGroup::rules());
     }
 }

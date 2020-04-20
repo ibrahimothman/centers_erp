@@ -106,24 +106,6 @@ class RoomsController extends Controller
         return json_encode($extras);
     }
 
-    public function getAvailableBegins()
-    {
-        if(request()->ajax()){
-            $room_id = request('room_id');
-            $day = request('day');
-        }
-        $begin = Time::hours();
-        $room = Room::findOrFail($room_id);
-
-        foreach($room->times->where('day', $day) as $time){
-            for ($i = $time->begin; $i < $time->end; $i++){
-                $begin= Arr::except($begin,$i);
-            }
-        }
-
-        return $begin;
-
-    }
 
     public function getAvailableRooms()
     {
@@ -134,8 +116,17 @@ class RoomsController extends Controller
         }
         $time = Time::where('day', $day)->where('begin', $begin)->where('end', $end)->first();
 
-        $rooms = Room::whereDoesnthave('times', function ($q) use ($time) {
-            $q->where('time_id', is_null($time)? 0 : $time->id);
+        $rooms = Room::whereDoesnthave('times', function ($q) use ($time, $begin, $day, $end) {
+            $q->where('time_id', is_null($time)? 0 : $time->id)
+                ->orWhere(function ($q) use ($day, $begin, $end){
+                $q->where('day',$day)
+                    ->where('begin' , '>=', $begin)
+                    ->where('begin' , '<', $end);
+            })->orWhere(function ($q) use($day, $begin, $end){
+                $q->where('day',$day)
+                    ->where('begin' , '<=', $begin)
+                    ->where('end' , '>', $begin);
+            });
         })->get();
         return $rooms;
 

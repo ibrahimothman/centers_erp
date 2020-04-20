@@ -33,11 +33,12 @@ function addDayInCourse(num) {
         <span class="input-group-addon">
            <span class="glyphicon glyphicon-calendar"></span>
         </span>
+        
         </div>
       </div>
     <div class="col-sm-3 form-group">
         <label for="diploma-day-${num}-begin"> بداية المحاضرة</label>
-        <select class="form-control" id="diploma-day-begin-${num}"  name="diploma-begins[]" " required>
+        <select class="form-control" id="diploma-day-begin-${num}"  name="diploma-begins[]" >
             
         </select>
             <span id="test_diploma-day-${num}-begin_error"></span>
@@ -45,7 +46,7 @@ function addDayInCourse(num) {
     </div>
     <div class="col-sm-3 form-group">
         <label for="diploma-day-${num}-end"> نهاية المحاضرة</label>
-        <select class="form-control" id="diploma-day-end-${num}" name="diploma-ends[]" required>
+        <select class="form-control" id="diploma-day-end-${num}" name="diploma-ends[]">
             
         </select>
             <span id="test_diploma-day-${num}-end_error"></span>

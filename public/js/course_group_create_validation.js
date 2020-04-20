@@ -7,56 +7,66 @@ $(document).ready(function () {
                 name: {
                     required: true,
                 },
-                course: {
+                diploma: {
                     required: true
                 },
 
-                start_at:{
+                instructor_id: {
+                    required: true
+                },
+
+                starts_at:{
                     required: true,
                     date:true
-                }
-  /*
-                room: {
+                },
+
+                "diploma-rooms[]": {
                     required: true,
                 },
-                "course-day[]": {
+                "diploma-days[]": {
                     required: true,
                 },
-                "course-begin[]": {
+                "diploma-begins[]": {
                     required: true
                 },
-                "course-end[]": {
+                "diploma-ends[]": {
                     required: true
                 },
-*/
+
+
+
             },
             messages: {
 
                 name: {
                     required: "هذه الخانه مطلوبه",
                 },
-                course: {
+                diploma: {
+                    required: "هذه الخانه مطلوبه",
+                },
+
+                instructor: {
                     required: "هذه الخانه مطلوبه",
                 },
 
                 start_at:{
                     required: "هذه الخانه مطلوبه",
                     date:"ادخل التاريخ الصحيح"
-                }
- /*
-                room: {
+                },
+
+                "diploma-rooms[]": {
                     required: "هذه الخانه مطلوبه",
                 },
-                "course-day[]": {
+                "diploma-days[]": {
                     required: "هذه الخانه مطلوبه",
                 },
-                "course-begin[]": {
+                "diploma-begins[]": {
                     required: "هذه الخانه مطلوبه",
                 },
-                "course-end[]": {
+                "diploma-ends[]": {
                     required: "هذه الخانه مطلوبه",
                 },
-*/
+
 
             },
             errorPlacement: function (error, element) {

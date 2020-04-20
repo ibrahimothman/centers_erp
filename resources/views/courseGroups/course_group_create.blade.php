@@ -46,13 +46,13 @@
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
                                                         <span class="required">*</span>
                                                         <div class='input-group date'>
-                                                            <input   id="datetimepicker" name="start_at"  class="form-control" type="text" required>                                                            <span class="input-group-addon">
+                                                            <input   id="datetimepicker" name="starts_at"  class="form-control" type="text" >                                                            <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
 
                                                         </div>
                                                     <div class="addError" ></div>
-                                                    <div>{{ $errors->first('start_at') }}</div>
+                                                    <div>{{ $errors->first('starts_at') }}</div>
                                                 </div>
                                             </div>
 
@@ -60,7 +60,7 @@
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course">اختار الدبلومه</label>
                                                     <span class="required">*</span>
-                                                    <select class="form-control" name="diploma"  id="selected_diploma" required>
+                                                    <select class="form-control" name="diploma"  id="selected_diploma" >
                                                         <option value="">اختر</option>
                                                         @foreach($diplomas as $diploma)
                                                             <option data-extra="{{ $diploma }}" value="{{ $diploma->id }}">{{ $diploma->name }}</option>
@@ -72,7 +72,7 @@
 
                                                 <div class="col-sm-6 form-group">
                                                     <label for="validationCustom01">اختر المدرس</label>
-                                                    <select class="form-control" id="instructor-options" name="instructor" required>
+                                                    <select class="form-control" id="instructor-options" name="instructor_id">
                                                     </select>
                                                 </div>
 
@@ -88,30 +88,33 @@
                                                         <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
+                                                        <div>{{ $errors->first('diploma-days.0') }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 form-group">
                                                     <label for="diploma-day-1-begin"> بداية المحاضرة</label>
                                                     <select class="form-control" id="diploma-day-begin-1" name="diploma-begins[]"
-                                                            " required>
+                                                            >
 
                                                     </select>
+                                                    <span id="test_course-day-1-end_error"></span>
+                                                    <div>{{ $errors->first('diploma-begins.0') }}</div>
                                                 </div>
 
                                                 <div class="col-sm-3 form-group">
                                                     <label for="diploma-day-1-end"> نهاية المحاضرة</label>
                                                     <select class="form-control" id="diploma-day-end-1" name="diploma-ends[]"
-                                                            required>
+                                                            >
 
                                                     </select>
                                                         <span id="test_course-day-1-end_error"></span>
-                                                    <div>{{ $errors->first('end') }}</div>
+                                                    <div>{{ $errors->first('diploma-ends.0') }}</div>
                                                 </div>
 
                                                 <div class="col-sm-3 form-group">
                                                     <label for="validationCustom01">اختر الغرفه</label>
                                                     <select class="form-control" id="diploma-room-1" name="diploma-rooms[]"
-                                                            " required>
+                                                            >
 
                                                     </select>
                                                 </div>

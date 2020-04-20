@@ -76,6 +76,8 @@ class Center extends ImageUploader
         return $this->hasMany(Diploma::class);
     }
 
+
+
     public function categories()
     {
         return $this->hasMany(Category::class);
