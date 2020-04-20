@@ -57,10 +57,9 @@ class DiplomaGroupController extends Controller
         $center = Center::findOrFail(Session('center_id'));
 ////        dd($data);
         $data = $data->validate();
-        $group = $center->diplomas()->findOrFail($data['diploma'])->groups()->create([
-            'instructor_id' => $data['instructor_id'],
-            'starts_at' => $data['starts_at']
-        ]);
+        $group_data = Arr::except($data,['diploma', 'diploma','diploma-days','diploma-begins','diploma-ends', 'diploma-rooms']);
+
+        $group = $center->diplomas()->findOrFail($data['diploma'])->groups()->create($group_data);
 
         // create times
         $times = Time::addTimes($data['diploma-days'],$data['diploma-begins'],$data['diploma-ends']);
