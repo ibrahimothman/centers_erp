@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use mysql_xdevapi\Collection;
 
 class Student extends ImageUploader
 {
@@ -86,9 +87,19 @@ class Student extends ImageUploader
         return $this->belongsToMany(CourseGroup::class)->withTimestamps();
     }
 
-    public function diplomas()
+    public function diplomas_groups()
     {
         return $this->belongsToMany(DiplomaGroup::class)->withTimestamps();
+    }
+
+    public function diplomas()
+    {
+        $diplomas = new \Illuminate\Database\Eloquent\Collection();
+        $groups =  $this->diplomas_groups()->with('diploma')->get();
+        foreach($groups as $group){
+              $diplomas->push($group->diploma);
+        }
+        return $diplomas;
     }
 
     public function payments()

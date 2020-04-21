@@ -34,9 +34,17 @@ class DiplomaEnrollmentController extends Controller
 
     public function store(Request $request)
     {
+        // todo check if student has already enrolled in this diploma
         $enrollment_data = $this->validateEnrollmentRequest($request)->validate();
-        Student::findOrFail($enrollment_data['student_id'])->diplomas()
-            ->syncWithoutDetaching($enrollment_data['diploma_group_id']);
+        $diploma_group = DiplomaGroup::findOrFail($enrollment_data['diploma_group_id']);
+
+        $student = Student::findOrFail($enrollment_data['student_id']);
+
+        if($this->hasStudentEnrolledInDiplomaBefore($diploma_group, $student)){
+           dd('has already before');
+        }
+
+        $student->diplomas_groups()->syncWithoutDetaching($enrollment_data['diploma_group_id']);
 
         return redirect("diploma-enrollments");
 
@@ -55,5 +63,10 @@ class DiplomaEnrollmentController extends Controller
             'student_id' => 'required | integer',
             'diploma_group_id' => 'required | integer',
         ]);
+    }
+
+    private function hasStudentEnrolledInDiplomaBefore($diploma_group, $student)
+    {
+        return $student->diplomas()->contains($diploma_group->diploma_id);
     }
 }
