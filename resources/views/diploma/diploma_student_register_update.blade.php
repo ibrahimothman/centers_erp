@@ -20,14 +20,16 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form  id="form" enctype="multipart/form-data" action="{{ route('diploma-enrollments.store')  }}" method="post" >
+                            <form  id="form" enctype="multipart/form-data" action="{{ route('diploma-enrollments.update',['student_id' => $student->id]) }}" method="post" >
                                 @csrf
+                                @method('put')
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="student-id">اسم الطالب</label>
-                                        <input id="student_id" name="student_id" hidden>
+                                        <input id="student_id" name="student_id" value="{{ $student->id }}" hidden>
+                                        <input id="prev_group_id" name="prev_group_id" value="{{ $current_group->id }}" hidden>
                                         <span class="required">*</span>
-                                        <input type="text"  placeholder="اسم الطالب"  name="student_name" class="form-control" id="student_name"  required>
+                                        <input type="text"  placeholder="اسم الطالب"  name="student_name" class="form-control" id="student_name" value="{{ $student->nameAr }}" required>
                                         <div class="list-gpfrm-list" id="studentsList"></div>
                                         <span id="stuselector_error"></span>
                                         <div></div>
@@ -38,27 +40,25 @@
                                     <div class="col form-group">
                                         <label for="course-id">الدبلومة</label>
                                         <span class="required">*</span>
-                                        <select class="form-control" id="diploma_option" required name="selectDiploma">
 
-                                            <option value="">اختار</option>
-                                            @foreach($diplomas as $diploma)
-                                                <option data-content="{{ $diploma->groups }}" >{{ $diploma->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input class="form-control" id="diploma_option" required name="selectDiploma" value="{{ $current_group->diploma->name }}">
+
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label >مواعيد الدبلومه</label>
                                         <select  class="form-control "  id="diploma_group_date" name="diploma_group_id" required>
-                                            <option value="">اختار</option>
+                                            @foreach($groups as $group)
+                                                <option value="{{ $group->id }}" {{ $group->id == $current_group->id? 'selected' : '' }}>{{ $group->starts_at }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
-                                        <button class="btn btn-primary " type="submit" id="submit"> اضافه
+                                        <button class="btn btn-primary " type="submit" id="submit"> تعديل
                                             </button>
                                         <button class="btn  btn-danger " type="reset"> إلغاء
                                                    </button>

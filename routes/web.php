@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
 
         //----------------- Diploma enrollment----------------
         Route::resource('diploma-enrollments', "$web_controllers_path\DiplomaEnrollmentController");
+        Route::resource('update-diploma-enrollments', "$web_controllers_path\DiplomaEnrollmentController@update");
 
         // -------------------instructor----------------
         Route::resource('instructors', "$web_controllers_path\InstructorsController");

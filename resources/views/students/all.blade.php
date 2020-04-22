@@ -61,15 +61,15 @@
                                 </div>
                                 <div class="col-md-6">
 
-                                    <div class="btn-group print-btn ">
+                                    <div class="btn-group print-btn mr-2 ">
 
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             الترتيب حسب
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">الاحدث اضافه</a>
+                                            <a class="dropdown-item" href="/students?order_by=created_at&sort=desc">الاحدث اضافه</a>
                                             <a class="dropdown-item" href="#">الاحدث التعديل</a>
-                                            <a class="dropdown-item" href="#">الحروف الابجديه</a>
+                                            <a class="dropdown-item" href="/students?order_by=nameAr&sort=desc"">الحروف الابجديه</a>
                                         </div>
                                     </div>
 
@@ -98,52 +98,42 @@
 
 
                             {{--                            @foreach($students as $students)--}}
-                            <div class="row cont-det" id="ddd">
+                            <div class="row cont-det" id="studentsContainer">
 
-                                <div class="col-md-12" id="sss">
+                                @foreach($students as $student)
+                                    <div class="col-12 col-md-3" id="studentContainer-{{$student->id}}">
+                                                    <div class="card card-sh  border-primary mb-3" >
 
-                                    @php($size = count($students))
-                                    @php($m = 0)
-                                    @for($y = 0; $size > 0; $y++)
-                                        <div class="card-deck">
-                                            @for($z = 0; $z < 4 && $z < $size; $z++,$m++)
+                                                        <div class="card-header bg-transparent border-primary">{{$student->nameAr}}</div>
+                                                        <div class="card-body ">
+                                                            <p class="card-text">
+                                                                <img src="{{$student->getImage("image")  }}" alt="" class="rounded-circle img-profile-contact float-right img-responsive">
+                                                            <ul class="list-unstyled contact-det">
+                                                                <li><i class="fas fa-envelope btn-circle"></i> البريد الالكترونى
+                                                                    <br>{{$student->email}}
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-phone btn-circle"></i> التليفون:
+                                                                    <span> {{$student->phoneNumber}}  </span>
+                                                                </li>
+                                                                <li class="gray">تاريخ الاضافه : {{ $student->created_at }}</li>
 
-                                                <div class="card card-sh  border-primary mb-3" style="max-width: 18rem;">
 
-                                                    <div class="card-header bg-transparent border-primary">{{$students[$m]->nameAr}}</div>
-                                                    <div class="card-body ">
-                                                        <p class="card-text">
-                                                            <img src="{{$students[$m]->getImage("image")  }}" alt="" class="rounded-circle img-profile-contact float-right img-responsive">
-                                                        <ul class="list-unstyled contact-det">
-                                                            <li><i class="fas fa-envelope btn-circle"></i> البريد الالكترونى
-                                                                <br>{{$students[$m]->email}}
-                                                            </li>
-                                                            <li>
-                                                                <i class="fa fa-phone btn-circle"></i> التليفون:
-                                                                <span> {{$students[$m]->phoneNumber}}  </span>
-                                                            </li>
-                                                            <li class="gray">
-                                                                تاريخ الاضافه  : {{$students[$m]->created_at}}
+                                                            </ul>
+                                                            </p>
+                                                        </div>
+                                                        <form class="card-footer border-primary">
 
-                                                            </li>
+                                                            <button type="button" class="btn btn-success btn-xs" id="delete-student-{{ $student->id }}"> <i class="fas fa-trash-alt"></i> </button>
+                                                            <a href="/students/{{$student->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
+                                                        </form>
 
-                                                        </ul>
-                                                        </p>
+
                                                     </div>
-                                                    <form class="card-footer border-primary " method="post" action="{{route('students.destroy',['student' => $students[$m]])}}">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-success btn-xs"> <i class="fas fa-trash-alt"></i> </button>
-                                                        <a href="/students/{{$students[$m]->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
-                                                    </form>
 
-
-                                                </div>
-                                            @endfor
-                                            @php($size -= 4)
-                                        </div>
-                                    @endfor
-                                </div>
+                                            </div>
+                                    @endforeach
+                                    </div>
                             </div>
 {{--                            {{$students->links()}}--}}
 
@@ -191,119 +181,7 @@
 
 @include('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
-<!-- Custom scripts for search-->
-
-<script>
-
-    $(document).ready(function(){
-        // $('.search-panel .dropdown-menu').find('a').click(function(e) {
-        //     e.preventDefault();
-        //     var param = $(this).attr("href").replace("#","");
-        //     var concept = $(this).text();
-        //     $('.search-panel span#search_concept').text(concept);
-        //     $('.btn-group #search_param').val(param);
-        // });
-
-        // searchForStudents();
-
-        $('#search').keyup(function (e) {
-            if(e.keyCode == 13) {
-                var query = $(this).val();
-                searchForStudents(query);
-            }
-
-        });
-
-
-
-    });
-
-
-</script>
-<script type="text/javascript">
-
-    $.ajaxSetup({
-       headers:{
-           'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-       }
-    });
-    function view(response) {
-                var size = response.length;
-                console.log(size);
-                var m = 0;
-                var y;
-                var lines = "";
-                // lines += "<div class='row cont-det'>";
-                // lines += "<div class='col-md-12'>";
-                for(y = 0; size > 0; y++){
-                    lines += "<div class='card-deck'>";
-                    var z;
-                    for(z = 0; z <4 && z < size; z++,m++){
-                        lines += "<div class='card card-sh border-primary mb-3' style='max-width:18rem'>";
-                        lines += "<div class='card-header bg-transparent border-primary'>"+response[m].nameAr+"</div>";
-                        lines += "<div class='card-body'>";
-                        lines += "<p class='card-text'>";
-                        lines +=  "<img src="+"'"+response[m].image+"' alt='' class='rounded-circle img-profile-contact float-right img-responsive'>";
-                        lines+= "<ul class='list-unstyled contact-det'>";
-                        lines+=  "<li><i class='fas fa-envelope btn-circle'></i>البريد الالكترونى<br>"+response[m].email+"</li>";
-                        lines+=  "<li><i class='fa fa-phone btn-circle'></i>التليفون:<span>"+response[m].phoneNumber+"</span></li>";
-                        lines += "<li class='gray'> تاريخ الاضافه  :"+response[m].created_at+"</li></ul></p></div>";
-                        lines+="<form class='card-footer border-primary'>";
-                        lines += "<button type='button' onclick='deleteStudent("+response[m].id+")' class='btn btn-success btn-xs'><i class='fas fa-trash-alt'></i> </button>";
-                        lines += " <a href='students/"+response[m].id+ "' class='btn btn-primary btn-xs'><i class='fa fa-user'></i>الملف الشخصي</a></div>";
-                        lines += "</form>";
-                        lines += "</div>";
-
-                    }
-                    size -= 4;
-                    lines += "</div>";
-                }
-                $('#sss').html(lines);
-    }
-
-    function deleteStudent(id) {
-        $.ajax({
-            url:'/students/'+id,
-            type: 'DELETE',
-            dataType: 'json',
-            data: {
-                "_token": "{{ csrf_token() }}"
-            },
-            success: function (response) {
-                viewAllStudents();
-            }
-
-        })
-    }
-    function viewAllStudents() {
-        $.ajax({
-            url:'students/all',
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                view(response);
-            }
-
-        })
-    }
-
-    function searchForStudents(query = '') {
-        loc = $('<a>', { href: window.location })[0];
-        var data = "name="+query;
-        console.log(query);
-        $.ajax({
-            url:"/search_student_by_name",
-            type:'GET',
-            data:data,
-
-            success:function (response) {
-                view(response);
-            }
-        });
-    }
-</script>
+<script src="{{ asset('js/student.js') }}"></script>
 
 </body>
 

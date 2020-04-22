@@ -13,6 +13,7 @@ use App\Student;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +41,7 @@ class StudentController extends Controller
     {
 
 //        $this->authorize('viewAny',Student::class);
+
         return view('students.all')->with('students',$this->getStudents());
     }
 
@@ -170,7 +172,7 @@ class StudentController extends Controller
         //policy
 //        $this->authorize('delete',$student);
         $student->delete();
-        return redirect('/students')->with('success','students is deleted');
+        return response()->json('student deleted successfully', 200);
 
     }
 

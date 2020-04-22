@@ -62,7 +62,8 @@
                                             <td>{{ $diploma->name }}</td>
                                             <td>{{ $group->starts_at }}</td>
                                             <td>
-                                                <a href="" class=" btn btn-outline-primary  py-1 px-2 "><i
+
+                                                <a href="{{ route('diploma-enrollments.edit', ['student_id' => $student->id, 'diploma_group' => $group->id]) }}" class=" btn btn-outline-primary  py-1 px-2 "><i
                                                             class="fas fa-edit m-0 "></i> </a>
 
                                             </td>
@@ -97,14 +98,14 @@
 <script>
     function deleteEnrollment(diploma_group_id, student_id) {
         console.log("diploma_group_id : "+diploma_group_id+", student_id : "+student_id);
-        $.ajax({
-            url : '/diploma-enrollments/1',
-            type : 'delete',
-            data : { diploma_group_id : diploma_group_id, student_id : student_id, '_token' : '{{ csrf_token() }}'  },
-            success : function (data) {
-                window.location.reload();
-            }
-        });
+        {{--$.ajax({--}}
+        {{--    url : '/diploma-enrollments/1',--}}
+        {{--    type : 'delete',--}}
+        {{--    data : { diploma_group_id : diploma_group_id, student_id : student_id, '_token' : '{{ csrf_token() }}'  },--}}
+        {{--    success : function (data) {--}}
+        {{--        window.location.reload();--}}
+        {{--    }--}}
+        {{--});--}}
     }
 </script>
 

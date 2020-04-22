@@ -9,6 +9,7 @@ use App\Diploma;
 use App\DiplomaGroup;
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
@@ -27,6 +28,7 @@ class DiplomaEnrollmentController extends Controller
     public function create()
     {
         $center = Center::findOrFail(Session('center_id'));
+
         $diplomas = Diploma::with('groups')->where('center_id', $center->id)->get();
 
         return view('diploma.diploma_student_register', compact('diplomas'));
@@ -48,6 +50,43 @@ class DiplomaEnrollmentController extends Controller
 
         return redirect("diploma-enrollments");
 
+    }
+
+    public function edit($student_id)
+    {
+
+        $current_group = DiplomaGroup::with('diploma')->findOrFail(Input::get('diploma_group'));
+        $groups = $current_group->diploma->groups;
+
+        $student = Student::findOrFail($student_id);
+
+        return view('diploma.diploma_student_register_update', compact('current_group', 'groups', 'student'));
+    }
+
+    public function update(Request $request)
+    {
+        // todo check if student is enrolled in group or not
+        $student_id = $request->get('student_id');
+        $prev_group_id = $request->get('prev_group_id');
+        $new_diploma_group_id = $request->get('diploma_group_id');
+
+        $student = Student::findOrFail($student_id);
+        $new_diploma_group = DiplomaGroup::findOrFail($new_diploma_group_id);
+
+        /*
+         * fetch all student's groups
+         * delete prev group
+         * add new one
+         * sync all groups to student
+         * */
+        $student_groups = $student->diplomas_groups;
+        $student_groups->push($new_diploma_group);
+        $student_groups->pull($student_groups->search(function($group) use ($prev_group_id){
+            return $group->id == $prev_group_id;
+        }));
+//
+        $student->diplomas_groups()->sync($student_groups);
+        return redirect('diploma-enrollments');
     }
 
     public function destroy(Request $request)

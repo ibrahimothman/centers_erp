@@ -59,7 +59,7 @@ class Center extends ImageUploader
 
     public function students()
     {
-        return $this->belongsToMany(\App\Student::class)->latest()->withTimestamps();
+        return $this->belongsToMany(\App\Student::class)->withTimestamps();
     }
 
     public function tests()
