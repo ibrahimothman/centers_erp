@@ -37,15 +37,15 @@
                                 <button class="btn btn-success"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
-                        </span></div>
+                        </span>
+                            </div>
                             <!-- diploma view -->
                             @foreach($diplomas as $diploma)
                                 <a href="#">
-                                    <div class="card  cardDiploma mb-3" style="max-width: 100%; ">
-                                        </span>
+                                    <div class="card  cardDiploma mb-3 " style="max-width: 100%;height: 250px">
                                         <div class="row ">
                                             <div class="col-md-4">
-                                                <a href="{{ route('diplomas.show', $diploma->id) }}"> <img src="{{$diploma->image }}" class="card-img h-100" alt="..."></a>
+                                                <a href="{{ route('diplomas.show', $diploma->id) }}"> <img src="{{$diploma->image }}" class="card-img h-100"   alt="..."></a>
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -62,8 +62,8 @@
                                                     </div>
                                                     <div class="mb-1">
                                                         <span class=" text-secondary pl-2  ">{{ $diploma->cost }} جنيه</span>
-                                                        <span class=" text-secondary pl-2 ">20 {{ $diploma->number_of_lectures }}</span>
-                                                        <span class=" text-secondary  pl-2">30 {{ $diploma->duration }}</span>
+                                                        <span class=" text-secondary pl-2 ">{{ $diploma->number_of_lectures }} محاضره </span>
+                                                        <span class=" text-secondary  pl-2"> {{ $diploma->duration }} ساعه </span>
                                                     </div>
                                                     <p class="card-text">{{ $diploma->description }}</p>
                                                 </div>

@@ -46,6 +46,17 @@ class Diploma extends ImageUploader
         return $this->hasMany(DiplomaGroup::class);
     }
 
+    public function instructors()
+    {
+        $instructors = [];
+        foreach ($this->courses()->with('instructors')->get() as $course){
+            foreach ($course->instructors as $instructor){
+                $instructors[] = $instructor;
+            }
+        }
+        return collect(array_unique($instructors));
+    }
+
     public function payments()
     {
         return $this->morphMany(Transaction::class, 'payFor');

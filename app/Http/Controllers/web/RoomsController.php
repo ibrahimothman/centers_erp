@@ -116,7 +116,7 @@ class RoomsController extends Controller
         }
         $time = Time::where('day', $day)->where('begin', $begin)->where('end', $end)->first();
 
-        $rooms = Room::whereDoesnthave('times', function ($q) use ($time, $begin, $day, $end) {
+        $rooms = Center::findOrFail(Session('center_id'))->rooms()->whereDoesnthave('times', function ($q) use ($time, $begin, $day, $end) {
             $q->where('time_id', is_null($time)? 0 : $time->id)
                 ->orWhere(function ($q) use ($day, $begin, $end){
                 $q->where('day',$day)

@@ -11,6 +11,15 @@ function fillInstructors(selected_diploma) {
     });
 }
 
+$('#instructor-options').on('change', function (e) {
+   $('#diploma-day-1').val("");
+   $('#diploma-day-begin-1').empty();
+   $('#diploma-day-end-1').empty();
+   $('#diploma-room-1').empty();
+
+    $('.extra_time').remove();
+});
+
 function fillTimes(results, num, prefix) {
         $('#diploma-day-'+prefix+'-'+num).append('<option value="0">اختر ميعاد</option>');
         $.each(results, function (i, v) {
@@ -48,7 +57,6 @@ $('#selected_diploma').on('change', function () {
     var selected_diploma = JSON.parse($(this).find('option:selected').attr('data-extra'));
     fillInstructors(selected_diploma);
 });
-
 
 var current_val = "";
 $(document).on('change', '[id^=diploma-day-]', function () {

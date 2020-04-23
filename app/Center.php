@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\NewCenterHasCreated;
 use App\helper\ImageUploader;
+use App\QueryFilter\GroupId;
 use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
@@ -18,11 +19,12 @@ class Center extends ImageUploader
     public static function allDiplomasEnrollments($center)
     {
         return app(Pipeline::class)
-            ->send($center->diplomas()->with('groups.students'))
+            ->send($center->diplomas())
             ->through([
-                Id::class
+                Id::class,
+//                GroupId::class
             ])
-            ->thenReturn()->get();
+            ->thenReturn()->with('groups.students')->get();
     }
 
     public function setImageAttribute($image){

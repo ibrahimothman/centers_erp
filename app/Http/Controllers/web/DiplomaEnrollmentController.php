@@ -21,7 +21,6 @@ class DiplomaEnrollmentController extends Controller
         $center = Center::findOrFail(Session('center_id'));
         $all_diplomas = $center->diplomas()->with('groups.students')->get();
         $diplomas = Center::allDiplomasEnrollments($center);
-//        return response()->json($diplomas);
         return view('diploma.diploma_student_show', compact('all_diplomas', 'diplomas'));
     }
 
@@ -54,18 +53,23 @@ class DiplomaEnrollmentController extends Controller
 
     public function edit($student_id)
     {
-
         $current_group = DiplomaGroup::with('diploma')->findOrFail(Input::get('diploma_group'));
+        $student = Student::findOrFail($student_id);
+
+        // check if student is enrolled in this group or not before editing
+        if(is_null($current_group->students()->where('student_id', $student->id)->first())){
+            return abort(404);
+        }
+
         $groups = $current_group->diploma->groups;
 
-        $student = Student::findOrFail($student_id);
 
         return view('diploma.diploma_student_register_update', compact('current_group', 'groups', 'student'));
     }
 
     public function update(Request $request)
     {
-        // todo check if student is enrolled in group or not
+
         $student_id = $request->get('student_id');
         $prev_group_id = $request->get('prev_group_id');
         $new_diploma_group_id = $request->get('diploma_group_id');

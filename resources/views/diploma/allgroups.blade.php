@@ -213,7 +213,7 @@
                                                                     <form method="post" action="{{route('diploma-groups.destroy',$group->id)}}">
                                                                         @csrf
                                                                         @method('delete')
-                                                                        <a href="/course_groups/{{$group->id}}/edit" class=" btn btn-outline-primary btn-sm ">
+                                                                        <a href="/diploma-groups/{{$group->id}}/edit" class=" btn btn-outline-primary btn-sm ">
                                                                             <i class="fas fa-edit"></i> </a> </span> </span>
 
                                                                         <button type="submit" name="delete" class="btn btn-outline-danger   btn-sm ">

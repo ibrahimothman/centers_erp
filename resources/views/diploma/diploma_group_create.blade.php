@@ -4,7 +4,7 @@
 
         <head>
             @include('library')
-            <title>Add a Course group</title>
+            <title>Add a diploma group</title>
 
         </head>
         <body id="page-top">
@@ -35,13 +35,7 @@
                                             @csrf
 
                                             <div class="form-row ">
-                                                <div class="col-sm-6 form-group">
-                                                    <label for="name">اسم الدورة</label>
-                                                    <span class="required">*</span>
-                                                    <input type="text" class="form-control" id="name" placeholder="اسم الدورة " value="{{ old('name') }}" name="name" required>
-                                                    <span id="test_course-name_error"></span>
-                                                    <div>{{ $errors->first('name') }}</div>
-                                                </div>
+
                                                 <div class='col-sm-6 form-group'>
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
                                                         <span class="required">*</span>

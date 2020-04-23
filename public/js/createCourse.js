@@ -24,7 +24,7 @@ function addDayInCourse(num) {
     return `
 
     <hr/>
-     <div class="col-sm-3 form-group">
+     <div class="col-sm-3 form-group extra_time">
         <label for="validationCustom01">   اختر اليوم</label>
         <div class='input-group date'>
 
@@ -36,7 +36,7 @@ function addDayInCourse(num) {
         
         </div>
       </div>
-    <div class="col-sm-3 form-group">
+    <div class="col-sm-3 form-group extra_time">
         <label for="diploma-day-${num}-begin"> بداية المحاضرة</label>
         <select class="form-control" id="diploma-day-begin-${num}"  name="diploma-begins[]" >
             
@@ -44,7 +44,7 @@ function addDayInCourse(num) {
             <span id="test_diploma-day-${num}-begin_error"></span>
             <div></div>
     </div>
-    <div class="col-sm-3 form-group">
+    <div class="col-sm-3 form-group extra_time">
         <label for="diploma-day-${num}-end"> نهاية المحاضرة</label>
         <select class="form-control" id="diploma-day-end-${num}" name="diploma-ends[]">
             
@@ -52,7 +52,7 @@ function addDayInCourse(num) {
             <span id="test_diploma-day-${num}-end_error"></span>
             <div></div>
     </div>
-    <div class="col-sm-3 form-group">
+    <div class="col-sm-3 form-group extra_time">
        <label for="validationCustom01">اختر الغرفه</label>
        <select class="form-control" id="diploma-room-${num}" name="diploma-rooms[]"required></select>
     </div>

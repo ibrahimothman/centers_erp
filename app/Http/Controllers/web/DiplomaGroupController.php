@@ -33,49 +33,51 @@ class DiplomaGroupController extends Controller
     {
 
         $center = Center::findOrFail(Session('center_id'));
-
-//        $groups = $center->diploma_groups();
-//        return json_encode($groups);
         $diplomas = Diploma::with('courses.instructors')->where('center_id', $center->id)->get();
-//        return json_encode($diplomas);
-//        $instructor = $center->instructors->first();
-//        return json_encode($instructor->busyTimes()->where('day', '2020-04-07'));
-//        foreach ($instructor->diplomaGroups as $diplomaGroup){}
-//        return json_encode($instructor);
-//        $rooms = $center->rooms;
-
-        return view('courseGroups.course_group_create', compact('diplomas'));
+        return view('diploma.diploma_group_create', compact('diplomas'));
     }
 
     public function store(Request $request)
     {
-//        dd($request->all());
         $data = $this->validateCourseGroupData($request);
-//        if($data->fails()){
-//            dd($data->errors()->messages());
-//        }
+
         $center = Center::findOrFail(Session('center_id'));
-////        dd($data);
         $data = $data->validate();
-        $group_data = Arr::except($data,['diploma', 'diploma','diploma-days','diploma-begins','diploma-ends', 'diploma-rooms']);
+        $group_data = Arr::except($data,['diploma','diploma-days','diploma-begins','diploma-ends', 'diploma-rooms']);
 
         $group = $center->diplomas()->findOrFail($data['diploma'])->groups()->create($group_data);
 
         // create times
         $times = Time::addTimes($data['diploma-days'],$data['diploma-begins'],$data['diploma-ends']);
-//        dd($times);
-        $times_rooms = [];
-        foreach ($times as $i => $time){
-            $temp['time_id'] = $time->id;
-            $temp['room_id'] = $data['diploma-rooms'][$i];
-
-            $times_rooms[] = $temp;
-        }
 
 
-        $group->times()->sync($times_rooms);
+        $group->times()->sync($this->createTimesRoomsForGroup($times, $data['diploma-rooms']));
 
         return redirect("diploma-groups");
+    }
+
+    public function edit(DiplomaGroup $diplomaGroup)
+    {
+        $instructors = $diplomaGroup->diploma->instructors();
+
+//        return json_encode($diplomaGroup->times);
+        return view('diploma.diploma_update_register', compact('diplomaGroup', 'instructors'));
+    }
+
+    public function update(Request $request, DiplomaGroup $diplomaGroup)
+    {
+        $data = $this->validateCourseGroupData($request);
+
+        $data = $data->validate();
+        $group_data = Arr::except($data,['diploma','diploma-days','diploma-begins','diploma-ends', 'diploma-rooms']);
+
+        // create times
+        $times = Time::addTimes($data['diploma-days'],$data['diploma-begins'],$data['diploma-ends']);
+
+        $diplomaGroup->times()->sync($this->createTimesRoomsForGroup($times, $data['diploma-rooms']));
+
+        $group = $diplomaGroup->update($group_data);
+        return redirect('diploma-groups');
     }
 
     public function destroy($group)
@@ -87,6 +89,23 @@ class DiplomaGroupController extends Controller
     private function validateCourseGroupData(Request $request)
     {
 
-        return Validator::make($request->all(), DiplomaGroup::rules());
+        return Validator::make($request->all(), DiplomaGroup::rules($request));
+    }
+
+    /*
+     * create times_rooms array
+     * [time_id, room_id]
+     * */
+    private function createTimesRoomsForGroup(array $times, array $rooms)
+    {
+        $times_rooms = [];
+        foreach ($times as $i => $time){
+            $temp['time_id'] = $time->id;
+            $temp['room_id'] = $rooms[$i];
+
+            $times_rooms[] = $temp;
+        }
+
+        return $times_rooms;
     }
 }
