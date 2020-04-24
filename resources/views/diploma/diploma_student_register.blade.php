@@ -42,7 +42,7 @@
 
                                             <option value="">اختار</option>
                                             @foreach($diplomas as $diploma)
-                                                <option data-content="{{ $diploma->groups }}" >{{ $diploma->name }}</option>
+                                                <option data-content="{{ $diploma->groups }}" {{ $diploma->id == $selected_group->diploma_id? 'selected' : '' }} >{{ $diploma->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -52,6 +52,10 @@
                                         <label >مواعيد الدبلومه</label>
                                         <select  class="form-control "  id="diploma_group_date" name="diploma_group_id" required>
                                             <option value="">اختار</option>
+                                            @if($selected_group)
+                                                <option value="{{ $selected_group->id}}" selected>{{ $selected_group->starts_at }}</option>
+
+                                            @endif
                                         </select>
                                     </div>
                                 </div>

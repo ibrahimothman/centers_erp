@@ -15,17 +15,7 @@ class Center extends ImageUploader
 {
     protected $guarded = [];
     public static $ApiFields=['id','name'];
-    // once center is created save it in session
-    public static function allDiplomasEnrollments($center)
-    {
-        return app(Pipeline::class)
-            ->send($center->diplomas())
-            ->through([
-                Id::class,
-//                GroupId::class
-            ])
-            ->thenReturn()->with('groups.students')->get();
-    }
+
 
     public function setImageAttribute($image){
         $this->deleteImage($this->image);
@@ -78,7 +68,10 @@ class Center extends ImageUploader
         return $this->hasMany(Diploma::class);
     }
 
-
+    public function diplomasIds()
+    {
+        return $this->diplomas->pluck('id');
+    }
 
     public function categories()
     {

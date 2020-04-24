@@ -20,8 +20,13 @@ class DiplomaEnrollmentController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $all_diplomas = $center->diplomas()->with('groups.students')->get();
-        $diplomas = Center::allDiplomasEnrollments($center);
-        return view('diploma.diploma_student_show', compact('all_diplomas', 'diplomas'));
+        $groups = DiplomaGroup::allEnrollments($center->diplomasIds());
+
+//        return json_encode($groups);
+//        return json_encode(DiplomaGroup::with('students')
+//            ->whereIn('diploma_id', $center->diplomasIds())
+//            ->where('diploma_id', 4)->get());
+        return view('diploma.diploma_student_show', compact('all_diplomas', 'groups'));
     }
 
     public function create()
@@ -30,7 +35,9 @@ class DiplomaEnrollmentController extends Controller
 
         $diplomas = Diploma::with('groups')->where('center_id', $center->id)->get();
 
-        return view('diploma.diploma_student_register', compact('diplomas'));
+        $selected_group = Input::has('group_id')? DiplomaGroup::findOrFail(Input::get('group_id')): new DiplomaGroup();
+
+        return view('diploma.diploma_student_register', compact('diplomas', 'selected_group'));
     }
 
     public function store(Request $request)

@@ -2,14 +2,28 @@
 
 namespace App;
 
+use App\QueryFilter\DiplomaId;
+use App\QueryFilter\Id;
 use App\Rules\UniquePerCenter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Pipeline\Pipeline;
 
 class DiplomaGroup extends Model
 {
     protected $guarded = [];
+
+    public static function allEnrollments($diplomasIds)
+    {
+        return app(Pipeline::class)
+            ->send(DiplomaGroup::with('students')->with('diploma')->whereIn('diploma_id', $diplomasIds))
+            ->through([
+                DiplomaId::class,
+                Id::class
+            ])
+            ->thenReturn()->get();
+    }
 
     public function diploma()
     {

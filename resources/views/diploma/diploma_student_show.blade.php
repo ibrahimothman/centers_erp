@@ -30,7 +30,7 @@
                                     aria-haspopup="true" aria-expanded="false"> اختار اسم الدبلومه </button>
                             <div class="dropdown-menu">
                                 @foreach($all_diplomas as $diploma)
-                                    <a class="dropdown-item" href="{{ route('diploma-enrollments.index') }}?id={{ $diploma->id }}">{{ $diploma->name }}</a>
+                                    <a class="dropdown-item" href="{{ route('diploma-enrollments.index') }}?diploma_id={{ $diploma->id }}">{{ $diploma->name }}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -54,12 +54,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($diplomas as $diploma)
-                                @foreach($diploma->groups as $group)
+
+                                @foreach($groups as $group)
                                     @foreach($group->students as $student)
                                         <tr>
                                             <td>{{ $student->nameAr }}</td>
-                                            <td>{{ $diploma->name }}</td>
+                                            <td>{{ $group->diploma->name }}</td>
                                             <td>{{ $group->starts_at }}</td>
                                             <td>
 
@@ -76,7 +76,6 @@
                                         </tr>
                                     @endforeach
                                 @endforeach
-                            @endforeach
                             </tbody>
 
                         </table>

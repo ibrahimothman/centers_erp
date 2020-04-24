@@ -4,6 +4,7 @@ namespace App;
 
 use App\helper\ImageUploader;
 use App\QueryFilter\Id;
+use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use phpDocumentor\Reflection\Types\Self_;
@@ -18,7 +19,8 @@ class Diploma extends ImageUploader
         return app(Pipeline::class)
             ->send($center->diplomas()->with('groups'))
             ->through([
-                Id::class
+                Id::class,
+                Sort::class
             ])
             ->thenReturn()->get();
     }

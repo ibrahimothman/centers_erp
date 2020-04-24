@@ -131,7 +131,7 @@
                     <div class="card">
                         <div class="card-header text-primary">
                             <div class="row  ">
-                                <div class="col-md-6"> الامتحانات </div>
+                                <div class="col-md-6"> مواعيد الدبلومات </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -141,25 +141,25 @@
                             <span class="float-right">
                             <div class="btn-group print-btn p-3 ">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
-                                <div class="dropdown-menu"> <a class="dropdown-item" href="#">الاحدث اضافه</a> <a class="dropdown-item" href="#">الاحدث التعديل</a> </div>
+                                <div class="dropdown-menu"> <a class="dropdown-item" href="diploma-groups?order_by=created_at&sort=desc">الاحدث اضافه</a> <a class="dropdown-item" href="#">الاحدث التعديل</a> </div>
                             </div>
                             </span>
 
 
                                 <span class="float-left w-50">
 
-                            <form method="get" action="{{route('diploma-groups.index')}}">
+                            
                                     <div class="form-row col-md-12 ">
-                                            <select name="id"  id="testselector"  onchange="this.form.submit()" class="form-control ">
+                                            <select name="diplomas-options"  id="diplomas-options"  onchange="this.form.submit()" class="form-control ">
 
-                                                    <option value=""> choose</option>
+                                                    <option value="0"> choose</option>
                                                     <option value="0"> الكل</option>
                                                 @foreach($allDiplomas as $diploma)
                                                     <option value="{{$diploma->id}}"> {{$diploma->name}} </option>
                                                 @endforeach
                                                 </select>
                                     </div>
-                            </form>
+
                        </span>
 
                             </div>
@@ -203,10 +203,10 @@
                                                                 <td> {{$Utility->getDate($group->starts_at)}} </td>
                                                                 <td >
 
-                                                                    <a href="diploma-enrollments/create?id={{ $diploma->id }}"  class="btn btn-outline-warning  btn-sm">
+                                                                    <a href="diploma-enrollments/create?group_id={{ $group->id }}"  class="btn btn-outline-warning  btn-sm">
                                                                         <i class="fas fa-plus"></i>
                                                                         <SPAN>تسجيل الطلاب</SPAN> </a>
-                                                                    <a  href="diploma-enrollments"  class="btn btn-outline-success   btn-sm ">
+                                                                    <a  href="diploma-enrollments?id={{ $group->id }}"  class="btn btn-outline-success   btn-sm ">
                                                                         <SPAN> الطلاب المسجلين</SPAN>
                                                                     </a></td>
                                                                 <td>
@@ -307,7 +307,11 @@
 
 <script>
 
-
+    $('#diplomas-options').on('change', function (e) {
+        var id = $(this).val();
+        if(id !== '0') window.location = '/diploma-groups?id='+id;
+        else window.location = '/diploma-groups'
+    })
 </script>
 
 </body>
