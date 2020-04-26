@@ -3,6 +3,7 @@
 namespace App;
 
 use App\QueryFilter\Id;
+use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
@@ -15,7 +16,8 @@ class Test extends Model
         return app(Pipeline::class)
             ->send($center->tests())
             ->through([
-                Id::class
+                Id::class,
+                Sort::class
             ])
             ->thenReturn()
             ->get();

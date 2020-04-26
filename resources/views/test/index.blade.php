@@ -25,7 +25,7 @@
                             <div class=" clearfix"> <span class="float-right">
                         <div class="btn-group print-btn p-3 ">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
-                            <div class="dropdown-menu"> <a class="dropdown-item" href="#">الاحدث اضافه</a> <a class="dropdown-item" href="#">الاحدث التعديل</a> </div>
+                            <div class="dropdown-menu"> <a class="dropdown-item" href="#latestCreated">الاحدث اضافه</a> <a class="dropdown-item" href="#latestUpdated">الاحدث التعديل</a> </div>
                         </div>
                         <div class="btn-group p-3 ">
                             <div class="btn-group search-panel ">
@@ -83,13 +83,17 @@
         <script>
             $(document).ready(function () {
                 // get all center's tests
-                getTests();
+                getTests({
+                    order_by: 'created_at',
+                    sort: 'desc'
+                });
             });
 
-            function getTests() {
+            function getTests(data) {
                 $.ajax({
                     url:'/all-tests',
                     type:'GET',
+                    data: data,
                     success: function (data) {
                         var lines = "";
                         data.forEach(function (test) {
@@ -139,6 +143,23 @@
                     }
                 });
             }
+
+            $('a[href="#latestCreated"]').click(function(e){
+                e.preventDefault();
+                getTests({
+                    order_by: 'created_at',
+                    sort: 'desc'
+                })
+            });
+
+            $('a[href="#latestUpdated"]').click(function(e){
+                e.preventDefault();
+                getTests({
+                    order_by: 'updated_at',
+                    sort: 'desc'
+                })
+            });
+
         </script>
 </body>
 </html>

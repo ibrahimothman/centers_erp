@@ -56,7 +56,7 @@ class Center extends ImageUploader
 
     public function tests()
     {
-        return $this->hasMany(Test::class)->latest();
+        return $this->hasMany(Test::class);
     }
 
     public function courses(){

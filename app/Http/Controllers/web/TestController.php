@@ -29,7 +29,7 @@ class TestController extends Controller
     }
     public function getTests(){
         $center = Center::findOrFail(Session('center_id'));
-        $tests = $center->tests()->orderBy('created_at','desc')->get();
+        $tests = Test::allTests($center);
         return json_decode($tests);
     }
 
