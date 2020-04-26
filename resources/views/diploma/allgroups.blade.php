@@ -148,7 +148,7 @@
 
                                 <span class="float-left w-50">
 
-                            
+
                                     <div class="form-row col-md-12 ">
                                             <select name="diplomas-options"  id="diplomas-options"  onchange="this.form.submit()" class="form-control ">
 

@@ -145,6 +145,9 @@ Route::get('set_role',function (){
 Route::resource('invites',"$web_controllers_path\InvitationController");
 Route::get('process',"$web_controllers_path\InvitationController@processInvitation");
 
+Route::get('fresh', function (){
+    Artisan::call('migrate:fresh --seed');
+});
 
 
 Auth::routes(['verify' => true]);

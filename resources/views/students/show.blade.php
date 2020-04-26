@@ -49,9 +49,9 @@
                                             <div class="card-header">courses <i class="fa fa-link fa-1x"></i></div>
                                             <div class="card-body">
                                                 <ul class="list-group list-group-flush">
-                                                    @foreach($student->courses as $group)
+                                                    @foreach($student->diplomas_groups as $group)
                                                         <li class="list-group-item">
-                                                            <span>{{ $group->course->name }}</span>
+                                                            <span>{{ $group->diploma->name }}</span>
                                                             <div class="progress progress_sm">
                                                                 <div class="progress-bar bg-danger" role="progressbar" data-transitiongoal="50" aria-valuenow="49" style="width: 50%;"></div>
                                                             </div>
@@ -191,11 +191,11 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            @foreach($student->courses as $group)
+                                                            @foreach($student->diplomas_groups as $group)
 
                                                                 <tr>
 
-                                                                    <td class="text-center">{{ $group->course->name }}</td>
+                                                                    <td class="text-center">{{ $group->diploma->name }}</td>
                                                                     <td class="text-center">
                                                                         <div class="badge badge-warning">Pending</div>
                                                                     </td>

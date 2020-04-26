@@ -22,10 +22,7 @@ class DiplomaEnrollmentController extends Controller
         $all_diplomas = $center->diplomas()->with('groups.students')->get();
         $groups = DiplomaGroup::allEnrollments($center->diplomasIds());
 
-//        return json_encode($groups);
-//        return json_encode(DiplomaGroup::with('students')
-//            ->whereIn('diploma_id', $center->diplomasIds())
-//            ->where('diploma_id', 4)->get());
+
         return view('diploma.diploma_student_show', compact('all_diplomas', 'groups'));
     }
 
