@@ -25,7 +25,7 @@ class EmployeeRepository
         $employees = $center->employees;
         foreach ($employees as $employee){
 
-            $employee->payment_model = $employee->getPaymentModel($employee->payment_model);
+//            $employee->payment_model = $employee->getPaymentModel($employee->payment_model);
 
             $rest = $center->transactions()->where("meta_data->payFor_type", "App\Employee")
                 ->where("meta_data->payFor_id", "$employee->id")->latest()->first()['rest'];
