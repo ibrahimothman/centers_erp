@@ -115,7 +115,7 @@ class Instructor extends ImageUploader
     }
 
 
-    public function getPaymentModel($paymentModel)
+    public function getPaymentModelAttribute($paymentModel)
     {
         return PaymentModelHelper::getPaymentModelAttribute($paymentModel,
             json_decode($this->payment_model_meta_data, true));

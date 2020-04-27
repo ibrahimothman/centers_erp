@@ -24,9 +24,36 @@
                                 تسجيل بيانات الموظفين
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('employees.update', $employee->id) }}" method="post" id="employeeCreate">
+                                <form action="{{ route('employees.update', $employee->id) }}" enctype="multipart/form-data" method="post" id="employeeCreate">
                                     @csrf
                                     @method('put')
+
+                                    <div class="form-row image-upload">
+                                        <div class="col-sm-8">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
+                                                       id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
+                                                       id="customFile2" src="" onchange="readURL(this, 2);" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center  ">
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded1" src="{{ $employee->image }}"
+                                                 />
+                                            <p>صورة البطاقه</p>
+                                            <!--      <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
+                                        </div>
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded2" src="{{ $employee->idImage }}"
+                                                 alt="your image"/>
+                                            <p>الصوره الشخصيه</p>
+                                            <!--      <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
+
+                                        </div>
+                                    </div>
+
                                     <div class="form-row">
                                         <label>الاسم باللغه العربيه </label>
                                         <span class="required">*</span>
@@ -234,6 +261,33 @@
                 "</div>" +
                 "</div>");
         })
+    }
+
+
+    $('#imageUploaded1, #imageUploaded2').click(function () {
+        let photoNum = this.id[this.id.length - 1];
+        $(`#customFile${photoNum}`).trigger('click');
+    })
+
+
+    //code for the image uploaded to be shown
+    function readURL(input, num) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                if (num > 3) {
+                    $(`#imageUploaded${num}`)
+                        .attr('src', 'https://icon-library.net/images/done-icon/done-icon-5.jpg')
+
+                } else {
+                    $(`#imageUploaded${num}`)
+                        .attr('src', e.target.result)
+                }
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\PaymentModel;
 use App\repository\EmployeeRepository;
 use App\repository\InstructorRepository;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,14 @@ class ExpensesController extends Controller
             , compact('instructors', 'employees', 'accounts'));
 
     }
+
+    public function edit($transaction ,$type)
+    {
+
+        $transaction = Transaction::findOrFail($transaction);
+
+        return view("financialManagement/edit_$type", compact('transaction'));
+    }
+
+
 }

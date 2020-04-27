@@ -35,8 +35,6 @@
                                                    id="customFile2" src="" onchange="readURL(this, 2);">
                                             <input type="file" class="custom-file-input" accept="image/*" name="image3"
                                                    id="customFile3" src="" onchange="readURL(this, 3);">
-                                            <input type="file" accept="video/*" class="custom-file-input" name="video"
-                                                   id="customFile4" src="" onchange="readURL(this, 4);">
                                             <label class="custom-file-label" for="customFile">صوره الدورة</label>
                                             <div></div>
                                         </div>
@@ -70,12 +68,7 @@
                                         <p>صورة الدورة</p>
                                         <!--     <div id="photo3" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
-                                    <div class="course-image-input">
-                                        <img id="imageUploaded4"
-                                             src="http://simpleicon.com/wp-content/uploads/video.svg" alt="your video"/>
-                                        <p>ڤيديو الدورة</p>
-                                        <!--     <div id="photo4" class="photo" >هذه الخانه مطلوبه</div> -->
-                                    </div>
+
                                 </div>
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">

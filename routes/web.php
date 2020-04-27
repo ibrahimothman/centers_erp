@@ -118,7 +118,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
             return view('financialManagement/dept');
         });
         Route::resource('profits', "$web_controllers_path\ProfitController");
-        Route::resource('expenses', "$web_controllers_path\ExpensesController");
+        Route::resource('expenses', "$web_controllers_path\ExpensesController")->except('edit');
+        Route::get('/expenses/{id}/{type}', "$web_controllers_path\ExpensesController@edit")->name('expenses.edit');
         Route::resource('revenues', "$web_controllers_path\RevenueController");
         Route::resource('transactions', "$web_controllers_path\TransactionController");
         Route::get('all_transactions', "$web_controllers_path\TransactionController@allTransactions");

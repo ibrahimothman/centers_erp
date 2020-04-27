@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\Role;
+use App\Time;
 use Illuminate\Http\Request;
 use App\Test;
 use App\TestGroup;
@@ -69,13 +70,14 @@ class TestGroupController extends Controller
         // check if user has rights to view create_test_group_form
 //        $this->authorize('create',TestGroup::class);
         $center = Center::findOrFail(Session('center_id'));
-        $tests = $center->tests()->orderBy('created_at','desc')->paginate(10);
-        $testName=null;
-        if (Input::get('test')!=null)
-            $testName=Input::get('test');
-            return view('testGroup.create')
-                ->with('tests',$tests)
-                ->with('testName',$testName);
+        $allTests = $center->tests;
+
+        $test = Input::has('id')? Test::allTests($center)[0]: new Test();
+
+         return view('testGroup.create')
+             ->with('selected_test',$test)
+             ->with('begins',Time::hours())
+             ->with('allTests',$allTests);
     }
 
     /**
@@ -86,19 +88,20 @@ class TestGroupController extends Controller
      */
     public function store(Request $request)
     {
+
+
         // check if user has rights to add a new test-group
 //        $this->authorize('create',TestGroup::class);
         //todo handle multiple groups
 
         $this->validate($request,[
-            'testName' => 'required',
-            'test_time2' => 'required',
-            'seat2' => 'required',
+            'test_id' => 'required',
+            'test_time' => 'required|array',
 
         ]);
 
-        $test = $request->input('testName');
-        $date = $request->input('test_time2');
+        $test_id = $request->input('test_id');
+        $times = $request->input('test_time');
         $seats = $request->input('seat2');
 
 

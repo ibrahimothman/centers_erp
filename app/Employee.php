@@ -3,6 +3,7 @@
 namespace App;
 
 use App\helper\Constants;
+use App\helper\ImageUploader;
 use App\helper\mathParser\Math;
 use App\helper\PaymentModelHelper;
 use App\QueryFilter\Name;
@@ -12,16 +13,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use function foo\func;
 
-class Employee extends Model
+class Employee extends ImageUploader
 {
     //
     protected $guarded = [];
-    public static function employeeRoles()
-    {
-        return[
-            'admin','not admin'
-        ];
-    }
+
 
     public static function allEmployees($center)
     {
@@ -32,6 +28,24 @@ class Employee extends Model
             ])
             ->thenReturn()
             ->paginate(request('limit')? request('limit') : 10);
+    }
+
+    public function setImageAttribute($image){
+        if ($image) {
+            $this->deleteImage($this->image);
+            $original = $this->saveImage($image);
+            return $this->attributes['image'] = url($this->getDir() . "/" . $original);
+        }
+
+    }
+    public function setIdImageAttribute($idImage){
+        if($idImage) {
+            // first delete prev one
+            $this->deleteImage($this->idImage);
+            $original = $this->saveImage($idImage);
+            return $this->attributes['idImage'] = url($this->getDir() . "/" . $original);
+        }
+
     }
 
     // employee could be an user
@@ -67,7 +81,7 @@ class Employee extends Model
 
 
 
-    public function getPaymentModel($paymentModel)
+    public function getPaymentModelAttribute($paymentModel)
     {
 
        return PaymentModelHelper::getPaymentModelAttribute($paymentModel,
@@ -81,6 +95,8 @@ class Employee extends Model
         static::deleting(function($employee){
             $employee->address->delete();
             if($employee->user) $employee->user->delete();
+            if($employee->image) (new self)->deleteImage($employee->image);
+            if($employee->idImage) (new self)->deleteImage($employee->idImage);
         });
     }
 
@@ -89,8 +105,8 @@ class Employee extends Model
         if($request->isMethod('post')){
             return[
                 'idNumber' => ['required', 'digits:14',  new UniquePerCenter(Employee::class, '')],
-//            'image' => ' sometimes |nullable|image|file | max:10000',
-//            'idImage' => 'sometimes |nullable|image|file | max:10000',
+                'image' => ' sometimes |nullable|image|file | max:10000',
+                'idImage' => 'sometimes |nullable|image|file | max:10000',
                 'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/',new UniquePerCenter(Employee::class, '')],
 //            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
                 'passportNumber' => ['sometimes', new UniquePerCenter(Employee::class, '')],
@@ -109,8 +125,8 @@ class Employee extends Model
             $employee_id = $request->route('employee')->id;
             return[
                 'idNumber' => ['required', 'digits:14',  new UniquePerCenter(Employee::class, $employee_id)],
-//            'image' => ' sometimes |nullable|image|file | max:10000',
-//            'idImage' => 'sometimes |nullable|image|file | max:10000',
+                 'image' => ' sometimes |nullable|image|file | max:10000',
+                'idImage' => 'sometimes |nullable|image|file | max:10000',
                 'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/',new UniquePerCenter(Employee::class, $employee_id)],
 //            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
                 'passportNumber' => ['sometimes', new UniquePerCenter(Employee::class, $employee_id)],
@@ -133,5 +149,11 @@ class Employee extends Model
     {
         $imagePath = ($this->$key) ? $this->$key : Constants::getInstructorPlaceholderImage();
         return  $imagePath;
+    }
+
+    public function getDir()
+    {
+        // TODO: Implement getDir() method.
+        return 'uploads/profiles';
     }
 }

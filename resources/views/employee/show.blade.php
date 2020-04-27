@@ -36,7 +36,7 @@
 
 
                                         <div class="text-center">
-                                            <img src="{{ $employee->getImage("image") }}" class="avatar img-circle img-thumbnail" alt="avatar">
+                                            <img src="{{ $employee->image }}" class="avatar img-circle img-thumbnail" alt="avatar">
 
                                         </div></hr><br>
                                         <p>تاريخ الاضافه : {{$employee->created_at}}</p>

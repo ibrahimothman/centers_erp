@@ -92,7 +92,6 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         //
-
         return view('employee.show', compact('employee'));
 
     }
@@ -111,6 +110,7 @@ class EmployeeController extends Controller
     {
         //
         $data = $this->validateRequest($request);
+
         $data = $data->validate();
         $employee->update(Arr::except($data,['state','city','address', 'job', 'send_invitation']));
 
@@ -123,11 +123,11 @@ class EmployeeController extends Controller
         ]);
 
         // attach employee with related job
-        if($data['job'] != "0"){
-            $employee->update([
-                'job_id' => $data['job']
+        $employee->update(
+            [
+                'job_id' => $data['job'] == '0'? null : $data['job']
             ]);
-        }
+
 
 
         // if this employee is wanted to be a user, send him an user invitation
