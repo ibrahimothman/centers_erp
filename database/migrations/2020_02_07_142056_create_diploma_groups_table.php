@@ -25,7 +25,7 @@ class CreateDiplomaGroupsTable extends Migration
             $table->foreign('diploma_id')->references('id')->on('diplomas')
                 ->onDelete('cascade');
             $table->foreign('instructor_id')->references('id')->on('instructors')
-                ->onDelete('cascade');
+                ->onDelete('setNull');
         });
     }
 

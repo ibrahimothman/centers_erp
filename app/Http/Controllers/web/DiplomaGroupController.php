@@ -82,7 +82,9 @@ class DiplomaGroupController extends Controller
 
     public function destroy($group)
     {
-        DiplomaGroup::findOrFail($group)->delete();
+        $group = DiplomaGroup::findOrFail($group);
+        $group->times()->detach();
+        $group->delete();
         return redirect('diploma-groups');
     }
 

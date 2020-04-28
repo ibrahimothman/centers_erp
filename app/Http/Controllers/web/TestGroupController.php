@@ -37,6 +37,7 @@ class TestGroupController extends Controller
 
         $tests = Test::allTests($center);
 
+
         return view('testGroup.index')
             ->with('allTests',$allTests)
             ->with('tests',$tests);
@@ -157,6 +158,7 @@ class TestGroupController extends Controller
     {
         //
 //        $this->authorize('delete',$testGroup);
+        $testGroup->times()->detach();
         $testGroup->delete();
         return redirect('/test-groups')
             ->with('message','test group deleted successfully');
