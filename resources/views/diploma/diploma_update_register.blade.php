@@ -48,6 +48,16 @@
                                         <div class="addError" ></div>
                                         <div>{{ $errors->first('starts_at') }}</div>
                                     </div>
+
+                                    <div class='col-sm-6 form-group'>
+                                        <label for="validationCustom01">عدد المقاعد المتاحه</label>
+                                        <span class="required">*</span>
+                                        <div class='input-group '>
+                                            <input value="{{ $diplomaGroup->available_chairs }}"   id="available_chairs" name="available_chairs"  class="form-control" type="number" >
+                                        </div>
+                                        <div class="addError" ></div>
+                                        <div>{{ $errors->first('available_chairs') }}</div>
+                                    </div>
                                 </div>
 
                                 <div class="form-row">

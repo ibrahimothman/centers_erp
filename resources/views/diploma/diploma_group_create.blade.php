@@ -48,6 +48,17 @@
                                                     <div class="addError" ></div>
                                                     <div>{{ $errors->first('starts_at') }}</div>
                                                 </div>
+
+                                                <div class='col-sm-6 form-group'>
+                                                    <label for="validationCustom01">عدد المقاعد المتاحه</label>
+                                                    <span class="required">*</span>
+                                                    <div class='input-group '>
+                                                        <input   id="available_chairs" name="available_chairs"  class="form-control" type="number" >                                                            <span class="input-group-addon">
+                                                            </span>
+                                                    </div>
+                                                    <div class="addError" ></div>
+                                                    <div>{{ $errors->first('available_chairs') }}</div>
+                                                </div>
                                             </div>
 
                                             <div class="form-row">
@@ -163,67 +174,6 @@
                      format:'Y-m-d',
                  });
              }
-            // function onDayChanged (num) {
-            //     number = num;
-            //     $('#course-day-'+number+'-begin').empty();
-            //     $('#course-day-'+number+'-end').empty();
-            //     var room_id = $('#course-group-room').val();
-            //     var day = $('#course-day-'+number).val();
-            //     console.log('room id = '+room_id+' and day = '+day);
-            //     getAvailableBeginsForTheRoom(room_id, day);
-            // }
-            //
-            // function getAvailableBeginsForTheRoom(room_id, day) {
-            //     $.ajax({
-            //         url : "/available_begins_for_the_room",
-            //         type : 'GET',
-            //         data : {room_id : room_id, day : day},
-            //         success : function (begins) {
-            //             console.log(begins);
-            //             fillBegins(begins);
-            //         }
-            //
-            //     });
-            // }
-            //
-            // function fillBegins(begins) {
-            //     $('#course-day-'+number+'-begin').empty();
-            //     $('#course-day-'+number+'-begin').append('<option value="0">اختر ميعاد</option>');
-            //     $.each(begins, function (i, v) {
-            //         $('#course-day-'+number+'-begin').append('<option value="' + i + '">' + v + '</option>');
-            //     });
-            // }
-            //
-            // function onBeginChanged () {
-            //     var room_id = $('#course-group-room').val();
-            //     var day_id = $('#course-day-'+number).val();
-            //     var begin_id = $('#course-day-'+number+'-begin').val();
-            //     getAvailableEndsForTheRoom(room_id, day_id, begin_id);
-            //     // console.log('room id = '+room_id+" / day = "+day_id);
-            // }
-            //
-            // function getAvailableEndsForTheRoom(room_id, day_id, begin_id) {
-            //     $.ajax({
-            //         url : "/available_ends_for_the_room",
-            //         type : 'GET',
-            //         data : {room_id : room_id, day_id : day_id, begin_id : begin_id},
-            //         success : function (ends) {
-            //             // console.log(ends);
-            //             fillEnds(ends);
-            //         }
-            //
-            //     });
-            // }
-            //
-            // function fillEnds(ends) {
-            //     $('#course-day-'+number+'-end').empty();
-            //     $('#course-day-'+number+'-end').append('<option value="0">اختر ميعاد</option>');
-            //     $.each(ends, function (i, v) {
-            //         // console.log('i = '+ i +" / v = "+v);
-            //         $('#course-day-'+number+'-end').append('<option value="' + i + '">' + v + '</option>');
-            //     });
-            // }
-
 
         </script>
     </body>

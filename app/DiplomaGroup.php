@@ -59,6 +59,7 @@ class DiplomaGroup extends Model
             return [
                 'starts_at' => "required|date|after_or_equal:$today_date",
                 'diploma' => 'required',
+                'available_chairs' => 'required| integer',
                 'instructor_id' => 'required|integer',
                 'diploma-begins' => 'required|array',
                 'diploma-ends' => 'required|array',
@@ -77,6 +78,7 @@ class DiplomaGroup extends Model
                     }else return true;
                 }],
                 'diploma' => 'required',
+                'available_chairs' => 'required| integer',
                 'instructor_id' => 'required|integer',
                 'diploma-begins' => 'required|array',
                 'diploma-ends' => 'required|array',

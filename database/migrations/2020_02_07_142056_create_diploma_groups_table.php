@@ -19,6 +19,7 @@ class CreateDiplomaGroupsTable extends Migration
             $table->unsignedBigInteger('diploma_id');
             $table->unsignedBigInteger('instructor_id');
             $table->date('starts_at');
+            $table->unsignedSmallInteger('available_chairs');
             $table->timestamps();
 
 
