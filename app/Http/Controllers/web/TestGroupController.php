@@ -38,28 +38,31 @@ class TestGroupController extends Controller
 //        $this->authorize('viewAny',TestGroup::class);
 
         $center = Center::findOrFail(Session('center_id'));;
-        $allTests = Test::allTests($center);
+        $allTests = $center->tests;
 
-        $tests = $center->tests()->paginate(2);
-        if (Input::get('test')!=null)
-            $tests=$center->tests()->where('id',Input::get('test'))->paginate(2);
+//        return json_encode($allTests);
 
-
-        foreach ($tests as $test){
-            $groups=DB::table('test_groups')
-                ->orderBy('group_date','desc')
-                ->where('test_id',$test->id)
-                ->get();
-            for ($j=0;$j<count($groups);$j++){
-                $groups[$j]->available_seats= 20;
-
-            }
-            $test->groups=$groups;
-        }
+        $tests = Test::allTests($center);
+//        return json_encode($tests);
+//        if (Input::get('test')!=null)
+//            $tests=$center->tests()->where('id',Input::get('test'))->paginate(2);
+//
+//
+//        foreach ($tests as $test){
+//            $groups=DB::table('test_groups')
+//                ->orderBy('group_date','desc')
+//                ->where('test_id',$test->id)
+//                ->get();
+//            for ($j=0;$j<count($groups);$j++){
+//                $groups[$j]->available_seats= 20;
+//
+//            }
+//            $test->groups=$groups;
+//        }
 
         return view('testGroup.index')
-            ->with('tests',$tests)
-            ->with('allTests',$allTests);
+            ->with('allTests',$allTests)
+            ->with('tests',$tests);
     }
 
 

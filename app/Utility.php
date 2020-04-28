@@ -23,27 +23,19 @@ class Utility {
     public function datePassed($expireDate,$expireTime){
         date_default_timezone_set('Africa/Cairo');
         $todayDate=date('y-m-d');
-        $todayTime=date("H:i:s");
+        $todayTime=date("H");
 
-        $todayTime=substr($todayTime, 0, 4);
         $today_date = strtotime($todayDate);
         $expire_date = strtotime($expireDate);
 
-        $todayTime = strtotime($todayTime);
-        $expireTime = strtotime($expireTime);
 
         if ($expire_date<$today_date){
             return true;
         }
         else{
-            if ($expire_date==$today_date&&$expireTime<$todayTime){
-                return true;
-            } else{
-                return false;
-            }
+            return $expire_date==$today_date && $expireTime < $todayTime;
+
         }
-
-
     }
 
     private function timePassed($pastTime,$currentTime){

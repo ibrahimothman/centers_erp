@@ -36,25 +36,37 @@
                                         <div class="col-md-6 form-group">
                                             <label for="validationCustom01"> اسم الامتحان </label>
                                             <span class="required">*</span>
-                                            <select class="form-control " placeholder="اختار الامتحان" id="testselector"
-                                                    name="test" required>
-                                                <option value="">اختر مبعادا</option>
-                                                @foreach($tests as $test)
-                                                    <option value={{$test->id}}>{{$test->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            <span id="testselector_error"></span>
+                                            @if($selected_group->id)
+                                                <input  class="form-control" value="{{ $selected_group->test->name }}">
+                                                <input id="testselector" name="test_id" value="{{ $selected_group->test->id }}" hidden>
+                                            @else
+                                                <select class="form-control " placeholder="اختار الامتحان" id="testselector"
+                                                        name="test" required>
+                                                        <option value="">اسم الامتحان</option>
+                                                        @foreach($tests as $test)
+                                                            <option data-extra="{{ $test }}" value={{$test->id}} @isset($selected_groups) @endisset>{{$test->name}}</option>
+                                                        @endforeach
 
+
+                                                </select>
+                                                <span id="testselector_error"></span>
+                                            @endif
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label>مواعيد الامتحان</label>
                                             <span class="required">*</span>
-                                            <select class="form-control " placeholder="اختار ميعاد الامتحان" id="time"
-                                                    name="time" required>
-                                                <option value="">اختر مبعادا</option>
+                                            @if($selected_group->id)
+                                                <input  class="form-control" name="time" value="{{ $selected_group->times[0]->day }}">
+                                                <input id="time" class="form-control" name="time" value="{{ $selected_group->id }}" hidden>
+                                            @else
+                                                <select class="form-control " placeholder="اختار ميعاد الامتحان" id="time"
+                                                        name="time" required>
 
-                                            </select>
-                                            <span id="dateselector_error"></span>
+                                                    <option value="">اختر مبعادا</option>
+
+                                                </select>
+                                                <span id="dateselector_error"></span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -173,40 +185,24 @@
             });
 
             $('#testselector').change(function() {
-                var test_id = $(this).val();
-                if(test_id != 0) getGroupsDate(test_id);
+                var selected_test = $.parseJSON($(this).find(':selected').attr('data-extra'));
+                var times = $('#time');
+                times.empty();
+                selected_test.groups.forEach(function (group) {
+                    times.append('<option value="' + group.id + '">' +group.times[0].day + '</option>');
+                });
 
             });
 
-            function getGroupsDate(test_id){
-                $('#time').empty();
-                $('#time').append('<option value="0">اختر ميعادا</option>');
-                    $.ajax({
-                        url: "/get_test_groups",
-                        method: "GET",
-                        data: {test: test_id, _token: "{{ csrf_token() }}"},
-                        dataType: "json",
-                        success: function (data) {
-                            // console.log(data);
-                            $.each(data, function (i, v) {
-                                // console.log(group.id)
-                                $('#time').append('<option value="' + v.id + '">' + v.group_date + '</option>');
-                            });
-
-                        },
-                        error: function (res) {
-                            alert(res.data);
-                        }
-
-                    });
-
-            }
+           
 
         $("#submit").on('click', function(e) {
             // check if all fields if filled
             var test_id = $('#testselector').val();
             var group_id = $('#time').val();
             var student_input = $('#student-id').val();
+
+            // console.log('test_id: '+test_id+", group_id: "+group_id+", student: "+student_input);
 
             if(test_id !== 0 && group_id !==0 && student_input) {
                 // remove errors

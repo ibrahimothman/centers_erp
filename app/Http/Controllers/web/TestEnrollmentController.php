@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Student;
 use App\Test;
 use App\StudentTestGroup;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
 use mysql_xdevapi\Session;
 
 
@@ -46,8 +48,13 @@ class TestEnrollmentController extends Controller
         $students = $center->students;
         $tests = Test::allTests($center);
 
+         $selected_group = Input::has('group_id') ?
+             TestGroup::with('times')->findOrFail(Input::get('group_id')): new TestGroup();
+
+
         return view('testEnrollments.create')
             ->with('students',$students)
+            ->with('selected_group',$selected_group)
             ->with('tests',$tests);
     }
 

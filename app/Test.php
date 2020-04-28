@@ -10,6 +10,7 @@ use Illuminate\Pipeline\Pipeline;
 class Test extends Model
 {
     protected $guarded  = [];
+    protected $appends = ['groups'];
 
     public static function allTests($center)
     {
@@ -20,7 +21,7 @@ class Test extends Model
                 Sort::class
             ])
             ->thenReturn()
-            ->get();
+            ->paginate(5);
     }
 
     public function center()
@@ -31,8 +32,15 @@ class Test extends Model
 
     public function groups()
     {
-        return $this->hasMany(TestGroup::class)->latest();
+        return $this->hasMany(TestGroup::class)->with('times');
 
+    }
+
+    public function getGroupsAttribute()
+    {
+        return $this->groups()->get()->each(function ($group){
+            $group['available_seats'] = $group->available_chairs - $group->enrollers->count();
+        });
     }
 
     public function categories()
