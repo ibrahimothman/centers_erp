@@ -26,11 +26,6 @@ class TestGroupController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         // todo something wrong while calculating available_seats
@@ -40,25 +35,7 @@ class TestGroupController extends Controller
         $center = Center::findOrFail(Session('center_id'));;
         $allTests = $center->tests;
 
-//        return json_encode($allTests);
-
         $tests = Test::allTests($center);
-//        return json_encode($tests);
-//        if (Input::get('test')!=null)
-//            $tests=$center->tests()->where('id',Input::get('test'))->paginate(2);
-//
-//
-//        foreach ($tests as $test){
-//            $groups=DB::table('test_groups')
-//                ->orderBy('group_date','desc')
-//                ->where('test_id',$test->id)
-//                ->get();
-//            for ($j=0;$j<count($groups);$j++){
-//                $groups[$j]->available_seats= 20;
-//
-//            }
-//            $test->groups=$groups;
-//        }
 
         return view('testGroup.index')
             ->with('allTests',$allTests)
@@ -86,12 +63,6 @@ class TestGroupController extends Controller
              ->with('allTests',$allTests);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -139,23 +110,45 @@ class TestGroupController extends Controller
     public function edit(TestGroup $testGroup)
     {
         //
+//        dd(Time::hours()[9] == $testGroup->times[0]->begin);
 //        $this->authorize('update',$testGroup);
-        return view('testGroup.edit')->with('testGroup',$testGroup);
+        return view('testGroup.edit')->with('test_group',$testGroup);
     }
 
 
     public function update(Request $request, TestGroup $testGroup)
     {
-        //
+
+
 //        $this->authorize('update',$testGroup);
-        $testGroup->update($this->validate($request,[
-            'group_date' => 'required',
-            'available_chairs' => 'required',
-//            'opened' => 'required'
-        ]));
+        $data = $this->validateRequest($request);
+
+        if($data->fails()){
+            dd($data->errors()->messages());
+            return back()->with('error', 'Please fill in all fields');
+        }
+
+        $data = $data->validate();
+
+        $time = Time::addTime($data['date']);
+
+        if($this->isThereGroupInSameTimeInSameRoom($data['test_id'], $testGroup, $time, $data['room'])){
+            return back()->with('error', 'There is a group in same time in same room');
+        }
+
+        // update group time and room
+        $testGroup->times()->sync([
+            $time->id => ['room_id' => $data['room']]
+        ]);
+
+        // update group
+        $testGroup->update([
+            'available_chairs' => $data['available_chairs'],
+
+        ]);
 
         // todo this view is missing
-//        return redirect('/test_group/'.$testGroup->id)->with('sucsess','group updated');
+        return back()->with('success','group successfully updated');
 
     }
 
@@ -182,20 +175,13 @@ class TestGroupController extends Controller
 
         return 'this group is closed';
     }
-    private function throwValidationException(array $errors){
-        $error = ValidationException::withMessages($errors);
-        throw $error;
-    }
 
-    public function getTestGroups()
-    {
-        $test_id  = request()->get('test');
-        return Test::with('groups')->findOrFail($test_id)->groups;
-    }
+
+
 
     private function validateRequest(Request $request)
     {
-        return Validator::make($request->all(), TestGroup::rules());
+        return Validator::make($request->all(), TestGroup::rules($request));
     }
 
     /*
@@ -214,4 +200,14 @@ class TestGroupController extends Controller
 
         return $times_rooms;
     }
+
+    private function isThereGroupInSameTimeInSameRoom($test_id, $test_group,  $time, $room_id)
+    {
+        return count(Test::findOrFail($test_id)->groups->filter(function ($group) use ($time, $test_group, $room_id){
+            return $group->times[0]->time_id == $time->id && $group->times[0]->pivot->room_id == $room_id  && $group->id <> $test_group->id;
+        })) != 0;
+
+    }
+
+
 }

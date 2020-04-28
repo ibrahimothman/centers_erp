@@ -5,6 +5,7 @@ namespace App;
 use App\QueryFilter\Id;
 use App\QueryFilter\TestId;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
 
@@ -39,17 +40,29 @@ class TestGroup extends Model
             ->withPivot('room_id');
 
     }
-    public static function rules()
+    public static function rules(Request $request)
     {
-        return[
-            'test_id' => 'required',
-            'groups' => 'required|array',
-            'groups.*room' => 'required',
-            'groups.*available_chairs' => 'required',
-            'groups.*date' => 'required',
-            'groups.*.date.day' => 'required',
-            'groups.*.date.begin' => 'required',
-            'groups.*.date.end' => 'required',
-        ];
+        if($request->isMethod('post')) {
+            return [
+                'test_id' => 'required',
+                'groups' => 'required|array',
+                'groups.*room' => 'required',
+                'groups.*available_chairs' => 'required',
+                'groups.*date' => 'required|date',
+                'groups.*.date.day' => 'required',
+                'groups.*.date.begin' => 'required',
+                'groups.*.date.end' => 'required',
+            ];
+        }else{
+            return[
+                'test_id' => 'required',
+                'date' => 'required|array',
+                'room' => 'required',
+                'available_chairs' => 'required',
+                'date.day' => 'required|date',
+                'date.begin' => 'required',
+                'date.end' => 'required',
+            ];
+        }
     }
 }
