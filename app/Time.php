@@ -15,6 +15,11 @@ class Time extends Model
         return $this->morphedByMany(DiplomaGroup::class, 'timeable');
     }
 
+    public function test_groups()
+    {
+        return $this->morphedByMany(TestGroup::class, 'timeable');
+    }
+
     public function rooms()
     {
         return $this->belongsToMany(Room::class, 'timeables')->withTimestamps();
@@ -76,4 +81,18 @@ class Time extends Model
         }
         return $times;
     }
+
+    public static function addTime($time)
+    {
+        return Time::firstOrCreate([
+            'day' => $time['day'],
+            'begin' => $time['begin'],
+            'end' => $time['end'],
+            'busy' => 1,
+
+        ]);
+
+    }
 }
+
+

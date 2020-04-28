@@ -11,6 +11,7 @@ use App\repository\InstructorRepository;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 use mysql_xdevapi\Session;
 
@@ -29,9 +30,9 @@ class ExpensesController extends Controller
 
     }
 
-    public function edit($transaction ,$type)
+    public function edit($transaction)
     {
-
+        $type = Input::has('type') ? Input::get('type'): 'salaries';
         $transaction = Transaction::findOrFail($transaction);
 
         return view("financialManagement/edit_$type", compact('transaction'));

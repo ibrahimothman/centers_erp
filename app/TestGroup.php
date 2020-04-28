@@ -32,4 +32,24 @@ class TestGroup extends Model
     {
         return $this->belongsToMany(Student::class)->withPivot(['take','result'])->withTimestamps();
     }
+
+    public function times()
+    {
+        return $this->morphToMany(Time::class, 'timeable', 'timeables')
+            ->withPivot('room_id');
+
+    }
+    public static function rules()
+    {
+        return[
+            'test_id' => 'required',
+            'groups' => 'required|array',
+            'groups.*room' => 'required',
+            'groups.*available_chairs' => 'required',
+            'groups.*date' => 'required',
+            'groups.*.date.day' => 'required',
+            'groups.*.date.begin' => 'required',
+            'groups.*.date.end' => 'required',
+        ];
+    }
 }

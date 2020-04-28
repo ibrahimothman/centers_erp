@@ -40,10 +40,7 @@ class DiplomaGroup extends Model
         return $this->belongsToMany(Student::class)->withTimestamps();
     }
 
-//    public function rooms()
-//    {
-//        return $this->morphToMany(Room::class, 'timeable', 'timeables');
-//    }
+
 
     public function times()
     {

@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\Role;
+use App\Room;
 use App\Time;
+use http\Exception\BadConversionException;
 use Illuminate\Http\Request;
 use App\Test;
 use App\TestGroup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use phpDocumentor\Reflection\Types\Null_;
 
@@ -89,52 +92,47 @@ class TestGroupController extends Controller
     public function store(Request $request)
     {
 
-
         // check if user has rights to add a new test-group
 //        $this->authorize('create',TestGroup::class);
         //todo handle multiple groups
 
-        $this->validate($request,[
-            'test_id' => 'required',
-            'test_time' => 'required|array',
+        $data = $this->validateRequest($request);
 
-        ]);
+        if($data->fails()){
+            dd($data->errors()->messages());
+            return back()->with('error', 'Please fill in all fields');
+        }
 
-        $test_id = $request->input('test_id');
-        $times = $request->input('test_time');
-        $seats = $request->input('seat2');
+        $data = $data->validate();
+        // add times
+        $times = [];
+        foreach ($data['groups'] as $test_group){
+            $group = TestGroup::create([
+                'test_id' => $data['test_id'],
+                'available_chairs' => $test_group['available_chairs'],
+            ]);
 
+            // create a tiem
+            $time = Time::addTime($test_group['date']);
+            // attach each group to time and room
+            $group->times()->sync([
+                $time->id => ['room_id' => $test_group['room']]
+            ]);
 
-        $testId =Test::where('name',$test)->first()->id;
-
-        TestGroup::create([
-            'test_id' => $testId,
-            'available_chairs' => $seats,
-            'group_date' => $date,
-        ]);
-
-        return redirect('/test-groups/create');
+        }
+        return redirect('/test-groups/create')->with('success', 'test group is successfully created');
 
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(TestGroup $testGroup)
     {
         // todo this view is missing
+//        return json_encode($testGroup->times);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(TestGroup $testGroup)
     {
         //
@@ -142,13 +140,7 @@ class TestGroupController extends Controller
         return view('testGroup.edit')->with('testGroup',$testGroup);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, TestGroup $testGroup)
     {
         //
@@ -164,12 +156,7 @@ class TestGroupController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(TestGroup $testGroup)
     {
         //
@@ -180,12 +167,6 @@ class TestGroupController extends Controller
 
     }
 
-    /**
-     * Get all test groups.
-     *
-     * @param  int $testId
-     * @return \Illuminate\Support\Collection
-     */
 
     public function closeGroup(){
 
@@ -207,5 +188,27 @@ class TestGroupController extends Controller
     {
         $test_id  = request()->get('test');
         return Test::with('groups')->findOrFail($test_id)->groups;
+    }
+
+    private function validateRequest(Request $request)
+    {
+        return Validator::make($request->all(), TestGroup::rules());
+    }
+
+    /*
+     * create times_rooms array
+     * [time_id, room_id]
+     * */
+    private function createTimesRoomsForGroup(array $times, array $rooms)
+    {
+        $times_rooms = [];
+        foreach ($times as $i => $time){
+            $temp['time_id'] = $time->id;
+            $temp['room_id'] = $rooms[$i];
+
+            $times_rooms[] = $temp;
+        }
+
+        return $times_rooms;
     }
 }

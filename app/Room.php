@@ -34,6 +34,11 @@ class Room extends Model
         return $this->belongsToMany(CourseGroup::class)->withTimestamps();
     }
 
+    public function test_groups()
+    {
+        return $this->belongsToMany(TestGroup::class)->withTimestamps();
+    }
+
     public function diplomas()
     {
         return $this->hasMany(DiplomaGroup::class);

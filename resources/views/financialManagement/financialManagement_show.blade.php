@@ -370,7 +370,7 @@
                                                                         <td>{{ $transaction->rest }}</td>
                                                                         <td>{{ $transaction->date }}</td>
                                                                         <td>
-                                                                            <a href="{{ route('expenses.edit', ['id' => $transaction->id, 'type' => 'salaries']) }}"
+                                                                            <a href="{{ route('expenses.edit', ['id' => $transaction->id]) }}"
                                                                                class=" btn btn-outline-primary  py-1 px-2 "><i
                                                                                         class="fas fa-edit m-0 "></i> </a>
 
@@ -454,7 +454,7 @@
                                                                                 <td>{{ $transaction->rest }}</td>
                                                                                 <td>{{ $transaction->date }}</td>
                                                                                 <td>
-                                                                                    <a href="{{ route('expenses.edit', ['id' => $transaction->id, 'type' => 'salaries']) }}"
+                                                                                    <a href="{{ route('expenses.edit', ['id' => $transaction->id]) }}"
                                                                                        class=" btn btn-outline-primary  py-1 px-2 "><i
                                                                                             class="fas fa-edit m-0 "></i> </a>
 
