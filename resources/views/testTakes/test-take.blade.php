@@ -39,7 +39,7 @@
                                         <select name="test"  id="testselector"     class="form-control ">
                                             <option value="0"> اختر الامتحان</option>
                                             @foreach($tests as $test)
-                                                <option value="{{$test->id}}">{{$test->name}}</option>
+                                                <option data-extra="{{ $test }}" value="{{$test->id}}">{{$test->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -112,34 +112,15 @@
 
     $('#testselector').change(function () {
        var test_id = $(this).val();
-       if(test_id != 0) getTestEnrollments(test_id);
+       if(test_id !== 0){
+           var selected_test = $.parseJSON($(this).find(':selected').attr('data-extra'));
+           displayData(selected_test);
+
+       }
+
     });
 
-    function getTestEnrollments(test_id) {
-        $.ajax({
-            url:'/get_tests_enrollments',
-            type:'GET',
-            data : {test_id : test_id},
-            dataType : 'json',
-            success: function (data) {
-                // console.log(data);
-                displayData(data);
-            }
-        });
-    }
 
-
-    function convertTime (time) {
-        // Check correct time format and split into components
-        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-        if (time.length > 1) { // If time format correct
-            time = time.slice (1);  // Remove full string match value
-            time[5] = +time[0] < 12 ? 'am' : 'pm'; // Set AM/PM
-            time[0] = +time[0] % 12 || 12; // Adjust hours
-        }
-        return time.join (''); // return adjusted time or original string
-    }
 
     function displayData(test) {
         var lines = '';
@@ -152,11 +133,10 @@
             lines+="<table  class='table '>";
             lines+="<tr class='table-warning'>";
             lines+="<td>اسم الامتحان : <span>"+ test.name +"</span></td>";
-            var groupDate = (group.group_date).split(' ')[0];
-            var startTime = convertTime((group.group_date).split(' ')[1]);
-            lines+="<td>تاريخ الامتحان : <span>"+ groupDate +"</span></td>";
-            lines+="<td>ميعاد البدايه  : <span>"+ startTime +"</span></td>";
-            lines+="<td>ميعاد النهايه  : <span>****</span></td>";
+
+            lines+="<td>تاريخ الامتحان : <span>"+ group.times[0].day +"</span></td>";
+            lines+="<td>ميعاد البدايه  : <span>"+ group.times[0].begin +"</span></td>";
+            lines+="<td>ميعاد النهايه  : <span>"+ group.times[0].end +"</span></td>";
             lines+="</tr>";
             lines+="</table>";
             lines+="</div>";

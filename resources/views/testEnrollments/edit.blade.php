@@ -9,7 +9,7 @@
     </script>
     -->
 
-    <title>test-stu-add</title>
+    <title>test-stu-edit</title>
     <style>
 
     </style>
@@ -27,46 +27,28 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card mb-4">
-                            <div class="card-header text-primary"> تسجيل الطلاب</div>
+                            <div class="card-header text-primary">تعديل تسجيل الطالب</div>
                             <div class="card-body">
-                                <form class="needs-validation" method="post" action="{{url("test-enrollments.store")}}"
-                                      novalidate autocomplete="off" id="testEnrollCreate">
-                                    @csrf
+                                <form >
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label for="validationCustom01"> اسم الامتحان </label>
                                             <span class="required">*</span>
-                                            @if($selected_group->id)
-                                                <input  class="form-control" value="{{ $selected_group->test->name }}" readonly>
-                                                <input id="testselector" name="test_id" value="{{ $selected_group->test->id }}" hidden>
-                                            @else
-                                                <select class="form-control " placeholder="اختار الامتحان" id="testselector"
-                                                        name="test" required>
-                                                        <option value="">اسم الامتحان</option>
-                                                        @foreach($tests as $test)
-                                                            <option data-extra="{{ $test }}" value={{$test->id}} @isset($selected_groups) @endisset>{{$test->name}}</option>
-                                                        @endforeach
+                                            <input  class="form-control" value="{{ $current_group->test->name }}" readonly>
+                                            <input id="testselector" name="test_id" value="{{ $current_group->test_id}}" hidden>
+                                            <input id="prev_group_id" name="prev_group_id" value="{{ $current_group->id}}" hidden>
 
-
-                                                </select>
-                                                <span id="testselector_error"></span>
-                                            @endif
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label>مواعيد الامتحان</label>
                                             <span class="required">*</span>
-                                            @if($selected_group->id)
-                                                <input  class="form-control" name="time" value="{{ $selected_group->times[0]->day }}" readonly>
-                                                <input id="time" class="form-control" name="time" value="{{ $selected_group->id }}" hidden>
-                                            @else
-                                                <select class="form-control " placeholder="اختار ميعاد الامتحان" id="time"
-                                                        name="time" required>
+                                            <select class="form-control " placeholder="اختار ميعاد الامتحان" id="time" name="time" required>
+                                                @foreach($groups as $group)
+                                                    <option value="{{ $group->id }}" {{ $group->id == $current_group->id? 'selected':'' }}>{{ $group->times[0]->day }}</option>
+                                                @endforeach
 
-                                                    <option value="">اختر مبعادا</option>
-
-                                                </select>
-                                                <span id="dateselector_error"></span>
-                                            @endif
+                                            </select>
+                                            <span id="dateselector_error"></span>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -74,9 +56,9 @@
                                         <div class="col-sm-5 form-group">
                                             <label for="student-id"> الطالب</label>
                                             <span class="required">*</span>
-                                            <input type="text" placeholder="اسم الطالب" name="student"
+                                            <input type="text" placeholder="اسم الطالب" name="student" value="{{ $student->nameAr }}" readonly
                                                    class="form-control" id="student-id" required>
-                                            <div class="list-gpfrm-list" id="studentsList"></div>
+                                            <input hidden name="student_id" id="student_id" value="{{ $student->id }}">
                                             <span id="stuselector_error"></span>
                                             <div></div>
                                         </div>
@@ -85,7 +67,7 @@
                                     </div>
                                     <div class="form-row save">
                                         <div class="col-sm-6 mx-auto text-center">
-                                            <button class="btn btn-primary" type="button" id="submit">حفظ</button>
+                                            <button class="btn btn-primary" type="button" id="submit">تعديل</button>
                                             <button class="btn  btn-danger" type="reset"> الغاء</button>
                                         </div>
                                     </div>
@@ -139,60 +121,6 @@
             $(document).ready(function(){
 
 
-            $('#student-id').keyup(function () {
-                var query=$(this).val();
-                console.log(query);
-                if (query===""){
-                    $('#studentsList').html("");
-                    return;
-                }
-
-                loc = $('<a>', { href: window.location })[0];
-                var data = "name="+query;
-                $.ajax({
-                    url: "/search_student_by_name",
-                    method: "GET",
-                    data: data,
-                    dataType: "json",
-                    success: function (data) {
-                        console.log(data);
-                        $('#studentsList').show();
-                        var output='<ul class="dropdown-menu" style="display:block; position:relative">';
-
-                        $.each(data, function (i, v) {
-                            console.log(i+" --> "+v.nameAr);
-                            output+=" <li value="+ v.id +"><a href='#'>"+v.nameAr+"</a></li>"
-
-                        });
-                        output += '</ul>';
-                        $("#studentsList").fadeIn();
-                        $("#studentsList").html(output);
-
-                    },
-                    error: function (res) {
-                        alert(res.data);
-                    }
-
-                });
-            });
-
-            $(document).on('click', 'li', function(e){
-                student_id = $(this).val();
-                $('#student-id').val($(this).text());
-                $('#studentsList').fadeOut();
-            });
-
-            $('#testselector').change(function() {
-                var selected_test = $.parseJSON($(this).find(':selected').attr('data-extra'));
-                var times = $('#time');
-                times.empty();
-                selected_test.groups.forEach(function (group) {
-                    times.append('<option value="' + group.id + '">' +group.times[0].day + '</option>');
-                });
-
-            });
-
-
 
         $("#submit").on('click', function(e) {
             // check if all fields if filled
@@ -213,9 +141,9 @@
 
 
                 $.ajax({
-                   url : '{{ route('test-enrollments.store') }}',
-                    method : 'post',
-                    data : {stu_id : student_id, test_id : test_id,group_id : group_id, _token: "{{csrf_token()}}"},
+                   url : '/test-enrollments/'+$('#student_id').val(),
+                    method : 'put',
+                    data : {prev_group_id : $('#prev_group_id').val(), new_group_id: group_id, _token: "{{csrf_token()}}"},
                     success : function (res) {
                         alert(res);
                     }

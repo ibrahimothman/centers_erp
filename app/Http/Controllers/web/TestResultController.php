@@ -60,7 +60,7 @@ class TestResultController extends Controller
         //
 //        return $this->getTestGroupStudents();
         $center = Center::findOrFail(Session('center_id'));
-        $tests = $center->tests;
+        $tests = Test::allTests($center);
         return view('testResult.test-result-add',compact('tests'));
     }
 

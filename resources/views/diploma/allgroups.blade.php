@@ -176,9 +176,9 @@
                                             <a href="{{url('/diplomas/'.$diploma->id)}}" >
                                                 <i class="fas fa-info-circle"></i></a> </span>
                                                 <span  class=" float-right">
-                                            <a href="{{ route('diploma-groups.create') }}" class="btn btn-success btn-sm ">
+                                            <a href="{{ route('diploma-groups.create', ['id' => $diploma->id]) }}" class="btn btn-success btn-sm ">
                                                 <i class="fas fa-plus"></i>
-                                                <SPAN> اضافه ميعاد</SPAN>
+                                                <SPAN> اضافه مجموعه</SPAN>
                                             </a>
                                         </span>
                                             </div>
@@ -189,7 +189,7 @@
                                                         <!--Table head-->
                                                         <thead>
                                                         <tr class="w-100">
-                                                            <th class="w-20">تاريخ الكورس </th>
+                                                            <th class="w-20">بدايه المجموعه</th>
                                                             <th class="w-30"></th>
                                                             <th class="w-10"></th>
                                                         </tr>
@@ -200,10 +200,18 @@
                                                         <tbody>
                                                         @if(isset($diploma->groups))
                                                             @foreach($diploma->groups as $group)
+                                                                <tr class= {{
+                                                                    $group->available_seats==0
+                                                                    ||$Utility->datePassed($Utility->getDate($group->starts_at),-1)?"table-danger":""}}>
                                                                 <td> {{$Utility->getDate($group->starts_at)}} </td>
                                                                 <td >
+                                                                    @php($dis="")
+                                                                    @if($group->available_seats==0
+                                                                    ||$Utility->datePassed($Utility->getDate($group->starts_at),-1)==true)
+                                                                        @php($dis="disabled")
+                                                                    @endif
 
-                                                                    <a href="diploma-enrollments/create?group_id={{ $group->id }}"  class="btn btn-outline-warning  btn-sm">
+                                                                    <a href="diploma-enrollments/create?group_id={{ $group->id }}"  class="btn btn-outline-warning {{ $dis }} btn-sm">
                                                                         <i class="fas fa-plus"></i>
                                                                         <SPAN>تسجيل الطلاب</SPAN> </a>
                                                                     <a  href="diploma-enrollments?id={{ $group->id }}"  class="btn btn-outline-success   btn-sm ">

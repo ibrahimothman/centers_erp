@@ -73,6 +73,11 @@ class Center extends ImageUploader
         return $this->diplomas->pluck('id');
     }
 
+    public function testsIds()
+    {
+        return $this->tests->pluck('id');
+    }
+
     public function categories()
     {
         return $this->hasMany(Category::class);

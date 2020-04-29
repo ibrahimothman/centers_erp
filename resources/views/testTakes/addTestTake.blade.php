@@ -23,9 +23,7 @@
         <input type="text" id="studentName" name="studentName" placeholder="student *" required>
         <select id="test" name="test" onchange="check(this)">
             <option value="-1">select Test</option>
-            ><?php
-
-            ?>
+            >
         </select>
 
         <select  name="group" id="group"  name="group" required>

@@ -82,6 +82,7 @@
                                                         <th class="w-10">النهايه</th>
                                                         <th class="w-10">عدد المقاعد</th>
                                                         <th class="w-10">عدد المقاعد المتاحه</th>
+                                                        <th class="w-10">الحاله</th>
                                                         <th class="w-30"></th>
                                                         <th class="w-10"></th>
                                                     </tr>
@@ -93,7 +94,7 @@
                                                 @if(isset($test->groups))
                                                 @foreach($test->groups as $testGroup)
                                                     <tr class= {{
-                                                    $testGroup->available_seats==0
+                                                    $testGroup->available_seats==0 || $testGroup->opened==0
                                                     ||$Utility->datePassed($Utility->getDate($testGroup->times[0]->day),$testGroup->times[0]->end)?"table-danger":""}}>
 
 
@@ -102,16 +103,17 @@
                                                         <td>{{ $testGroup->times[0]->end }}</td>
                                                         <td>{{$testGroup->available_chairs}}</td>
                                                         <td>{{$testGroup->available_seats}}</td>
+                                                        <td>{{$testGroup->opened == 1? 'مقتوحه': 'مغلقه'}}</td>
                                                         <td >
                                                             @php($dis="")
-                                                            @if($testGroup->available_seats==0
+                                                            @if($testGroup->available_seats==0 || $testGroup->opened==0
                                                     ||$Utility->datePassed($Utility->getDate($testGroup->times[0]->day),$testGroup->times[0]->end)==true)
                                                                 @php($dis="disabled")
                                                                 @endif
-                                                            <a href="test-enrollments/create?id={{ $test->id }}"  class="btn btn-outline-warning {{$dis}} btn-sm">
+                                                            <a href="test-enrollments/create?group_id={{ $testGroup->id }}"  class="btn btn-outline-warning {{$dis}} btn-sm">
                                                                 <i class="fas fa-plus"></i>
                                                                 <SPAN>تسجيل الطلاب</SPAN> </a>
-                                                            <a  href="test-enrollments"  class="btn btn-outline-success   btn-sm ">
+                                                            <a  href="test-enrollments?id={{$testGroup->id}}"  class="btn btn-outline-success   btn-sm ">
                                                                 <SPAN> الطلاب المسجلين</SPAN>
                                                             </a></td>
                                                         <td>

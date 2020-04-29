@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\QueryFilter\DiplomaId;
 use App\QueryFilter\Id;
 use App\QueryFilter\TestId;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,17 @@ class TestGroup extends Model
             ])
             ->thenReturn()
             ->get();
+    }
+
+    public static function allEnrollments($diplomasIds)
+    {
+        return app(Pipeline::class)
+            ->send(TestGroup::with('enrollers')->with('test')->whereIn('test_id', $diplomasIds))
+            ->through([
+                TestID::class,
+                Id::class
+            ])
+            ->thenReturn()->get();
     }
 
     public function test()

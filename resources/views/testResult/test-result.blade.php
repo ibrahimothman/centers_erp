@@ -16,74 +16,74 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-@include('sidebar')
-<div id="content-wrapper" class="d-flex flex-column">
-@include('operationBar')
-        <!-- Main Content -->
+    @include('sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+    @include('operationBar')
+    <!-- Main Content -->
         <div id="content">
-                <!-- Page Heading -->
+            <!-- Page Heading -->
 
-                <div class="container-fluid">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header text-primary">
-                                <div class="row  ">
-                                    <div class="col-md-6">  نتيجه الامتحانات</div>
-                                </div>
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header text-primary">
+                            <div class="row  ">
+                                <div class="col-md-6">  نتيجه الامتحانات</div>
                             </div>
-                            <div class="card-body">
+                        </div>
+                        <div class="card-body">
 
-                                <form class="needs-validation" method="get"  novalidate autocomplete="off">
+                            <form class="needs-validation" method="get"  novalidate autocomplete="off">
 
-                                    @csrf
-                                    <div class="form-row">
+                                @csrf
+                                <div class="form-row">
 
-                                        <div class="col-md-6 form-group">
-                                            <label for="testselector"> اسم الامتحان </label>
+                                    <div class="col-md-6 form-group">
+                                        <label for="testselector"> اسم الامتحان </label>
 
-                                            <select class="form-control "  id="testselector" name="test" required>
-                                                <option value="0">اختار الامتحان</option>
-                                                @foreach($tests as $test)
-                                                    <option value={{$test->id}}>{{$test->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            <span id="testselector_error"></span>
-                                        </div>
+                                        <select class="form-control "  id="testselector" name="test" required>
+                                            <option value="0">اختار الامتحان</option>
+                                            @foreach($tests as $test)
+                                                <option data-extra="{{ $test }}" value={{$test->id}}>{{$test->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <span id="testselector_error"></span>
                                     </div>
-                                    <!-- stu-block -->
-                                    <div id = 'dispay_date'/>
+                                </div>
+                                <!-- stu-block -->
+                                <div id = 'dispay_date'/>
 
 
 
-                                    <!-- stu-block-end -->
+                                <!-- stu-block-end -->
 
 
 
-                                    <!-- stu-block -->
+                                <!-- stu-block -->
 
 
 
 
-                                    <!-- stu-block-end -->
-
-                            </div>
-
-
+                                <!-- stu-block-end -->
 
                         </div>
+
+
+
                     </div>
                 </div>
+            </div>
 
-                <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
         </div>
-                <!-- End of Main Content -->
-</div>
-                <!-- Footer -->
-        @include('footer')
-                <!-- End of Footer -->
+        <!-- End of Main Content -->
+    </div>
+    <!-- Footer -->
+@include('footer')
+<!-- End of Footer -->
 
 
-        <!-- End of Content Wrapper -->
+    <!-- End of Content Wrapper -->
 
 </div>
 <!-- End of Page Wrapper -->
@@ -111,12 +111,9 @@
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
 <script>
-
     $('#datatable-responsive').DataTable( {
         responsive: true
     } );
-
-
     $(document).ready(function() {
         $('#datatable-buttons').DataTable( {
             dom: 'Bfrtip',
@@ -127,7 +124,6 @@
                 'pdfHtml5'
             ]
         } );
-
         $('#datatable-buttons1').DataTable( {
             dom: 'Bfrtip',
             buttons: [
@@ -137,10 +133,7 @@
                 'pdfHtml5'
             ]
         } );
-
-
     } );
-
     $('#testselector').change(function () {
         var test_id = $('#testselector').val();
         console.log('test id : '+test_id);
@@ -151,7 +144,6 @@
 <script>
     $(function() {
         $('#testselector').change(function(){
-
             if($(this).val()==="test")
             {
                 $('.cont-det').show();
@@ -163,7 +155,6 @@
             }
         });
     });
-
     function getTestEnrollments(test_id) {
         $.ajax({
             url:'/get_tests_enrollments',
@@ -177,35 +168,22 @@
         });
     }
 
-
-    function convertTime (time) {
-        // Check correct time format and split into components
-        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-        if (time.length > 1) { // If time format correct
-            time = time.slice (1);  // Remove full string match value
-            time[5] = +time[0] < 12 ? 'am' : 'pm'; // Set AM/PM
-            time[0] = +time[0] % 12 || 12; // Adjust hours
-        }
-        return time.join (''); // return adjusted time or original string
-    }
-
     function displayData(test) {
+        console.log(test);
         var lines = '';
         lines += "<div class='row cont-det  border-bottom-info mb-4 ' id='test1'>";
         lines += "<div class=' card-body col-md-12'>";
         lines += "<div class='card card-sh p-3 mb-4 border-bottom-info '>";
         lines+="<div class='card-body'>";
-
         test.groups.forEach(function (group) {
             lines+="<table  class='table '>";
             lines+="<tr class='table-warning'>";
             lines+="<td>اسم الامتحان : <span>"+ test.name +"</span></td>";
-            var groupDate = (group.group_date).split(' ')[0];
-            var startTime = convertTime((group.group_date).split(' ')[1]);
-            lines+="<td>تاريخ الامتحان : <span>"+ groupDate +"</span></td>";
-            lines+="<td>ميعاد البدايه  : <span>"+ startTime +"</span></td>";
-            lines+="<td>ميعاد النهايه  : <span>****</span></td>";
+            // var groupDate = (group.group_date).split(' ')[0];
+            // var startTime = convertTime((group.group_date).split(' ')[1]);
+            lines+="<td>تاريخ الامتحان : <span>"+ group.times[0].day +"</span></td>";
+            lines+="<td>ميعاد البدايه  : <span>"+ group.times[0].begin +"</span></td>";
+            lines+="<td>ميعاد النهايه  : <span>"+ group.times[0].end +"</span></td>";
             lines+="</tr>";
             lines+="<tr class='table-warning'>";
             lines += "<td></td>";
@@ -221,7 +199,6 @@
             lines += "<div class='card-body '>";
             lines += "<form class='needs-validation' novalidate>";
             lines += "<table id='DataTable' class='table table-striped table-bordered display  hover'>";
-
             <!--Table head-->
             lines += "<thead>";
             lines += "<tr class='w-100 t2 table-info'>";
@@ -231,13 +208,10 @@
             lines += "<th class='' >الحاله </th>";
             lines += "<th class='' >اعاده الامتحان</th>";
             lines += "<th class='' >طباعة افاده</th>";
-
-
             lines += "</tr>";
             lines += "</thead>";
             lines += "<tbody>";
             <!--Table head-->
-
             <!--Table body-->
             var i = 1;
             group.enrollers.forEach(function (student) {
@@ -252,13 +226,11 @@
                     lines += "<td>" + status + "</td>";
                     if (test.retake) lines += " <td> <button id='retake_test' type='button' class='btn btn-primary' >اعاده الامتحان</button> </td>";
                     else lines += " <td> <button class='btn btn-primary' disabled   ><i class='fas fa-sync'></i> اعاده الامتحان</button> </td>";
-                    lines += " <td> <button class='btn btn-primary' type='button'  ><i></i> طباعة افاده</button> </td>";
+                    lines += " <td> <button class='btn btn-primary' type='button' onclick='printStatement("+ test.statement.id+", "+ student.id +")' ><i></i> طباعة افاده</button> </td>";
                     lines += "</tr>";
                     i++;
                 }
-
             });
-
             lines += " </tbody>";
             lines += "</table>";
             lines += "</form>";
@@ -267,17 +239,14 @@
             lines += "</div>";
             lines += "</div>";
         });
-
         $('#dispay_date').html(lines);
-
     }
-
     function printStatement(test_statement_id, student_id) {
         //
-        location.href = 'test-statements-preview/'+test_statement_id+'/'+student_id;
-        console.log(test_statement_id+" / "+student_id);
+        console.log('satement: '+test_statement_id+", student: "+student_id);
+        location.href = 'test-statements-preview/1/'+student_id;
+        // console.log(test_statement_id+" / "+student_id);
     }
-
 </script>
 
 </body>

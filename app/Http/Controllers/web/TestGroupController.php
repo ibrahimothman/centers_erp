@@ -58,6 +58,7 @@ class TestGroupController extends Controller
 
         $test = Input::has('id')? Test::allTests($center)[0]: new Test();
 
+
          return view('testGroup.create')
              ->with('selected_test',$test)
              ->with('begins',Time::hours())

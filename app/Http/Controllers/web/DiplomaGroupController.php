@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
@@ -25,6 +26,7 @@ class DiplomaGroupController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $diplomas = Diploma::allDiplomas($center);
+
         $allDiplomas = $center->diplomas;
         return view('diploma.allgroups', compact('allDiplomas','diplomas'));
     }
@@ -33,7 +35,9 @@ class DiplomaGroupController extends Controller
     {
 
         $center = Center::findOrFail(Session('center_id'));
-        $diplomas = Diploma::with('courses.instructors')->where('center_id', $center->id)->get();
+//        $diplomas = Diploma::with('courses.instructors')->where('center_id', $center->id)->get();
+        $diplomas = Diploma::allDiplomas($center);
+//        return json_encode($diplomas);
         return view('diploma.diploma_group_create', compact('diplomas'));
     }
 
