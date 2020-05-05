@@ -15,8 +15,15 @@
 
 <script>
     // set alt image for all invalid images url
+    function imgError(image) {
+        console.log("error");
+        image.onerror = "";
+        image.src = "https://www.nautec.com/wp-content/uploads/2018/04/placeholder-person.png";
+        return true;
+    }
+
+
     $('img').on('error', function(e){
-        console.log('error');
         $(this).attr('src', "https://www.nautec.com/wp-content/uploads/2018/04/placeholder-person.png");
     });
 

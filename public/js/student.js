@@ -4,7 +4,7 @@ function generateStudentHtml(student) {
         '<div class="card-header bg-transparent border-primary">'+ student.nameAr +'</div>' +
         '<div class="card-body ">' +
         '<p class="card-text">' +
-        "<img src='"+ student.image +"' alt='' class='rounded-circle img-profile-contact float-right img-responsive'>" +
+        "<img src='"+ student.image +"' alt='' onerror='imgError(this);' class='rounded-circle img-profile-contact float-right img-responsive'>" +
         '<ul class="list-unstyled contact-det">' +
         '<li><i class="fas fa-envelope btn-circle"></i>البريد الالكترونى<br>'+ student.email +'</li>'+
         '<li><i class="fa fa-phone btn-circle"></i>التليفون:<span>'+student.phoneNumber+'</span></li>'+
@@ -26,7 +26,6 @@ function searchForStudents(query = '') {
     var data = "";
     if(query.trim().length !== 0) data = "name="+query.trim();
 
-    console.log(query);
     $.ajax({
         url:"/search_student_by_name",
         type:'GET',
@@ -50,6 +49,24 @@ function deleteStudent(id) {
         dataType: 'json',
         success: function (data, status, xhr) {
             $('#studentContainer-'+id).remove();
+            data=data.replace(/\r?\n|\r/, '');
+
+            $.notify(data, {
+                position:"bottom left",
+                style: 'successful-process',
+                className: 'done',
+                // autoHideDelay: 500000
+            });
+        },
+        error: function (xhr, status, error) {
+          if (xhr.status == 403){
+              $.notify(error, {
+                  position:"bottom left",
+                  style: 'successful-process',
+                  className: 'notDone',
+                  // autoHideDelay: 500000
+              });
+          }
         }
 
     })
@@ -63,7 +80,7 @@ $('#search').keyup(function (e) {
 
 });
 
-$('[id^=delete-student-]').on('click', function (e) {
+$(document).on('click', '[id^=delete-student-]',  function (e) {
     var student_id = $(this).attr('id').split('-');
     student_id = student_id[student_id.length -1];
     deleteStudent(student_id);

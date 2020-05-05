@@ -41,9 +41,9 @@
                                         </div></hr><br>
                                         <p>تاريخ الاضافه : {{$student->created_at}}</p>
 
-
-                                        <a href="{{ route('students.edit', ['student' => $student]) }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> تعديل الملف الشخصى  </a>
-
+                                        @can('update', $student)
+                                            <a href="{{ route('students.edit', ['student' => $student]) }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> تعديل الملف الشخصى  </a>
+                                        @endcan
                                         <br>
                                         <div class="card  border-info mb-3 user-course">
                                             <div class="card-header">courses <i class="fa fa-link fa-1x"></i></div>

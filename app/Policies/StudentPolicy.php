@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\helper\AccessRightsHelper;
 use App\Role;
 use App\User;
 use App\Student;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 class StudentPolicy
 {
     use HandlesAuthorization;
+    private $scope = 'students';
 
     /**
      * Determine whether the user can view any students.
@@ -19,12 +21,9 @@ class StudentPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny()
     {
-        //
-        $role = Role::where('name','student.view')->first();
-        return Auth::user()->roles->contains($role->id);
-
+        return AccessRightsHelper::show($this->scope);
     }
 
     /**
@@ -34,20 +33,9 @@ class StudentPolicy
      * @param  \App\Student  $student
      * @return mixed
      */
-    public function view(User $user, Student $student)
+    public function view()
     {
-        /*
-         * The user who can view this student must be :
-         * A member in center which student enrolled in and
-         * Has student.view role
-         * */
-//        $role = Role::where('name','student.view')->first();
-        foreach ($student->centers as $center){
-            if($center->user_id ==  Auth::id())
-                return true;
-        }
-//
-        return false;
+        return AccessRightsHelper::show($this->scope);
     }
 
     /**
@@ -56,12 +44,9 @@ class StudentPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create()
     {
-
-        $role = Role::where('name','student.add')->first();
-        return Auth::user()->roles->contains($role->id);
-
+        return AccessRightsHelper::create($this->scope);
     }
 
     /**
@@ -71,30 +56,23 @@ class StudentPolicy
      * @param  \App\Student  $student
      * @return mixed
      */
-    public function update(User $user, Student $student)
+    public function update()
     {
         //
-//        $role = Role::where('name','student.update')->first();
-//        foreach ($student->centers as $center){
-//            if($center->users->contains(auth()->user()) && Auth::user()->roles->contains($role->id))
-//                return true;
-//        }
-//
-//        return false;
+        return AccessRightsHelper::update($this->scope);
+
     }
 
     /**
      * Determine whether the user can delete the student.
      *
      * @param  \App\User  $user
-     * @param  \App\Student  $student
      * @return mixed
      */
-    public function delete(User $user, Student $student)
+    public function delete()
     {
         //
-        $role = Role::where('name','student.delete')->first();
-        return Auth::user()->roles->contains($role->id);
+        return AccessRightsHelper::delete($this->scope);
 
     }
 

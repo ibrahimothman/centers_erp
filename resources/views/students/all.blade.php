@@ -107,7 +107,7 @@
                                                         <div class="card-header bg-transparent border-primary">{{$student->nameAr}}</div>
                                                         <div class="card-body ">
                                                             <p class="card-text">
-                                                                <img src="{{$student->getImage("image")  }}" alt="" class="rounded-circle img-profile-contact float-right img-responsive">
+                                                                <img src="{{$student->getImage("image")  }}" alt="" onerror="imgError(this);" class="rounded-circle img-profile-contact float-right img-responsive">
                                                             <ul class="list-unstyled contact-det">
                                                                 <li><i class="fas fa-envelope btn-circle"></i> البريد الالكترونى
                                                                     <br>{{$student->email}}
@@ -122,11 +122,16 @@
                                                             </ul>
                                                             </p>
                                                         </div>
-                                                        <form class="card-footer border-primary">
 
-                                                            <button type="button" class="btn btn-success btn-xs" id="delete-student-{{ $student->id }}"> <i class="fas fa-trash-alt"></i> </button>
-                                                            <a href="/students/{{$student->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
+                                                        <form class="card-footer border-primary">
+                                                            @can('delete', $student)
+                                                                <button type="button" class="btn btn-success btn-xs" id="delete-student-{{ $student->id }}"> <i class="fas fa-trash-alt"></i> </button>
+                                                            @endcan
+                                                            @can('view', $student)
+                                                                <a href="/students/{{$student->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
+                                                            @endcan
                                                         </form>
+
 
 
                                                     </div>
@@ -181,6 +186,8 @@
 
 @include('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="{{ asset('js/notify.min.js') }}"></script>
+<script src="{{ asset('js/notification.js') }}"></script>
 <script src="{{ asset('js/student.js') }}"></script>
 
 </body>

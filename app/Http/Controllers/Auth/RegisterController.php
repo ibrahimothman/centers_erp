@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use mysql_xdevapi\Session;
 
 class RegisterController extends Controller
 {
@@ -90,6 +91,7 @@ class RegisterController extends Controller
                 if($invitation->jobs){
                     $user->jobs()->syncWithoutDetaching($invitation->jobs);
                 }
+
 
                 // update employee_userID
                 Employee::where('email', $invitation->email)->update(['user_id' => $user->id]);

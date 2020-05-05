@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Session;
 
 class CenterMiddleware
 {
@@ -20,7 +21,9 @@ class CenterMiddleware
             return redirect('settings');
         }
 
+//        dd('asd');
         Session(['center_id' => Auth::user()->center? Auth::user()->center->id : Auth::user()->jobs->first()->center->id]);
+        Session(['job_id' => Auth::user()->center? 0: Auth::user()->jobs->first()->id ]);
         return $next($request);
     }
 }
