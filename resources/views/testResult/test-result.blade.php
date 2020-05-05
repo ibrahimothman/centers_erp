@@ -226,7 +226,7 @@
                     lines += "<td>" + status + "</td>";
                     if (test.retake) lines += " <td> <button id='retake_test' type='button' class='btn btn-primary' >اعاده الامتحان</button> </td>";
                     else lines += " <td> <button class='btn btn-primary' disabled   ><i class='fas fa-sync'></i> اعاده الامتحان</button> </td>";
-                    lines += " <td> <button class='btn btn-primary' type='button' onclick='printStatement("+ test.statement.id+", "+ student.id +")' ><i></i> طباعة افاده</button> </td>";
+                    lines += " <td> <button class='btn btn-primary' type='button' onclick='printStatement(1, "+ student.id +")' ><i></i> طباعة افاده</button> </td>";
                     lines += "</tr>";
                     i++;
                 }
