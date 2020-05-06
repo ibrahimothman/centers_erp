@@ -49,8 +49,12 @@
                                 <th class="th-sm">اسم الطالب</th>
                                 <th class="th-sm">اسم الدبلومه</th>
                                 <th class="th-sm">المعاد</th>
-                                <th class="th-sm"> تعديل</th>
-                                <th class="th-sm"> ازاله</th>
+                                @can('update', App\Test::class)
+                                    <th class="th-sm"> تعديل</th>
+                                @endcan
+                                @can('delete', App\Test::class)
+                                    <th class="th-sm"> ازاله</th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -61,18 +65,23 @@
                                         <td>{{ $student->nameAr }}</td>
                                         <td>{{ $group->test->name }}</td>
                                         <td>{{ $group->times[0]->day }}</td>
-                                        <td>
 
-                                            <a href="{{ route('test-enrollments.edit', ['student_id' => $student->id, 'test_group' => $group->id]) }}" class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                    class="fas fa-edit m-0 "></i> </a>
+                                        @can('update', App\Test::class)
+                                            <td>
 
-                                        </td>
-                                        <td>
-                                            <form>
-                                                <button type="button" onclick="deleteEnrollment('{{ $group->id }}', '{{  $student->id }}');" class="btn btn-outline-danger py-1 px-2">
-                                                    <i class="fas fa-trash-alt m-0"></i></button>
-                                            </form>
-                                        </td>
+                                                <a href="{{ route('test-enrollments.edit', ['student_id' => $student->id, 'test_group' => $group->id]) }}" class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                        class="fas fa-edit m-0 "></i> </a>
+
+                                            </td>
+                                        @endcan
+                                        @can('delete', App\Test::class)
+                                            <td>
+                                                <form>
+                                                    <button type="button" onclick="deleteEnrollment('{{ $group->id }}', '{{  $student->id }}');" class="btn btn-outline-danger py-1 px-2">
+                                                        <i class="fas fa-trash-alt m-0"></i></button>
+                                                </form>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             @endforeach

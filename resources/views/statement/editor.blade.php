@@ -26,17 +26,17 @@
                         </header>
                         <div class="card-body">
                             <form >
-                                <div class="form-row form-group ">
-                                    <div class="col">
-                                        <label>اختيار الامتحان</label>
-                                        <select   id="testselector"   class="form-control ">
-                                            <option value="0">اختر الامتحان</option>
-                                            @foreach($tests as $test)
-                                                <option value={{ $test->id }}>{{ $test->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+{{--                                <div class="form-row form-group ">--}}
+{{--                                    <div class="col">--}}
+{{--                                        <label>اختيار الامتحان</label>--}}
+{{--                                        <select   id="testselector"   class="form-control ">--}}
+{{--                                            <option value="0">اختر الامتحان</option>--}}
+{{--                                            @foreach($tests as $test)--}}
+{{--                                                <option value={{ $test->id }}>{{ $test->name }}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div  class="text-primary"><p >يمكنك إضافة (اسم الطالب - اسم المركز - اسم المدير - التاريخ) عن طريق كتابة @ لظهور الإختيارات  </p></div>
                                 <div id="summernote"></div>
@@ -71,7 +71,8 @@
 <script src="{{url('js/jquery-ui.min.js')}}"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{url('js/sb-admin-2.min.js')}}"></script>
-<script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
+<script  src="{{asset('js/notify.min.js')}}"></script>
+<script  src="{{asset('js/notification.js')}}"></script>
 
 
 
@@ -126,25 +127,25 @@
             'note-icon-caret': 'fa fa-caret-right',
         });
 
-        $('#saveCert').click(function(){
-            var content=$('.note-editable').html();
-            var test_id = $('#testselector').val();
-            if(test_id != 0) {
+        $('#saveCert').click(function(e){
+            e.preventDefault();
+            var content= {};
+            content['body'] = $('.note-editable').html();
                 $.ajax({
                     url: "/test-statements",
                     type: "POST",
                     // dataType: 'text',
-                    data: {test_id : test_id,  body: content, _token: "{{ csrf_token() }}"},
+                    data: {body: JSON.stringify(content), _token: "{{ csrf_token() }}"},
                     success: function (data) {
-                        $.notify('تمت العملية بنجاح', {
+                        $.notify(data, {
                             position:"bottom left",
                             style: 'successful-process',
                             className: 'done',
                             // autoHideDelay: 500000
                         });
                     },
-                    error: function (data, errorThrown) {
-                        $.notify('تمت العملية بنجاح', {
+                    error: function (xhr, status, error) {
+                        $.notify(error, {
                             position:"bottom left",
                             style: 'successful-process',
                             className: 'notDone',
@@ -153,56 +154,13 @@
                     }
 
                 });
-            }else{
-                $.notify('choose test first', {
-                    position:"bottom left",
-                    style: 'successful-process',
-                    className: 'notDone',
-                    // autoHideDelay: 500000
-                });
-            }
+
         });
 
     });
 </script>
 
-<script>
-  // var jQuery = $.noConflict(true);
-    $.notify.addStyle('successful-process', {
-        html: `<div>
-                            <span data-notify-text/>
-                            <i class="fas fa-times-circle"
-                            style="
-                                    color:white;
-                                    opacity:0.7;
-                                    position: relative;
-                                    top: 0px;
-                                    left: -28px;
-                                  "
-                            ></i>
-                        </div>`,
-        classes: {
-            base: {
-                "white-space": "nowrap",
-                "background-color": "green",
-                "padding": "15px",
-                "padding-left": "35px",
-                "border-radius": "3px"
-            },
-            done: {
-                "color": "white",
-                "background-color": "#28a745",
-                "font-weight":"bold"
-            },
-            notDone:{
-                "color": "white",
-                "background-color": "#dc3545",
-                "font-weight":"bold"
-            }
-        }
-    });
 
-</script>
 </body>
 </html>
 

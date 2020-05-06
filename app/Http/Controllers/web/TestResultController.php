@@ -19,13 +19,10 @@ class TestResultController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        $this->authorize('view', Test::class);
 
         $center = Center::findOrFail(Session('center_id'));
         $tests = $center->tests;
@@ -50,81 +47,38 @@ class TestResultController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
-//        return $this->getTestGroupStudents();
+        $this->authorize('create', Test::class);
         $center = Center::findOrFail(Session('center_id'));
         $tests = Test::allTests($center);
+
+        // get only opened groups which have students
+//        $tests = $tests->each(function ($test) use (&$tests){
+//           return $test->groups->filter(function ($group){
+//              return $group->opened ;
+//           });
+//        });
+
+//        return json_encode($tests);
         return view('testResult.test-result-add',compact('tests'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store()
     {
+        $this->authorize('create', Test::class);
         if(request()->ajax()){
             $s_id = request()->get('student_id');
             $g_id = request()->get('group_id');
             $result = request()->get('result');
         }
         Student::findOrFail($s_id)->testsEnrolling()->updateExistingPivot($g_id,array('result' => $result));
-        return 'successfully updated';
+        return response()->json('successfully updated', 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
 
 

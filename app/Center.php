@@ -24,6 +24,11 @@ class Center extends ImageUploader
 
     }
 
+    public function getStatementAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
     public function getRevenuesAttribute($revenues)
     {
         return json_decode($revenues, true);

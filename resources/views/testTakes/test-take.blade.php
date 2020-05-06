@@ -8,7 +8,6 @@
     <link href="{{url('vendor/datatables/datatables.min.css')}}" rel="stylesheet">
 
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
-    @inject('Utility', 'App\Utility')
     <title>test-take</title>
 
 </head>
@@ -203,7 +202,7 @@
 
             lines += "<tr class='align-middle ' >";
             lines += "<td colspan='7' class='align-middle  ' >";
-            if(group.opened)lines += "<button class='btn btn-success w-100' onclick='closeGroup("+ group.id +")' type='submit'>اغلاق الامتحان </button>";
+            if(group.opened)lines += "<button id='closeGroupBtn' class='btn btn-success w-100' onclick='closeGroup("+ group.id +")' type='button'>اغلاق الامتحان </button>";
             else lines += "<button id='closeGroupBtn' class='btn btn-success w-100' disabled type='submit'>الامتحان مغلق</button>";
             lines += "</td>";
             lines += "</tr>";
@@ -252,14 +251,14 @@
             type:'post',
             data:{group_id : group_id,  _token: "{{ csrf_token() }}"},
             success: function (data) {
-                alert(data);
                 $.notify(data, {
                     position:"bottom left",
                     style: 'successful-process',
-                    className: className,
+                    className: 'done',
                     // autoHideDelay: 500000
                 });
-                $('#closeGroupBtn').text('الامتحان مغلق');
+                $('#closeGroupBtn').html('الامتحان مغلق');
+                $('#closeGroupBtn').prop('disabled', true);
 
             }
         })

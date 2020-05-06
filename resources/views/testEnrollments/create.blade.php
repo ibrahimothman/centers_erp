@@ -131,6 +131,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
 <script type='text/javascript' src="{{asset("js/test_enrollment_create_validation.js")}}"></script>
+<script src="{{ asset('js/notify.min.js') }}"></script>
+<script src="{{ asset('js/notification.js') }}"></script>
 <!-- Custom scripts for alwl pages-->
 {{--<script src="{{url('employee')}}"></script>--}}
 
@@ -217,8 +219,24 @@
                     method : 'post',
                     data : {stu_id : student_id, test_id : test_id,group_id : group_id, _token: "{{csrf_token()}}"},
                     success : function (res) {
-                        alert(res);
+                        $.notify(res, {
+                            position:"bottom left",
+                            style: 'successful-process',
+                            className: 'done',
+                            // autoHideDelay: 500000
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        if (xhr.status == 403){
+                            $.notify(error, {
+                                position:"bottom left",
+                                style: 'successful-process',
+                                className: 'notDone',
+                                // autoHideDelay: 500000
+                            });
+                        }
                     }
+
                 });
 
 

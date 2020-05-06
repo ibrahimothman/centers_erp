@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\web;
 
+use App\Center;
 use App\Http\Controllers\Controller;
 
 use App\StatementTemplate;
@@ -11,6 +12,8 @@ use App\TestStatement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Session;
+use phpDocumentor\Reflection\DocBlock\Tags\See;
 
 class TestStatementController extends Controller
 {
@@ -20,119 +23,68 @@ class TestStatementController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $tests = auth()->user()->center->tests;
+        $this->authorize('create',Test::class);
+        $center = Center::findOrFail(Session('center_id'));
+        $tests = $center->tests;
         return view('statement/editor',compact('tests'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store()
     {
         if(request()->ajax()){
-           $test_id = request()->get('test_id');
            $body = request()->get('body');
         }
-        Test::findOrFail($test_id)->statement()->create(['body' => $body]);
-        return 'successfully added';
+        Center::findOrFail(Session('center_id'))->update([
+            'statement' => request('body')
+        ]);
+
+        return response()->json('successfully added', 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(TestStatement $testStatement)
     {
-        $this->authorize('view',$testStatement);
+        $this->authorize('view',Test::class);
         return view('statement/statementPreview')
             ->with('statement',$testStatement);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+
+
+    public function previewStatement(Student $student)
     {
-        //
-    }
+        $center = Center::findOrFail(Session('center_id'));
+        $statement = $center->statement;
+        $statement['body'] = $this->parseStatement($statement, $center,$student);
+//        dd($statement['body']);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-
-    public function previewStatement(TestStatement $statement, Student $student)
-    {
-
-        $statement->body = $this->parseStatement($statement, $student);
         return view('statement/statementPreview')
             ->with('statement',$statement);
     }
 
-    private function parseStatement($statement, $student)
+    private function parseStatement($statement, $center, $student)
     {
 
-        if (strpos($statement->body, '@اسم الطالب') !== false) {
-            $statement->body=str_replace('@اسم الطالب',$student->nameAr,$statement->body);
+        if (strpos($statement['body'], '@اسم الطالب') !== false) {
+            $statement['body']=str_replace('@اسم الطالب',$student->nameAr,$statement['body']);
         }
 
-        if (strpos($statement->body, '@اسم المركز') !== false) {
-            $statement->body=str_replace('@اسم المركز',$statement->test->center->name,$statement->body);
+        if (strpos($statement['body'], '@اسم المركز') !== false) {
+            $statement['body']=str_replace('@اسم المركز',$center->name,$statement['body']);
         }
-        if (strpos($statement->body, '@اسم المدير') !== false) {
-            $manger=Auth::user()->center->manager_name;
+        if (strpos($statement['body'], '@اسم المدير') !== false) {
+            $manger=$center->manager_name;
 
-            $statement->body=str_replace('@اسم المدير',$manger,$statement->body);
-        }if (strpos($statement->body, '@التاريخ') !== false) {
+            $statement['body']=str_replace('@اسم المدير',$manger,$statement['body']);
+        }if (strpos($statement['body'], '@التاريخ') !== false) {
             $date=date('d-m-y');
-            $statement->body=str_replace('@التاريخ',$date,$statement->body);
+            $statement['body']=str_replace('@التاريخ',$date,$statement['body']);
         }
 
-        return $statement->body;
+        return $statement['body'];
 
     }
 }

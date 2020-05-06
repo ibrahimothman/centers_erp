@@ -9,7 +9,6 @@
  <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
 
 </head>
-@inject('Utility', 'App\Utility')
 <body id="page-top">
 
 <!-- Begin Page Content -->
@@ -36,14 +35,7 @@
                     <div class=" clearfix col-md-8 mb-4">
 
                             <input type="text" name="test1"  class="form-control " placeholder=" اختار الامتحان "  list="tests"/>
-                            <datalist id="tests">
-                                <select name="test1">
-                                    <option value="ICDL">
-                                    <option value="English ">
-                                     <option value="toefl ">
 
-                                </select>
-                            </datalist>
                         </div>
 
                     </form>
@@ -91,7 +83,7 @@
                                 <div class="col-md-12">
                                     <div class="card card  card-sh  border-primary p-3 test-view ">
                                         <div class="card-header bg-transparent border-primary text-success font-weight-bold  clearfix">
-                                            <span class="float-right"> <a href="/test-groups/create?test={{$test->id}}" class="btn btn-outline-success ">
+                                            <span class="float-right"> <a href="/test-groups/create?id={{$test->id}}" class="btn btn-outline-success ">
                                                 <i class="fas fa-plus"></i> <SPAN> اضافه ميعاد</SPAN> </a>
                                                 </span>
                                                  <span  class=" float-left"> مواعيد الامتحان</span> </div>
@@ -102,9 +94,11 @@
                                                         <thead>
                                                             <tr class="w-100">
                                                                 <th class="w-20">تاريخ الامتحان </th>
-                                                                <th class="w-10">ميعاد</th>
+                                                                <th class="w-10">البدايه</th>
+                                                                <th class="w-10">النهايه</th>
                                                                 <th class="w-10">عدد المقاعد</th>
                                                                 <th class="w-10">عدد المقاعد المتاحه</th>
+                                                                <th class="w-10">الحاله</th>
 
                                                             </tr>
                                                         </thead>
@@ -112,15 +106,16 @@
 
                                                         <!--Table body-->
                                                         <tbody>
-                                                        @foreach($testGroups as $testGroup)
-                                                            @php($available_seats =$testGroup->available_chairs - $testGroup->enrollmentsCount)
-                                                            <tr  class={{$available_seats==0
-                                                                ||$Utility->datePassed($Utility->getDate($testGroup->group_date),$Utility->getTime($testGroup->group_date))
-                                                                ?"table-danger":""}}>
-                                                                <td>{{$Utility->getDate($testGroup->group_date)}} </td>
-                                                                <td>{{$Utility->getTime($testGroup->group_date)}}</td>
+                                                        @foreach($test->groups as $testGroup)
+                                                            <tr class= {{
+                                                                $testGroup->available_seats==0 || $testGroup->opened==0
+                                                                ||Utility::datePassed(Utility::getDate($testGroup->times[0]->day),$testGroup->times[0]->end)?"table-danger":""}}>
+                                                                <td> {{Utility::getDate($testGroup->times[0]->day)}} </td>
+                                                                <td>{{ $testGroup->times[0]->begin }}</td>
+                                                                <td>{{ $testGroup->times[0]->end }}</td>
                                                                 <td>{{$testGroup->available_chairs}}</td>
-                                                                <td>{{$available_seats}}</td>
+                                                                <td>{{$testGroup->available_seats}}</td>
+                                                                <td>{{$testGroup->opened == 1? 'مقتوحه': 'مغلقه'}}</td>
                                                             </tr>
                                                         @endforeach
 

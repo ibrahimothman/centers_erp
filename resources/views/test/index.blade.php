@@ -28,15 +28,9 @@
                             <div class="dropdown-menu"> <a class="dropdown-item" href="#latestCreated">الاحدث اضافه</a> <a class="dropdown-item" href="#latestUpdated">الاحدث التعديل</a> </div>
                         </div>
                         <div class="btn-group p-3 ">
-                            <div class="btn-group search-panel ">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span id="search_concept">البحث فى </span> <span class="caret"></span> </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="">الكل</a></li>
-                                    <li><a href="">الاسماء</a></li>
-                                </ul>
-                            </div>
+
                             <input type="hidden" name="search_param" value="all" id="search_param">
-                            <input type="text" class="form-control " name="x" placeholder="ابحث">
+                            <input type="text" id="search" class="form-control " name="x" placeholder="ابحث">
                             <div class="btn-group">
                                 <button class="btn btn-success"><i class="fas fa-search"></i></button>
                             </div>
@@ -80,6 +74,8 @@
     <!-- scroll top -->
     @include('scroll_top')
     @include('script')
+    <script src="{{ asset('js/notify.min.js') }}"></script>
+    <script src="{{ asset('js/notification.js') }}"></script>
         <script>
             $(document).ready(function () {
                 // get all center's tests
@@ -87,7 +83,22 @@
                     order_by: 'created_at',
                     sort: 'desc'
                 });
+
+                $('#search').on('keyup', function (e) {
+                    if(e.keyCode == 13){
+                        var query = $(this).val();
+                        if (query != ''){
+                            getTests({
+                                name: query,
+                                order_by: 'created_at',
+                                sort: 'desc'
+                            })
+                        }
+                    }
+                })
             });
+
+
 
             function getTests(data) {
                 $.ajax({
@@ -95,8 +106,9 @@
                     type:'GET',
                     data: data,
                     success: function (data) {
+                        console.log(data);
                         var lines = "";
-                        data.forEach(function (test) {
+                        data.data.forEach(function (test) {
                             // console.log(test.name);
                             lines += "<div class='card card  card-sh  border-primary p-3 test-view'>";
                             lines += "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";
@@ -140,6 +152,16 @@
                     success : function (data) {
                         console.log(data);
                         getTests();
+                    },
+                    error: function (xhr, status, error) {
+                        if (xhr.status == 403){
+                            $.notify(error, {
+                                position:"bottom left",
+                                style: 'successful-process',
+                                className: 'notDone',
+                                // autoHideDelay: 500000
+                            });
+                        }
                     }
                 });
             }

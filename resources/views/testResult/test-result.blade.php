@@ -8,7 +8,6 @@
     <link href="vendor/datatables/datatables.min.css" rel="stylesheet">
 
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
-    @inject('Utility', 'App\Utility')
 
 </head>
 
@@ -244,7 +243,7 @@
     function printStatement(test_statement_id, student_id) {
         //
         console.log('satement: '+test_statement_id+", student: "+student_id);
-        location.href = 'test-statements-preview/1/'+student_id;
+        location.href = 'test-statements-preview/'+student_id;
         // console.log(test_statement_id+" / "+student_id);
     }
 </script>

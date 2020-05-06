@@ -30,7 +30,7 @@ class TestGroupController extends Controller
     {
         // todo something wrong while calculating available_seats
 
-//        $this->authorize('viewAny',TestGroup::class);
+        $this->authorize('view',Test::class);
 
         $center = Center::findOrFail(Session('center_id'));;
         $allTests = $center->tests;
@@ -52,7 +52,7 @@ class TestGroupController extends Controller
     public function create()
     {
         // check if user has rights to view create_test_group_form
-//        $this->authorize('create',TestGroup::class);
+        $this->authorize('create',Test::class);
         $center = Center::findOrFail(Session('center_id'));
         $allTests = $center->tests;
 
@@ -69,7 +69,7 @@ class TestGroupController extends Controller
     {
 
         // check if user has rights to add a new test-group
-//        $this->authorize('create',TestGroup::class);
+        $this->authorize('create',Test::class);
         //todo handle multiple groups
 
         $data = $this->validateRequest($request);
@@ -112,8 +112,8 @@ class TestGroupController extends Controller
     public function edit(TestGroup $testGroup)
     {
         //
-//        dd(Time::hours()[9] == $testGroup->times[0]->begin);
-//        $this->authorize('update',$testGroup);
+        $this->authorize('update',Test::class);
+
         return view('testGroup.edit')->with('test_group',$testGroup);
     }
 
@@ -122,7 +122,7 @@ class TestGroupController extends Controller
     {
 
 
-//        $this->authorize('update',$testGroup);
+        $this->authorize('update',Test::class);
         $data = $this->validateRequest($request);
 
         if($data->fails()){
@@ -158,8 +158,8 @@ class TestGroupController extends Controller
     public function destroy(TestGroup $testGroup)
     {
         //
-//        $this->authorize('delete',$testGroup);
-        $testGroup->times()->detach();
+        $this->authorize('delete',Test::class);
+
         $testGroup->delete();
         return redirect('/test-groups')
             ->with('message','test group deleted successfully');
@@ -176,7 +176,7 @@ class TestGroupController extends Controller
             'opened' => 0
         ]);
 
-        return 'this group is closed';
+        return response()->json('groups closed', 200);
     }
 
 

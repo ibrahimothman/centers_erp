@@ -21,6 +21,7 @@ class CreateCentersTable extends Migration
             $table->string('location')->nullable();
             $table->string('about_center')->nullable();
             $table->string('about_manager')->nullable();
+            $table->longText('statement')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')

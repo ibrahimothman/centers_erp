@@ -25,7 +25,7 @@
                 }
             </style>
 
-            {!!$statement->body!!}
+            {!!$statement['body']!!}
 
         </div>
 

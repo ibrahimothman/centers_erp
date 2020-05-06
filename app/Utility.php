@@ -8,19 +8,19 @@ class Utility {
     {
         return substr($dateTime, 0, 10);
     }
-    public function getTime($dateTime)
+    public static function getTime($dateTime)
     {
         return substr($dateTime, 11, 5);
 
     }
 
-   public function getCurrentDay(){
+   public static function getCurrentDay(){
        date_default_timezone_set('Africa/Cairo');
        return date('y-m-d');
 
    }
 
-    public function datePassed($expireDate,$expireTime){
+    public static function datePassed($expireDate,$expireTime){
         date_default_timezone_set('Africa/Cairo');
         $todayDate=date('y-m-d');
         $todayTime=date("H");
@@ -38,8 +38,7 @@ class Utility {
         }
     }
 
-    private function timePassed($pastTime,$currentTime){
-        echo $pastTime.'----------' .$currentTime;
+    private static function timePassed($pastTime,$currentTime){
         $pastHour=substr($pastTime, 0, 2);
         $currentHour=substr($currentTime, 0, 2);
         $pastMinute=substr($pastTime, 2, 2);

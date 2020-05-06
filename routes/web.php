@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
 
         //----------------------- statement ------------
         Route::resource('test-statements', "$web_controllers_path\TestStatementController");
-        Route::get('test-statements-preview/{statement}/{student}', "$web_controllers_path\TestStatementController@previewStatement");
+        Route::get('test-statements-preview/{student}', "$web_controllers_path\TestStatementController@previewStatement");
 
 
         //----------- courses ---------------
