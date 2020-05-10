@@ -21,7 +21,14 @@ function generateStudentHtml(student) {
         ' </div>'
 }
 
-
+$('#save').on('click', function (e) {
+    var input = '<input hidden name="return" value="students">';
+    $('#studentCreate').append(input);
+});
+$('#save_new').on('click', function (e) {
+    var input = '<input hidden name="return" value="new">';
+    $('#studentCreate').append(input);
+});
 function searchForStudents(query = '') {
     var data = "";
     if(query.trim().length !== 0) data = "name="+query.trim();

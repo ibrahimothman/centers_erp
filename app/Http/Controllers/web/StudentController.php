@@ -70,10 +70,14 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+//        dd($request->all());
         // check if user has rights to add a new student
         $this->authorize('create', Student::class);
 
         $data = $this->validateRequest($request);
+//        if ($data->fails()){
+//            dd($data->errors()->messages());
+//        }
 
         // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
@@ -89,7 +93,8 @@ class StudentController extends Controller
         ]);
 
         $center->students()->syncWithoutDetaching($student);
-        return redirect("/students/$student->id");
+        $return = $request->get('return') == 'students'? "/students/$student->id": "/students/create";
+        return redirect($return)->with('success','Student added successfully');
 
     }
 
