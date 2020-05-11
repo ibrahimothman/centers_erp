@@ -36,7 +36,7 @@ class TestGroup extends Model
             ])
             ->thenReturn()->get();
     }
-
+    
     public function test()
     {
         return $this->belongsTo(Test::class);
