@@ -20,8 +20,8 @@
     <nav class="navbar navbar-expand-lg navbar-light ">
 
         <form class="form-inline my-2 my-lg-0" action="/instructors" method="get">
-
-            <input name="name" id="search" type="search" placeholder="بحث">
+            <input hidden name="search_by" value="nameAr">
+            <input name="value" id="search" type="search" placeholder="بحث">
             <button class="btn btn-primary  mx-2 px-4 my-5 my-sm-0" id="search_for_instructor" type="submit">بحث</button>
 
         </form>

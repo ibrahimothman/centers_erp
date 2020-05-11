@@ -95,7 +95,6 @@
 <script src="{{url('js/demo/datatables-demo.js')}}"></script>
 <script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
 <script type='text/javascript' src="{{url('js/notification.js')}}"></script>
-@include('script')
 
 <script>
     $(document).ready( function () {
@@ -227,17 +226,17 @@
             type:'post',
             data:{student_id : student_id, group_id : group_id, take : take, _token: "{{ csrf_token() }}"},
             success: function (data) {
-            data=data.replace(/\r?\n|\r/, '');
-            var className;
-            if (take===1)className='done';
-                    else className='notDone';
+                data=data.replace(/\r?\n|\r/, '');
+                var className;
+                if (take===1)className='done';
+                        else className='notDone';
 
-            $.notify(data, {
-                    position:"bottom left",
-                    style: 'successful-process',
-                    className: 'done',
-                    // autoHideDelay: 500000
-                });
+                $.notify(data, {
+                        position:"bottom left",
+                        style: 'successful-process',
+                        className: 'done',
+                        // autoHideDelay: 500000
+                    });
 
             }
         })

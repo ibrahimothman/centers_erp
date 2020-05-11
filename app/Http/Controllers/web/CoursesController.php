@@ -67,7 +67,7 @@ class CoursesController extends Controller
 
 //        // upload images
         $this->uploadImages($request,$course);
-        return $course;
+        return response()->json(['message' => 'Successfully added the course', 'course_id' => $course->id],200);
     }
 
 
@@ -145,11 +145,7 @@ class CoursesController extends Controller
 
     public function destroy(Course $course)
     {
-        //delete course's images from file
-        Image::deleteImages('/uploads/courses',$course->images);
-        //delete course's images from db
-        $course->images()->delete();
-//        //delete course
+        //delete course
         $course->delete();
         return redirect("/courses");
     }

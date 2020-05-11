@@ -67,7 +67,7 @@ class Course extends ImageUploader
         static::deleting(function($course){
             if($course->images){
                 foreach($course->images as $image){
-                    (new self)->deleteImage($image);
+                    (new self)->deleteImage($image->url);
                 }
                 $course->images()->delete();
             }

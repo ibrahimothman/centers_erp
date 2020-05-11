@@ -37,9 +37,10 @@ abstract class ImageUploader extends Model
     public function deleteImage($image)
     {
         if($image) {
-            $url = explode('/', $image)[5];
+            $url = explode('/', $image);
+            $image_part = $url[count($url)-1];
             File::delete([
-                public_path($this->getDir() . "/" . $url)
+                $this->getPath() ."/" . $image_part
             ]);
         }
 

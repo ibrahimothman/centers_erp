@@ -208,8 +208,9 @@
 <!-- script-->
 @include('script')
 <!--  course and category script plugin  -->
-<script type='text/javascript' src="{{url('js/createCourse.js')}}">
-</script>
+<script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
+<script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
+<script type='text/javascript' src="{{url('js/notificatio.js')}}"></script>
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
@@ -276,10 +277,14 @@
                 contentType : false,
                 processData : false,
                 dataType: "json",
-                success: function (course) {
-                    // console.log(data);
-                    // alert(data);
-                    // location.href = '/courses/'+course.id;
+                success: function (data) {
+                    // $.notify(data.message, {
+                    //     position:"bottom left",
+                    //     style: 'successful-process',
+                    //     className: 'done',
+                    //     // autoHideDelay: 500000
+                    // });
+                    window.location = '/courses/'+data.course_id;
                 },
                 error: function (error) {
                     if (error.status == 400) {// validation
