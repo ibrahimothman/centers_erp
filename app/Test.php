@@ -3,7 +3,7 @@
 namespace App;
 
 use App\QueryFilter\Id;
-use App\QueryFilter\Name;
+use App\QueryFilter\SearchBy;
 use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
@@ -18,7 +18,7 @@ class Test extends Model
             ->send($center->tests()->with('groups.enrollers'))
             ->through([
                 Id::class,
-                Name::class,
+                SearchBy::class,
                 Sort::class
             ])
             ->thenReturn()

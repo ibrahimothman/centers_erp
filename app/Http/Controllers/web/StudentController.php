@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Center;
 use App\helper\ImageUploader;
 use App\Job;
-use App\QueryFilter\Name;
+use App\QueryFilter\SearchBy;
 use App\QueryFilter\Sort;
 use App\QueryFilter\SortElse;
 use Illuminate\Http\Request;

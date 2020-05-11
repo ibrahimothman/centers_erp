@@ -6,7 +6,7 @@ use App\helper\Constants;
 use App\helper\ImageUploader;
 use App\helper\mathParser\Math;
 use App\helper\PaymentModelHelper;
-use App\QueryFilter\Name;
+use App\QueryFilter\SearchBy;
 use App\Rules\UniquePerCenter;
 use http\Client\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +24,7 @@ class Employee extends ImageUploader
         return App(Pipeline::class)
             ->send($center->employees())
             ->through([
-                Name::class
+                SearchBy::class
             ])
             ->thenReturn()
             ->paginate(request('limit')? request('limit') : 10);

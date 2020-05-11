@@ -26,10 +26,10 @@ class TestGroup extends Model
             ->get();
     }
 
-    public static function allEnrollments($diplomasIds)
+    public static function allEnrollments($testsIds)
     {
         return app(Pipeline::class)
-            ->send(TestGroup::with('enrollers')->with('test')->whereIn('test_id', $diplomasIds))
+            ->send(TestGroup::with('enrollers')->with('test')->whereIn('test_id', $testsIds))
             ->through([
                 TestID::class,
                 Id::class

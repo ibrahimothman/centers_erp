@@ -21,6 +21,17 @@ function generateStudentHtml(student) {
         ' </div>'
 }
 
+// determine search_by option
+var search_by = 'nameAr';
+$('#search_by_id_number').on('click', function () {
+    search_by = 'idNumber';
+});
+
+$('#search_by_name').on('click', function () {
+    search_by = 'nameAr';
+});
+
+// add hidden input to determine next redirect route after successful form submission
 $('#save').on('click', function (e) {
     var input = '<input hidden name="return" value="students">';
     $('#studentCreate').append(input);
@@ -29,9 +40,12 @@ $('#save_new').on('click', function (e) {
     var input = '<input hidden name="return" value="new">';
     $('#studentCreate').append(input);
 });
+
+
+
 function searchForStudents(query = '') {
     var data = "";
-    if(query.trim().length !== 0) data = "name="+query.trim();
+    if(query.trim().length !== 0) data = "search_by="+ search_by +"&value="+query.trim();
 
     $.ajax({
         url:"/search_student_by_name",

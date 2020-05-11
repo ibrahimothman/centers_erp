@@ -23,7 +23,8 @@
     }
 
 
-    $('img').on('error', function(e){
+    $('img').on('error', function(){
+        console.log('error');
         $(this).attr('src', "https://www.nautec.com/wp-content/uploads/2018/04/placeholder-person.png");
     });
 

@@ -68,8 +68,8 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="/students?order_by=created_at&sort=desc">الاحدث اضافه</a>
-                                            <a class="dropdown-item" href="#">الاحدث التعديل</a>
-                                            <a class="dropdown-item" href="/students?order_by=nameAr&sort=desc"">الحروف الابجديه</a>
+                                            <a class="dropdown-item" href="/students?order_by=updated_at&sort=desc">"الاحدث التعديل</a>
+                                            <a class="dropdown-item" href="/students?order_by=nameAr&sort=desc">"الحروف الابجديه</a>
                                         </div>
                                     </div>
 
@@ -79,11 +79,8 @@
                                                 <span id="search_concept">البحث فى </span> <span class="caret"></span>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">الكل</a>
-                                                <a class="dropdown-item" href="#">الاسماء</a>
-                                                <a class="dropdown-item" href="#">الرقم القومى</a>
-                                                <a class="dropdown-item" href="#">الكورس</a>
-                                                <a class="dropdown-item" href="#">المجموعه</a>
+                                                <a class="dropdown-item" id="search_by_name" href="#">الاسماء</a>
+                                                <a class="dropdown-item" id="search_by_id_number" href="#">الرقم القومى</a>
                                             </div>
                                         </div>
                                         <input type="hidden" name="search_param" value="all" id="search_param">

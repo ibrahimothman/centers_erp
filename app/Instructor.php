@@ -6,7 +6,7 @@ use App\helper\Constants;
 use App\helper\ImageUploader;
 use App\helper\MathParser\Math;
 use App\helper\PaymentModelHelper;
-use App\QueryFilter\Name;
+use App\QueryFilter\SearchBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
@@ -25,7 +25,7 @@ class Instructor extends ImageUploader
         return App(Pipeline::class)
             ->send($center->instructors())
             ->through([
-                Name::class
+                SearchBy::class
 
             ])
             ->thenReturn()

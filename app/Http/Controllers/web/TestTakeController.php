@@ -26,11 +26,7 @@ class TestTakeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
 
-        return view('testTakes/test-take');
-    }
 
     public function create()
     {
@@ -41,7 +37,7 @@ class TestTakeController extends Controller
         $this->authorize('create', Test::class);
 
         $center = Center::findOrFail(Session('center_id'));
-        $tests = Test::allTests($center);
+        $tests = $center->tests()->has('groups')->with('groups.enrollers')->get();
         return view('testTakes/test-take')->with('tests',$tests);
     }
 

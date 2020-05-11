@@ -36,6 +36,8 @@ class TestEnrollmentController extends Controller
         $groups = TestGroup::allEnrollments($center->testsIds());
 
 
+
+
         return view('testEnrollments.index',compact('all_tests', 'groups'));
     }
 

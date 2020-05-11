@@ -95,6 +95,7 @@
 <script src="{{url('js/demo/datatables-demo.js')}}"></script>
 <script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
 <script type='text/javascript' src="{{url('js/notification.js')}}"></script>
+@include('script')
 
 <script>
     $(document).ready( function () {
@@ -114,6 +115,7 @@
        var test_id = $(this).val();
        if(test_id !== 0){
            var selected_test = $.parseJSON($(this).find(':selected').attr('data-extra'));
+           console.log(selected_test);
            displayData(selected_test);
 
        }
@@ -169,11 +171,9 @@
             group.enrollers.forEach(function (student) {
 
                     lines += "<tr>";
-                    var image = '/uploads/';
-                    if(student.image) image += student.image;
-                    else image += 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
 
-                    lines += "<td><img src='"+ image +"' alt='' class='rounded-circle img-profile-contact float-right img-responsive'></td>";
+
+                    lines += "<td><img src='"+ student.image +"' onerror='imgError(this)' alt='' class='rounded-circle img-profile-contact float-right img-responsive'></td>";
                     lines += "<td >" + student.nameAr + "</td>";
                     lines += "<td >" + student.id + "</td>";
 
@@ -181,20 +181,20 @@
                    lines += " <td >";
                    lines += " <div class='custom-control custom-checkbox'>";
                    if(group.opened){
-                       if(student.pivot.take) lines += "<input type='checkbox' checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id="+"confirm"+i+" >";
-                       else lines += "<input type='checkbox'  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id="+"confirm"+i+" >";
+                       if(student.pivot.take) lines += "<input type='checkbox' checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"' >";
+                       else lines += "<input type='checkbox'  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"' >";
                    }
                    else{
-                       if(student.pivot.take) lines += "<input type='checkbox' disabled checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id="+"confirm"+i+" >";
-                       else lines += "<input type='checkbox' disabled  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id="+"confirm"+i+" >";
+                       if(student.pivot.take) lines += "<input type='checkbox' disabled checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+" '>";
+                       else lines += "<input type='checkbox' disabled  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"'>";
                    }
 
-                   lines += " <label class='custom-control-label' for="+"confirm"+i+"></label>";
+                   lines += " <label class='custom-control-label' for='confirm-"+group.id+"'></label>";
                     lines += "</div>";
                     lines += "</td>";
                     lines += "<td  class='up'><div class='file  upload btn btn-sm btn-primary'>";
-                    if(group.opened) lines += "<input type='file' name='photo' /> تحميل الصوره </div></td>";
-                    else lines += "<input type='file' name='photo' disabled /> تحميل الصوره </div></td>";
+                    if(group.opened) lines += "<input type='file' id='upload-photo-"+ group.id +"' name='photo' /> تحميل الصوره </div></td>";
+                    else lines += "<input type='file' id='upload-photo-"+ group.id +"' name='photo' disabled /> تحميل الصوره </div></td>";
                     lines += "</tr>";
                     i++;
 
@@ -202,8 +202,8 @@
 
             lines += "<tr class='align-middle ' >";
             lines += "<td colspan='7' class='align-middle  ' >";
-            if(group.opened)lines += "<button id='closeGroupBtn' class='btn btn-success w-100' onclick='closeGroup("+ group.id +")' type='button'>اغلاق الامتحان </button>";
-            else lines += "<button id='closeGroupBtn' class='btn btn-success w-100' disabled type='submit'>الامتحان مغلق</button>";
+            var btn_txt = group.opened? 'اغلاق الامتحان' : 'اعاده فتح الامتحان';
+            lines += "<button data-isOpened='"+ group.opened +"' id='close-group-"+ group.id +"' class='cg btn btn-success w-100'  type='button'>"+ btn_txt +"</button>";
             lines += "</td>";
             lines += "</tr>";
             lines += " </tbody>";
@@ -220,9 +220,8 @@
     }
 
     function saveTake(student_id,group_id,i) {
-
         var take = 0;
-        if($('#confirm'+i).prop('checked') == true) take = 1;
+        if($('#confirm-'+group_id).prop('checked') == true) take = 1;
         $.ajax({
             url:'/test-takes',
             type:'post',
@@ -245,7 +244,11 @@
 
     }
 
-    function closeGroup(group_id) {
+    $(document).on('click', '[id^=close-group-]', function (e) {
+       var group_id = $(this).attr('id').split('-')[2];
+       toggleGroup(group_id);
+    });
+    function toggleGroup(group_id) {
         $.ajax({
             url:'/close_group',
             type:'post',
@@ -257,12 +260,38 @@
                     className: 'done',
                     // autoHideDelay: 500000
                 });
-                $('#closeGroupBtn').html('الامتحان مغلق');
-                $('#closeGroupBtn').prop('disabled', true);
+                $('#close-group-'+group_id).text(function () {
+                    var isOpened = $(this).attr('data-isOpened');
+                    console.log("group was opened: "+isOpened);
+                    if (isOpened == 1){
+                        // toggle to reopen
+                        $(this).attr('data-isOpened', 0);
+
+
+                        return "اعاده فتح الامتحان";
+                    }else{
+                        $(this).attr('data-isOpened', 1);
+
+                        return "اغلاق الامتحان";
+                    }
+
+                });
+
+                // toggle take checkbox and update image ability
+                $('#confirm-'+group_id).prop('disabled', function (i,v) {
+                    return !v;
+                });
+                $('#upload-photo-'+group_id).prop('disabled', function (i,v) {
+                    return !v;
+                });
 
             }
         })
     }
+
+
+
+
 </script>
 
 

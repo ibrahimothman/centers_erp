@@ -89,7 +89,8 @@
                         var query = $(this).val();
                         if (query != ''){
                             getTests({
-                                name: query,
+                                search_by: 'name',
+                                value: query,
                                 order_by: 'created_at',
                                 sort: 'desc'
                             })

@@ -172,11 +172,13 @@ class TestGroupController extends Controller
         if(request()->ajax()){
             $group_id = request()->get('group_id');
         }
-        TestGroup::findOrFail($group_id)->update([
-            'opened' => 0
+        $group = TestGroup::findOrFail($group_id);
+        $group->update([
+            'opened' => !$group->opened
         ]);
 
-        return response()->json('groups closed', 200);
+        $data = $group->opened? 'group reopened' : 'group closed';
+        return response()->json($data, 200);
     }
 
 

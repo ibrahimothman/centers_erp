@@ -4,7 +4,7 @@ namespace App;
 
 use App\helper\Constants;
 use App\helper\ImageUploader;
-use App\QueryFilter\Name;
+use App\QueryFilter\SearchBy;
 use App\QueryFilter\Sort;
 use App\Rules\DegreeRule;
 use App\Rules\FacultyRule;
@@ -25,8 +25,8 @@ class Student extends ImageUploader
         return app(Pipeline::class)
             ->send($center->students())
             ->through([
-                Sort::class,
-                Name::class
+                SearchBy::class,
+                Sort::class
             ])
             ->thenReturn()
             ->get();

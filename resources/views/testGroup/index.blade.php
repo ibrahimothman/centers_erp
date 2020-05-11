@@ -30,7 +30,9 @@
                             <span class="float-right">
                             <div class="btn-group print-btn p-3 ">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
-                                <div class="dropdown-menu"> <a class="dropdown-item" href="#">الاحدث اضافه</a> <a class="dropdown-item" href="#">الاحدث التعديل</a> </div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/test-groups?order_by=created_at&sort=desc">الاحدث اضافه</a>
+                                    <a class="dropdown-item" href="/test-groups?order_by=updated_at&sort=desc">الاحدث التعديل</a> </div>
                             </div>
                             </span>
 

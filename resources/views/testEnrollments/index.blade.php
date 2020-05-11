@@ -34,12 +34,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="btn-group p-3 ">
-                            <input type="text" class="form-control " name="x" placeholder="ابحث">
-                            <div class="btn-group">
-                                <button class="btn btn-success"><i class="fas fa-search"></i></button>
-                            </div>
-                        </div>
+
                         </span></div>
                         <!-- table -->
                         <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0"
@@ -104,6 +99,14 @@
 @include('scroll_top')
 @include('script')
 <script>
+
+
+    $('#search').on('click', function (e) {
+       var query = $(this).val();
+       if(e.keyup == 13 && query != ''){
+           window.location.href = window.location.href + "?student="+query;
+       }
+    });
     function deleteEnrollment(test_group_id, student_id) {
         console.log("diploma_group_id : "+test_group_id+", student_id : "+student_id);
         $.ajax({
