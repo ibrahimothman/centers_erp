@@ -3,10 +3,28 @@
 <head>
 @include('library')
 <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="{{asset("css/room_style.css")}}">
     <title> view rooms</title>
     <style>
-
+        /* room view */
+        /* card */
+        .motionCard {
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.1s linear, transform 0.15s ease-out;
+        }
+        .motionCard:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 17px 2px rgba(0, 0, 0, 0.14), 0 5px 22px 4px rgba(0, 0, 0, 0.12), 0 7px 8px -4px rgba(0, 0, 0, 0.2);
+        }
+        a[class="add"]:hover {
+            background-color: #007bff;
+            text-decoration: none;
+            color: white;
+        }
+        a[class="add"]:active {
+            background-color: #007bff;
+        }
     </style>
 </head>
 <body class="bg-light" id="page-top">

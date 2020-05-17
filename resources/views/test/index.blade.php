@@ -82,9 +82,9 @@
                             lines += "<div class='card card  card-sh  border-primary p-3 test-view'>";
                             lines += "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";
                             lines += "<span class='float-right'>";
-                            lines += "<a href='/test-groups/create?id="+test.id+"' class='btn btn-outline-success '><i class='fas fa-plus'></i> <SPAN>تسجيل الامتحان</SPAN> </a>";
-                            lines += "<a href='tests/"+test.id+"/edit/' class=' btn btn-outline-primary '><i class='fas fa-edit'></i> </a>";
-                            lines += "<button onclick='deleteTest("+test.id+");' class='btn btn-outline-danger'> <i class='fas fa-trash-alt'></i> </button>";
+                            lines += "<a href='/test-groups/create?id="+test.id+"' class='btn btn-outline-success mx-1 form-group '><i class='fas fa-plus'></i> <SPAN>تسجيل الامتحان</SPAN> </a>";
+                            lines += "<a href='tests/"+test.id+"/edit/' class=' btn btn-outline-primary  form-group mx-1'><i class='fas fa-edit'></i> </a>";
+                            lines += "<button onclick='deleteTest("+test.id+");' class='btn btn-outline-danger form-group mx-1'> <i class='fas fa-trash-alt'></i> </button>";
                             lines += "</span>";
                             lines += "<span  class=' float-left'>"+test.name+"</span>";
                             lines += "</div>";
@@ -96,9 +96,9 @@
                             lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >فردي : </span> <span class=' text-secondary ' >"+test.cost_ind+" جنيها </span> </div>";
                             lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >كورس : </span> <span class=' text-secondary ' >"+test.cost_course+" جنيها </span> </div>";
                             if(test.retake)
-                                lines += "<div class='d-inline p-5  '> <span class='btn-success rep ' >قابل للاعاده</span> </div>";
+                                lines += "<div class='d-inline p-5 '> <div class='btn-success rep mr-3' style='float: left'>قابل للاعاده</div> </div>";
                             else
-                                lines += "<div class='d-inline p-5  '> <span class='btn-warning rep ' >غير قابل للاعاده</span> </div>";
+                                lines += "<div class='d-inline p-5  '> <div class='btn-warning rep mr-3' style='float: left'>غير قابل للاعاده</div> </div>";
                             lines += "<footer class='blockquote-footer float-right'>";
                             lines += "<span>تاريخ الاضافه "+test.created_at+"</span>";
                             lines += " </footer>";

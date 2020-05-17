@@ -23,7 +23,7 @@
                         <div class="card-body">
                             <!-- side bar -->
                             <div class="row">
-                                <aside class="col-sm-3 ">
+                                <aside class="col-lg-3 ">
                                     <article class="card-group-item">
                                         <h6 class="title text-secondary">الاعدادات <i class="fas fa-cogs"></i></h6>
                                         <div class="filter-content">
@@ -55,7 +55,7 @@
                                 <!-- en side bar -->
                                 <!-- ///////////content //////////////// -->
                                 <!-- end -->
-                                <div class="col-sm-8">
+                                <div class="col-lg-8">
                                     <!-- center info -->
                                     <section class="centerInfoSection">
                                         <div class="card mb-4">
@@ -126,16 +126,20 @@
                                                                   class="form-control"
                                                                   style="  overflow-scrolling:auto; ">{{ $center && $center->about_manager? $center->about_manager: old('about_manager')  }}</textarea>
                                                     </div>
+
                                                     <div class="form-row save">
-                                                        <div class="col-sm-6 mx-auto text-center">
-                                                            <button class="btn btn-primary" type="submit" id="submit">
+
+                                                        <div class="col-lg-6 mx-auto text-center">
+                                                            <button class="btn btn-primary " type="submit" id="submit">
                                                                 {{ Session('center_id')? 'تعديل' : 'حفظ' }}
                                                             </button>
                                                             <button class="btn  btn-danger" type="reset"> الغاء</button>
                                                         </div>
+
                                                     </div>
                                                     <br>
-                                                </form>
+                                                     </form>
+                                                    </form>
                                             </div>
                                         </div>
                                         <!-- /.container-fluid -->
@@ -187,7 +191,7 @@
                                                     </div>
                                                     <hr>
                                                     <div class="form-row save">
-                                                        <div class="col-sm-6 mx-auto text-center">
+                                                        <div class="col-lg-6 mx-auto text-center">
                                                             <button class="btn btn-primary" type="submit" id="submit">
                                                                 حفظ
                                                             </button>
@@ -230,8 +234,8 @@
                                                     </div>
 
                                                     <div class="form-row save">
-                                                        <div class="col-sm-6 mx-auto text-center">
-                                                            <button class="btn btn-primary" type="submit" id="submit">
+                                                        <div class="col-lg-6 mx-auto text-center">
+                                                            <button class="btn btn-primary " type="submit" id="submit">
                                                                 حفظ
                                                             </button>
                                                             <button class="btn  btn-danger" type="reset"> الغاء</button>

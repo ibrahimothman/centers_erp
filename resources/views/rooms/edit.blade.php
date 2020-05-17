@@ -4,7 +4,6 @@
     <!-- Bootstrap CSS & js -->
 @include('library')
 <!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="{{asset("css/room_style.css")}}">
     <title> room edit</title>
     <style>
         div[name="add"]{

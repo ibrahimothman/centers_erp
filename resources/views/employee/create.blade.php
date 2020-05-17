@@ -42,7 +42,7 @@
 
 
                                         <div class=" form-row form-group">
-                                            <div class="col-6 ">
+                                            <div class="col-sm-6 ">
                                                 <label>رقم التليفون </label>
                                                 <span class="required">*</span>
                                                 <input type="text" name="phoneNumber" placeholder="ادخل رقم التليفون المحمول  "

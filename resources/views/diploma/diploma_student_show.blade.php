@@ -42,6 +42,7 @@
                         </div>
                         </span></div>
                         <!-- table -->
+                        <div class="table-responsive">
                         <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0"
                                width="100%">
                             <thead>
@@ -81,6 +82,7 @@
                             </tbody>
 
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
