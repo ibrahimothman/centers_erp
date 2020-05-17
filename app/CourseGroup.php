@@ -28,15 +28,7 @@ class CourseGroup extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function times()
-    {
-        return $this->belongsToMany(Time::class);
-    }
 
-    public function rooms()
-    {
-        return $this->belongsToMany(Room::class)->withTimestamps();
-    }
 
 
     public function joiners()

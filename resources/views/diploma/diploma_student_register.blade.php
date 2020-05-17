@@ -20,14 +20,14 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form  id="form" enctype="multipart/form-data" action="{{ route('diploma-enrollments.store') }}" method="post" >
+                            <form  id="form" enctype="multipart/form-data" action="{{ route('diploma-enrollments.store')  }}" method="post" >
                                 @csrf
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="student-id">اسم الطالب</label>
-                                        <input type="hidden" id="student_id" name="student_id">
+                                        <input id="student_id" name="student_id" hidden>
                                         <span class="required">*</span>
-                                        <input type="text"  placeholder="اسم الطالب"  name="student_name" class="form-control" id="student_name" required>
+                                        <input type="text"  placeholder="اسم الطالب"  name="student_name" class="form-control" id="student_name"  required>
                                         <div class="list-gpfrm-list" id="studentsList"></div>
                                         <span id="stuselector_error"></span>
                                         <div></div>
@@ -42,7 +42,7 @@
 
                                             <option value="">اختار</option>
                                             @foreach($diplomas as $diploma)
-                                                <option data-content="{{ $diploma->groups }}" value="{{ $diploma->id }}">{{ $diploma->name }}</option>
+                                                <option data-content="{{ $diploma->groups }}" {{ $diploma->id == $selected_group->diploma_id? 'selected' : '' }} >{{ $diploma->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -50,16 +50,19 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label >مواعيد الدبلومه</label>
-                                        <select  class="form-control "  id="diploma_group_date" name="diploma_group_id">
-
+                                        <select  class="form-control "  id="diploma_group_date" name="diploma_group_id" required>
                                             <option value="">اختار</option>
+                                            @if($selected_group)
+                                                <option value="{{ $selected_group->id}}" selected>{{ $selected_group->starts_at }}</option>
+
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
-                                        <button class="btn btn-primary " type="submit" id="submit"> إضافة
+                                        <button class="btn btn-primary " type="submit" id="submit"> اضافه
                                             </button>
                                         <button class="btn  btn-danger " type="reset"> إلغاء
                                                    </button>

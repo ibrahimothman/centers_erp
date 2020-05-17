@@ -22,7 +22,7 @@ use Faker\Generator as Faker;
 $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => 'ibrahim karim',
-        'email' => 'ibrahimothmanre@gmail.com',
+        'email' => 'ahmdkhled@gmail.com',
         'email_verified_at' => now(),
         'password' => Hash::make('123654789'), // password
     ];

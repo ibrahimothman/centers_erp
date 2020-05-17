@@ -1,218 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('library')
- <!-- Custom styles for this page -->
- <link href="/../../../vendor/datatables/datatables.min.css" rel="stylesheet">
-
- <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
-        <title>test-stu-view</title>
+    <!-- Bootstrap CSS & js -->
+@include('library')
+<!-- style -->
+    <link href="/css/diploma_style.css" rel="stylesheet"/>
+    <title>show student in test</title>
 </head>
-
 <body id="page-top">
-
-<!-- Page Wrapper -->
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
     @include('operationBar')
-<!-- Main Content -->
-<div id="content">
     <!-- Page Heading -->
-
-    <div class="container-fluid">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header text-primary">
-                    <div class="row  ">
-                        <div class="col-md-6"> الطلاب المسجلين بالامتحانات</div>
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header text-primary form-title view-courses-title">
+                        <h3>الطلاب المسجلين بالامتحان </h3>
+                        <a href="{{ route('test-enrollments.create') }}">
+                            <button type="button" class="btn btn-success">أضف طالب</button>
+                        </a>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class=" clearfix col-md-8 mb-4">
-                            <form >
-                                    <div class="form-row col-md-12 ">
-                                            <select   id="testselector"   class="form-control ">
-                                                <option value="0">اختر الامتحان</option>
-                                                @foreach($tests as $test)
-                                                    <option value={{ $test->id }}>{{ $test->name }}</option>
-                                                 @endforeach
-                                                </select>
-                                    </div>
-                            </form>
-                        </div>
-                            <div id="test1">
+                    <div class="card-body">
+                        <div class=" clearfix"> <span class="float-right">
+                        <div class="btn-group print-btn p-3 ">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> اختار اسم الامتحان </button>
+                            <div class="dropdown-menu">
+                                @foreach($all_tests as $test)
+                                    <a class="dropdown-item" href="{{ route('test-enrollments.index') }}?test_id={{ $test->id }}">{{ $test->name }}</a>
+                                @endforeach
                             </div>
                         </div>
+
+                        </span></div>
+                        <!-- table -->
+                        <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0"
+                               width="100%">
+                            <thead>
+                            <tr>
+                                <th class="th-sm">اسم الطالب</th>
+                                <th class="th-sm">اسم الدبلومه</th>
+                                <th class="th-sm">المعاد</th>
+                                @can('update', App\Test::class)
+                                    <th class="th-sm"> تعديل</th>
+                                @endcan
+                                @can('delete', App\Test::class)
+                                    <th class="th-sm"> ازاله</th>
+                                @endcan
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach($groups as $group)
+                                @foreach($group->enrollers as $student)
+                                    <tr>
+                                        <td>{{ $student->nameAr }}</td>
+                                        <td>{{ $group->test->name }}</td>
+                                        <td>{{ $group->times[0]->day }}</td>
+
+                                        @can('update', App\Test::class)
+                                            <td>
+
+                                                <a href="{{ route('test-enrollments.edit', ['student_id' => $student->id, 'test_group' => $group->id]) }}" class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                        class="fas fa-edit m-0 "></i> </a>
+
+                                            </td>
+                                        @endcan
+                                        @can('delete', App\Test::class)
+                                            <td>
+                                                <form>
+                                                    <button type="button" onclick="deleteEnrollment('{{ $group->id }}', '{{  $student->id }}');" class="btn btn-outline-danger py-1 px-2">
+                                                        <i class="fas fa-trash-alt m-0"></i></button>
+                                                </form>
+                                            </td>
+                                        @endcan
+                                    </tr>
+                                @endforeach
+                            @endforeach
+                            </tbody>
+
+                        </table>
                     </div>
                 </div>
             </div>
-
-            <!-- /.container-fluid -->
-</div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
+        </div>
+        <!-- /.container-fluid -->
+        <!-- Footer -->
     @include('footer')
-</div>
+    <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
 </div>
 <!-- End of Page Wrapper -->
 <!-- scroll top -->
 @include('scroll_top')
-<!-- script-->
 @include('script')
-<!-- Custom scripts for all pages-->
-<script src={{url('employee')}}></script>
-<!-- Page level plugins -->
-<script src={{url('vendor/datatables/datatables.min.js')}}></script>
-<!-- Page level custom scripts -->
-<script src={{url('js/demo/datatables-demo.js')}}></script>
 <script>
 
-$('#datatable-responsive').DataTable( {
-  responsive: true
-} );
 
-
-  $(document).ready(function() {
-  $('#datatable-buttons').DataTable( {
-      dom: 'Bfrtip',
-      buttons: [
-          'copyHtml5',
-          'excelHtml5',
-          'csvHtml5',
-          'pdfHtml5'
-      ]
-  } );
-  $('#datatable-buttons2').DataTable( {
-      dom: 'Bfrtip',
-      buttons: [
-          'copyHtml5',
-          'excelHtml5',
-          'csvHtml5',
-          'pdfHtml5'
-      ]
-  } );$('#datatable-buttons3').DataTable( {
-      dom: 'Bfrtip',
-      buttons: [
-          'copyHtml5',
-          'excelHtml5',
-          'csvHtml5',
-          'pdfHtml5'
-      ]
-  } );
-
-
-
-} );
-
-  function displayTestsEnrollments(test) {
-      var lines ="";
-      lines += "<div class='row cont-det' >";
-      lines+="<div class='col-md-12'>";
-      lines+="<div class='card card  card-sh  border-primary p-3 test-view'>";
-      lines+= "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";
-      lines+="<span class='float-right'>";
-      lines += "<a href="+"'test-enrollments/create?id=" +test.id + "'class='btn btn-outline-success'>";
-      lines+="<i class='fas fa-plus'></i> <SPAN> اضافه طالب</SPAN> </a></span>";
-      lines+="<span  class='float-left'>الطلاب المسجلين على امتحان "+ test.name +"</span> </div>";
-      lines+= "<div class='card-body'>";
-      lines+="<table id='datatable-buttons_wrapper' class='table table-striped table-bordered display  hover'>";
-      lines+="<thead>";
-      lines+= "<tr class='w-100'>";
-      lines+= '<th class="w-10">امتحان</th>';
-      lines+= '<th class="w-30">ميعاد الامتحان</th>';
-      lines+='<th class="w-30">رقم الطالب</th>';
-      lines+='<th class="w-30">اسم الطالب</th>';
-      lines+='<th class="w-10"></th>';
-      lines+= '</tr>';
-      lines+= '</thead>';
-      lines+="<tbody>";
-
-      test.groups.forEach(function (group) {
-          console.log('group '+group.id);
-          group.enrollers.forEach(function (student) {
-              lines += "<tr>";
-              lines += "<td>" + test.name + "</td>";
-              lines += "<td>"+ group.group_date +"</td>";
-              lines += "<td>" + student.id + "</td>";
-              lines += "<td>" + student.nameAr + "</td>";
-              lines += "<td><button onclick='deleteEnrollment("+ student.id +","+ group.id +","+ test.id +");'  class='btn btn-outline-danger  btn-sm '><i class='fas fa-trash-alt'></i> </button></td>";
-              lines += "</tr>";
-          });
-      });
-
-
-          lines+="</tbody>";
-          lines+="</table>";
-          lines+="</div>";
-          lines+="</div>";
-          lines+="</div>";
-          lines+="</div>";
-
-
-        $('#test1').html(lines);
-  }
-
-
-// if user choose a test to display its group enrollment
-$('#testselector').change(function () {
-    var test_id = $('#testselector').val();
-    getTestEnrollments(test_id);
-
-});
-function getTestEnrollments(test_id) {
-
-      // var test_id = $('#testselector').val();
-    // console.log('getTestEnrollments');
-
-    $.ajax({
-        url:'/get_tests_enrollments',
-        type:'GET',
-        data : {test_id : test_id},
-        dataType : 'json',
-        success: function (data) {
-            // console.log(data);
-            displayTestsEnrollments(data);
-        }
+    $('#search').on('click', function (e) {
+       var query = $(this).val();
+       if(e.keyup == 13 && query != ''){
+           window.location.href = window.location.href + "?student="+query;
+       }
     });
-}
-
-    function deleteEnrollment(student_id, test_group_id, test_id) {
-        console.log(student_id+','+test_group_id);
+    function deleteEnrollment(test_group_id, student_id) {
+        console.log("diploma_group_id : "+test_group_id+", student_id : "+student_id);
         $.ajax({
-            url:'/delete-test-enrollments',
-            type:'DELETE',
-            data : {student_id : student_id, test_group_id : test_group_id, _token : '{{ csrf_token() }}'},
-
-            success: function (data) {
-                // console.log(data);
-                getTestEnrollments(test_id);
-                // window.location = 'test-enrollments';
+            url : '/test-enrollments/'+student_id,
+            type : 'delete',
+            data : { student_id: student_id, test_group_id : test_group_id, '_token' : '{{ csrf_token() }}'  },
+            success : function (data, status) {
+                console.log(status);
+                if(status === 'success') {
+                    window.location.reload();
+                }
             }
         });
     }
-  </script>
+</script>
 
-<script>
-        $(function() {
-            $('#testselector').change(function(){
-
-                if($(this).val()=="test")
-           {
-               $('.cont-det').show();
-           }
-            else
-            {
-              $('.cont-det').hide();
-              $('#' + $(this).val()).show();
-            }
-            });
-          });
-
-        </script>
-
-</body>
 </body>
 </html>

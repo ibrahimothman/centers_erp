@@ -186,7 +186,7 @@ function addNewCategory(name, parent_id){
             lines += "<td class='add'><input type='button' class=' btn  btn-warning  addbtn' value='  اضافه تصنيف '><div class='addnew'></div></td>";
             lines += "<td class='newROW'>" ;
             $.each(category.children, function (i, child) {
-                lines += "<div class='field row mx-3'><span>" + child.name + "<button type='button' class='ml-2 mb-1 close' onclick='deleteCategory("+ child.id +")'  data-dismiss='toast' aria-label='Close'><span style='color:red;' aria-hidden='true'>&times;</span></button></span></div>";
+                lines += "<div id='category"+ child.id +"'class='field row mx-3'><span>" + child.name + "<button type='button' class='ml-2 mb-1 close' onclick='deleteCategory("+ child.id +")'  data-dismiss='toast' aria-label='Close'><span style='color:red;' aria-hidden='true'>&times;</span></button></span></div>";
             });
             lines += "</td>";
             lines += "<td><button class='btn btn-danger btn-xs btn-delete'>حذف</button></td></tr>";

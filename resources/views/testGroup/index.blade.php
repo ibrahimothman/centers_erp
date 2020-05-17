@@ -30,24 +30,25 @@
                             <span class="float-right">
                             <div class="btn-group print-btn p-3 ">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
-                                <div class="dropdown-menu"> <a class="dropdown-item" href="#">الاحدث اضافه</a> <a class="dropdown-item" href="#">الاحدث التعديل</a> </div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/test-groups?order_by=created_at&sort=desc">الاحدث اضافه</a>
+                                    <a class="dropdown-item" href="/test-groups?order_by=updated_at&sort=desc">الاحدث التعديل</a> </div>
                             </div>
                             </span>
 
 
                             <span class="float-left w-50">
 
-                            <form method="get" action="{{url('/test-groups')}}">
                                     <div class="form-row col-md-12 ">
-                                            <select name="test"  id="testselector"  onchange="this.form.submit()" class="form-control ">
-                                                    <option value=""> choose</option>
-                                                    <option value=""> الكل</option>
+                                            <select name="id"  id="testselector"   class="form-control ">
+                                                    <option value="-1"> اخنار</option>
+                                                    <option value="0"> الكل</option>
                                                 @foreach($allTests as $test)
                                                     <option value="{{$test->id}}"> {{$test->name}} </option>
                                                 @endforeach
                                                 </select>
                                     </div>
-                            </form>
+
                        </span>
 
                         </div>
@@ -64,12 +65,14 @@
                                         <span  class=" float-left">{{$test->name}}
                                             <a href="{{url('/tests/'.$test->id)}}" >
                                                 <i class="fas fa-info-circle"></i></a> </span>
-                                        <span  class=" float-right">
-                                            <a href="test-groups/create?test={{$test->name}}" class="btn btn-success    btn-sm ">
-                                                <i class="fas fa-plus"></i>
-                                                <SPAN> اضافه ميعاد</SPAN>
-                                            </a>
-                                        </span>
+                                        @can('create', App\Test::class)
+                                            <span  class=" float-right">
+                                                <a href="test-groups/create?id={{$test->id}}" class="btn btn-success    btn-sm ">
+                                                    <i class="fas fa-plus"></i>
+                                                    <SPAN> اضافه ميعاد</SPAN>
+                                                </a>
+                                            </span>
+                                         @endcan
                                     </div>
                                     <div class="card-body ">
                                         <div class="col-md-12 table-responsive">
@@ -79,9 +82,11 @@
                                                 <thead>
                                                     <tr class="w-100">
                                                         <th class="w-20">تاريخ الامتحان </th>
-                                                        <th class="w-10">ميعاد</th>
+                                                        <th class="w-10">البدايه</th>
+                                                        <th class="w-10">النهايه</th>
                                                         <th class="w-10">عدد المقاعد</th>
                                                         <th class="w-10">عدد المقاعد المتاحه</th>
+                                                        <th class="w-10">الحاله</th>
                                                         <th class="w-30"></th>
                                                         <th class="w-10"></th>
                                                     </tr>
@@ -93,36 +98,44 @@
                                                 @if(isset($test->groups))
                                                 @foreach($test->groups as $testGroup)
                                                     <tr class= {{
-                                                    $testGroup->available_seats==0
-                                                    ||$Utility->datePassed($Utility->getDate($testGroup->group_date),$Utility->getTime($testGroup->group_date))==true
-                                                    ?"table-danger":""}}>
+                                                    $testGroup->available_seats==0 || $testGroup->opened==0
+                                                    ||$Utility->datePassed($Utility->getDate($testGroup->times[0]->day),$testGroup->times[0]->end)?"table-danger":""}}>
 
 
-                                                        <td> {{$Utility->getDate($testGroup->group_date)}} </td>
-                                                        <td>{{ $Utility->getTime($testGroup->group_date) }}</td>
+                                                        <td> {{$Utility->getDate($testGroup->times[0]->day)}} </td>
+                                                        <td>{{ $testGroup->times[0]->begin }}</td>
+                                                        <td>{{ $testGroup->times[0]->end }}</td>
                                                         <td>{{$testGroup->available_chairs}}</td>
                                                         <td>{{$testGroup->available_seats}}</td>
+                                                        <td>{{$testGroup->opened == 1? 'مقتوحه': 'مغلقه'}}</td>
                                                         <td >
                                                             @php($dis="")
-                                                            @if($testGroup->available_seats==0
-                                                    ||$Utility->datePassed($Utility->getDate($testGroup->group_date),$Utility->getTime($testGroup->group_date))==true)
+                                                            @if($testGroup->available_seats==0 || $testGroup->opened==0
+                                                    ||$Utility->datePassed($Utility->getDate($testGroup->times[0]->day),$testGroup->times[0]->end)==true)
                                                                 @php($dis="disabled")
                                                                 @endif
-                                                            <a href="test-enrollments/create?id={{ $test->id }}"  class="btn btn-outline-warning {{$dis}} btn-sm">
-                                                                <i class="fas fa-plus"></i>
-                                                                <SPAN>تسجيل الطلاب</SPAN> </a>
-                                                            <a  href="test-enrollments"  class="btn btn-outline-success   btn-sm ">
-                                                                <SPAN> الطلاب المسجلين</SPAN>
-                                                            </a></td>
+                                                            @can('create', App\Test::class)
+                                                                <a href="test-enrollments/create?group_id={{ $testGroup->id }}"  class="btn btn-outline-warning {{$dis}} btn-sm">
+                                                                    <i class="fas fa-plus"></i>
+                                                                    <SPAN>تسجيل الطلاب</SPAN> </a>
+                                                            @endcan
+                                                            @can('view', App\Test::class)
+                                                                <a  href="test-enrollments?id={{$testGroup->id}}"  class="btn btn-outline-success   btn-sm ">
+                                                                    <SPAN> الطلاب المسجلين</SPAN>
+                                                                </a></td>
+                                                            @endcan
                                                         <td>
                                                             <form method="post" action="{{route('test-groups.destroy',$testGroup->id)}}">
                                                                 @csrf
                                                                 @method('delete')
-                                                            <a href="/test-groups/{{$testGroup->id}}/edit" class=" btn btn-outline-primary btn-sm ">
-                                                                <i class="fas fa-edit"></i> </a> </span> </span>
-
-                                                            <button type="submit" name="delete" class="btn btn-outline-danger   btn-sm ">
-                                                                <i class="fas fa-trash-alt"></i> </button>
+                                                                @can('update', App\Test::class)
+                                                                    <a href="/test-groups/{{$testGroup->id}}/edit" class=" btn btn-outline-primary btn-sm ">
+                                                                        <i class="fas fa-edit"></i> </a> </span> </span>
+                                                                @endcan
+                                                                @can('delete', App\Test::class)
+                                                                      <button type="submit" name="delete" class="btn btn-outline-danger   btn-sm ">
+                                                                         <i class="fas fa-trash-alt"></i> </button>
+                                                                @endcan
                                                             </form>
                                                         </td>
                                                     </tr>
@@ -178,20 +191,16 @@
 <!-- script-->
 @include('script')
 <script>
-// $(function() {
-//     $('#testselector').change(function(){
-//
-//         if($(this).val()=="test")
-//    {
-//        $('.cont-det').show();
-//    }
-//     else
-//     {
-//       $('.cont-det').hide();
-//       $('#' + $(this).val()).show();
-//     }
-//     });
-//   });
+    $('#testselector').change(function(){
+        var id = $(this).val();
+        if(id != 0){
+            window.location = '/test-groups?id='+id;
+        }
+        else if(id == 0){
+            window.location = '/test-groups';
+        }
+    });
+
 
 </script>
 </body>

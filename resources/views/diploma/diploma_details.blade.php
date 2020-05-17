@@ -68,21 +68,20 @@
                                                     <div class="view-courses-title">
                                                         <h5 class="card-title text-primary">تفاصيل الحجز</h5>
                                                         <div class="dropdown-divider"></div>
-                                                            <a href="" class=" btn btn-outline-primary  py-1 px-2"><i
+                                                            <a href="{{ route('diploma-groups.edit', $group->id) }}" class=" btn btn-outline-primary  py-1 px-2"><i
                                                                         class="fas fa-edit m-0 "></i> </a>
                                                     </div>
                                                     <div class="row ">
                                                         <div class="col-sm-6">
-                                                            @foreach($group->instructors as $instructor)
-                                                                <div>
-                                                                    <span class="w-50 p-3  text-primary"> اسم المدرس :</span>
-                                                                    {{ $instructor->nameAr }}
-                                                                </div>
-                                                            @endforeach
+                                                            <div>
+                                                                <span class="w-50 p-3  text-primary"> اسم المدرس :</span>
+                                                                {{ $group->instructor->nameAr }}
+                                                            </div>
                                                         </div>
                                                         <div class="col-sm-6">
-                                                            <div><span class="w-50 p-3  text-primary"> القاعه :</span>
-                                                                 {{ $group->room->name }}
+                                                            <div>
+                                                                <span class="w-50 p-3 text-warning">تاريخ البدايه : </span>
+                                                                20/10/2020
                                                             </div>
                                                         </div>
                                                     </div>
@@ -91,11 +90,23 @@
                                                     <fieldset>
                                                     <div class="form-row days">
                                                         <header class="full-width"><h6> مواعيد الدبلومه </h6></header>
-                                                        <div class="col-sm-4 form-group">
-                                                            <div>
-                                                                <span class="w-50 p-3  text-warning"> تاريخ البدايه :</span>
-                                                                20/1/2020
-                                                            </div>
+                                                        <div class="col-sm-4 col-md-12 form-group">
+                                                            @foreach($group->times as $time)
+                                                                <div>
+                                                                    <span class="w-50 p-3  text-primary"> التارخ :</span>
+                                                                    {{ $time->day}}
+
+                                                                    <span class="w-50 p-3  text-primary"> البدايه :</span>
+                                                                    {{ $time->begin }}
+
+                                                                    <span class="w-50 p-3  text-primary"> النهايه :</span>
+                                                                    {{$time->end }}
+
+                                                                    <span class="w-50 p-3  text-primary"> القاعه :</span>
+                                                                    {{ App\Room::findOrFail($time->pivot->room_id)->name }}
+                                                                </div>
+
+                                                            @endforeach
                                                         </div>
 
                                                     </div>

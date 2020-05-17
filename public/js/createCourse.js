@@ -1,7 +1,5 @@
-
 let chapterNum = 1;
 let courseDayNom = 1;
-
 function addChapterInput(num) {
     return `
     <hr/>
@@ -24,34 +22,42 @@ function addChapterInput(num) {
 
 function addDayInCourse(num) {
     return `
+
     <hr/>
-     <div class="col-sm-4 form-group">
+     <div class="col-sm-3 form-group extra_time">
         <label for="validationCustom01">   اختر اليوم</label>
         <div class='input-group date'>
 
-        <input id="course-day-${num}" name="course-day[]" onchange="onDayChanged(${num})"  onclick="onDayClicked(${num})" class="form-control" type="text" >
+        <input id="diploma-day-${num}" name="diploma-days[]"   onclick="onDayClicked(${num})" class="form-control" type="text" >
         
         <span class="input-group-addon">
            <span class="glyphicon glyphicon-calendar"></span>
         </span>
+        
         </div>
       </div>
-    <div class="col-sm-4 form-group">
-        <label for="course-day-${num}-begin"> بداية المحاضرة</label>
-        <select class="form-control" id="course-day-${num}-begin"  name="course-begin[]" onchange="onBeginChanged(${num})" required>
+    <div class="col-sm-3 form-group extra_time">
+        <label for="diploma-day-${num}-begin"> بداية المحاضرة</label>
+        <select class="form-control" id="diploma-day-begin-${num}"  name="diploma-begins[]" >
             
         </select>
-            <span id="test_course-day-${num}-begin_error"></span>
+            <span id="test_diploma-day-${num}-begin_error"></span>
             <div></div>
     </div>
-    <div class="col-sm-4 form-group">
-        <label for="course-day-${num}-end"> نهاية المحاضرة</label>
-        <select class="form-control" id="course-day-${num}-end" name="course-end[]" required>
+    <div class="col-sm-3 form-group extra_time">
+        <label for="diploma-day-${num}-end"> نهاية المحاضرة</label>
+        <select class="form-control" id="diploma-day-end-${num}" name="diploma-ends[]">
             
         </select>
-            <span id="test_course-day-${num}-end_error"></span>
+            <span id="test_diploma-day-${num}-end_error"></span>
             <div></div>
     </div>
+    <div class="col-sm-3 form-group extra_time">
+       <label for="validationCustom01">اختر الغرفه</label>
+       <select class="form-control" id="diploma-room-${num}" name="diploma-rooms[]"required></select>
+    </div>
+    
+    
     `
 }
 
@@ -129,7 +135,7 @@ var dropDownOptions = {
 };
 
 var globalTreeIdCounter = 0;
-
+var selectedElements = [];
 (function ($) {
 
     //data inits from options
@@ -237,7 +243,7 @@ var globalTreeIdCounter = 0;
             }
         }
         $(options.element).append('<button class="btn btn-default dropdown-toggle categoryBTN" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="dropdowntree-name">' + options.title + '</span><span class="caret"></span></button>');
-        $(options.element).append('<ul style="max-height: ' + options.maxHeight + 'px" class="dropdown-menu" aria-labelledby="dropdownMenu1"></ul>');
+        $(options.element).append('<ul id="main_ul" style="max-height: ' + options.maxHeight + 'px" class="dropdown-menu" aria-labelledby="dropdownMenu1"></ul>');
 
         RenderData(options.data, $(options.element).find("ul").first());
 
@@ -253,11 +259,12 @@ var globalTreeIdCounter = 0;
         };
 
         $(options.element).init.prototype.GetSelected = function (title) {
-            var selectedElements = [];
             $(this).find(".fa-check-square-o").each(function () {
-                selectedElements.push($(this).parents("li").first());
+                if(! selectedElements.includes($(this).parents("li").first().attr('data-id'))){
+                    selectedElements.push($(this).parents("li").first().attr('data-id'));
+                }
             });
-            return selectedElements;
+            console.log(selectedElements);
         };
 
         $(options.element).init.prototype.AddChildren = function (element, arrOfElements) {
@@ -287,31 +294,75 @@ var globalTreeIdCounter = 0;
 ga('create', 'UA-81901172-2', 'auto');
 ga('send', 'pageview');
 
-/* --------value of category -------*/
-
+var selectedCategories = [];
 var options = {
     title: "اختيار التصنيف",
-    data: arr,
+    data: "",
     maxHeight: 300,
     clickHandler: function (element) {
         //gets clicked element parents
-        console.log($(element).GetParents());
+        // console.log($(element).GetParents());
         //element is the clicked element
-        console.log(element);
+        // console.log(element);
         $("#firstDropDownTree").SetTitle($(element).find("a").first().text());
-        console.log("Selected Elements", $("#firstDropDownTree").GetSelected());
+
     },
     expandHandler: function (element, expanded) {
-        console.log("expand", element, expanded);
+        // console.log("expand", element, expanded);
     },
     checkHandler: function (element, checked) {
-        console.log("check", element, checked);
+        var category_id = element.attr('data-id');
+        if(selectedElements.includes(category_id)) {
+            selectedElements.splice(selectedElements.indexOf(category_id), 1);
+        }else{
+            selectedElements.push(category_id);
+        }
+        // $("#firstDropDownTree").GetSelected();
     },
     closedArrow: '<i class="fa fa-caret-right" aria-hidden="true"></i>',
     openedArrow: '<i class="fa fa-caret-down" aria-hidden="true"></i>',
     multiSelect: true,
     selectChildren: true,
+};
+
+getCategories();
+
+
+function getCategories() {
+    jQuery.ajax({
+        url: "/all_categories/",
+        type: 'GET',
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (categories) {
+            // console.log(categories);
+            options.data = setOptions(categories);
+            $("#firstDropDownTree").DropDownTree(options);
+        }
+    })
 }
 
-$("#firstDropDownTree").DropDownTree(options);
+function setOptions(categories) {
+    var options = [];
+    categories.forEach(function (category, index) {
+        var option = {
+            title: category.name,
+            href: "#3",
+            dataAttrs: [{title: "id", data: category.id}],
+        };
+        if(category.children.length > 0){
+            option.data = setOptions(category.children);
+        }
+        options.push(option);
+    });
+
+
+    return options;
+
+}
+
+function getSelectedCategoriesIds() {
+    console.log("getSelectedCategories");
+    return selectedElements;
+}
 /* ---end category -----*/

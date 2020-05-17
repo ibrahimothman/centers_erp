@@ -91,12 +91,12 @@
                                                 <p><img class="img-fluid rounded-circle  " src="{{ is_null($employees[$j]->image)? App\helper\Constants::getInstructorPlaceholderImage() : $employees[$j]->image}}" width="100"
                                                         height="100" alt="card image"></p>
                                                 <h4 class="card-title">{{$employees[$j]->nameAr}}</h4>
-                                                <a href="" class=" btn btn-outline-primary  py-1 px-2 m-1">
-                                                    <i  class="fas fa-edit m-0 "></i> </a>
-                                                <a href="/employees/{{$employees[$j]->id}}" class="btn btn-outline-success  py-1 px-2 m-1"><i class="fas fa-eye m-0"></i></a>
-                                                <button type="submit" class="btn btn-outline-danger py-1 px-2 m-1">
-                                                    <i class="fas fa-trash-alt m-0"></i>
-                                                </button>
+                                                <form class="card-footer border-primary " method="post" action="{{route('employees.destroy',['employee' => $employees[$j]])}}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-success btn-xs"> <i class="fas fa-trash-alt"></i> </button>
+                                                    <a href="/employees/{{$employees[$j]->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -111,6 +111,7 @@
             @endfor
             {!! $employees->render() !!}
         </div>
+
         @include('footer')
     </div>
 </div>

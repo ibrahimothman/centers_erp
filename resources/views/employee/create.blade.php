@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     @include('library')
-    <!-- Bootstrap CSS & js -->
-        <link rel="stylesheet" href="/css/employee.css">
     <title>add a new admin</title>
 </head>
 <body id="page-top">
@@ -25,28 +24,61 @@
                                     تسجيل بيانات الموظفين
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('employees.store') }}" method="post" id="employeeCreate">
+                                    <form action="{{ route('employees.store') }}" method="post" enctype="multipart/form-data" id="employeeCreate">
                                         @csrf
-                                        <div class="form-row form-group">
+                                        <div class="form-row image-upload">
+                                            <div class="col-sm-8">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" accept="image/*" name="idImage"
+                                                           id="customFile1" src="" onchange="readURL(this, 1);" >
+                                                    <input type="file" class="custom-file-input" accept="image/*" name="image"
+                                                           id="customFile2" src="" onchange="readURL(this, 2);">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center  ">
+                                            <div class="course-image-input">
+                                                <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                     alt="your image"/>
+                                                <p>صورة البطاقه</p>
+                                                <!--      <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
+                                            </div>
+                                            <div class="course-image-input">
+                                                <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                     alt="your image"/>
+                                                <p>الصوره الشخصيه</p>
+                                                <!--      <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
                                             <label>الاسم باللغه العربيه </label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="nameAr" placeholder="الاسم " value="{{ old('nameAr') }}">
+                                            <input type="text" class="form-control"  name="nameAr" placeholder="الاسم " value="{{ old('nameAr') ?? 'asd' }}">
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
 
-                                        <div class="form-row form-group">
+                                        <div class="form-row">
                                             <label>الاسم باللغه الانجليزيه </label>
-                                            <input type="text" class="form-control" name="nameEn" placeholder="الاسم " value="{{ old('nameEn') }}">
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" name="nameEn" placeholder="الاسم " value="{{ old('nameEn') ?? 'asd' }}">
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
 
+                                        <div class="form-row">
+                                            <label>الايميل</label>
+                                            <input type="text" class="form-control" name="email" placeholder="ادخل الايميل " value="{{ old('email') ?? 'asda@asd.com'}}">
+                                            <div>{{ $errors->first('email') }}</div>
+                                        </div>
 
-                                        <div class=" form-row form-group">
-                                            <div class="col-sm-6 ">
+
+                                        <div class=" form-row ">
+                                            <div class="col-6 ">
                                                 <label>رقم التليفون </label>
                                                 <span class="required">*</span>
                                                 <input type="text" name="phoneNumber" placeholder="ادخل رقم التليفون المحمول  "
-                                                       class="form-control" value="{{ old('phoneNumber') }}">
+                                                       class="form-control" value="{{ old('phoneNumber') ?? '01254111111' }}">
                                                 <div>{{ $errors->first('phoneNumber') }}</div>
                                             </div>
 
@@ -60,23 +92,23 @@
 
 
                                         </div>
-{{--                                        <div class="form-row">--}}
-{{--                                            <div class="col ">--}}
-{{--                                                <label>الوظيفه </label>--}}
-{{--                                                <span class="required">*</span>--}}
-{{--                                                <select name="job" class="form-control">--}}
-{{--                                                    <option value="" selected>اختار وظيفة</option>--}}
-{{--                                                    @foreach($jobs as $job)--}}
-{{--                                                        <option value="{{ $job->id }}">{{ $job->name }}</option>--}}
-{{--                                                    @endforeach--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        <div class="form-row">
+                                            <div class="col ">
+                                                <label>الوظيفه </label>
+                                                <select name="job" class="form-control">
+                                                    <option value="0">اختار وظيفة</option>
+                                                    @foreach($jobs as $job)
+                                                        <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div>{{ $errors->first('job') }}</div>
+                                            </div>
+                                        </div>
 
                                         <div class=" form-row form-group">
                                             <div class="col-sm-6 ">
                                                 <label>الرقم القومى </label>
-                                                <input type="text" name="idNumber" value="{{ old('idNumber') }}"
+                                                <input type="text" name="idNumber" value="{{ old('idNumber') ?? '22223333000101' }}"
                                                        placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
                                                 <div>{{ $errors->first('idNumber') }}</div>
                                             </div>
@@ -88,11 +120,13 @@
                                                 <div>{{ $errors->first('passportNum') }}</div>
                                             </div>
                                         </div>
-                                   <div class="form-row form-group">
+                                        <br>
+
+                                        <div class="form-row">
 
                                             <div class="col  ">
                                                 <label>البلد </label>
-                                                <input name="state" type="text" placeholder="البلد" value="{{ old('state') }}" class="form-control">
+                                                <input name="state" type="text" placeholder="البلد" value="{{ old('state') ?? 'asd'}}" class="form-control">
                                                 <div>{{ $errors->first('state') }}</div>
                                                 <div></div>
 
@@ -100,17 +134,17 @@
 
                                             <div class="col  ">
                                                 <label >المدينه </label>
-                                                <input name="city" type="text" placeholder="المدينه" value="{{ old('city') }}" class="form-control">
+                                                <input name="city" type="text" placeholder="المدينه" value="{{ old('city') ?? 'sad'}}" class="form-control">
                                                 <div>{{ $errors->first('city') }}</div>
 
                                             </div>
                                         </div>
 
-                                        <div class=" form-row form-group">
+                                        <div class=" form-row">
                                             <label>العنوان</label>
                                             <span class="required">*</span>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="3"
-                                                      class="form-control">{{ old('address') }}</textarea>
+                                                      class="form-control">{{ old('address') ?? 'asda'}}</textarea>
                                             <div>{{ $errors->first('address') }}</div>
                                         </div>
 
@@ -120,29 +154,24 @@
                                                 <label>نظام المحاسبه</label>
                                                 <span class="required">*</span>
                                                 <select class="form-control" id="payment_models" name="payment_model" required>
-                                                    <option value="">اختار</option>
+                                                    <option value="0">اختار</option>
                                                     @foreach($payment_models as $payment_model)
-                                                        <option data-extra="{{ $payment_model }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
+                                                        <option data-extra="{{ $payment_model->meta_data }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                            <div class="form-row form-group">
-                                                <div class="col-sm-6">
-                                                <label>
-                                                    <input type="radio" class="option-input radio"
-                                                           name="example" checked/>
-                                                   يعمل
-                                                </label>
+
+                                        <!-- user invitation checkbox-->
+                                        <div class="form-row">
+                                            <div class="col-sm-6 form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input part-of-diploma" name="send_invitation" id="send_invitation">
+                                                    <label class="custom-control-label" for="send_invitation">دعوة هذا الموظف ليكون مستخدم</label>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <label>
-                                                    <input type="radio" class="option-input radio"
-                                                           name="example"/>
-                                                 لا يعمل
-                                                </label>
-                                            </div>
-                                            </div>
+                                        </div>
+
                                         <br>
                                         <div class="form-row save">
                                             <div class="col-sm-6 mx-auto text-center">
@@ -165,6 +194,24 @@
             @include('footer')
     </div>
 </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">هل تريد الخروج بالفعل</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">اضغط على الخروج اذا كنت ترغب قى  الخروج</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
+                    <a class="btn btn-primary" href="login.html">الخروج</a>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- scroll top -->
 @include('scroll_top')
 <!-- script-->
@@ -181,17 +228,49 @@
 <script>
     $("#payment_models").on('change', function() {
         $('.meta_data').remove();
-        var selected_model = $.parseJSON($(this).find(':selected').attr("data-extra"));
-        $.each(selected_model.meta_data, function (key, value) {
+        var selected_model_meta_data = $.parseJSON($(this).find(':selected').attr("data-extra"));
+        $.each(selected_model_meta_data, function (key, value) {
             $('#model_form').after("<div class='row form-group meta_data'>" +
                 "<div class='col-sm-12'>" +
                 "<label>"+ key +"</label>" +
                 "<span class='required'>*</span>" +
-                "<input class='form-control payType' type='text' name='payment_model_meta_data["+ key +"]' id='"+ key +"'>" +
+                "<input class='form-control payType' type='text' value='"+ value +"' name='payment_model_meta_data["+ key +"]' id='"+ key +"'>" +
                 "</div>" +
                 "</div>");
         })
 
     });
+
+
+    // upload images
+
+
+    $('#imageUploaded1, #imageUploaded2').click(function () {
+        let photoNum = this.id[this.id.length - 1];
+        $(`#customFile${photoNum}`).trigger('click');
+    })
+
+
+    //code for the image uploaded to be shown
+    function readURL(input, num) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                if (num > 3) {
+                    $(`#imageUploaded${num}`)
+                        .attr('src', 'https://icon-library.net/images/done-icon/done-icon-5.jpg')
+
+                } else {
+                    $(`#imageUploaded${num}`)
+                        .attr('src', e.target.result)
+                }
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
 
 </script>

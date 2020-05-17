@@ -13,10 +13,15 @@ abstract class ImageUploader extends Model
 
     public abstract function getDir();
 
+    private function getPath()
+    {
+        return public_path($this->getDir());
+    }
+
     public function saveImage($image)
     {
         // create courses dir if not existed
-        $path = public_path($this->getDir());
+        $path = $this->getPath();
         if (!is_dir($path)) {
             mkdir($path,0777,true);
         }
@@ -32,9 +37,10 @@ abstract class ImageUploader extends Model
     public function deleteImage($image)
     {
         if($image) {
-            $url = explode('/', $image)[5];
+            $url = explode('/', $image);
+            $image_part = $url[count($url)-1];
             File::delete([
-                public_path($this->getDir() . "/" . $url)
+                $this->getPath() ."/" . $image_part
             ]);
         }
 

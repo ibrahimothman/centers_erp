@@ -40,6 +40,26 @@ class TransactionController extends Controller
     }
 
 
+    public function update(Request $request, Transaction $transaction)
+    {
+        $data = Validator::make($request->all(),[
+            'amount' => 'required | numeric',
+            'date' => 'required | date',
+            'rest' => 'required | numeric',
+        ]);
+
+
+        $data = $data->validate();
+        $transaction->update($data);
+        return redirect()->back()->with('message', 'Successfully updated');
+    }
+
+    public function destroy(Transaction $transaction)
+    {
+        $transaction->delete();
+        return redirect('/finance');
+    }
+
     private function validateTransaction(Request $request)
     {
         /*

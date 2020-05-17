@@ -18,13 +18,17 @@
                 <div class="row">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8">
+                        @if(session()->has('success'))
+                            <div class="alert alert-success">
+                                {{ session()->get('success') }}
+                            </div>
+                        @endif
                         <div class="card mb-4">
                             <div class="card-header text-primary">
                                 تسجيل بيانات الطلاب
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('students.store') }}" method="post" enctype="multipart/form-data" id="studentCreate">
-
                                     @csrf
                                     <!-- photo -->
                                         <div class="form-row image-upload">
@@ -141,7 +145,7 @@
                                             <select name="degree" class="form-control" id="exampleFormControlSelect1">
                                                 <option value="">اختار</option>
                                                 @foreach($student->degreeOptions() as $degree)
-                                                    <option>{{ $degree }}</option>
+                                                    <option {{ $degree == old('degree')? 'selected': '' }}>{{ $degree }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -151,7 +155,7 @@
                                             <select name="faculty" class="form-control" id="exampleFormControlSelect2">
                                                 <option value="">اختار</option>
                                                 @foreach($student->facultyOptions() as $faculty)
-                                                    <option>{{ $faculty }}</option>
+                                                    <option {{ $faculty == old('faculty')? 'selected': '' }}>{{ $faculty }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -169,7 +173,8 @@
                                         </div>
                                         <div class="col-sm-6  form-group">
                                             <br>
-                                            <button class="btn btn-primary" type="submit" id="submit"><i class="glyphicon glyphicon-ok-sign"></i> حفظ</button>
+                                            <button class="btn btn-primary" type="submit" id="save"><i class="glyphicon glyphicon-ok-sign"></i> حفظ</button>
+                                            <button class="btn btn-primary" type="submit" id="save_new"><i class="glyphicon glyphicon-ok-sign"></i> حفظ و انشاء جديد</button>
                                             <button class="btn  btn-danger" type="reset"><i class="glyphicon glyphicon-repeat"></i> الغاء</button>
                                         </div>
                                         <div class="col-sm-3  form-group">
@@ -199,6 +204,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
 <script type='text/javascript' src="/js/students_create_validation.js"></script>
+<script type='text/javascript' src="/js/student.js"></script>
 <script>
 
         $(document).ready(function() {

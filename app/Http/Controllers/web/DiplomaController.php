@@ -57,7 +57,7 @@ class DiplomaController extends Controller
 
     public function show(Diploma $diploma)
     {
-        $diploma = Diploma::with('courses')->with('groups.instructors')->findOrFail($diploma)->first();
+        $diploma = Diploma::with('courses')->with('groups.times')->with('groups.instructor')->findOrFail($diploma)->first();
         return view('diploma/diploma_details', compact('diploma'));
     }
 

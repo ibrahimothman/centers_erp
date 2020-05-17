@@ -6,24 +6,18 @@ $(document).ready(function () {
     $('#employeeCreate').validate(
         {
             rules: {
-                nameAr: {
+                name: {
                     required: true,
                 },
-
-                idNumber:{
-                    number: true,
-                    minlength: 14,
-                    maxlength:14
-                },
+               email:{
+                 email: true
+               },
                 phoneNumber: {
                     required: true,
                     noSpace:true,
                     number: true,
                     minlength: 11,
                     maxlength:11
-                },
-                payment_model: {
-                    required: true,
                 },
 
                 address: {
@@ -33,14 +27,12 @@ $(document).ready(function () {
             },
             messages: {
 
-                nameAr: {
+                name: {
                     required: "هذه الخانه مطلوبه",
                 },
-                idNumber: {
-                    number:"ادخل الرقم الصحيح",
-                    minlength: "ادخل الرقم الصحيح" ,
-                    maxlength:"ادخل الرقم الصحيح",
-
+                email: {
+                    required: "هذه الخانه مطلوبه",
+                    email:"ادخل الايميل الصحيح"
                 },
                 phoneNumber: {
                     required: "هذه الخانه مطلوبه",
@@ -49,7 +41,7 @@ $(document).ready(function () {
                     maxlength:"ادخل الرقم الصحيح",
                     noSpace:"غير مسموح بالمسافات"
                 },
-                payment_model: {
+                job: {
                     required: "هذه الخانه مطلوبه",
                 },
 
@@ -64,7 +56,7 @@ $(document).ready(function () {
 
         });
     $('#employeeCreate').on('focus', function() {
-        $(this).validate();
+       $(this).validate();
 
     });
 

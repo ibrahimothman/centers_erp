@@ -35,13 +35,14 @@
 
                                             <label for="validationCustom01">اسم الامتحان</label>
                                             <span class="required">*</span>
+
                                             <input type="text" class="form-control" id="validationCustom01" placeholder="اسم الامتحان " value="{{ old('name') }}"  name="name">
                                             <span id="test_name_error"></span>
                                             <div>{{ $errors->first('name') }}</div>
                                         </div>
                                         <div class="col-sm-4 form-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="retake" id="customCheck1" {{old('retake') ?? 'checked'}}>
+                                                <input type="checkbox" class="custom-control-input" name="retake" id="customCheck1" {{old('retake') == 'on' ? 'checked' : ''}}>
                                                 <label class="custom-control-label" for="customCheck1">قابل للاعادة</label>
                                             </div>
 

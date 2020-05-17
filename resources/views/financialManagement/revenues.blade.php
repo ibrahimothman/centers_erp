@@ -36,7 +36,7 @@
                                                 <!-- date -->
                                                 <div class="  col-sm-6 title pb-3">
                                                     <h5 class="text-primary  pt-1 pr-3 pl-0">التاريخ: </h5>
-                                                        <input id="date" name="date" class="form-control datetimepickerRevenues required_field"  placeholder="التاريخ "    type="text" >
+                                                        <input id="date" name="date" class="form-control datetimepicker required_field"  placeholder="التاريخ "    type="text" >
                                                     </div>
                                                 <!-- add pill -->
                                                 <div  class="form-group   mr-3  ">
@@ -123,16 +123,20 @@
 
 <script>
 
+    $(".datetimepicker").datetimepicker({
+        timepicker:false,
+        format:'Y-m-d'
+    });
 
     $(document).ready(function () {
 
         $(document).on('input', "[id^=student]",  function () {
-            var id = $(this).attr('id')[7];
+            var id = $(this).attr('id').substring(7);
             // console.log("changed");
             var value = $(this).val();
             if(value !== '') {
                 var selected_student = $.parseJSON($('#studentList [value="' + value + '"]').attr('data-customValue'));
-                selected_student.diplomas.forEach(function (diploma_group) {
+                selected_student.diplomas_groups.forEach(function (diploma_group) {
                     $("#diplomaList").append("<option data-id = '"+ diploma_group.diploma.id +"' data-customValue='" + diploma_group.diploma.cost + "' value='" + diploma_group.diploma.name + "'></option>");
                 });
             }

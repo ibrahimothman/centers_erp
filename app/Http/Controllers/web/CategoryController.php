@@ -6,6 +6,7 @@ use App\Category;
 use App\Center;
 use App\Http\Controllers\Controller;
 use App\repository\CategoryRepository;
+use App\Rules\UniquePerCenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
@@ -74,7 +75,7 @@ class CategoryController extends Controller
     private function validateRequest(Request $request)
     {
         return Validator::make($request->all(),[
-            'name' => 'required | unique:categories,name,NULL,id,center_id,' . Session('center_id'),
+            'name' => ['required',new UniquePerCenter(Category::class, '')],
             'parent_id' => ['sometimes'],
         ]);
     }

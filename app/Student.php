@@ -4,15 +4,17 @@ namespace App;
 
 use App\helper\Constants;
 use App\helper\ImageUploader;
-use App\QueryFilter\Name;
+use App\QueryFilter\SearchBy;
 use App\QueryFilter\Sort;
 use App\Rules\DegreeRule;
 use App\Rules\FacultyRule;
+use App\Rules\UniquePerCenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use mysql_xdevapi\Collection;
 
 class Student extends ImageUploader
 {
@@ -23,8 +25,8 @@ class Student extends ImageUploader
         return app(Pipeline::class)
             ->send($center->students())
             ->through([
-                Sort::class,
-                Name::class
+                SearchBy::class,
+                Sort::class
             ])
             ->thenReturn()
             ->get();
@@ -85,9 +87,19 @@ class Student extends ImageUploader
         return $this->belongsToMany(CourseGroup::class)->withTimestamps();
     }
 
-    public function diplomas()
+    public function diplomas_groups()
     {
         return $this->belongsToMany(DiplomaGroup::class)->withTimestamps();
+    }
+
+    public function diplomas()
+    {
+        $diplomas = new \Illuminate\Database\Eloquent\Collection();
+        $groups =  $this->diplomas_groups()->with('diploma')->get();
+        foreach($groups as $group){
+              $diplomas->push($group->diploma);
+        }
+        return $diplomas;
     }
 
     public function payments()
@@ -123,40 +135,40 @@ class Student extends ImageUploader
 
         if($request->isMethod('post')){
             return [
-                'nameAr' => 'required|unique:students,nameAr',
-                'nameEn' => 'required|unique:students,nameEn',
-                'email' => 'required|unique:students,email',
-                'idNumber' => 'required|digits:14|unique:students,idNumber',
+                'nameAr' => ['required', new UniquePerCenter(Student::class, '', 'students', false)],
+                'nameEn' => ['required', new UniquePerCenter(Student::class, '', 'students', false)],
+                'email' => ['required', new UniquePerCenter(Student::class, '', 'students', false)],
+                'idNumber' => ['required', 'digits:14', new UniquePerCenter(SStudent::class, '', 'students', false)],
                 'image' => ' required|image|file | max:10000',
                 'idImage' => 'required|image|file | max:10000',
-                'phoneNumber' => 'required|regex:/(01)[0-9]{9}/|unique:students,phoneNumber',
+                'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/', new UniquePerCenter(Student::class, '', 'students', false)],
 //                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
                 'passportNumber' => 'sometimes',
-                'state' => 'required',
-                'city' => 'required',
+                'state' => 'sometimes',
+                 'city' => 'required',
                 'address' => 'required',
                 'degree' => ['required',new DegreeRule],
                 'faculty' => ['required',new FacultyRule],
-                'skillCardNumber' => 'required|unique:students,skillCardNumber',
+                'skillCardNumber' => ['sometimes', new UniquePerCenter(Student::class, '', 'students', false)],
             ];
         }else{
             $student_id = $request->route('student')->id;
             return[
-                'nameAr' => 'sometimes|unique:students,nameAr,'.$student_id,
-                'nameEn' => 'sometimes|unique:students,nameEn,'.$student_id,
-                'email' => 'sometimes|unique:students,email,'.$student_id,
-                'idNumber' => 'sometimes|digits:14|unique:students,idNumber,'.$student_id,
+                'nameAr' => ['required', new UniquePerCenter(Student::class, $student_id, 'students', false)],
+                'nameEn' => ['required', new UniquePerCenter(Student::class, $student_id, 'students', false)],
+                'email' => ['required', new UniquePerCenter(Student::class, $student_id, 'students', false)],
+                'idNumber' => ['required', 'digits:14', new UniquePerCenter(SStudent::class, $student_id, 'students', false)],
                 'image' => ' sometimes|image|file | max:10000',
                 'idImage' => 'sometimes|image|file | max:10000',
-                'phoneNumber' => 'sometimes|regex:/(01)[0-9]{9}/|unique:students,phoneNumber,'.$student_id,
-                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
+                'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/', new UniquePerCenter(Student::class, $student_id, 'students', false)],
+//                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
                 'passportNumber' => 'sometimes',
                 'state' => 'sometimes',
                 'city' => 'sometimes',
                 'address' => 'sometimes',
                 'degree' => ['sometimes',new DegreeRule],
                 'faculty' => ['sometimes',new FacultyRule],
-                'skillCardNumber' => 'sometimes|unique:students,skillCardNumber,'.$student_id,
+                'skillCardNumber' => ['sometimes', new UniquePerCenter(Student::class, $student_id, 'students', false)],
             ];
         }
     }

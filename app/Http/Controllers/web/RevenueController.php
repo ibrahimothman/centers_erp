@@ -27,8 +27,14 @@ class RevenueController extends Controller
     {
         // get students with diplomas in which they enroll
         $center = Center::findOrFail(Session('center_id'));
-        $students = $center->students()->with('diplomas.diploma')->get();
-//        return response()->json($students);
+        $students = $center->students()->with('diplomas_groups.diploma')->get();
+//        return json_encode($students);
         return view("financialManagement/revenues", compact('students'));
+    }
+
+    public function edit($transaction)
+    {
+        $transaction = Transaction::findOrFail($transaction);
+        return view("financialManagement/edit_revenues", compact("transaction"));
     }
 }

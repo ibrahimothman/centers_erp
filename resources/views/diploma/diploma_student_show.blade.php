@@ -30,7 +30,7 @@
                                     aria-haspopup="true" aria-expanded="false"> اختار اسم الدبلومه </button>
                             <div class="dropdown-menu">
                                 @foreach($all_diplomas as $diploma)
-                                    <a class="dropdown-item" href="{{ route('diploma-enrollments.index') }}?id={{ $diploma->id }}">{{ $diploma->name }}</a>
+                                    <a class="dropdown-item" href="{{ route('diploma-enrollments.index') }}?diploma_id={{ $diploma->id }}">{{ $diploma->name }}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -42,30 +42,28 @@
                         </div>
                         </span></div>
                         <!-- table -->
-                        <div class="table-responsive">
                         <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0"
                                width="100%">
                             <thead>
                             <tr>
                                 <th class="th-sm">اسم الطالب</th>
                                 <th class="th-sm">اسم الدبلومه</th>
-                                <th class="th-sm">اسم المدرب</th>
                                 <th class="th-sm">المعاد</th>
                                 <th class="th-sm"> تعديل</th>
                                 <th class="th-sm"> ازاله</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($diplomas as $diploma)
-                                @foreach($diploma->groups as $group)
+
+                                @foreach($groups as $group)
                                     @foreach($group->students as $student)
                                         <tr>
                                             <td>{{ $student->nameAr }}</td>
-                                            <td>{{ $diploma->name }}</td>
-                                            <td></td>
+                                            <td>{{ $group->diploma->name }}</td>
                                             <td>{{ $group->starts_at }}</td>
                                             <td>
-                                                <a href="" class=" btn btn-outline-primary  py-1 px-2 "><i
+
+                                                <a href="{{ route('diploma-enrollments.edit', ['student_id' => $student->id, 'diploma_group' => $group->id]) }}" class=" btn btn-outline-primary  py-1 px-2 "><i
                                                             class="fas fa-edit m-0 "></i> </a>
 
                                             </td>
@@ -78,11 +76,9 @@
                                         </tr>
                                     @endforeach
                                 @endforeach
-                            @endforeach
                             </tbody>
 
                         </table>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -101,14 +97,14 @@
 <script>
     function deleteEnrollment(diploma_group_id, student_id) {
         console.log("diploma_group_id : "+diploma_group_id+", student_id : "+student_id);
-        $.ajax({
-            url : '/diploma-enrollments/1',
-            type : 'delete',
-            data : { diploma_group_id : diploma_group_id, student_id : student_id, '_token' : '{{ csrf_token() }}'  },
-            success : function (data) {
-                window.location.reload();
-            }
-        });
+        {{--$.ajax({--}}
+        {{--    url : '/diploma-enrollments/1',--}}
+        {{--    type : 'delete',--}}
+        {{--    data : { diploma_group_id : diploma_group_id, student_id : student_id, '_token' : '{{ csrf_token() }}'  },--}}
+        {{--    success : function (data) {--}}
+        {{--        window.location.reload();--}}
+        {{--    }--}}
+        {{--});--}}
     }
 </script>
 
