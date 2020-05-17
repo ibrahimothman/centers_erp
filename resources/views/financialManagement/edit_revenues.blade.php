@@ -14,9 +14,15 @@
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
         @include('operationBar')
+
         <div class="container-fluid">
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-10">
+                    @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
@@ -27,41 +33,40 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <!-- select date -->
-                                        <form>
+                                        <form action="{{ route('transactions.update', $transaction->id) }}" method="post">
+                                            @csrf
+                                            @method('put')
                                             <!-- add row revenues -->
                                                 <div class="form-row ">
                                                     <div class="col-sm-6  form-group ">
                                                         <label> الاسم  </label>
-                                                        <input placeholder="اختار" type="text" id="name" class="form-control" name="nameStudent" list="nameSelect"  />
-                                                        <datalist id="nameSelect" >
-                                                                <option >احمد</option>
-                                                                <option>محمد</option>
-                                                        </datalist>
+                                                        <input placeholder="اختار" type="text" id="name" class="form-control" name="nameStudent" value="{{ $transaction->payer()->nameAr }}" readonly />
+
                                                     </div>
                                                     <div class="col-sm-6 form-group ">
                                                         <label>الكورس /الدبلومه</label>
-                                                        <input placeholder="اختار" type="text" id="course" class="form-control" name="course" list="courseSelect"  />
-                                                        <datalist id="courseSelect">
-                                                            <option >  full stack  (جنيه2000)  </option>
-                                                            <option>full stack  (600جنيه) </option>
-                                                        </datalist>
+                                                        <input placeholder="اختار" type="text" id="course" class="form-control" name="diploma" value="{{ $transaction->payFor()->name }}" readonly />
+
                                                     </div>
                                                 </div>
                                             <div class="form-row ">
                                                     <div class="col-sm-6  form-group ">
-                                                        <label> التكلفه </label><input type="text" name="cost" class="form-control "  id="cost"   >
+                                                        <label> التكلفه </label><input type="text" name="cost" class="form-control "  id="cost" value="{{ $transaction->payFor()->cost }}" readonly  >
                                                     </div>
                                                     <div class="col-sm-6  form-group ">
-                                                        <label> المدفوع  </label><input type="text" name="payIncome" class=" form-control  payIncome"  id="payIncome"   >
+                                                        <label> المدفوع  </label><input type="text" name="amount" class=" form-control  payIncome"  id="payIncome" value="{{ $transaction->amount }}"  >
+                                                        <div>{{ $errors->first('amount') }}</div>
                                                     </div>
+
                                             </div>
                                             <div class="form-row ">
                                                     <div class="col-sm-6 form-group ">
-                                                        <label>الباقي  </label><input type="text" name="noPayIncome" class="form-control "  id="noPayIncome"   >
+                                                        <label>الباقي  </label><input type="text" name="rest" class="form-control "  id="noPayIncome" value="{{ $transaction->rest }}" readonly >
                                                     </div>
                                                 <div class="  col-sm-6  form-group ">
                                                     <label>التاريخ </label>
-                                                    <input id="datetimepickerRevenuesEdit" name="test_timeRevenuesEdit" class="form-control datetimepickerRevenuesEdit"  placeholder="التاريخ "    type="text" >
+                                                    <input id="datetimepickerRevenuesEdit" name="date" class="form-control datetimepicker"  placeholder="التاريخ "    type="text" value="{{ $transaction->date }}" >
+                                                    <div>{{ $errors->first('date') }}</div>
                                                 </div>
                                                 </div>
 
@@ -69,7 +74,7 @@
                                             <div class="form-row save">
                                                 <div class="col-sm-6 mx-auto" style="width: 200px;">
                                                     <button class="btn btn-primary action-buttons" type="submit"
-                                                            id="submit">حفظ
+                                                            id="submit">تعديل
                                                     </button>
                                                     <button class="btn  btn-danger action-buttons" type="reset"> إلغاء
                                                     </button>
@@ -103,3 +108,11 @@
 <script type='text/javascript' src="/js/financialManagement.js"></script>
 </body>
 </html>
+<script>
+
+    $('#payIncome').on('input', function (e) {
+        var amount = $(this).val();
+        var rest = $('#cost').val() - amount;
+        $('#noPayIncome').val(rest);
+    })
+</script>

@@ -118,6 +118,7 @@
     </li>
 
     <!-- calendar -->
+<<<<<<< HEAD
     <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::CalendarLinks() )? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarCollapse" aria-expanded="true" aria-controls="calendarCollapse">
             <i class="fas fa-calendar-week"></i>
@@ -133,6 +134,23 @@
             </div>
         </div>
     </li>
+=======
+{{--    <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::CalendarLinks() )? 'active' : ''}}"  >--}}
+{{--        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarCollapse" aria-expanded="true" aria-controls="calendarCollapse">--}}
+{{--            <i class="fas fa-fw fa-wrench"></i>--}}
+{{--            <span>كالندر</span>--}}
+{{--        </a>--}}
+{{--        <div id="calendarCollapse" class="{{array_key_exists(Request::url(),\App\helper\SideBarLinks::CalendarLinks() )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">--}}
+{{--            <div class="bg-white py-2 collapse-inner rounded">--}}
+
+{{--                @foreach(\App\helper\SideBarLinks::CalendarLinks() as $linkKey => $linkValue)--}}
+{{--                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>--}}
+{{--                @endforeach--}}
+
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </li>--}}
+>>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
 
     <!-- employees -->
     <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::employeeLinks() ) ? 'active' : ''}}">

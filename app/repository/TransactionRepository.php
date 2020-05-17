@@ -31,7 +31,6 @@ class TransactionRepository
 
         $transactions = Transaction::allTransactions($center);
 //
-        $summary = $this->fetchMonthlyFinanceSummary($transactions);
         $finance = $this->countRevenuesAndExpenses($transactions);
         $revenues_amount = $finance['revenues_amount'];
         $expenses_amount = $finance['expenses_amount'];
@@ -47,6 +46,7 @@ class TransactionRepository
         $result['finance']['profit'] = $profit;
         $result['finance']['tax'] = $tax;
         $result['finance']['net_profit'] = $net_profit;
+
 
         return $result;
     }

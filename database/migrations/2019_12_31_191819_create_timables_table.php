@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCourseGroupsTimesPivotTable extends Migration
+class CreateTimablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,19 @@ class CreateCourseGroupsTimesPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_group_time', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('timeables', function (Blueprint $table) {
             $table->unsignedBigInteger('time_id');
-            $table->unsignedBigInteger('course_group_id');
+            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('timeable_id');
+            $table->string('timeable_type');
             $table->timestamps();
 
             $table->foreign('time_id')->references('id')
                 ->on('times')->onDelete('cascade');
 
-            $table->foreign('course_group_id')->references('id')
-                ->on('course_groups')->onDelete('cascade');
+            $table->foreign('room_id')->references('id')
+                ->on('rooms')->onDelete('cascade');
+
         });
     }
 

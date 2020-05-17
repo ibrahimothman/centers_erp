@@ -9,12 +9,18 @@ $(document).ready(function () {
                 nameAr: {
                     required: true,
                 },
+<<<<<<< HEAD
 
                 idNumber:{
                     number: true,
                     minlength: 14,
                     maxlength:14
                 },
+=======
+               email:{
+                 email: true
+               },
+>>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
                 phoneNumber: {
                     required: true,
                     noSpace:true,
@@ -22,9 +28,12 @@ $(document).ready(function () {
                     minlength: 11,
                     maxlength:11
                 },
+<<<<<<< HEAD
                 payment_model: {
                     required: true,
                 },
+=======
+>>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
 
                 address: {
                     required: true

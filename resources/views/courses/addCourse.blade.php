@@ -24,7 +24,7 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form method="post" action="{{url('/courses')}}" enctype="multipart/form-data" id="form">
+                            <form id="form">
                                 @csrf
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
@@ -35,8 +35,6 @@
                                                    id="customFile2" src="" onchange="readURL(this, 2);">
                                             <input type="file" class="custom-file-input" accept="image/*" name="image3"
                                                    id="customFile3" src="" onchange="readURL(this, 3);">
-                                            <input type="file" accept="video/*" class="custom-file-input" name="video"
-                                                   id="customFile4" src="" onchange="readURL(this, 4);">
                                             <label class="custom-file-label" for="customFile">صوره الدورة</label>
                                             <div></div>
                                         </div>
@@ -70,12 +68,7 @@
                                         <p>صورة الدورة</p>
                                         <!--     <div id="photo3" class="photo" >هذه الخانه مطلوبه</div> -->
                                     </div>
-                                    <div class="course-image-input">
-                                        <img id="imageUploaded4"
-                                             src="http://simpleicon.com/wp-content/uploads/video.svg" alt="your video"/>
-                                        <p>ڤيديو الدورة</p>
-                                        <!--     <div id="photo4" class="photo" >هذه الخانه مطلوبه</div> -->
-                                    </div>
+
                                 </div>
                                 <div class="form-row">
                                     <div class="col-sm-6 form-group">
@@ -126,18 +119,7 @@
                                     </div>
                                 </fieldset>
                                 <div class="form-row">
-                                    {{--
-                                                                            <div class="col-sm-6 form-group">
-                                                                                                              <label for="instructor-name">اسم المدرس</label>
-                                                                                                                                                       <select class="form-control" id="instructor-name" multiple required>
-                                        @foreach($instructors as $instructor)
-                                        <option value="{{$instructor->id}}">{{$instructor->name}}</option>
-                                        @endforeach
-                                        </select>
-                                        <span id="test_course-teacher_error"></span>
-                                        <div></div>
-                                        </div>
-                                        --}}
+
                                     <div class="col-sm-6 form-group">
                                         <label for="instructor-name">
                                             اسم المدرس</label>
@@ -191,6 +173,7 @@
                                         <label>التصنيف</label>
                                         <span class="required">*</span>
                                         <div class="dropdown dropdown-tree" id="firstDropDownTree"></div>
+<<<<<<< HEAD
                                     </div>
                                 </div>
                                 <br>
@@ -199,6 +182,18 @@
                                     <span id="test_course-teacher_error"></span>
                                     <div></div>
                                     <div class="form-row save">
+=======
+
+                                    </div>
+                                    <div id="errorSelect" class="errorMselector">هذه الخانه مطلوبه</div>
+                                    <span id="test_course-teacher_error"></span>
+                                    <div></div>
+
+                                </div>
+                                <br>
+
+                                <div class="form-row save">
+>>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
 
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
                                         <hr/>
@@ -225,28 +220,29 @@
 @include('script')
 <!--  course and category script plugin  -->
 <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
+<script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
+<script type='text/javascript' src="{{url('js/notificatio.js')}}"></script>
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
-<script type='text/javascript' src="/js/course_create_validation.js"></script>
+{{--<script type='text/javascript' src="/js/course_create_validation.js"></script>--}}
 <!--  end script-->
 <script>
     $(document).ready(function () {
 
+
         $("#submit").click(function () {
-            var ins=$('#instructors-list').find('li').map(function()
-            {
-                return $(this).val()
-            }).get().join(',');
-            console.log("ins"+ins);
-            // return;
+
+            var selected_categories_ids = getSelectedCategoriesIds();
+            // clear all previous validation errors
+            $('.errors').remove();
+
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
             var courseDescription = $("#course-description").val();
             var courseDuration = $("#course-duration").val();
             var courseCost = $("#course-cost").val();
             var teamCost = $("#course-group-cost").val();
-            // var instructorId = $("#instructor-name").val();
             var courseChapter = $("#course-chapter-1").val();
             var chapterDesc = $("#chapter-1-desc").val();
             let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
@@ -263,17 +259,13 @@
             var fd = new FormData();
             $('input[type="file"]').each(function (index, file) {
                if(file.files.length != 0){
+                   console.log(file.files[0]);
                     fd.append('images[]',file.files[0]);
                }
             });
             $('.instructors[type="checkbox"]').each(function () {
                 if(this.checked)
                     fd.append('instructors[]',$(this).val());
-            });
-
-            $('.categories[type="checkbox"]').each(function () {
-                if(this.checked)
-                    fd.append('categories[]',$(this).val());
             });
 
 
@@ -285,6 +277,9 @@
             fd.append('cost', courseCost);
             fd.append('content', JSON.stringify(chapters));
             fd.append('teamCost', teamCost);
+            selected_categories_ids.forEach(function (id) {
+                fd.append('categories[]', id);
+            });
 
             $.ajax({
                 url: "/courses",
@@ -293,21 +288,23 @@
                 contentType : false,
                 processData : false,
                 dataType: "json",
-                success: function (course) {
-                    // console.log(data);
-                    // alert(data);
-                    location.href = '/courses/'+course.id;
-                    document.getElementById('form').reset();
+                success: function (data) {
+                    // $.notify(data.message, {
+                    //     position:"bottom left",
+                    //     style: 'successful-process',
+                    //     className: 'done',
+                    //     // autoHideDelay: 500000
+                    // });
+                    window.location = '/courses/'+data.course_id;
                 },
                 error: function (error) {
-                    if (error.status == 422) {// validation
+                    if (error.status == 400) {// validation
                         // loop through the errors and show them to the user
-                        $.each(error.responseJSON.errors, function (i, error) {
+                        $.each(error.responseJSON.errors, function (i, error_message) {
                             // error is message
                             // i is element's name
-                            console.log(error);
                             var element = $(document).find('[name="' + i + '"]');
-                            element.after($('<span style="color: red;">' + error[0] + '</span>'));
+                            element.after($('<span class="errors" style="color: red;">' + error_message + '</span>'));
                         });
                     }
                 }

@@ -8,7 +8,6 @@
     <link href="{{url('vendor/datatables/datatables.min.css')}}" rel="stylesheet">
 
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
-    @inject('Utility', 'App\Utility')
     <title>test-take</title>
 
 </head>
@@ -39,7 +38,7 @@
                                         <select name="test"  id="testselector"     class="form-control ">
                                             <option value="0"> اختر الامتحان</option>
                                             @foreach($tests as $test)
-                                                <option value="{{$test->id}}">{{$test->name}}</option>
+                                                <option data-extra="{{ $test }}" value="{{$test->id}}">{{$test->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -80,6 +79,7 @@
 <!-- Page level custom scripts -->
 <script src="{{url('js/demo/datatables-demo.js')}}"></script>
 <script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
+<script type='text/javascript' src="{{url('js/notification.js')}}"></script>
 
 <script>
     $(document).ready( function () {
@@ -97,34 +97,16 @@
 
     $('#testselector').change(function () {
        var test_id = $(this).val();
-       if(test_id != 0) getTestEnrollments(test_id);
+       if(test_id !== 0){
+           var selected_test = $.parseJSON($(this).find(':selected').attr('data-extra'));
+           console.log(selected_test);
+           displayData(selected_test);
+
+       }
+
     });
 
-    function getTestEnrollments(test_id) {
-        $.ajax({
-            url:'/get_tests_enrollments',
-            type:'GET',
-            data : {test_id : test_id},
-            dataType : 'json',
-            success: function (data) {
-                // console.log(data);
-                displayData(data);
-            }
-        });
-    }
 
-
-    function convertTime (time) {
-        // Check correct time format and split into components
-        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-        if (time.length > 1) { // If time format correct
-            time = time.slice (1);  // Remove full string match value
-            time[5] = +time[0] < 12 ? 'am' : 'pm'; // Set AM/PM
-            time[0] = +time[0] % 12 || 12; // Adjust hours
-        }
-        return time.join (''); // return adjusted time or original string
-    }
 
     function displayData(test) {
         var lines = '';
@@ -137,11 +119,10 @@
             lines+="<table  class='table '>";
             lines+="<tr class='table-warning'>";
             lines+="<td>اسم الامتحان : <span>"+ test.name +"</span></td>";
-            var groupDate = (group.group_date).split(' ')[0];
-            var startTime = convertTime((group.group_date).split(' ')[1]);
-            lines+="<td>تاريخ الامتحان : <span>"+ groupDate +"</span></td>";
-            lines+="<td>ميعاد البدايه  : <span>"+ startTime +"</span></td>";
-            lines+="<td>ميعاد النهايه  : <span>****</span></td>";
+
+            lines+="<td>تاريخ الامتحان : <span>"+ group.times[0].day +"</span></td>";
+            lines+="<td>ميعاد البدايه  : <span>"+ group.times[0].begin +"</span></td>";
+            lines+="<td>ميعاد النهايه  : <span>"+ group.times[0].end +"</span></td>";
             lines+="</tr>";
             lines+="</table>";
             lines+="</div>";
@@ -174,11 +155,9 @@
             group.enrollers.forEach(function (student) {
 
                     lines += "<tr>";
-                    var image = '/uploads/';
-                    if(student.image) image += student.image;
-                    else image += 'profiles/RwIFWl3VBxNdet3VFZR7eK0PPkQQA5kOo6Q32ZSD.png';
 
-                    lines += "<td><img src='"+ image +"' alt='' class='rounded-circle img-profile-contact float-right img-responsive'></td>";
+
+                    lines += "<td><img src='"+ student.image +"' onerror='imgError(this)' alt='' class='rounded-circle img-profile-contact float-right img-responsive'></td>";
                     lines += "<td >" + student.nameAr + "</td>";
                     lines += "<td >" + student.id + "</td>";
 
@@ -186,20 +165,20 @@
                    lines += " <td >";
                    lines += " <div class='custom-control custom-checkbox'>";
                    if(group.opened){
-                       if(student.pivot.take) lines += "<input type='checkbox' checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id="+"confirm"+i+" >";
-                       else lines += "<input type='checkbox'  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id="+"confirm"+i+" >";
+                       if(student.pivot.take) lines += "<input type='checkbox' checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"' >";
+                       else lines += "<input type='checkbox'  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"' >";
                    }
                    else{
-                       if(student.pivot.take) lines += "<input type='checkbox' disabled checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id="+"confirm"+i+" >";
-                       else lines += "<input type='checkbox' disabled  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id="+"confirm"+i+" >";
+                       if(student.pivot.take) lines += "<input type='checkbox' disabled checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+" '>";
+                       else lines += "<input type='checkbox' disabled  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"'>";
                    }
 
-                   lines += " <label class='custom-control-label' for="+"confirm"+i+"></label>";
+                   lines += " <label class='custom-control-label' for='confirm-"+group.id+"'></label>";
                     lines += "</div>";
                     lines += "</td>";
                     lines += "<td  class='up'><div class='file  upload btn btn-sm btn-primary'>";
-                    if(group.opened) lines += "<input type='file' name='photo' /> تحميل الصوره </div></td>";
-                    else lines += "<input type='file' name='photo' disabled /> تحميل الصوره </div></td>";
+                    if(group.opened) lines += "<input type='file' id='upload-photo-"+ group.id +"' name='photo' /> تحميل الصوره </div></td>";
+                    else lines += "<input type='file' id='upload-photo-"+ group.id +"' name='photo' disabled /> تحميل الصوره </div></td>";
                     lines += "</tr>";
                     i++;
 
@@ -207,8 +186,8 @@
 
             lines += "<tr class='align-middle ' >";
             lines += "<td colspan='7' class='align-middle  ' >";
-            if(group.opened)lines += "<button class='btn btn-success w-100' onclick='closeGroup("+ group.id +")' type='submit'>اغلاق الامتحان </button>";
-            else lines += "<button id='closeGroupBtn' class='btn btn-success w-100' disabled type='submit'>الامتحان مغلق</button>";
+            var btn_txt = group.opened? 'اغلاق الامتحان' : 'اعاده فتح الامتحان';
+            lines += "<button data-isOpened='"+ group.opened +"' id='close-group-"+ group.id +"' class='cg btn btn-success w-100'  type='button'>"+ btn_txt +"</button>";
             lines += "</td>";
             lines += "</tr>";
             lines += " </tbody>";
@@ -225,101 +204,80 @@
     }
 
     function saveTake(student_id,group_id,i) {
-
         var take = 0;
-        if($('#confirm'+i).prop('checked') == true) take = 1;
+        if($('#confirm-'+group_id).prop('checked') == true) take = 1;
         $.ajax({
             url:'/test-takes',
             type:'post',
             data:{student_id : student_id, group_id : group_id, take : take, _token: "{{ csrf_token() }}"},
             success: function (data) {
-            data=data.replace(/\r?\n|\r/, '');
-            var className;
-            if (take===1)className='done';
-                    else className='notDone';
+                data=data.replace(/\r?\n|\r/, '');
+                var className;
+                if (take===1)className='done';
+                        else className='notDone';
 
-            $.notify(data, {
-                    position:"bottom left",
-                    style: 'successful-process',
-                    className: className,
-                    // autoHideDelay: 500000
-                });
+                $.notify(data, {
+                        position:"bottom left",
+                        style: 'successful-process',
+                        className: 'done',
+                        // autoHideDelay: 500000
+                    });
 
             }
         })
 
     }
 
-    function closeGroup(group_id) {
+    $(document).on('click', '[id^=close-group-]', function (e) {
+       var group_id = $(this).attr('id').split('-')[2];
+       toggleGroup(group_id);
+    });
+    function toggleGroup(group_id) {
         $.ajax({
             url:'/close_group',
             type:'post',
             data:{group_id : group_id,  _token: "{{ csrf_token() }}"},
             success: function (data) {
-                alert(data);
                 $.notify(data, {
                     position:"bottom left",
                     style: 'successful-process',
-                    className: className,
+                    className: 'done',
                     // autoHideDelay: 500000
                 });
-                $('#closeGroupBtn').text('الامتحان مغلق');
+                $('#close-group-'+group_id).text(function () {
+                    var isOpened = $(this).attr('data-isOpened');
+                    console.log("group was opened: "+isOpened);
+                    if (isOpened == 1){
+                        // toggle to reopen
+                        $(this).attr('data-isOpened', 0);
+
+
+                        return "اعاده فتح الامتحان";
+                    }else{
+                        $(this).attr('data-isOpened', 1);
+
+                        return "اغلاق الامتحان";
+                    }
+
+                });
+
+                // toggle take checkbox and update image ability
+                $('#confirm-'+group_id).prop('disabled', function (i,v) {
+                    return !v;
+                });
+                $('#upload-photo-'+group_id).prop('disabled', function (i,v) {
+                    return !v;
+                });
 
             }
         })
     }
-</script>
 
-
-<script>
-    $.notify.addStyle('successful-process', {
-        html: `<div>
-                            <span data-notify-text/>
-                            <i class="fas fa-times-circle"
-                            style="
-                                    color:white;
-                                    opacity:0.7;
-                                    position: relative;
-                                    top: 0px;
-                                    left: -28px;
-                                  "
-                            ></i>
-                        </div>`,
-        classes: {
-            base: {
-                "white-space": "nowrap",
-                "background-color": "green",
-                "padding": "15px",
-                "padding-left": "35px",
-                "border-radius": "3px"
-            },
-            done: {
-                "color": "white",
-                "background-color": "#28a745",
-                "font-weight":"bold"
-            },
-            notDone:{
-                "color": "white",
-                "background-color": "#dc3545",
-                "font-weight":"bold"
-            }
-        }
-    });
-
-    $('.btn').click(function(){
-
-        $.notify('تمت العملية بنجاح', {
-            position:"bottom left",
-            style: 'successful-process',
-            className: 'done',
-            // autoHideDelay: 500000
-        });
-
-    });
 
 
 
 </script>
+
 
 </body>
 </body>

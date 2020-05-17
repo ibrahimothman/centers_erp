@@ -17,6 +17,7 @@ class CreateJobsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedBigInteger('center_id');
+            $table->longText('roles');
             $table->timestamps();
 
             $table->foreign('center_id')

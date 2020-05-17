@@ -66,7 +66,7 @@
                                             </header>
 
                                             <div class="card-body">
-                                                @if(Session('center_id'))
+                                                @if($center)
                                                     <form id="centerInfo" action="{{ route('centers.update', $center) }}" method="post" enctype="multipart/form-data">
                                                         @method('put')
                                                 @else
@@ -129,7 +129,7 @@
                                                     <div class="form-row save">
                                                         <div class="col-sm-6 mx-auto text-center">
                                                             <button class="btn btn-primary" type="submit" id="submit">
-                                                                {{ Session('center_id')? 'تعديل' : 'حفظ' }}
+                                                                {{ $center? 'تعديل' : 'حفظ' }}
                                                             </button>
                                                             <button class="btn  btn-danger" type="reset"> الغاء</button>
                                                         </div>

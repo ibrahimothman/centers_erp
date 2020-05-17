@@ -176,9 +176,12 @@
 
 <script>
     $(document).ready(function () {
-        console.log("ready");
+
         $("#submit").click(function (e) {
             e.preventDefault();
+
+            // clear all previous validation errors
+            $('.errors').remove();
 
             var courseName = $("#course-name").val();
             var courseCode = $("#course-id").val();
@@ -218,6 +221,7 @@
             fd.append('cost', courseCost);
             fd.append('content', JSON.stringify(chapters));
             fd.append('teamCost', teamCost);
+            fd.append('_method', 'put');
 
             $.ajaxSetup({
                 headers: {
@@ -227,25 +231,26 @@
 
             $.ajax({
                 url: "/courses/{{$course->id}}",
-                type : "patch",
+                type : "post",
                 data : fd,
                 contentType : false,
                 processData : false,
                 dataType: "json",
-                success: function (data) {
+                success: function (course) {
                     // console.log(data);
                     // document.getElementById('form').reset();
                     // alert(data);
+                    location.href = '/courses/'+course.id;
+                    document.getElementById('form').reset();
                 },
                 error: function (error) {
-                    if (error.status == 422) {// validation
+                    if (error.status == 400) {// validation
                         // loop through the errors and show them to the user
-                        $.each(error.responseJSON.errors, function (i, error) {
+                        $.each(error.responseJSON.errors, function (i, error_message) {
                             // error is message
                             // i is element's name
-                            console.log(error);
                             var element = $(document).find('[name="' + i + '"]');
-                            element.after($('<span style="color: red;">' + error[0] + '</span>'));
+                            element.after($('<span class="errors" style="color: red;">' + error_message + '</span>'));
                         });
                     }
                 }

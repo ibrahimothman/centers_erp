@@ -6,7 +6,10 @@ use App\helper\ImageUploader;
 use App\QueryFilter\CategoryId;
 use App\QueryFilter\Id;
 use App\QueryFilter\Limit;
+use App\Rules\UniquePerCenter;
+use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use mysql_xdevapi\Session;
 
 class Course extends ImageUploader
 {
@@ -23,7 +26,8 @@ class Course extends ImageUploader
                 CategoryId::class,
 
             ])
-            ->thenReturn()->paginate(request('limit')? request('limit') : 10);
+            ->thenReturn()
+            ->paginate(request('limit')? request('limit') : 10);
     }
 
 
@@ -63,7 +67,7 @@ class Course extends ImageUploader
         static::deleting(function($course){
             if($course->images){
                 foreach($course->images as $image){
-                    (new self)->deleteImage($image);
+                    (new self)->deleteImage($image->url);
                 }
                 $course->images()->delete();
             }
@@ -75,10 +79,42 @@ class Course extends ImageUploader
     {
         foreach ($images as $image) {
             $original = $this->saveImage($image);
-//            echo $original;
             $this->images()->create([
                 'url' => url("/uploads/courses/".$original)
             ]);
+        }
+    }
+
+    public static function rules(Request $request)
+    {
+        if($request->isMethod('post')){
+            return[
+                'name'=>['required', new UniquePerCenter(Course::class, '')],
+                'code'=>['required', new UniquePerCenter(Course::class, '')],
+                'duration'=>'required',
+                'cost'=>'required',
+                'teamCost'=>'nullable',
+                'description'=>'required',
+                'content'=>'required',
+                'images'=>'required|array',
+                'instructors'=>'required|array',
+                'categories'=>'required | array',
+            ];
+        }
+        else{
+            $course_id = $request->route('course')->id;
+            return[
+                'name'=>['required', new UniquePerCenter(Course::class, $course_id)],
+                'code'=>['required', new UniquePerCenter(Course::class, $course_id)],
+                'duration'=>'required',
+                'cost'=>'required',
+                'teamCost'=>'nullable',
+                'description'=>'required',
+                'content'=>'required',
+                'images'=>'sometimes|array',
+                'instructors'=>'required|array',
+//                'categories'=>'required|array',
+            ];
         }
     }
 

@@ -101,10 +101,8 @@ class SideBarLinks
     public static function financeLinks()
     {
         return [
-            url('/').'/'.'dept' =>'الديون',
             url('/').'/'.'finance' => 'عرض ملخص الماليات',
             url('/').'/'.'expenses/create' => 'المصاريف',
-            url('/').'/'.'profits' => 'الارباح',
             url('/').'/'.'revenues/create' => 'الايرادات',
         ];
     }

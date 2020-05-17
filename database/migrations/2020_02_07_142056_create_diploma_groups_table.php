@@ -15,16 +15,18 @@ class CreateDiplomaGroupsTable extends Migration
     {
         Schema::create('diploma_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('room_id');
+
             $table->unsignedBigInteger('diploma_id');
+            $table->unsignedBigInteger('instructor_id');
             $table->date('starts_at');
+            $table->unsignedSmallInteger('available_chairs');
             $table->timestamps();
 
-            $table->foreign('room_id')->references('id')->on('rooms')
-                ->onDelete('cascade');
 
             $table->foreign('diploma_id')->references('id')->on('diplomas')
                 ->onDelete('cascade');
+            $table->foreign('instructor_id')->references('id')->on('instructors')
+                ->onDelete('setNull');
         });
     }
 

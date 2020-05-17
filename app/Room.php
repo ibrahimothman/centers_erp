@@ -26,12 +26,17 @@ class Room extends Model
 
     public function times()
     {
-        return $this->belongsToMany(Time::class)->withTimestamps();
+        return $this->belongsToMany(Time::class, 'timeables');
     }
 
     public function course_groups()
     {
         return $this->belongsToMany(CourseGroup::class)->withTimestamps();
+    }
+
+    public function test_groups()
+    {
+        return $this->belongsToMany(TestGroup::class)->withTimestamps();
     }
 
     public function diplomas()

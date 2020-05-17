@@ -18,6 +18,11 @@
         <div id="content">
             <!-- Page Heading -->
             <div class="container-fluid">
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header text-primary">
@@ -45,15 +50,15 @@
                                 </div>
                                 <div class="col-md-6">
 
-                                    <div class="btn-group print-btn ">
+                                    <div class="btn-group print-btn mr-2 ">
 
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             الترتيب حسب
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">الاحدث اضافه</a>
-                                            <a class="dropdown-item" href="#">الاحدث التعديل</a>
-                                            <a class="dropdown-item" href="#">الحروف الابجديه</a>
+                                            <a class="dropdown-item" href="/students?order_by=created_at&sort=desc">الاحدث اضافه</a>
+                                            <a class="dropdown-item" href="/students?order_by=updated_at&sort=desc">"الاحدث التعديل</a>
+                                            <a class="dropdown-item" href="/students?order_by=nameAr&sort=desc">"الحروف الابجديه</a>
                                         </div>
                                     </div>
 
@@ -63,11 +68,8 @@
                                                 <span id="search_concept">البحث فى </span> <span class="caret"></span>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">الكل</a>
-                                                <a class="dropdown-item" href="#">الاسماء</a>
-                                                <a class="dropdown-item" href="#">الرقم القومى</a>
-                                                <a class="dropdown-item" href="#">الكورس</a>
-                                                <a class="dropdown-item" href="#">المجموعه</a>
+                                                <a class="dropdown-item" id="search_by_name" href="#">الاسماء</a>
+                                                <a class="dropdown-item" id="search_by_id_number" href="#">الرقم القومى</a>
                                             </div>
                                         </div>
                                         <input type="hidden" name="search_param" value="all" id="search_param">
@@ -81,52 +83,47 @@
                             </div>
 
                             {{--                            @foreach($students as $students)--}}
-                            <div class="row cont-det" id="ddd">
+                            <div class="row cont-det" id="studentsContainer">
 
-                                <div class="col-md-12" id="sss">
+                                @foreach($students as $student)
+                                    <div class="col-12 col-md-3" id="studentContainer-{{$student->id}}">
+                                                    <div class="card card-sh  border-primary mb-3" >
 
-                                    @php($size = count($students))
-                                    @php($m = 0)
-                                    @for($y = 0; $size > 0; $y++)
-                                        <div class="card-deck">
-                                            @for($z = 0; $z < 3 && $z < $size; $z++,$m++)
+                                                        <div class="card-header bg-transparent border-primary">{{$student->nameAr}}</div>
+                                                        <div class="card-body ">
+                                                            <p class="card-text">
+                                                                <img src="{{$student->getImage("image")  }}" alt="" onerror="imgError(this);" class="rounded-circle img-profile-contact float-right img-responsive">
+                                                            <ul class="list-unstyled contact-det">
+                                                                <li><i class="fas fa-envelope btn-circle"></i> البريد الالكترونى
+                                                                    <br>{{$student->email}}
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-phone btn-circle"></i> التليفون:
+                                                                    <span> {{$student->phoneNumber}}  </span>
+                                                                </li>
+                                                                <li class="gray">تاريخ الاضافه : {{ $student->created_at }}</li>
 
-                                                <div class="card card-sh  border-primary mb-3" style="max-width: 18rem;">
 
-                                                    <div class="card-header bg-transparent border-primary">{{$students[$m]->nameAr}}</div>
-                                                    <div class="card-body ">
-                                                        <p class="card-text">
-                                                            <img src="{{$students[$m]->getImage("image")  }}" alt="" class="rounded-circle img-profile-contact float-right img-responsive">
-                                                        <ul class="list-unstyled contact-det">
-                                                            <li><i class="fas fa-envelope btn-circle"></i> البريد الالكترونى
-                                                                <br>{{$students[$m]->email}}
-                                                            </li>
-                                                            <li>
-                                                                <i class="fa fa-phone btn-circle"></i> التليفون:
-                                                                <span> {{$students[$m]->phoneNumber}}  </span>
-                                                            </li>
-                                                            <li class="gray">
-                                                                تاريخ الاضافه  : {{$students[$m]->created_at}}
+                                                            </ul>
+                                                            </p>
+                                                        </div>
 
-                                                            </li>
+                                                        <form class="card-footer border-primary">
+                                                            @can('delete', $student)
+                                                                <button type="button" class="btn btn-success btn-xs" id="delete-student-{{ $student->id }}"> <i class="fas fa-trash-alt"></i> </button>
+                                                            @endcan
+                                                            @can('view', $student)
+                                                                <a href="/students/{{$student->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
+                                                            @endcan
+                                                        </form>
 
-                                                        </ul>
-                                                        </p>
+
+
                                                     </div>
-                                                    <form class="card-footer border-primary " method="post" action="{{route('students.destroy',['student' => $students[$m]])}}">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-success btn-xs"> <i class="fas fa-trash-alt"></i> </button>
-                                                        <a href="/students/{{$students[$m]->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
-                                                    </form>
 
-
-                                                </div>
-                                            @endfor
-                                            @php($size -= 3)
-                                        </div>
-                                    @endfor
-                                </div>
+                                            </div>
+                                    @endforeach
+                                    </div>
                             </div>
 {{--                            {{$students->links()}}--}}
                         </div>
@@ -151,6 +148,7 @@
 
 @include('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<<<<<<< HEAD
 <!-- Custom scripts for search-->
 
 <script>
@@ -261,5 +259,11 @@
         });
     }
 </script>
+=======
+<script src="{{ asset('js/notify.min.js') }}"></script>
+<script src="{{ asset('js/notification.js') }}"></script>
+<script src="{{ asset('js/student.js') }}"></script>
+
+>>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
 </body>
 </html>

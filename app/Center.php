@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\NewCenterHasCreated;
 use App\helper\ImageUploader;
+use App\QueryFilter\GroupId;
 use App\QueryFilter\Id;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
@@ -14,22 +15,18 @@ class Center extends ImageUploader
 {
     protected $guarded = [];
     public static $ApiFields=['id','name'];
-    // once center is created save it in session
-    public static function allDiplomasEnrollments($center)
-    {
-        return app(Pipeline::class)
-            ->send($center->diplomas()->with('groups.students'))
-            ->through([
-                Id::class
-            ])
-            ->thenReturn()->get();
-    }
+
 
     public function setImageAttribute($image){
         $this->deleteImage($this->image);
         $original = $this->saveImage($image);
         return $this->attributes['image'] = url($this->getDir()."/".$original);
 
+    }
+
+    public function getStatementAttribute($value)
+    {
+        return json_decode($value, true);
     }
 
     public function getRevenuesAttribute($revenues)
@@ -59,12 +56,12 @@ class Center extends ImageUploader
 
     public function students()
     {
-        return $this->belongsToMany(\App\Student::class)->latest()->withTimestamps();
+        return $this->belongsToMany(\App\Student::class)->withTimestamps();
     }
 
     public function tests()
     {
-        return $this->hasMany(Test::class)->latest();
+        return $this->hasMany(Test::class);
     }
 
     public function courses(){
@@ -74,6 +71,16 @@ class Center extends ImageUploader
     public function diplomas()
     {
         return $this->hasMany(Diploma::class);
+    }
+
+    public function diplomasIds()
+    {
+        return $this->diplomas->pluck('id');
+    }
+
+    public function testsIds()
+    {
+        return $this->tests->pluck('id');
     }
 
     public function categories()

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use mysql_xdevapi\Session;
 
@@ -37,7 +38,6 @@ class CoursesController extends Controller
         $center=Center::findOrFail(Session("center_id"));
         $instructors= $center->instructors;
         $categories = CategoryRepository::getInstance()->allCategories();
-        return $categories;
         return view('courses/addCourse', compact('instructors', 'categories'));
 
 
@@ -47,26 +47,27 @@ class CoursesController extends Controller
     {
 //        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
-
-        $data = $this->getValidatedCourseData('');
-        $course_data = Arr::except($data,['images','instructors', 'categories']);
+//
+        $data = $this->getValidatedCourseData($request);
+        if($data->fails()){
+            return response()->json(['message' => 'invalid data', 'errors' => $data->errors()->messages()], 400);
+        }
 
         // create the course
+        $course_data = Arr::except($data->validate(),['images','instructors', 'categories']);
         $course = $center->courses()->create($course_data);
 
         // attach the course to the instructors
-        foreach ($data['instructors'] as $instructor_id){
-            $course->instructors()->syncWithoutDetaching($instructor_id);
-        }
+        $course->instructors()->sync($request->all()['instructors']);
+
 
         // attach the course to the categories
-        foreach ($data['categories'] as $category){
-            $course->categories()->syncWithoutDetaching($category);
-        }
+        $course->categories()->sync($request->all()['categories']);
 
-        // upload images
+
+//        // upload images
         $this->uploadImages($request,$course);
-        return $course;
+        return response()->json(['message' => 'Successfully added the course', 'course_id' => $course->id],200);
     }
 
 
@@ -98,7 +99,7 @@ class CoursesController extends Controller
 
     public function update(Request $request, Course $course)
     {
-        dd($request->all());
+//        dd($request->all());
         // todo handle validation with ajax
         // delete all course's image from db and files
         if($request->hasFile('image')) {
@@ -106,13 +107,28 @@ class CoursesController extends Controller
             $course->images()->delete();
         }
 
-        $data = $this->getValidatedCourseData('');
-        $course_data = Arr::except($data,['images','instructors']);
+        $data = $this->getValidatedCourseData($request);
+        if($data->fails()){
+            return response()->json(['message' => 'invalid data', 'errors' => $data->errors()->messages()], 400);
+        }
+        $course_data = Arr::except($data->validate(),['images','instructors']);
 
         $course->update($course_data);
 
+        // update instructors
+        if(isset($request->all()['instructors'])) {
+            $course->instructors()->sync($request->all()['instructors']);
+        }
+
+        // update categories
+//        if (isset($data->validate()['categories'])) {
+//            foreach ($data->validate()['categories'] as $category) {
+//                $course->categories()->syncWithoutDetaching($category);
+//            }
+//        }
+
         $this->uploadImages($request,$course);
-        return redirect("courses/$course->id");
+        return $course;
 
     }
 
@@ -129,42 +145,15 @@ class CoursesController extends Controller
 
     public function destroy(Course $course)
     {
-        //delete course's images from file
-        Image::deleteImages('/uploads/courses',$course->images);
-        //delete course's images from db
-        $course->images()->delete();
-//        //delete course
+        //delete course
         $course->delete();
         return redirect("/courses");
     }
 
-    private function getValidatedCourseData($course_id){
-        return request()->validate([
-                'name'=>'required|unique:courses,name,'.$course_id,
-                'code'=>'required|unique:courses,code,'.$course_id,
-                'duration'=>'required',
-                'cost'=>'required',
-                'teamCost'=>'nullable',
-                'description'=>'required',
-                'content'=>'required',
-                'images'=>'required|array',
-                'instructors'=>'required|array',
-                'categories'=>'required|array',
-            ]);
-
-
+    private function getValidatedCourseData(Request $request){
+//        echo 'validate';
+        return Validator::make($request->all(),Course::rules($request));
     }
 
-    private function setContent($course_chapters, $chapters_description){
-        $content = array();
-        for ($i = 0; $i < count($course_chapters); $i++){
-            $temp = array();
-            $temp['name'] = $course_chapters[$i];
-            $temp['description'] = $chapters_description[$i];
 
-            $content[] = $temp;
-        }
-
-        return json_encode($content);
-    }
 }

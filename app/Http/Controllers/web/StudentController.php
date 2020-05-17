@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers\web;
 
+use App\helper\AccessRightsHelper;
 use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\helper\ImageUploader;
-use App\QueryFilter\Name;
+use App\Job;
+use App\QueryFilter\SearchBy;
 use App\QueryFilter\Sort;
 use App\QueryFilter\SortElse;
 use Illuminate\Http\Request;
@@ -13,6 +15,7 @@ use App\Student;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -26,35 +29,27 @@ use mysql_xdevapi\Session;
 class StudentController extends Controller
 {
 
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
 
-//        $this->authorize('viewAny',Student::class);
+        $this->authorize('view',Student::class);
+
         return view('students.all')->with('students',$this->getStudents());
     }
 
     public function getStudents(){
         $center = Center::findOrFail(Session('center_id'));
-//        dd($center);
         return Student::allStudents($center);
 
     }
 
-    /**
-     * Display a listing of the resource as table.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function showTable()
     {
         $center = Center::findOrFail(Session('center_id'));
@@ -62,34 +57,27 @@ class StudentController extends Controller
         return view('students.all-table')->with('students', $students);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-//        dd(Session('center_id'));
-        //check if user has rights to view create_student_form
-        // $this->authorize('create',Student::class);
+        // authorization check
+        $this->authorize('create', Student::class);
+
         $student = new Student();
         return view('students.studentCreate',compact('student'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        // todo : attach student to the center
+//        dd($request->all());
         // check if user has rights to add a new student
+        $this->authorize('create', Student::class);
 
-//        $this->authorize('create',Student::class);
         $data = $this->validateRequest($request);
-
+//        if ($data->fails()){
+//            dd($data->errors()->messages());
+//        }
 
         // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
@@ -105,49 +93,38 @@ class StudentController extends Controller
         ]);
 
         $center->students()->syncWithoutDetaching($student);
-        return redirect("/students/$student->id");
+        $return = $request->get('return') == 'students'? "/students/$student->id": "/students/create";
+        return redirect($return)->with('success','Student added successfully');
 
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Student $student)
     {
-//        $this->authorize('view',$student);
+        // check if student related to the auth center
+        $center = Center::findOrFail(Session('center_id'));
+        if (! $center->students->contains($student)){
+            return abort(404);
+        }
+
+        // authorization check
+        $this->authorize('view', Student::class);
         return view('students.show',compact('student'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Student $student)
     {
-
-//        $this->authorize('update',$student);
+        $this->authorize('update', $student);
         return view('students.studentEdit',compact('student'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Student $student)
     {
 
-//        $this->authorize('update',$student);
-
-        // todo delete prev image from profiles dir
+        $this->authorize('update',$student);
 
         $data = $this->validateRequest($request);
 
@@ -168,9 +145,9 @@ class StudentController extends Controller
   function destroy(Student $student)
     {
         //policy
-//        $this->authorize('delete',$student);
+        $this->authorize('delete',$student);
         $student->delete();
-        return redirect('/students')->with('success','students is deleted');
+        return response()->json('student deleted successfully', 200);
 
     }
 

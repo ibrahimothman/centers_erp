@@ -12,13 +12,15 @@
 */
 
 use App\Role;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use function foo\func;
 
 $web_controllers_path = "\App\Http\Controllers\web";
 
-Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
+Route::group(['middleware' => ['auth', 'verified']], function () use ($web_controllers_path){
 
     //-------------------- settings ---------------------
     Route::resource('settings', "$web_controllers_path\SettingController");
@@ -61,7 +63,7 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
 
         //----------------------- statement ------------
         Route::resource('test-statements', "$web_controllers_path\TestStatementController");
-        Route::get('test-statements-preview/{statement}/{student}', "$web_controllers_path\TestStatementController@previewStatement");
+        Route::get('test-statements-preview/{student}', "$web_controllers_path\TestStatementController@previewStatement");
 
 
         //----------- courses ---------------
@@ -78,7 +80,7 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
         // ----------------------- rooms----------------
         Route::resource('rooms', "$web_controllers_path\RoomsController");
         Route::get('available_begins_for_the_room', "$web_controllers_path\RoomsController@getAvailableBegins");
-        Route::get('available_ends_for_the_room', "$web_controllers_path\RoomsController@getAvailableEnds");
+        Route::get('available_rooms', "$web_controllers_path\RoomsController@getAvailableRooms");
         Route::get('/all-rooms', "$web_controllers_path\RoomsController@allRooms");
         Route::get('/rooms-calendar/{room}', "$web_controllers_path\RoomsController@showRoomCalendar");
 
@@ -90,6 +92,7 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
 
         //----------------- Diploma enrollment----------------
         Route::resource('diploma-enrollments', "$web_controllers_path\DiplomaEnrollmentController");
+        Route::resource('update-diploma-enrollments', "$web_controllers_path\DiplomaEnrollmentController@update");
 
         // -------------------instructor----------------
         Route::resource('instructors', "$web_controllers_path\InstructorsController");
@@ -97,6 +100,8 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
         Route::get('/all-instructors', "$web_controllers_path\InstructorsController@allInstructors");
         Route::get('/instructors-calendar/{instructor}', "$web_controllers_path\InstructorsController@showInstructorCalendar");
         Route::post('update_instructor_payment', "$web_controllers_path\PaymentModelController@updateInstructorPayment");
+        Route::get('available_begins_for_the_instructor', "$web_controllers_path\InstructorsController@getAvailableBegins");
+        Route::get('available_ends_for_the_instructor', "$web_controllers_path\InstructorsController@getAvailableEnds");
 
         //-------------------- jobs ---------------------
         Route::resource('jobs', "$web_controllers_path\jobController");
@@ -114,6 +119,7 @@ Route::group(['middleware' => 'auth'], function () use ($web_controllers_path){
         });
         Route::resource('profits', "$web_controllers_path\ProfitController");
         Route::resource('expenses', "$web_controllers_path\ExpensesController");
+//        Route::get('/expenses/{id}/{type}', "$web_controllers_path\ExpensesController@edit")->name('expenses.edit');
         Route::resource('revenues', "$web_controllers_path\RevenueController");
         Route::resource('transactions', "$web_controllers_path\TransactionController");
         Route::get('all_transactions', "$web_controllers_path\TransactionController@allTransactions");
@@ -137,8 +143,18 @@ Route::get('set_role',function (){
     }
 });
 
+Route::resource('invites',"$web_controllers_path\InvitationController");
+Route::get('process',"$web_controllers_path\InvitationController@processInvitation");
+
+Route::get('fresh', function (){
+    Artisan::call('migrate:fresh --seed');
+});
 
 
-
+<<<<<<< HEAD
 
 Auth::routes(['register' => true]);
+=======
+Auth::routes(['verify' => true]);
+
+>>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599

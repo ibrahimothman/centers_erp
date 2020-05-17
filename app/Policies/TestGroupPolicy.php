@@ -12,17 +12,10 @@ class TestGroupPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any test groups.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
+
     public function viewAny(User $user)
     {
-        //
-        $role = Role::where('name','test-group.view')->first();
-        return Auth::user()->roles->contains($role->id);
+
     }
 
     /**

@@ -22,11 +22,11 @@ class PaymentModel extends Model
         return $this->hasMany(Employee::class);
     }
 
-    public function getMetaDataAttribute($key)
-    {
-//        dd($key);
-        return json_decode($key, true);
-    }
+//    public function getMetaDataAttribute($key)
+//    {
+////        dd($key);
+//        return json_decode($key, true);
+//    }
 
     public function setMetaDataAttribute($meta_data)
     {

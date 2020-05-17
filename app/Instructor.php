@@ -6,7 +6,7 @@ use App\helper\Constants;
 use App\helper\ImageUploader;
 use App\helper\MathParser\Math;
 use App\helper\PaymentModelHelper;
-use App\QueryFilter\Name;
+use App\QueryFilter\SearchBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
@@ -25,7 +25,8 @@ class Instructor extends ImageUploader
         return App(Pipeline::class)
             ->send($center->instructors())
             ->through([
-                Name::class
+                SearchBy::class
+
             ])
             ->thenReturn()
             ->paginate(5);
@@ -50,7 +51,19 @@ class Instructor extends ImageUploader
 
     public function diplomaGroups()
     {
-        return $this->belongsToMany(DiplomaGroup::class)->withTimestamps();
+        return $this->hasMany(DiplomaGroup::class);
+    }
+
+    public function busyTimes()
+    {
+        $groups = $this->diplomaGroups;
+        $busyTimes = [];
+        foreach ($groups as $group){
+            foreach ($group->times as $time){
+                $busyTimes[] = $time;
+            }
+        }
+        return collect($busyTimes);
     }
 
     public function address()
@@ -101,16 +114,12 @@ class Instructor extends ImageUploader
         return $this->attributes['payment_model_meta_data'] = json_encode($meta_data,JSON_UNESCAPED_UNICODE );
     }
 
-    public function getPaymentModelMetaDataAttribute($meta_data)
-    {
-        return json_decode($meta_data, true);
-    }
 
     public function getPaymentModelAttribute($paymentModel)
     {
-        return PaymentModelHelper::getPaymentModelAttribute($paymentModel, $this->payment_model_meta_data);
+        return PaymentModelHelper::getPaymentModelAttribute($paymentModel,
+            json_decode($this->payment_model_meta_data, true));
     }
-
 
 
 

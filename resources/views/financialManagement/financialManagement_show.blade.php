@@ -106,8 +106,7 @@
                                                                                     <th class="th-sm">المصروفات</th>
                                                                                     <th class="th-sm">الضرائب</th>
                                                                                     <th class="th-sm">الربح الصافي بعد الضرائب</th>
-                                                                                    <th class="th-sm"> تعديل</th>
-                                                                                    <th class="th-sm"> ازاله</th>
+
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -118,20 +117,7 @@
                                                                                         <td>{{ $result['expenses_amount']}}</td>
                                                                                         <td>{{ $result['tax'] }}</td>
                                                                                         <td>{{ $result['net_profit'] }}</td>
-                                                                                        <td>
-                                                                                            <a href=""
-                                                                                               class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                                                                        class="fas fa-edit m-0 "></i> </a>
 
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <form>
-                                                                                                <button type="submit"
-                                                                                                        class="btn btn-outline-danger py-1 px-2">
-                                                                                                    <i class="fas fa-trash-alt m-0"></i>
-                                                                                                </button>
-                                                                                            </form>
-                                                                                        </td>
                                                                                     </tr>
                                                                                  @endforeach
                                                                                 </tbody>
@@ -156,22 +142,22 @@
                                                 <div class="card-header text-primary bg-transparent  border-primary ">
                                                     <h5 class="fRight">  الايرادات</h5>
                                                     <form class="form-inline" style="float: left">
-                                                    <div class="btn-group ">
-                                                        <div class="btn-group search-panel ">
-                                                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <span id="search_concept">البحث فى </span> <span class="caret"></span>
-                                                            </button>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">الاسماء</a>
-                                                                <a class="dropdown-item" href="#">الكورس</a>
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" name="search_param" value="all" id="search_param">
-                                                        <input type="text" class="form-control " id="search" placeholder="ابحث">
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-success" id="search" ><i class="fas fa-search"></i></button>
-                                                        </div>
-                                                    </div>
+{{--                                                    <div class="btn-group ">--}}
+{{--                                                        <div class="btn-group search-panel ">--}}
+{{--                                                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                                                                <span id="search_concept">البحث فى </span> <span class="caret"></span>--}}
+{{--                                                            </button>--}}
+{{--                                                            <div class="dropdown-menu">--}}
+{{--                                                                <a class="dropdown-item" href="#">الاسماء</a>--}}
+{{--                                                                <a class="dropdown-item" href="#">الكورس</a>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <input type="hidden" name="search_param" value="all" id="search_param">--}}
+{{--                                                        <input type="text" class="form-control " id="search" placeholder="ابحث">--}}
+{{--                                                        <div class="btn-group">--}}
+{{--                                                            <button class="btn btn-success" id="search" ><i class="fas fa-search"></i></button>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
                                                     </form>
                                                 </div>
                                                 <!-- card table -->
@@ -194,7 +180,6 @@
                                                                 <th class="th-sm">التاريخ</th>
                                                                 <th class="th-sm"> تعديل</th>
                                                                 <th class="th-sm"> ازاله</th>
-                                                                <th class="th-sm"> الديون</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody id="student_table">
@@ -210,24 +195,22 @@
                                                                         <td>{{ $transaction->rest}}</td>
                                                                         <td>{{ $transaction->date }}</td>
                                                                         <td>
-                                                                            <a href=""
+                                                                            <a href="{{ route('revenues.edit', $transaction->id) }}"
                                                                                class=" btn btn-outline-primary  py-1 px-2 "><i
                                                                                         class="fas fa-edit m-0 "></i> </a>
 
                                                                         </td>
                                                                         <td>
-                                                                            <form>
+                                                                            <form method="post" action="{{ route('transactions.destroy', $transaction->id) }}">
+                                                                                @csrf
+                                                                                @method('delete')
                                                                                 <button type="submit"
                                                                                         class="btn btn-outline-danger py-1 px-2">
                                                                                     <i class="fas fa-trash-alt m-0"></i>
                                                                                 </button>
                                                                             </form>
                                                                         </td>
-                                                                        <td>
-                                                                            <a href=""
-                                                                               class=" btn btn-outline-primary  py-1 px-2 ">
-                                                                                <i class="fas fa-money-check-alt"></i> </a>
-                                                                        </td>
+
                                                                     </tr>
                                                                 @endforeach
                                                              @endforeach
@@ -260,16 +243,16 @@
                                             <div class="card border-primary p-3 ">
                                                 <div class="card-header text-primary bg-transparent border-primary ">
                                                     <h5 class="fRight">المصروفات</h5>
-                                                    <form class="form-inline fLeft " >
-                                                        <input type="search" class="form-control" placeholder="البحث بالفاتوره" list="pill">
-                                                        <datalist id="pill">
-                                                            <option>الايجار</option>
-                                                            <option>الكهرباء</option>
-                                                        </datalist>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-success" id="search" ><i class="fas fa-search"></i></button>
-                                                        </div>
-                                                    </form>
+{{--                                                    <form class="form-inline fLeft " >--}}
+{{--                                                        <input type="search" class="form-control" placeholder="البحث بالفاتوره" list="pill">--}}
+{{--                                                        <datalist id="pill">--}}
+{{--                                                            <option>الايجار</option>--}}
+{{--                                                            <option>الكهرباء</option>--}}
+{{--                                                        </datalist>--}}
+{{--                                                        <div class="btn-group">--}}
+{{--                                                            <button class="btn btn-success" id="search" ><i class="fas fa-search"></i></button>--}}
+{{--                                                        </div>--}}
+{{--                                                    </form>--}}
                                                 </div>
                                                 <div class="card-body ">
                                                     <div class="row form-group">
@@ -289,7 +272,6 @@
                                                                 <th class="th-sm">التاريخ</th>
                                                                 <th class="th-sm"> تعديل</th>
                                                                 <th class="th-sm"> ازاله</th>
-                                                                <th class="th-sm"> الديون</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -304,24 +286,22 @@
                                                                         <td>{{ $transaction->rest }}</td>
                                                                         <td>{{ $transaction->date }}</td>
                                                                         <td>
-                                                                            <a href=""
+                                                                            <a href="{{ route('expenses.edit', ['id' => $transaction->id, 'type' => 'bill']) }}"
                                                                                class=" btn btn-outline-primary  py-1 px-2 "><i
                                                                                     class="fas fa-edit m-0 "></i> </a>
 
                                                                         </td>
                                                                         <td>
-                                                                            <form>
+                                                                            <form method="post" action="{{ route('transactions.destroy', $transaction->id) }}">
+                                                                                @csrf
+                                                                                @method('delete')
                                                                                 <button type="submit"
                                                                                         class="btn btn-outline-danger py-1 px-2">
                                                                                     <i class="fas fa-trash-alt m-0"></i>
                                                                                 </button>
                                                                             </form>
                                                                         </td>
-                                                                        <td>
-                                                                            <a href=""
-                                                                               class=" btn btn-outline-primary  py-1 px-2 ">
-                                                                                <i class="fas fa-money-check-alt"></i> </a>
-                                                                        </td>
+
                                                                     </tr>
                                                                 @endforeach
                                                              @endforeach
@@ -390,13 +370,15 @@
                                                                         <td>{{ $transaction->rest }}</td>
                                                                         <td>{{ $transaction->date }}</td>
                                                                         <td>
-                                                                            <a href=""
+                                                                            <a href="{{ route('expenses.edit', ['id' => $transaction->id]) }}"
                                                                                class=" btn btn-outline-primary  py-1 px-2 "><i
                                                                                         class="fas fa-edit m-0 "></i> </a>
 
                                                                         </td>
                                                                         <td>
-                                                                            <form>
+                                                                            <form method="post" action="{{ route('transactions.destroy', $transaction->id) }}">
+                                                                                @csrf
+                                                                                @method('delete')
                                                                                 <button type="submit"
                                                                                         class="btn btn-outline-danger py-1 px-2">
                                                                                     <i class="fas fa-trash-alt m-0"></i>
@@ -472,13 +454,15 @@
                                                                                 <td>{{ $transaction->rest }}</td>
                                                                                 <td>{{ $transaction->date }}</td>
                                                                                 <td>
-                                                                                    <a href=""
+                                                                                    <a href="{{ route('expenses.edit', ['id' => $transaction->id]) }}"
                                                                                        class=" btn btn-outline-primary  py-1 px-2 "><i
                                                                                             class="fas fa-edit m-0 "></i> </a>
 
                                                                                 </td>
                                                                                 <td>
-                                                                                    <form>
+                                                                                    <form method="post" action="{{ route('transactions.destroy', $transaction->id) }}">
+                                                                                        @csrf
+                                                                                        @method('delete')
                                                                                         <button type="submit"
                                                                                                 class="btn btn-outline-danger py-1 px-2">
                                                                                             <i class="fas fa-trash-alt m-0"></i>

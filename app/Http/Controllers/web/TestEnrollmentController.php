@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\web;
 
+use App\DiplomaGroup;
 use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\Policies\TestEnrollmentPolicy;
 use App\TestGroup;
+use App\Utility;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Test;
 use App\StudentTestGroup;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
 use mysql_xdevapi\Session;
 
 
@@ -22,61 +26,62 @@ class TestEnrollmentController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        $this->authorize('view', Test::class);
         $center = Center::findOrFail(Session('center_id'));
-        $tests = $center->tests;
-//        dd($tests);
-        return view('testEnrollments.index',compact('tests'));
+        $all_tests = $center->tests()->with('groups.enrollers')->get();
+
+        $groups = TestGroup::allEnrollments($center->testsIds());
+
+
+
+
+        return view('testEnrollments.index',compact('all_tests', 'groups'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        $this->authorize('create', Test::class);
         $center = Center::findOrFail(Session('center_id'));
         $students = $center->students;
         $tests = Test::allTests($center);
 
+
+         $selected_group = Input::has('group_id') ?
+             TestGroup::with('times')->findOrFail(Input::get('group_id')): new TestGroup();
+
+//        return json_encode($tests);
+
         return view('testEnrollments.create')
             ->with('students',$students)
+            ->with('selected_group',$selected_group)
             ->with('tests',$tests);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store()
     {
+        $this->authorize('create', Test::class);
         if(request()->ajax()){
             $stu_id = request()->get('stu_id');
             $test_id = request()->get('test_id');
             $group_id = request()->get('group_id');
         }
 
-        if($this->checkTestEnrollmentValidation($stu_id,$test_id)){
-            return response('student has already enrolled in this test');
-        }else{
-            $date = TestGroup::find($group_id)->group_date;
-            if($this->checkEnrollmentTimeValidation($stu_id, $date)){
-                return response('student has already enrolled in a test at this time');
-            }
-            else{
-                Student::findOrFail($stu_id)->testsEnrolling()->syncWithoutDetaching($group_id);
-                return response('student has successfully enrolled in this test');
-            }
+        if(! $this->IsGroupOpened($group_id)){
+            return response()->json('this groups is closed', 200);
         }
+
+        if($this->checkTestEnrollmentValidation($stu_id,$test_id)){
+            return response()->json('student has already enrolled in this test', 200);
+        }
+
+        Student::findOrFail($stu_id)->testsEnrolling()->syncWithoutDetaching($group_id);
+        return response()->json('student has successfully enrolled in this test', 200);
+
+
 
     }
 
@@ -92,28 +97,9 @@ class TestEnrollmentController extends Controller
         return false;
     }
 
-    // check if a students has already enrolled in a test at specific date
-    public function checkEnrollmentTimeValidation($stu_name, $date){
-        foreach (TestGroup::where('group_date', $date)->get() as $group){
-            if($group->enrollers->contains($stu_name)){
-                return true;
-            }
 
-        }
-        return false;
 
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-
-    }
 
     public function getTestEnrollments()
     {
@@ -124,58 +110,92 @@ class TestEnrollmentController extends Controller
 
         // todo determine center
         $center = Center::findOrFail(Session('center_id'));
-        $test = $center->tests()->with('groups')->with('statement')->findOrFail($test_id);
-        foreach ($test->groups as $group){
-            $group->enrollers;
-        }
+        $test = $center->tests()->with('groups.enrollers')->with('statement')->findOrFail($test_id);
 
-//        echo json_encode($test);
         return $test ;
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function edit($student_id)
     {
-        //
-    }
+        if(! Center::findOrFail(Session('center_id'))->students->contains($student_id)){
+            return abort(404);
+        }
+        $this->authorize('update', Test::class);
+        $current_group = TestGroup::with('test')->findOrFail(Input::get('test_group'));
+        $student = Student::findOrFail($student_id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-    }
-
-    public function deleteEnrollment()
-    {
-        if(request()->ajax()){
-            $student_id = request()->get('student_id');
-            $test_group_id = request()->get('test_group_id');
+        // check if student is enrolled in this group or not before editing
+        if(is_null($current_group->enrollers()->where('student_id', $student->id)->first())){
+            return abort(404);
         }
 
-        TestGroup::findOrFail($test_group_id)->enrollers()->detach($student_id);
-        return 'successfully deleted';
+        $groups = $current_group->test->groups;
+
+
+        return view('testEnrollments.edit', compact('current_group', 'groups', 'student'));
+    }
+
+
+    public function update(Request $request, $student_id)
+    {
+        $this->authorize('update', Test::class);
+        if(request()->ajax()){
+            $new_group_id = request()->get('new_group_id');
+            $prev_group_id = request()->get('prev_group_id');
+        }
+
+
+
+        if($new_group_id != $prev_group_id) {
+            if(! $this->IsGroupOpened($new_group_id)){
+                return response()->json('this group is closed', 200);
+            }
+            $student = Student::findOrFail($student_id);
+            $new_test_group = TestGroup::findOrFail($new_group_id);
+
+            /*
+             * fetch all student's groups
+             * delete prev group
+             * add new one
+             * sync all groups to student
+             * */
+            $student_groups = $student->testsEnrolling;
+            $student_groups->push($new_test_group);
+            $student_groups->pull($student_groups->search(function($group) use ($prev_group_id){
+                return $group->id == $prev_group_id;
+            }));
+
+//
+            $student->testsEnrolling()->sync($student_groups);
+            return response()->json('enrollment has successfully updated', 200);
+        }
+
+
+    }
+
+
+    public function destroy(Request $request)
+    {
+        $this->authorize('delete', Test::class);
+        TestGroup::findOrFail($request->all()['test_group_id'])->enrollers()
+            ->detach($request->all()['student_id']);
+        return response()->json('successfully detaching', 200);
+    }
+
+
+//
+    private function IsGroupOpened($group_id)
+    {
+        $group = TestGroup::findOrFail($group_id);
+        if (! Utility::datePassed($group->times[0]->day, $group->times[0]->begin)){
+            if ($group->available_seats > 0 ){
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

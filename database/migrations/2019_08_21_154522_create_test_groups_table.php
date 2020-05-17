@@ -18,7 +18,6 @@ class CreateTestGroupsTable extends Migration
             $table->unsignedBigInteger('test_id');
             $table->string('available_chairs');
             $table->boolean('opened')->default(1);
-            $table->dateTime('group_date');
             $table->timestamps();
 
             $table->foreign('test_id')->references('id')->on('tests')

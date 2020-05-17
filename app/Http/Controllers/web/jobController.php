@@ -8,6 +8,7 @@ use App\Center;
 use App\Job;
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
 class jobController extends Controller
@@ -30,8 +31,7 @@ class jobController extends Controller
     public function create()
     {
         //
-        $roles = Role::all();
-        return view('jobs.create', compact('roles'));
+        return view('jobs.create');
     }
 
     /**
@@ -42,23 +42,28 @@ class jobController extends Controller
      */
     public function store(Request $request)
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $job = $center->jobs()->create(['name' => $request->job_name]);
-        $job->roles()->syncWithoutDetaching($request->roles_ids);
+//        dd($request->all());
 
-        return "job has successfully added";
+        $center = Center::findOrFail(Session('center_id'));
+
+        $data = $this->validateRequest($request);
+        if($data->fails()){
+            return response()->json(['message' => "invalid data", 'errors' => $data->errors()->messages()], 400);
+        }
+        $job = $center->jobs()->create($data->validate());
+
+        return response()->json(['message' => "job has successfully added"], 200);
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Job $job)
     {
-        //
     }
 
     /**
@@ -93,5 +98,10 @@ class jobController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function validateRequest(Request $request)
+    {
+        return Validator::make($request->all(), Job::rules($request));
     }
 }

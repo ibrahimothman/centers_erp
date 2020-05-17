@@ -39,31 +39,38 @@
                                 <button class="btn btn-success"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
-                        </span></div>
+                        </span>
+                            </div>
                             <!-- diploma view -->
                             @foreach($diplomas as $diploma)
                                 <a href="#">
-                                    <div class="card  cardDiploma mb-3" style="max-width: 100%; ">
-                                        </span>
+                                    <div class="card  cardDiploma mb-3 " style="max-width: 100%;height: 250px">
                                         <div class="row ">
                                             <div class="col-md-4">
-                                                <a href="{{ route('diplomas.show', $diploma->id) }}"> <img src="{{$diploma->image }}" class="card-img h-100" alt="..."></a>
+                                                <a href="{{ route('diplomas.show', $diploma->id) }}"> <img src="{{$diploma->image }}" class="card-img h-100"   alt="..."></a>
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
                                                     <div class="view-courses-title">
+<<<<<<< HEAD
                                                         <h5 class="card-title text-primary">{{ $diploma->name }} <span class="text-warning " style="font-size: 15px">خصم 20%</span></h5>
                                                         <form>
+=======
+                                                        <h5 class="card-title text-primary">{{ $diploma->name }}</h5>
+                                                        <form method="post" action="{{ route('diplomas.destroy', ['diploma_id' => $diploma->id]) }}">
+                                                            @csrf
+                                                            @method('delete')
+>>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
                                                             <a href="{{ route('diplomas.edit', $diploma->id) }}" class=" btn btn-outline-primary  py-1 px-2"><i
                                                                         class="fas fa-edit m-0 "></i> </a>
-                                                            <button type="submit" class="btn btn-outline-danger py-1 px-2">
+                                                            <button type="submit"  class="btn btn-outline-danger py-1 px-2">
                                                                 <i class="fas fa-trash-alt m-0"></i></button>
                                                         </form>
                                                     </div>
                                                     <div class="mb-1">
                                                         <span class=" text-secondary pl-2  ">{{ $diploma->cost }} جنيه</span>
-                                                        <span class=" text-secondary pl-2 ">20 {{ $diploma->number_of_lectures }}</span>
-                                                        <span class=" text-secondary  pl-2">30 {{ $diploma->duration }}</span>
+                                                        <span class=" text-secondary pl-2 ">{{ $diploma->number_of_lectures }} محاضره </span>
+                                                        <span class=" text-secondary  pl-2"> {{ $diploma->duration }} ساعه </span>
                                                     </div>
                                                     <p class="card-text">{{ $diploma->description }}</p>
                                                 </div>
