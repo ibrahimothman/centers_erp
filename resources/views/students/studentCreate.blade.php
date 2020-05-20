@@ -201,7 +201,8 @@
 <script type='text/javascript' src="/js/students_create_validation.js"></script>
 <script>
 
-        $(document).ready(function() {
+
+    $(document).ready(function() {
             $(":input").inputmask();
 
             $("#phone").inputmask({"mask": "(999) 99999999"});

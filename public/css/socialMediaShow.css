@@ -1,0 +1,155 @@
+.icon{
+    padding: 10px 10px;
+    text-align: center;
+    color: grey;
+    -webkit-transition: all .2s ease-in-out;
+    display: inline-block;
+    width:70%;
+    background-color: #fff;
+    box-shadow: 0 12px 17px 2px rgba(0, 0, 0, 0.14), 0 5px 22px 4px rgba(0, 0, 0, 0.12), 0 7px 8px -4px rgba(0, 0, 0, 0.2);
+}
+.iconLeft{
+    margin-left: -30px;
+}
+.iconRight{
+    margin-right: -30px;
+}
+.social {
+    display: inline-block;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    border: 4px solid #fff;
+
+}
+
+.faceIcon{
+    border-right: 10px solid #286ED6;
+}
+.twitterIcon{
+    border-right: 10px solid #00ABE3;
+}
+.linkIcon{
+    border-left: 10px solid #0094BC;
+}
+.pinIcon{
+    border-left: 10px solid #cb2027;
+}
+.whatsIcon{
+    border-right: 10px solid #25d366;
+
+}
+.instaIcon{
+    border-right: 10px solid  transparent ;
+    border-image: linear-gradient(#ff3019 , #c90477 );
+    border-image-slice:1;
+}
+.youtubeIcon{
+    border-left: 10px solid #dd0000;
+
+}
+.googleIcon{
+    border-left: 10px solid #db5a3c;
+}
+.face{
+    background-color: #286ED6;
+}
+.twitter{
+    background-color: #00ABE3;
+}
+.pin{
+    background-color:#cb2027;
+
+}
+.linked{
+    background-color:#0094BC;
+}
+.whats{
+    background-color: #25d366;
+    color: #fff;
+    border-radius:50px;
+    text-align:center;
+    font-size:30px;
+    z-index: 1;
+}
+.insta {
+    background: linear-gradient(to right, #ff3019 0%, #c90477 100%);
+    color: #fff;
+    border-radius:50px;
+    text-align:center;
+    font-size:30px;
+    z-index: 1;
+}
+.youtube{
+    background-color: #dd0000;
+    color: #fff;
+    border-radius:50px;
+    text-align:center;
+    font-size:30px;
+    z-index: 1;
+}
+.google{
+    background-color: #db5a3c;
+    color: #fff;
+    border-radius:50px;
+    text-align:center;
+    font-size:30px;
+    z-index: 1;
+}
+
+/* linkedin button class*/
+.linkedinBtn{
+    background: #0094BC;
+}
+
+.linkedinBtn:before{
+    font-family: "FontAwesome";
+    content: "\f0e1"; /* add linkedin icon */
+}
+
+.linkedinBtn:hover{
+    color: #0094BC;
+    background: #fff;
+}
+/* pinterest button class*/
+.pinterestBtn{
+    background: #cb2027;
+}
+
+.pinterestBtn:before{
+    font-family: "FontAwesome";
+    content: "\f0d2"; /* add pinterest icon */
+}
+
+.pinterestBtn:hover{
+    color: #cb2027;
+    background: #fff;
+    text-decoration: none;
+}
+
+/* whats */
+
+
+.whats:hover{
+    color: #25d366;
+    background: #fff;
+}
+.google:hover{
+    color: #db5a3c;
+    background: #fff;
+}
+.youtube:hover{
+    color: #dd0000;
+    background: #fff;
+}
+.insta:hover{
+    color: #c90477;
+    background: #fff;
+}
+a:hover{
+    text-decoration: none;
+}

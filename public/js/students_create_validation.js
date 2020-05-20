@@ -6,9 +6,12 @@ $(document).ready(function () {
     }, "No space please and don't leave it empty");
     /* write only english */
     $.validator.addMethod("validUsername", function (value, element) {
-        return /^[a-zA-Z0-9_.-]+$/.test(value);
+        return /^[\a-\z\A-Z\0-9_.-]+$/.test(value);
     }, "Please enter a valid username");
-
+    /* write only arabic */
+    $.validator.addMethod("arabic", function (value, element) {
+        return /^[\u0621-\u064A\s0-9]+$/.test(value);
+    }, "Please enter a valid username");
     /* validation */
     $('#studentCreate').validate(
         {
@@ -16,10 +19,11 @@ $(document).ready(function () {
             rules: {
                 nameAr: {
                     required: true,
+                    arabic: true
                 },
                 nameEn: {
                     required: true,
-                    validUsername: true
+                    validUsername: true,
                 },
 
                 email: {
@@ -54,6 +58,7 @@ $(document).ready(function () {
 
                 nameAr: {
                     required: "هذه الخانه مطلوبه",
+                    arabic: "مسموح بالعربي فقط"
                 },
                 nameEn: {
                     required: "هذه الخانه مطلوبه",
