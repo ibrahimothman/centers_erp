@@ -138,7 +138,7 @@ class Student extends ImageUploader
                 'nameAr' => ['required', new UniquePerCenter(Student::class, '', 'students', false)],
                 'nameEn' => ['required', new UniquePerCenter(Student::class, '', 'students', false)],
                 'email' => ['required', new UniquePerCenter(Student::class, '', 'students', false)],
-                'idNumber' => ['required', 'digits:14', new UniquePerCenter(SStudent::class, '', 'students', false)],
+                'idNumber' => ['required', 'digits:14', new UniquePerCenter(Student::class, '', 'students', false)],
                 'image' => ' required|image|file | max:10000',
                 'idImage' => 'required|image|file | max:10000',
                 'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/', new UniquePerCenter(Student::class, '', 'students', false)],

@@ -21,9 +21,15 @@
                             </ul>
                         </div>
                     @endif
+
                     <div class="container-fluid">
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-10">
+                                @if(session()->has('success'))
+                                    <div class="alert alert-success">
+                                        {{ session()->get('success') }}
+                                    </div>
+                                @endif
                                 <div class="card mb-4 shadowed">
                                     <header>
                                         <div class="card-header text-primary form-title">

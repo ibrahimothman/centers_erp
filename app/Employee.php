@@ -7,6 +7,7 @@ use App\helper\ImageUploader;
 use App\helper\mathParser\Math;
 use App\helper\PaymentModelHelper;
 use App\QueryFilter\SearchBy;
+use App\QueryFilter\Sort;
 use App\Rules\UniquePerCenter;
 use http\Client\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -24,10 +25,11 @@ class Employee extends ImageUploader
         return App(Pipeline::class)
             ->send($center->employees())
             ->through([
-                SearchBy::class
+                SearchBy::class,
+                Sort::class
             ])
             ->thenReturn()
-            ->paginate(request('limit')? request('limit') : 10);
+            ->get();
     }
 
     public function setImageAttribute($image){

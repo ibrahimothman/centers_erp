@@ -22,6 +22,7 @@
                             </div>
                         </div>
                         <div class="card-body">
+
                             <div class=" clearfix"> <span class="float-right">
                         <div class="btn-group print-btn p-3 ">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
@@ -29,6 +30,15 @@
                         </div>
                         <div class="btn-group p-3 ">
 
+                            <div class="btn-group search-panel ">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span id="search_concept">البحث فى </span> <span class="caret"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" id="search_by_name" href="#">الاسماء</a>
+                                                <a class="dropdown-item" id="search_by_code" href="#">الكود</a>
+                                            </div>
+                                        </div>
                             <input type="hidden" name="search_param" value="all" id="search_param">
                             <input type="text" id="search" class="form-control " name="x" placeholder="ابحث">
                             <div class="btn-group">
@@ -84,17 +94,27 @@
                     sort: 'desc'
                 });
 
+                var search_by = name;
+                $('#search_by_name').on('click', function () {
+                    search_by = 'name';
+                    $('#search_concept').text($(this).text());
+                });
+
+                $('#search_by_code').on('click', function () {
+                    search_by = 'code';
+                    $('#search_concept').text($(this).text());
+                });
+
                 $('#search').on('keyup', function (e) {
                     if(e.keyCode == 13){
                         var query = $(this).val();
-                        if (query != ''){
                             getTests({
-                                search_by: 'name',
+                                search_by: search_by,
                                 value: query,
                                 order_by: 'created_at',
                                 sort: 'desc'
                             })
-                        }
+
                     }
                 })
             });

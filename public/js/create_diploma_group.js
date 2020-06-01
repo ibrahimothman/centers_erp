@@ -27,18 +27,7 @@ function fillTimes(results, num, prefix) {
         });
 }
 
-function makeCall(url, method, data, callback, prefix, num) {
 
-    // console.log(url);
-    $.ajax({
-        url : url,
-        type : method,
-        data : data,
-        success : function (results) {
-            callback(results, num, prefix);
-        }
-    });
-}
 function makeCall(url, method, data, callback, prefix, num) {
 
     // console.log(url);

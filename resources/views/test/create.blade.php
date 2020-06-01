@@ -20,6 +20,11 @@
                 <div class="row">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8">
+                        @if(session()->has('success'))
+                            <div class="alert alert-success">
+                                {{ session()->get('success') }}
+                            </div>
+                        @endif
                         <div class="card mb-4">
                             <div class="card-header text-primary">
                                 اضافه الامتحان
@@ -28,10 +33,10 @@
                             <div class="card-body">
                                 <form method="post" action="{{ route('tests.store') }}" id="testsCreate">
                                     @csrf
-
+                                    <input name="next" value="tests" hidden>
                                     <div class="form-row">
 
-                                        <div class="col-sm-8 form-group">
+                                        <div class="col-sm-4 form-group">
 
                                             <label for="validationCustom01">اسم الامتحان</label>
                                             <span class="required">*</span>
@@ -39,7 +44,20 @@
                                             <input type="text" class="form-control" id="validationCustom01" placeholder="اسم الامتحان " value="{{ old('name') }}"  name="name">
                                             <span id="test_name_error"></span>
                                             <div>{{ $errors->first('name') }}</div>
+
                                         </div>
+
+                                        <div class="col-sm-4 form-group">
+
+                                            <label for="validationCustom02">كود الامتحان</label>
+                                            <span class="required">*</span>
+
+                                            <input type="text" class="form-control" id="validationCustom02" placeholder="كود الامتحان" value="{{ old('code') }}"  name="code">
+                                            <span id="test_code_error"></span>
+                                            <div>{{ $errors->first('code') }}</div>
+
+                                        </div>
+
                                         <div class="col-sm-4 form-group">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" name="retake" id="customCheck1" {{old('retake') == 'on' ? 'checked' : ''}}>
@@ -53,7 +71,7 @@
 
                                     <div class="form-row">
 
-                                        <div class="col-sm-6  form-group">
+                                        <div class="col-sm-4  form-group">
 
                                             <label for="validationCustom02">مصاريف الامتحان/فردى</label>
                                             <span class="required">*</span>
@@ -62,11 +80,19 @@
 
                                         </div>
 
-                                        <div class="col-sm-6  form-group">
+                                        <div class="col-sm-4  form-group">
                                             <label for="validationCustom03">مصاريف الامتحان/كورس</label>
                                             <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom03" placeholder="" value="{{ old('cost_course') }}" name="cost_course">
                                             <div>{{ $errors->first('cost_course') }}</div>
+
+                                        </div>
+
+                                        <div class="col-sm-4  form-group">
+                                            <label for="validationCustom04">نتيجه الامتحان</label>
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" id="validationCustom04" placeholder="" value="{{ old('result') }}" name="result">
+                                            <div>{{ $errors->first('result') }}</div>
 
                                         </div>
 
@@ -88,7 +114,8 @@
 
                                         <div class="col-sm-6 mx-auto" style="width: 200px;">
                                             <br>
-                                            <button class="btn btn-primary" type="submit" id="submit"><i class="glyphicon glyphicon-ok-sign"></i> اضافه</button>
+                                            <button class="btn btn-primary" type="submit" id="save"><i class="glyphicon glyphicon-ok-sign"></i> اضافه</button>
+                                            <button class="btn btn-primary" type="submit" id="save_create"><i class="glyphicon glyphicon-ok-sign"></i>حفظ و انشاء جديد</button>
                                             <button class="btn  btn-danger" type="reset"><i class="glyphicon glyphicon-repeat"></i> الغاء</button>
                                         </div>
 
@@ -144,32 +171,11 @@
         <script type='text/javascript' src="/js/tests_create_validation.js"></script>
 
 
-{{--    <script type="text/javascript">--}}
-{{--        $(document).ready(function () {--}}
-{{--            $('#validationCustom01').blur(function () {--}}
-{{--               var test_name = $('#validationCustom01').val();--}}
-{{--               $.ajax({--}}
-{{--                   url : '/check_test',--}}
-{{--                   data : {test_name : test_name},--}}
-{{--                   success: function (data) {--}}
-{{--                       if(data == 0){--}}
-{{--                           console.log('not available');--}}
-{{--                           $('#test_name_error').html("<lable class = 'text-danger'>Test name is already existed</lable>");--}}
-{{--                           $('#validationCustom01').addClass('has-error');--}}
-{{--                           $('#submit').attr('disabled','disabled');--}}
-{{--                       }else{--}}
-{{--                           // available test name--}}
-{{--                           console.log('available');--}}
-{{--                           $('#test_name_error').html("<lable class = 'text-success'></lable>");--}}
-{{--                           $('#validationCustom01').removeClass('has-error');--}}
-{{--                           $('#submit').attr('disabled',false);--}}
-{{--                       }--}}
-{{--                   }--}}
-{{--               })--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-
+        <script>
+            $('#save_create').on('click', function (e) {
+                $('input[name=next]').val('create');
+            })
+        </script>
 </body>
 
 </html>

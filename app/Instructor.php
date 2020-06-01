@@ -7,6 +7,7 @@ use App\helper\ImageUploader;
 use App\helper\MathParser\Math;
 use App\helper\PaymentModelHelper;
 use App\QueryFilter\SearchBy;
+use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
@@ -25,11 +26,12 @@ class Instructor extends ImageUploader
         return App(Pipeline::class)
             ->send($center->instructors())
             ->through([
-                SearchBy::class
+                SearchBy::class,
+                Sort::class
 
             ])
             ->thenReturn()
-            ->paginate(5);
+            ->get();
     }
 
     public function getImage($key)

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 
 use App\Center;
+use App\Rules\UniquePerCenter;
 use Illuminate\Http\Request;
 use App\Test;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
 class TestController extends Controller
@@ -38,15 +40,20 @@ class TestController extends Controller
     }
 
 
-    public function store()
+    public function store(Request $request)
     {
+
         // check if auth user has rights to add a new test
         $this->authorize('create',Test::class);
         $center = Center::findOrFail(Session('center_id'));
-        $test = $center->tests()->create($this->validateRequest(''));
-        $this->setRetake($test);
+        $data = $this->validateRequest($request);
+        DB::transaction(function () use ($center, $data){
+            $test = $center->tests()->create($data->validate());
+            $this->setRetake($test);
+        });
 
-        return redirect('/tests');
+        $next = $request->get('next') == 'tests' ? 'tests' : 'tests/create';
+        return redirect($next)->with('success', 'Test added successfully');
 
     }
 
@@ -58,12 +65,15 @@ class TestController extends Controller
 
     }
 
-    public function update(Test $test)
+    public function update(Request $request, Test $test)
     {
 
         $this->authorize('update',$test);
-        $test->update($this->validateRequest($test->id));
-        $this->setRetake($test);
+        $data = $this->validateRequest($request);
+        DB::transaction(function () use ($test, $data){
+            $test->update($data->validate());
+            $this->setRetake($test);
+        });
         return redirect('/tests')->with('success','test updated');
 
     }
@@ -92,29 +102,11 @@ class TestController extends Controller
     }
 
 
-    public  function searchTest(Request $request){
-        if($request->ajax()){
-            $query = $request->get('query');
-            if($query != ''){
-                $tests = Db::table('tests')
-                    ->where('name','like','%'.$query.'%')
-                    ->get();
-            }
-        }
 
-        return response()->json($tests);
 
-    }
-
-    private function validateRequest($test_id)
+    private function validateRequest(Request $request)
     {
-        return request()->validate([
-            'name' => 'required|unique:tests,name,'.$test_id,
-            'description' => 'required',
-            'cost_ind' => 'required|integer',
-            'cost_course' => 'required|integer',
-
-        ]);
+        return Validator::make($request->all(), Test::rules($request));
     }
 
     private function setRetake($test)

@@ -180,20 +180,20 @@
                    lines += " <td >";
                    lines += " <div class='custom-control custom-checkbox'>";
                    if(group.opened){
-                       if(student.pivot.take) lines += "<input type='checkbox' checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"' >";
-                       else lines += "<input type='checkbox'  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"' >";
+                       if(student.pivot.take) lines += "<input type='checkbox' checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+student.id+"-"+ group.id +"' >";
+                       else lines += "<input type='checkbox'  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+student.id+"-"+ group.id +"' >";
                    }
                    else{
-                       if(student.pivot.take) lines += "<input type='checkbox' disabled checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+" '>";
-                       else lines += "<input type='checkbox' disabled  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+group.id+"'>";
+                       if(student.pivot.take) lines += "<input type='checkbox' disabled checked  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+student.id+"-"+ group.id +"'>";
+                       else lines += "<input type='checkbox' disabled  onchange='saveTake("+ student.id+","+ group.id +","+i+")' class='custom-control-input'  id='confirm-"+student.id+"-"+ group.id +"'>";
                    }
 
-                   lines += " <label class='custom-control-label' for='confirm-"+group.id+"'></label>";
+                   lines += " <label class='custom-control-label' for='confirm-"+student.id+"-"+ group.id +"'></label>";
                     lines += "</div>";
                     lines += "</td>";
                     lines += "<td  class='up'><div class='file  upload btn btn-sm btn-primary'>";
-                    if(group.opened) lines += "<input type='file' id='upload-photo-"+ group.id +"' name='photo' /> تحميل الصوره </div></td>";
-                    else lines += "<input type='file' id='upload-photo-"+ group.id +"' name='photo' disabled /> تحميل الصوره </div></td>";
+                    if(group.opened) lines += "<input type='file' id='upload-photo-"+student.id+"-"+ group.id +"' name='photo' /> تحميل الصوره </div></td>";
+                    else lines += "<input type='file' id='upload-photo-"+student.id+"-"+ group.id +"' name='photo' disabled /> تحميل الصوره </div></td>";
                     lines += "</tr>";
                     i++;
 
@@ -220,7 +220,7 @@
 
     function saveTake(student_id,group_id,i) {
         var take = 0;
-        if($('#confirm-'+group_id).prop('checked') == true) take = 1;
+        if($('#confirm-'+student_id+'-'+group_id).prop('checked') == true) take = 1;
         $.ajax({
             url:'/test-takes',
             type:'post',
@@ -277,12 +277,16 @@
                 });
 
                 // toggle take checkbox and update image ability
-                $('#confirm-'+group_id).prop('disabled', function (i,v) {
-                    return !v;
+                $("[id^=confirm-][id$=-"+group_id+"]").each(function () {
+                    $(this).prop('disabled', function (i,v){
+                        return !v;
+                    })
                 });
-                $('#upload-photo-'+group_id).prop('disabled', function (i,v) {
-                    return !v;
-                });
+                $("[id^=upload-photo-][id$=-"+group_id+"]").each(function () {
+                    $(this).prop('disabled', function (i, v) {
+                        return !v;
+                    })
+                })
 
             }
         })

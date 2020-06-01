@@ -83,6 +83,23 @@
         </div>
     </li>
 
+    <!-- categories -->
+    <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::categoryLinks() )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="true" aria-controls="categoryCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>التصنيفات</span>
+        </a>
+        <div id="categoryCollapse" class="{{array_key_exists(Request::url(),\App\helper\SideBarLinks::categoryLinks() )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                @foreach(\App\helper\SideBarLinks::categoryLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
+
+            </div>
+        </div>
+    </li>
+
     <!-- instructors -->
     <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::instructorLinks() )? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#instructorCollapse" aria-expanded="true" aria-controls="instructorCollapse">

@@ -48,6 +48,9 @@ class Job extends Model
             'الطلاب' => 'students',
             'الامتحانات' => 'tests',
             'المدربين' => 'instructors',
+            'الماليات' => 'finance',
+            'الكورسات' => 'courses',
+            'الدبلومات' => 'diplomas',
         ];
     }
 
@@ -69,4 +72,8 @@ class Job extends Model
             ];
         }
     }
+
+    public static $scopes = [
+        'الطلاب', 'الامتحانات', 'المدربين', 'الكورسات' , 'الدبلومات', 'الماليات'
+    ];
 }

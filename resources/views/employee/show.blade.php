@@ -36,7 +36,7 @@
 
 
                                         <div class="text-center">
-                                            <img src="{{ $employee->image }}" class="avatar img-circle img-thumbnail" alt="avatar">
+                                            <img src="{{ $employee->image ?? 'https://www.nautec.com/wp-content/uploads/2018/04/placeholder-person.png' }}" onerror="imgError(this)" class="avatar img-circle img-thumbnail" alt="avatar">
 
                                         </div></hr><br>
                                         <p>تاريخ الاضافه : {{$employee->created_at}}</p>
@@ -132,7 +132,7 @@
                                                         <tr>
 
                                                             <td>نظام المحاسبه</td>
-                                                            <td colspan="2">{{$employee->paymentModel->name}}</td>
+                                                            <td colspan="2">{{$employee->payment_model['model']}}</td>
 
 
                                                         </tr>
@@ -231,6 +231,11 @@
                     newWin.print();
                     newWin.close();
                 }
+
+                $('img').on('error', function(){
+                    console.log('error');
+                    $(this).attr('src', "https://www.nautec.com/wp-content/uploads/2018/04/placeholder-person.png");
+                });
             </script>
 
 

@@ -28,11 +28,12 @@
                         <div class="btn-group print-btn p-3 ">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
-                            <div class="dropdown-menu"> <a class="dropdown-item" href="#">السعر</a>
-                                <a class="dropdown-item" href="#">المده</a> </div>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="diplomas?order_by=cost&sort=desc">السعر</a>
+                                <a class="dropdown-item" href="diplomas?order_by=duration&sort=desc">المده</a> </div>
                         </div>
                         <div class="btn-group p-3 ">
-                            <input type="text" class="form-control " name="x" placeholder="ابحث">
+                            <input type="text" class="form-control " name="search" id="search" placeholder="ابحث">
                             <div class="btn-group">
                                 <button class="btn btn-success"><i class="fas fa-search"></i></button>
                             </div>
@@ -87,6 +88,19 @@
 @include('scroll_top')
 <!-- script-->
 @include('script')
+<script>
+
+
+    $('#search').on('keyup', function (e) {
+        var q = $(this).val().trim();
+        if(e.keyCode == 13){
+            var data = "search_by=name&value="+q;
+            window.location.href = "diplomas?"+data;
+        }
+    })
+
+
+</script>
 </body>
 
 </html>

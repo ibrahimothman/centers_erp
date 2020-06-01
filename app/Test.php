@@ -5,7 +5,9 @@ namespace App;
 use App\QueryFilter\Id;
 use App\QueryFilter\SearchBy;
 use App\QueryFilter\Sort;
+use App\Rules\UniquePerCenter;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 
 class Test extends Model
@@ -61,6 +63,31 @@ class Test extends Model
 
 
         });
+    }
+
+    public static function rules(Request $request)
+    {
+        if($request->isMethod('post')){
+            return[
+                'name' => ['required', new UniquePerCenter(Test::class, '')],
+                'code' => ['required', new UniquePerCenter(Test::class, '')],
+                'description' => 'required',
+                'cost_ind' => 'required|integer',
+                'cost_course' => 'required|integer',
+                'result' => 'required|integer',
+            ];
+        }
+
+        else{
+            $test_id = $request->route('test')->id;
+            return[
+                'name' => ['required', new UniquePerCenter(Test::class,$test_id )],
+                'code' => ['required', new UniquePerCenter(Test::class,$test_id )],
+                'description' => 'required',
+                'cost_ind' => 'required|integer',
+                'cost_course' => 'required|integer',
+            ];
+        }
     }
 
 }

@@ -93,7 +93,7 @@ class StudentController extends Controller
         ]);
 
         $center->students()->syncWithoutDetaching($student);
-        $return = $request->get('return') == 'students'? "/students/$student->id": "/students/create";
+        $return = $request->get('next') == 'students'? "/students/$student->id": "/students/create";
         return redirect($return)->with('success','Student added successfully');
 
     }

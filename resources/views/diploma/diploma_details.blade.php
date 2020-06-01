@@ -81,7 +81,7 @@
                                                         <div class="col-sm-6">
                                                             <div>
                                                                 <span class="w-50 p-3 text-warning">تاريخ البدايه : </span>
-                                                                20/10/2020
+                                                                {{ $group->starts_at }}
                                                             </div>
                                                         </div>
                                                     </div>

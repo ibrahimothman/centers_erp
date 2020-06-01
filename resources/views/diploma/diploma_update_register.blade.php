@@ -86,34 +86,34 @@
                                                 <label for="validationCustom01">   اختر اليوم</label>
                                                 <div class='input-group date'>
 
-                                                    <input id="diploma-day-1" name="diploma-days[]" onclick="onDayClicked(1)" value="{{ $time->day }}" class="form-control" type="text" >
+                                                    <input id="diploma-day-{{$i}}" name="diploma-days[]" onclick="onDayClicked(1)" value="{{ $time->day }}" class="form-control" type="text" >
                                                     <span class="input-group-addon">
                                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                                 </span>
-                                                    <div>{{ $errors->first('diploma-days.0') }}</div>
+                                                    <div>{{ $errors->first("diploma-days.$i") }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 form-group {{ $i > 1? 'extra_time' : ''}}">
-                                                <label for="diploma-day-1-begin"> بداية المحاضرة</label>
-                                                <select class="form-control" id="diploma-day-begin-1" name="diploma-begins[]">
+                                                <label for="diploma-day-{{$i}}-begin"> بداية المحاضرة</label>
+                                                <select class="form-control" id="diploma-day-begin-{{$i}}" name="diploma-begins[]">
                                                     <option value="{{ $time->begin }}">{{ $time->begin }}</option>
                                                 </select>
-                                                <span id="test_course-day-1-end_error"></span>
+                                                <span id="test_course-day-{{$i}}-end_error"></span>
                                                 <div>{{ $errors->first('diploma-begins.0') }}</div>
                                             </div>
 
                                             <div class="col-sm-3 form-group {{ $i > 1? 'extra_time' : ''}}">
-                                                <label for="diploma-day-1-end"> نهاية المحاضرة</label>
-                                                <select class="form-control" id="diploma-day-end-1" name="diploma-ends[]">
+                                                <label for="diploma-day-{{$i}}-end"> نهاية المحاضرة</label>
+                                                <select class="form-control" id="diploma-day-end-{{$i}}" name="diploma-ends[]">
                                                     <option value="{{ $time->end }}">{{ $time->end }}</option>
                                                 </select>
-                                                <span id="test_course-day-1-end_error"></span>
+                                                <span id="test_course-day-{{$i}}-end_error"></span>
                                                 <div>{{ $errors->first('diploma-ends.0') }}</div>
                                             </div>
 
                                             <div class="col-sm-3 form-group {{ $i > 1? 'extra_time' : ''}}">
-                                                <label for="validationCustom01">اختر الغرفه</label>
-                                                <select class="form-control" id="diploma-room-1" name="diploma-rooms[]">
+                                                <label for="validationCustom0{{$i}}">اختر الغرفه</label>
+                                                <select class="form-control" id="diploma-room-{{$i}}" name="diploma-rooms[]">
                                                     <option value="{{ $time->pivot->room_id }}">{{ App\Room::findOrFail($time->pivot->room_id)->name }}</option>
                                                 </select>
                                             </div>

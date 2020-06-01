@@ -1,155 +1,179 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
+
 <head>
+
     <!-- Bootstrap CSS & js -->
     @include('library')
-<!-- Bootstrap CSS & js -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/instructor_style.css">
-    <title> view instructors </title>
+    <link href="{{url('employee')}}" rel="stylesheet">
+    <script wesrc="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>instructors</title>
+
+
 </head>
-<body class="bg-light" id="page-top">
+
+<body id="page-top">
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
-        @include('operationBar')
 
-<!-- container -->
-<div class="container  ">
-    <nav class="navbar navbar-expand-lg navbar-light ">
+    @include('operationBar')
 
-        <form class="form-inline my-2 my-lg-0" action="/instructors" method="get">
-            <input hidden name="search_by" value="nameAr">
-            <input name="value" id="search" type="search" placeholder="بحث">
-            <button class="btn btn-primary  mx-2 px-4 my-5 my-sm-0" id="search_for_instructor" type="submit">بحث</button>
+    <!-- Main Content -->
+        <div id="content">
+            <!-- Page Heading -->
 
-        </form>
-
-        <ul class="navbar-nav text-right">
-
-            <li class="nav-item ml-4">
-                <h5 hidden style="color: #007bff">تصنيف علي حسب</h5>
-
-            </li>
-
-            <li class=" nav-item  dropdown ml-4 ">
-                <button hidden data-toggle="dropdown" class="dropdown-toggle btn-primary py-1">
-                    الاقسام <b class="caret"></b>
-                </button>
-                <ul class=" dropdown-menu text-right">
-                    <li><label class="checkbox"><input type="checkbox">القسم الاول</label></li>
-                    <li><label class="checkbox"><input type="checkbox"> القسم الثاني</label></li>
+            <div class="container-fluid">
 
 
-                </ul>
-            </li>
-            <br>
-            <li class=" nav-item  dropdown ml-4 ">
-                <button hidden data-toggle="dropdown" class="dropdown-toggle btn-primary py-1">
-                    المواعيد <b class="caret"></b>
-                </button>
-                <ul class=" dropdown-menu text-right">
-                    <li><label class="checkbox"><input type="checkbox">من1:2</label></li>
-                    <li><label class="checkbox"><input type="checkbox"> من3:4</label></li>
+                <div class="col-md-12">
+                    <div class="card">
 
-
-                </ul>
-            </li>
-            <br>
-
-        </ul>
-
-    </nav>
-
-
-</div>
-
-<!-- end container -->
-<div class="container text-right px-5 py-5">
-
-    <div class="row ">
-        <div class="col">
-            <h2 class="text-primary ">المدربين</h2>
-            <br>
-        </div>
-    </div>
-    <!-- card -->
-
-        @for($i=0;$i<count($instructors);$i+=3)
-        <div class="row ">
-            @for($j=$i;$j<$i+3;$j++)
-                @if($j==count($instructors))
-                    @break
-                    @endif
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card motionCard">
-                                <div class="card-body text-center">
-                                    <p><img class="img-fluid rounded-circle" id="image-{{$j}}" src="{{$instructors[$j]->image}}" width="100"
-                                            height="100" alt=""></p>
-                                    <h4 class="card-title">{{$instructors[$j]->nameAr}}</h4>
-                                    <p class="card-text">{{$instructors[$j]->bio}}</p>
-                                    <a href="/instructors/{{$instructors[$j]->id}}" class="btn btn-primary btn-sm">قراءه المزيد</a>
+                        <div class="card-header text-primary">
+                            <div class="row  ">
+                                <div class="col-md-6">
+                                    بيانات المدربين
                                 </div>
+
                             </div>
                         </div>
+                        <div class="card-body">
 
+                            <div class="row cont-header">
+
+                                <div class="col-md-6">
+
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="btn-group print-btn mr-2 ">
+
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            الترتيب حسب
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="/instructors?order_by=created_at&sort=desc">الاحدث اضافه</a>
+                                            <a class="dropdown-item" href="/instructors?order_by=updated_at&sort=desc">"الاحدث التعديل</a>
+                                            <a class="dropdown-item" href="/instructors?order_by=nameAr&sort=desc">"الحروف الابجديه</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="btn-group ">
+                                        <div class="btn-group search-panel ">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span id="search_concept">البحث فى </span> <span class="caret"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" id="search_by_name" href="#">الاسماء</a>
+                                                <a class="dropdown-item" id="search_by_id_number" href="#">الرقم القومى</a>
+                                                <a class="dropdown-item" id="search_by_phone_number" href="#">رقم الموبايل</a>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="search_param" value="all" id="search_param">
+                                        <input type="text" class="form-control " id="search" placeholder="ابحث">
+                                        <div class="btn-group">
+                                            <button class="btn btn-success" id="search" ><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            {{--                            @foreach($instructors as $instructors)--}}
+                            <div class="row cont-det" id="container">
+
+                                @foreach($instructors as $instructor)
+                                    <div class="col-12 col-md-3" id="container-{{$instructor->id}}">
+                                        <div class="card card-sh  border-primary mb-3" >
+
+                                            <div class="card-header bg-transparent border-primary">{{$instructor->nameAr}}</div>
+                                            <div class="card-body ">
+                                                <p class="card-text">
+                                                    <img src="{{$instructor->getImage("image")  }}" alt="" onerror="imgError(this);" class="rounded-circle img-profile-contact float-right img-responsive">
+                                                <ul class="list-unstyled contact-det">
+                                                    <li><i class="fas fa-envelope btn-circle"></i> البريد الالكترونى
+                                                        <br>{{$instructor->email}}
+                                                    </li>
+                                                    <li>
+                                                        <i class="fa fa-phone btn-circle"></i> التليفون:
+                                                        <span> {{$instructor->phoneNumber}}  </span>
+                                                    </li>
+                                                    <li class="gray">تاريخ الاضافه : {{ $instructor->created_at }}</li>
+
+
+                                                </ul>
+                                                </p>
+                                            </div>
+
+                                            <form class="card-footer border-primary">
+                                                    <button type="button" class="btn btn-success btn-xs" id="delete-instructors-{{ $instructor->id }}"> <i class="fas fa-trash-alt"></i> </button>
+                                                    <a href="/instructors/{{$instructor->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
+                                            </form>
+
+
+
+                                        </div>
+
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        {{--                            {{$instructors->links()}}--}}
 
                     </div>
                 </div>
-                <br>
             </div>
-                @endfor
         </div>
-        @endfor
-{!! $instructors->render() !!}
-</div>
+        <!-- /.container-fluid -->
+        <!-- End of Main Content -->
 
-        @include('footer')
+        <!-- Footer -->
+    @include('footer')
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">هل تريد الخروج بالفعل</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">اضغط على الخروج اذا كنت ترغب قى  الخروج</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
+                <a class="btn btn-primary" href="login.html">الخروج</a>
+            </div>
+        </div>
     </div>
 </div>
-<!-- scroll top -->
-@include('scroll_top')
 <!-- script-->
+
 @include('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="{{ asset('js/notify.min.js') }}"></script>
+<script src="{{ asset('js/notification.js') }}"></script>
+<script>var scope = 'instructors';</script>
+<script src="{{ asset('js/person.js') }}"></script>
+
 </body>
+
 </html>
-
-<script>
-
-
-    // $('')
-    // var lines = '';
-    // for(i=0; i< instructors.length; i+=3){
-    //     lines += "<div class='row instructor'>";
-    //     for(j = i; j < i + 3; j++){
-    //         if(j == count(instructors)) {
-    //             break;
-    //         }
-    //         lines += "<div class='col-xs-12 col-sm-6 col-md-'>";
-    //         lines += "<div class='image-flip'>";
-    //         lines += "<div class='mainflip'>";
-    //         lines += "<div class='frontside'>";
-    //         lines += "<div class='card motionCard'>";
-    //         lines += "<div class='card-body text-center'>";
-    //         lines += "<p><img class='img-fluid rounded-circle  ' src='' width='100'height='100' alt='card image'></p>";
-    //         linese += "<h4 class='card-title'></h4>";
-    //         linese += "<p class='card-text'></p>";
-    //         linese += "<a href='' class='btn btn-primary btn-sm'>قراءة المزيد</a>";
-    //
-    //         lines += "</div>";
-    //         lines += "</div>";
-    //         lines += "</div>";
-    //
-    //
-    //         lines += "</div>";
-    //         lines += "</div>";
-    //         lines += "<br>";
-    //         lines += "</div>";
-    //     }
-    //     lines += "/div>";
-    // }
-</script>

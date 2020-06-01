@@ -190,8 +190,10 @@
                                                         <thead>
                                                         <tr class="w-100">
                                                             <th class="w-20">بدايه المجموعه</th>
+                                                            <th class="w-10">عدد المقاعد</th>
+                                                            <th class="w-10">عدد المقاعد الشاغره</th>
                                                             <th class="w-30"></th>
-                                                            <th class="w-10"></th>
+                                                            <th class="w-30"></th>
                                                         </tr>
                                                         </thead>
                                                         <!--Table head-->
@@ -201,13 +203,13 @@
                                                         @if(isset($diploma->groups))
                                                             @foreach($diploma->groups as $group)
                                                                 <tr class= {{
-                                                                    $group->available_seats==0
-                                                                    ||$Utility->datePassed($Utility->getDate($group->starts_at),-1)?"table-danger":""}}>
+                                                                    $group->getAvailableSeats()==0?"table-danger":""}}>
                                                                 <td> {{$Utility->getDate($group->starts_at)}} </td>
+                                                                <td>{{ $group->available_chairs }}</td>
+                                                                <td>{{ $group->getAvailableSeats() }}</td>
                                                                 <td >
                                                                     @php($dis="")
-                                                                    @if($group->available_seats==0
-                                                                    ||$Utility->datePassed($Utility->getDate($group->starts_at),-1)==true)
+                                                                    @if($group->getAvailableSeats()==0)
                                                                         @php($dis="disabled")
                                                                     @endif
 

@@ -51,29 +51,16 @@
                                     </thead>
                                     <tbody>
                                     <!-- first row -->
-                                    <tr>
-                                        <th scope="row">الطلاب</th>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                    </tr>
-                                    <!-- second row -->
-                                    <tr>
-                                        <th scope="row">المدربين</th>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                    </tr>
-                                    <!-- third row -->
-                                    <tr>
-                                        <th scope="row">الامتحانات</th>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                        <td><input name="check" type="checkbox" value=""></td>
-                                    </tr>
+                                    @foreach(App\Job::$scopes as $scope)
+                                        <tr>
+                                            <th scope="row">{{$scope}}</th>
+                                            <td><input name="check" type="checkbox" value=""></td>
+                                            <td><input name="check" type="checkbox" value=""></td>
+                                            <td><input name="check" type="checkbox" value=""></td>
+                                            <td><input name="check" type="checkbox" value=""></td>
+                                        </tr>
+                                    @endforeach
+
                                     </tbody>
                                 </table>
                                 <br>
@@ -109,6 +96,8 @@
 <!-- client side validation page -->
 
 <script type='text/javascript' src="/js/jobs_create_validation.js"></script>
+<script src="{{ asset('js/notify.min.js') }}"></script>
+<script src="{{ asset('js/notification.js') }}"></script>
 <script>
 
     $('#fromJob').submit(function (e) {
@@ -128,10 +117,15 @@
                     "_token": "{{csrf_token()}}"
                 },
                 success: function (response) {
-                    alert(response.message);
+                    $.notify(response.message, {
+                        position:"bottom left",
+                        style: 'successful-process',
+                        className: 'done',
+                        // autoHideDelay: 500000
+                    });
                     setTimeout(function () {
                         location.reload();
-                    }, 1000);
+                    }, 3000);
                 },
                 error: function (error) {
                     if (error.status == 400) {// validation

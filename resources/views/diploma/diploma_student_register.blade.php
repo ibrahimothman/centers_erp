@@ -13,6 +13,16 @@
         <div class="container-fluid">
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-10">
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{session()->get('error')}}
+                        </div>
+                    @endif
+                    @if(session()->has('success'))
+                        <div class="alert alert-success">
+                            {{session()->get('success')}}
+                        </div>
+                    @endif
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
@@ -22,6 +32,7 @@
                         <div class="card-body">
                             <form  id="form" enctype="multipart/form-data" action="{{ route('diploma-enrollments.store')  }}" method="post" >
                                 @csrf
+                                <input name="next" value="save" hidden>
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label for="student-id">اسم الطالب</label>
@@ -64,6 +75,8 @@
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
                                         <button class="btn btn-primary " type="submit" id="submit"> اضافه
                                             </button>
+                                        <button class="btn btn-primary " type="submit" id="submit_new">حفظ و انشاء جديد
+                                        </button>
                                         <button class="btn  btn-danger " type="reset"> إلغاء
                                                    </button>
                                     </div>
@@ -138,6 +151,11 @@
             })
         })
     });
+
+    $('#submit_new').on('click', function () {
+        $('input[name=next]').val('create');
+    })
+
 </script>
 </body>
 </html>

@@ -19,6 +19,11 @@
                     <div class="row">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-8">
+                            @if(session()->has('success'))
+                                <div class="alert alert-success">
+                                    {{ session()->get('success') }}
+                                </div>
+                            @endif
                             <div class="card mb-4">
                                 <div class="card-header text-primary ">
                                     تسجيل بيانات الموظفين
@@ -26,6 +31,7 @@
                                 <div class="card-body">
                                     <form action="{{ route('employees.store') }}" method="post" enctype="multipart/form-data" id="employeeCreate">
                                         @csrf
+                                        <input name="next" value="save" hidden>
                                         <div class="form-row image-upload">
                                             <div class="col-sm-8">
                                                 <div class="custom-file">
@@ -98,7 +104,7 @@
                                                 <select name="job" class="form-control">
                                                     <option value="0">اختار وظيفة</option>
                                                     @foreach($jobs as $job)
-                                                        <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                                        <option  {{$job == old('job') ? 'selected':''}} value="{{ $job->id }}">{{ $job->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div>{{ $errors->first('job') }}</div>
@@ -176,6 +182,7 @@
                                         <div class="form-row save">
                                             <div class="col-sm-6 mx-auto text-center">
                                                 <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
+                                                <button class="btn btn-primary" type="submit" id="submit_new">حفظ و انشاء جديد</button>
                                                 <button class="btn  btn-danger" type="reset"> الغاء</button>
                                             </div>
                                         </div>
@@ -270,6 +277,11 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+
+    $('#submit_new').on('click', function (e) {
+        $('input[name=next]').val('create') ;
+    })
 
 
 

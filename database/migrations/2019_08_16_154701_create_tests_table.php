@@ -16,10 +16,11 @@ class CreateTestsTable extends Migration
         Schema::create('tests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
+            $table->string('code')->unique();
             $table->string('description');
             $table->string('cost_ind');
             $table->string('cost_course');
-            $table->string('result')->default(100);
+            $table->string('result');
             $table->boolean('retake')->default(0);
             $table->unsignedBigInteger('center_id')->index();
             $table->timestamps();

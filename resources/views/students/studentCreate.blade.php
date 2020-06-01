@@ -35,13 +35,14 @@
                                 <form action="{{ route('students.store') }}" method="post" enctype="multipart/form-data" id="studentCreate">
                                     @csrf
                                     <!-- photo -->
+                                        <input name="next" value="students" hidden>
                                         <div class="form-row image-upload">
                                             <div class="col-sm-8">
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input" accept="image/*" name="idImage"
-                                                           id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                           id="customFile1" src="" onchange="readURL(this, 1);" >
                                                     <input type="file" class="custom-file-input" accept="image/*" name="image"
-                                                           id="customFile2" src="" onchange="readURL(this, 2);" required>
+                                                           id="customFile2" src="" onchange="readURL(this, 2);" >
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +68,7 @@
 
                                             <label for="validationCustom01">الاسم باللغه العربيه</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('nameAr') }}" >
+                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('nameAr') ?? 'asdas'}}" >
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
                                     </div>
@@ -75,7 +76,7 @@
                                         <div class="col-sm-12 form-group">
                                             <label for="validationCustom03">الاسم باللغه الانجليزيه</label>
                                             <span class="required">*</span>
-                                            <input type="text" name= "nameEn" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('nameEn') }}" >
+                                            <input type="text" name= "nameEn" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('nameEn')?? 'asdw' }}" >
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
                                     </div>
@@ -83,7 +84,7 @@
                                         <div class="col-sm-12 form-group">
                                         <label for="validationCustom05">البريد الالكترونى </label>
                                             <span class="required">*</span>
-                                        <input type="text" name="email" id="validationCustom05" placeholder="ادخل البريد الالكترونى " class="form-control" value="{{ old('email') }}">
+                                        <input type="text" name="email" id="validationCustom05" placeholder="ادخل البريد الالكترونى " class="form-control" value="{{ old('email') ?? 'asd@asd.asd'}}">
                                         <div>{{ $errors->first('email') }}</div>
                                     </div>
 
@@ -92,7 +93,7 @@
                                         <div class="col-sm-6 ">
                                             <label>رقم التليفون المحمول</label>
                                             <span class="required">*</span>
-                                            <input type="text" name="phoneNumber"  data-inputmask="'mask' : '(999) 99999999'"  placeholder="ادخل رقم التليفون المحمول"  class="form-control" value="{{ old('phoneNumber') }}">
+                                            <input type="text" name="phoneNumber"  data-inputmask="'mask' : '(999) 99999999'"  placeholder="ادخل رقم التليفون المحمول"  class="form-control" value="{{ old('phoneNumber')??'01265236521' }}">
                                             <div>{{ $errors->first('phoneNumber') }}</div>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -106,7 +107,7 @@
                                     <div class=" form-row">
                                         <div class="col-sm-6">
                                             <label for="validationCustom06">الرقم القومى </label>
-                                            <input type="text" name="idNumber" id="validationCustom06" value="{{ old('idNumber') }}"  placeholder="ادخل الرقم القومى " class="form-control" >
+                                            <input type="text" name="idNumber" id="validationCustom06" value="{{ old('idNumber') ?? '23652145214521'}}"  placeholder="ادخل الرقم القومى " class="form-control" >
                                             <div>{{ $errors->first('idNumber') }}</div>
 
                                         </div>
@@ -119,39 +120,20 @@
                                     </div>
                                     <br>
 
-                                  {{--  <div class=" form-row ">
-                                        <div class="col-sm-6" >
-
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="image" id="customFile1" src="{{ old('image') }}" >
-                                                <label class="custom-file-label" for="customFile">صوره الشخصيه</label>
-                                                <div>{{ $errors->first('image') }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 ">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="idPicture" src="{{ old('idPicture') }}" id="customFile2">
-                                                <label class="custom-file-label" for="customFile">صوره  البطاقه </label>
-                                                <div>{{ $errors->first('idPicture') }}</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                  --}}
                                     <div class="form-row">
                                         <div class="col-sm-12  ">
 
                                         </div>
                                         <div class="col-sm-6 form-group ">
                                             <label for="">البلد </label>
-                                            <input name="state" type="text" placeholder="البلد" value="{{ old('state') }}" class="form-control">
+                                            <input name="state" type="text" placeholder="البلد" value="{{ old('state')?? 'asdas' }}" class="form-control">
                                             <div>{{ $errors->first('state') }}</div>
 
                                         </div>
 
                                         <div class="col-sm-6 form-group ">
                                             <label for="">المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="{{ old('city') }}" class="form-control">
+                                            <input name="city" type="text" placeholder="المدينه" value="{{ old('city')?? 'asdasd' }}" class="form-control">
                                             <div>{{ $errors->first('city') }}</div>
                                         </div>
                                     </div>
@@ -160,7 +142,7 @@
                                         <label>العنوان</label>
                                         <span class="required">*</span>
 
-                                        <textarea name="address" placeholder="ادخل العنوان " rows="3" class="form-control">{{ old('address') }}</textarea>
+                                        <textarea name="address" placeholder="ادخل العنوان " rows="3" class="form-control">{{ old('address')??'asda' }}</textarea>
                                         <div>{{ $errors->first('address') }}</div>
                                     </div>
 
@@ -189,7 +171,7 @@
                                     <div class=" form-row">
                                         <div class="col-sm-12 form-group ">
                                             <label>كارت المهاره</label>
-                                            <input type="text" value="{{ old('skillCardNumber') }}" placeholder="ادخل الرقم" name="skillCardNumber" class="form-control" >
+                                            <input type="text" value="{{ old('skillCardNumber')?? '215546' }}" placeholder="ادخل الرقم" name="skillCardNumber" class="form-control">
                                             <div>{{ $errors->first('skillCardNumber') }}</div>
                                         </div>
 
@@ -301,6 +283,13 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
+
+
+                // add hidden input to determine next redirect route after successful form submission
+
+                $('#save_new').on('click', function (e) {
+                    $('input[name=next]').val('create') ;
+                })
 
 
         </script>

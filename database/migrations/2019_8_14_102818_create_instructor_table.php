@@ -17,9 +17,9 @@ class CreateInstructorTable extends Migration
             $table->bigIncrements('id');
             $table->string('nameAr');
             $table->string('nameEn');
-            $table->string('email')->unique();
-            $table->string('phoneNumber')->unique();
-            $table->string('idNumber')->unique();
+            $table->string('email');
+            $table->string('phoneNumber');
+            $table->string('idNumber');
             $table->string('phoneNumberSec')->nullable();
             $table->string('passportNumber')->nullable();
             $table->string('image')->nullable();

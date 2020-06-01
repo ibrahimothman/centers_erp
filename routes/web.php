@@ -32,13 +32,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
 
         //--------------------------- employees ------------------
         Route::resource('employees', "$web_controllers_path\EmployeeController");
+        Route::get('search_for_employees', "$web_controllers_path\EmployeeController@getEmployees");
 
         // --------------------- students --------------------
         Route::get('/', "$web_controllers_path\StudentController@create");
         Route::resource('students', "$web_controllers_path\StudentController")->middleware('center');
 
         Route::get('students.table', "$web_controllers_path\StudentController@showTable")->name('students.table');
-        Route::get('/search_student_by_name', "$web_controllers_path\StudentController@searchByName");
+        Route::get('/search_for_students', "$web_controllers_path\StudentController@searchByName");
 
 
         //---------------------- Tests-------------------
@@ -89,14 +90,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
 
         //----------------- Diploma Groups----------------
         Route::resource('diploma-groups', "$web_controllers_path\DiplomaGroupController");
+        Route::get('all-diplomas', "$web_controllers_path\DiplomaGroupController@allDiplomas");
 
         //----------------- Diploma enrollment----------------
         Route::resource('diploma-enrollments', "$web_controllers_path\DiplomaEnrollmentController");
         Route::resource('update-diploma-enrollments', "$web_controllers_path\DiplomaEnrollmentController@update");
+        Route::get('/get_student_enrollment', "$web_controllers_path\DiplomaEnrollmentController@getStudentEnrollment");
 
         // -------------------instructor----------------
         Route::resource('instructors', "$web_controllers_path\InstructorsController");
-        Route::post('search_instructor', "$web_controllers_path\InstructorsController@searchInstructors");
+        Route::get('search_for_instructors', "$web_controllers_path\InstructorsController@searchInstructors");
         Route::get('/all-instructors', "$web_controllers_path\InstructorsController@allInstructors");
         Route::get('/instructors-calendar/{instructor}', "$web_controllers_path\InstructorsController@showInstructorCalendar");
         Route::post('update_instructor_payment', "$web_controllers_path\PaymentModelController@updateInstructorPayment");

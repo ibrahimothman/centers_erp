@@ -54,6 +54,12 @@ class SideBarLinks
 
         ];
     }
+    public static function categoryLinks()
+    {
+        return [
+            url('/').'/'.'categories' => 'التصنيفات',
+        ];
+    }
 
     public static function instructorLinks()
     {
