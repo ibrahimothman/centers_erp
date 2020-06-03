@@ -37,7 +37,7 @@ class TestTakeController extends Controller
         $this->authorize('create', Test::class);
 
         $center = Center::findOrFail(Session('center_id'));
-        $tests = $center->tests()->has('groups')->with('groups.enrollers')->get();
+        $tests = $center->tests()->has('groups.enrollers')->with('groups.enrollers')->get();
         return view('testTakes/test-take')->with('tests',$tests);
     }
 

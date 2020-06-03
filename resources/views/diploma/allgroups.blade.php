@@ -202,7 +202,7 @@
                                                         <tbody>
                                                         @if(isset($diploma->groups))
                                                             @foreach($diploma->groups as $group)
-                                                                <tr class= {{
+                                                                <tr id="diplomaGroupContainer-{{$group->id}}" class= {{
                                                                     $group->getAvailableSeats()==0?"table-danger":""}}>
                                                                 <td> {{$Utility->getDate($group->starts_at)}} </td>
                                                                 <td>{{ $group->available_chairs }}</td>
@@ -220,13 +220,11 @@
                                                                         <SPAN> الطلاب المسجلين</SPAN>
                                                                     </a></td>
                                                                 <td>
-                                                                    <form method="post" action="{{route('diploma-groups.destroy',$group->id)}}">
-                                                                        @csrf
-                                                                        @method('delete')
+                                                                    <form>
                                                                         <a href="/diploma-groups/{{$group->id}}/edit" class=" btn btn-outline-primary btn-sm ">
                                                                             <i class="fas fa-edit"></i> </a> </span> </span>
 
-                                                                        <button type="submit" name="delete" class="btn btn-outline-danger   btn-sm ">
+                                                                        <button type="button" id="delete-diploma-group-{{$group->id}}" name="delete" class="btn btn-outline-danger   btn-sm ">
                                                                             <i class="fas fa-trash-alt"></i> </button>
                                                                     </form>
                                                                 </td>
@@ -322,6 +320,23 @@
         if(id !== '0') window.location = '/diploma-groups?id='+id;
         else window.location = '/diploma-groups'
     })
+
+    $('button[id^=delete-diploma-group-]').on('click', function (e) {
+        var id = $(this).attr('id').split('-')[3];
+        deleteGroup(id);
+    });
+
+    function deleteGroup(id) {
+        $.ajax({
+            url: '/diploma-groups/'+id,
+            type: 'DELETE',
+            data: {_token: "{{csrf_token()}}"},
+            success: function (data) {
+                console.log(data.message);
+                $('tr[id=diplomaGroupContainer-'+ id +']').remove();
+            }
+        })
+    }
 </script>
 
 </body>

@@ -39,6 +39,20 @@ class InstructorRepository
         return $instructors;
     }
 
+//    public function getInstructorPaymentInfo($instructor_id)
+//    {
+//        $center = Center::findOrFail(Session('center_id'));
+//        $instructor = $center->instructors()->findOrFail($instructor_id);
+//        $rest = $center->transactions()->where("meta_data->payFor_type", "App\Instructor")
+//            ->where("meta_data->payFor_id", "$instructor->id")->latest()->first()['rest'];
+//
+//        $instructor['rest'] = is_null($rest)? 0 : $rest;
+//        $instructor['total'] = $instructor->payment_model['salary'] + $instructor['rest']  ;
+//
+//        return $instructor;
+//
+//    }
+
     public function getAvailableBegins($instructor_id, $day)
     {
         $instructor = Instructor::findOrFail($instructor_id);

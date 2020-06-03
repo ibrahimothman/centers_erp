@@ -94,7 +94,7 @@
             loc = $('<a>', { href: window.location })[0];
             var data = "name="+query;
             $.ajax({
-                url: "/search_student_by_name",
+                url: "/search_for_students",
                 method: "GET",
                 data: data,
                 dataType: "json",
@@ -113,7 +113,7 @@
 
                 },
                 error: function (res) {
-                    alert(res.data);
+                    // alert(res.data);
                 }
 
             });

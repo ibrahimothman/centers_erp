@@ -33,20 +33,7 @@
                                                     تعديل البيانات المركز
                                                     <i class="fas fa-angle-double-left  "></i> </a>
 
-                                                <a href="#" id="pass" class="list-group-item">
-                                                    <i class="fas fa-key"></i>
-                                                    تغير الباسورد
-                                                    <i class="fas fa-angle-double-left "></i></a>
-
-                                                <a href="#" id="lang" class="list-group-item">
-                                                    <i class="fas fa-globe"></i>
-                                                    اللغه
-                                                    <i class="fas fa-angle-double-left "></i></a>
-                                                <a href="#" class="list-group-item" data-toggle="modal"
-                                                   data-target="#logout">
-                                                    <i class="fas fa-sign-out-alt"></i>
-                                                    الخروج
-                                                    <i class="fas fa-angle-double-left "></i></a>
+                                                
                                             </div>  <!-- list-group .// -->
                                         </div>
                                     </article> <!-- card-group-item.// -->

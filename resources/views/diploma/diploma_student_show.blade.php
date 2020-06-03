@@ -52,7 +52,7 @@
 
                             @foreach($groups as $group)
                                 @foreach($group->students as $student)
-                                    <tr>
+                                    <tr id="container-{{$group->id}}-{{$student->id}}">
                                         <td>{{ $student->nameAr }}</td>
                                         <td>{{ $group->diploma->name }}</td>
                                         <td>{{ $group->starts_at }}</td>
@@ -64,7 +64,7 @@
                                         </td>
                                         <td>
                                             <form>
-                                                <button type="button" onclick="deleteEnrollment('{{ $group->id }}', '{{  $student->id }}');" class="btn btn-outline-danger py-1 px-2">
+                                                <button type="button" id="delete-diploma-enrollment-{{$group->id}}-{{$student->id}}" class="btn btn-outline-danger py-1 px-2">
                                                     <i class="fas fa-trash-alt m-0"></i></button>
                                             </form>
                                         </td>
@@ -91,6 +91,26 @@
 @include('script')
 <script>
 
+    $('button[id^=delete-diploma-enrollment-]').on('click', function () {
+        var e = $(this).attr('id').split('-');
+        var student_id = e[e.length-1];
+        var group_id = e[e.length-2];
+
+        deleteEnrollment(group_id, student_id);
+    })
+    function deleteEnrollment(group_id, student_id) {
+        $.ajax({
+            url : '/diploma-enrollments/'+student_id,
+            type : 'delete',
+            data : { student_id: student_id, group_id : group_id, '_token' : '{{ csrf_token() }}'  },
+            success : function (data, status) {
+                console.log(status);
+                if(status === 'success') {
+                    $('tr[id=container-'+group_id+'-'+ student_id +']').remove();
+                }
+            }
+        });
+    }
 </script>
 
 </body>

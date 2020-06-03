@@ -13,6 +13,7 @@ use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\Integer;
 
 
 class Instructor extends ImageUploader
@@ -20,6 +21,8 @@ class Instructor extends ImageUploader
     protected $hidden = array('pivot');
 
     protected $guarded = [];
+    protected $appends = ['last_rest'];
+
 
     public static function allInstructors($center)
     {
@@ -85,6 +88,15 @@ class Instructor extends ImageUploader
         $original = $this->saveImage($idImage);
         return $this->attributes['idImage'] = url($this->getDir()."/".$original);
 
+    }
+
+    // get last rest for instructor
+    public function getLastRestAttribute()
+    {
+        $center = Center::findOrFail(Session('center_id'));
+        $rest = $center->transactions()->where("meta_data->payFor_type", "App\Instructor")
+            ->where("meta_data->payFor_id", "$this->id")->latest()->first()['rest'];
+        return $this['rest'] = $rest;
     }
 
     protected static function boot()

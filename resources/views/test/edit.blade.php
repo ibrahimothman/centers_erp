@@ -57,8 +57,8 @@
                                             مصاريف الامتحان/فردى
                                             </label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" id="validationCustom02" placeholder="" value="{{$test->cost_ind}}" name="cost_ind" >
-                                            <div>{{ $errors->first('cost_ind') }}</div>
+                                            <input type="text" class="form-control" id="validationCustom02" placeholder="" value="{{$test->cost}}" name="cost" >
+                                            <div>{{ $errors->first('cost') }}</div>
                                         </div>
                                         <div class="col-sm-4  form-group">
                                             <label for="validationCustom03">

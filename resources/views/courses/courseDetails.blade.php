@@ -100,57 +100,8 @@
                                                 </div>
                                             </section>
                                             </div>
-                                            <!-- <sction class="testmonials">
-                                                <div id="course-testmonial" class="carousel slide course-testmonial" data-ride="carousel" data-interval="false">
-                                                    <div class="carousel-inner">
-                                                        <div class="carousel-item active">
-                                                        <img class="d-block w-100" src="https://img-cdn.majarah.com/post/6916910457805268_4055220074079483_711907441144118_4332190458952274_Majarah_tech_.jpg" alt="First slide">
-                                                        </div>
-                                                        <div class="carousel-item">
-                                                        <img class="d-block w-100" src="https://1ook.com/wp-content/uploads/2017/11/php-1.jpg" alt="Second slide">
-                                                        </div>
-                                                        <div class="carousel-item">
-                                                        <img class="d-block w-100" src="https://www.fortunetechnologyindia.com/wp-content/uploads/2019/06/PHP_1_1.jpg" alt="Third slide">
-                                                        </div>
-                                                    </div>
-                                                    <a class="carousel-control-prev" href="#course-testmonial" role="button" data-slide="prev">
-                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                    <a class="carousel-control-next" href="#course-testmonial" role="button" data-slide="next">
-                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                </div>
-                                            </secrion> -->
 
-                                            <section class="logistics testmonials">
-                                                <div class="course-logistics">
-                                                    <div class="logistic-element">
-                                                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" alt="" class="rounded-img">
-                                                        <p>محمود سعيد</p>
-                                                        <p>كورس جميل جداً انصحه لكل حد عايز يبقى مبرمج</p>
-                                                        <p><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i></p>
-                                                    </div>
-                                                    <div class="logistic-element">
-                                                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(27).jpg" alt="" class="rounded-img">
-                                                        <p>علي الفخراني</p>
-                                                        <p>المدرسون كانوا عباقرة شكراً جامعة المنصورة</p>
-                                                        <p><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></p>
-                                                    </div>
-                                                    <div class="logistic-element">
-                                                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(11).jpg" alt="" class="rounded-img">
-                                                        <p>دي سماااح</p>
-                                                        <p>مبسوطة اني خدت الكورس ده والله</p>
-                                                        <p><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i><i class="fas fa-star gold-star"></i><i class="fas fa-star"></i></p>
-                                                    </div>
-                                                </div>
-                                            </section>
 
-                                            <div class="col-sm-8 mx-auto" style="width: 200px;">
-                                                    <hr/>
-                                                    <button class="btn btn-success action-buttons w-100" type="submit" id="submit"> انضم <i class="fas fa-plus"></i></button>
-                                                </div>
                                         </article>
                                     </div>
                                 </div>

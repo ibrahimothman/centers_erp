@@ -97,7 +97,7 @@
                                                 <tbody>
                                                 @if(isset($test->groups))
                                                 @foreach($test->groups as $testGroup)
-                                                    <tr class= {{
+                                                    <tr id="container-{{$testGroup->id}}" class= {{
                                                     $testGroup->available_seats==0 || $testGroup->opened==0
                                                     ||$Utility->datePassed($Utility->getDate($testGroup->times[0]->day),$testGroup->times[0]->end)?"table-danger":""}}>
 
@@ -125,15 +125,14 @@
                                                                 </a></td>
                                                             @endcan
                                                         <td>
-                                                            <form method="post" action="{{route('test-groups.destroy',$testGroup->id)}}">
-                                                                @csrf
-                                                                @method('delete')
+                                                            <form >
+
                                                                 @can('update', App\Test::class)
                                                                     <a href="/test-groups/{{$testGroup->id}}/edit" class=" btn btn-outline-primary btn-sm ">
                                                                         <i class="fas fa-edit"></i> </a> </span> </span>
                                                                 @endcan
                                                                 @can('delete', App\Test::class)
-                                                                      <button type="submit" name="delete" class="btn btn-outline-danger   btn-sm ">
+                                                                      <button type="button" id="delete-group-{{ $testGroup->id }}" name="delete" class="btn btn-outline-danger   btn-sm ">
                                                                          <i class="fas fa-trash-alt"></i> </button>
                                                                 @endcan
                                                             </form>
@@ -215,6 +214,24 @@
             window.location = '/test-groups';
         }
     });
+
+
+    $('button[id^=delete-group-]').on('click', function (e) {
+        var id = $(this).attr('id').split('-')[2];
+        deleteTestGroup(id);
+    });
+
+    function deleteTestGroup(id) {
+        $.ajax({
+            url: '/test-groups/'+id,
+            type: 'DELETE',
+            data: {_token: "{{csrf_token()}}"},
+            success: function (data) {
+                console.log(data.message);
+                $('tr[id=container-'+ id +']').remove();
+            }
+        })
+    }
 
 
 </script>

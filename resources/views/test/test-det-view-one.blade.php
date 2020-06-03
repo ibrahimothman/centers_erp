@@ -58,7 +58,7 @@
                                     <div class="card-text clearfix "> <span class="w-50 p-3  text-primary" > تكلفه الامتحان :</span>
                                         <div class="d-inline p-2 ">
                                             <span class="text-warning " >فردى : </span>
-                                            <span class=" text-secondary " >{{$test->cost_ind}} جنيه </span> </div>
+                                            <span class=" text-secondary " >{{$test->cost}} جنيه </span> </div>
                                         <div class="d-inline p-2 ">
                                             <span class="text-warning  " >كورس : </span>
                                             <span class=" text-secondary " >{{$test->cost_course}} جنيه </span> </div>

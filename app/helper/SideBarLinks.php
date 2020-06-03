@@ -109,7 +109,10 @@ class SideBarLinks
         return [
             url('/').'/'.'finance' => 'عرض ملخص الماليات',
             url('/').'/'.'expenses/create' => 'المصاريف',
+            url('/').'/'.'salaries/create' => 'المرتبات',
             url('/').'/'.'revenues/create' => 'الايرادات',
+            url('/').'/'.'refund/create' => 'استرجاع',
+
         ];
     }
 

@@ -17,7 +17,7 @@ class CreateDiplomaGroupsTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('diploma_id');
-            $table->unsignedBigInteger('instructor_id');
+            $table->unsignedBigInteger('instructor_id')->nullable();
             $table->date('starts_at');
             $table->unsignedSmallInteger('available_chairs');
             $table->timestamps();
@@ -26,7 +26,7 @@ class CreateDiplomaGroupsTable extends Migration
             $table->foreign('diploma_id')->references('id')->on('diplomas')
                 ->onDelete('cascade');
             $table->foreign('instructor_id')->references('id')->on('instructors')
-                ->onDelete('setNull');
+                ->onDelete('Set Null');
         });
     }
 

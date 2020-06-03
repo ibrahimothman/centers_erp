@@ -82,6 +82,17 @@ class Student extends ImageUploader
         return $this->belongsToMany(TestGroup::class)->withPivot(['take','result'])->withTimestamps();
     }
 
+    public function tests()
+    {
+        $tests = new \Illuminate\Database\Eloquent\Collection();
+        $groups =  $this->testsEnrolling()->with('test')->get();
+        foreach($groups as $group){
+            $tests->push($group->test);
+        }
+        return $tests;
+
+    }
+
 
     public function courses(){
         return $this->belongsToMany(CourseGroup::class)->withTimestamps();

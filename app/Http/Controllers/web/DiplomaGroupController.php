@@ -97,7 +97,7 @@ class DiplomaGroupController extends Controller
         $group = DiplomaGroup::findOrFail($group);
         $group->times()->detach();
         $group->delete();
-        return redirect('diploma-groups');
+        return response()->json(['message' => 'deleted'], 200);
     }
 
     private function validateCourseGroupData(Request $request)

@@ -1,5 +1,5 @@
 <?php return array (
-  'app' => 
+  'app' =>
   array (
     'name' => 'Laravel',
     'env' => 'local',
@@ -12,7 +12,7 @@
     'faker_locale' => 'en_US',
     'key' => 'base64:JM2n7DQm/DvWpMIRgzSJ1YuM8YJYLANVQlLrGubEMfI=',
     'cipher' => 'AES-256-CBC',
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Illuminate\\Auth\\AuthServiceProvider',
       1 => 'Illuminate\\Broadcasting\\BroadcastServiceProvider',
@@ -43,7 +43,7 @@
       26 => 'App\\Providers\\RouteServiceProvider',
       27 => 'Yajra\\Datatables\\DatatablesServiceProvider',
     ),
-    'aliases' => 
+    'aliases' =>
     array (
       'App' => 'Illuminate\\Support\\Facades\\App',
       'Arr' => 'Illuminate\\Support\\Arr',
@@ -85,37 +85,37 @@
       'DataTables' => 'yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
-  'auth' => 
+  'auth' =>
   array (
-    'defaults' => 
+    'defaults' =>
     array (
       'guard' => 'web',
       'passwords' => 'users',
     ),
-    'guards' => 
+    'guards' =>
     array (
-      'web' => 
+      'web' =>
       array (
         'driver' => 'session',
         'provider' => 'users',
       ),
-      'api' => 
+      'api' =>
       array (
         'driver' => 'jwt',
         'provider' => 'users',
       ),
     ),
-    'providers' => 
+    'providers' =>
     array (
-      'users' => 
+      'users' =>
       array (
         'driver' => 'eloquent',
         'model' => 'App\\User',
       ),
     ),
-    'passwords' => 
+    'passwords' =>
     array (
-      'users' => 
+      'users' =>
       array (
         'provider' => 'users',
         'table' => 'password_resets',
@@ -123,77 +123,77 @@
       ),
     ),
   ),
-  'broadcasting' => 
+  'broadcasting' =>
   array (
     'default' => 'log',
-    'connections' => 
+    'connections' =>
     array (
-      'pusher' => 
+      'pusher' =>
       array (
         'driver' => 'pusher',
         'key' => '',
         'secret' => '',
         'app_id' => '',
-        'options' => 
+        'options' =>
         array (
           'cluster' => 'mt1',
           'encrypted' => true,
         ),
       ),
-      'redis' => 
+      'redis' =>
       array (
         'driver' => 'redis',
         'connection' => 'default',
       ),
-      'log' => 
+      'log' =>
       array (
         'driver' => 'log',
       ),
-      'null' => 
+      'null' =>
       array (
         'driver' => 'null',
       ),
     ),
   ),
-  'cache' => 
+  'cache' =>
   array (
     'default' => 'file',
-    'stores' => 
+    'stores' =>
     array (
-      'apc' => 
+      'apc' =>
       array (
         'driver' => 'apc',
       ),
-      'array' => 
+      'array' =>
       array (
         'driver' => 'array',
       ),
-      'database' => 
+      'database' =>
       array (
         'driver' => 'database',
         'table' => 'cache',
         'connection' => NULL,
       ),
-      'file' => 
+      'file' =>
       array (
         'driver' => 'file',
         'path' => 'C:\\Users\\ibrah\\centers_erp\\storage\\framework/cache/data',
       ),
-      'memcached' => 
+      'memcached' =>
       array (
         'driver' => 'memcached',
         'persistent_id' => NULL,
-        'sasl' => 
+        'sasl' =>
         array (
           0 => NULL,
           1 => NULL,
         ),
-        'options' => 
+        'options' =>
         array (
         ),
-        'servers' => 
+        'servers' =>
         array (
-          0 => 
+          0 =>
           array (
             'host' => '127.0.0.1',
             'port' => 11211,
@@ -201,12 +201,12 @@
           ),
         ),
       ),
-      'redis' => 
+      'redis' =>
       array (
         'driver' => 'redis',
         'connection' => 'cache',
       ),
-      'dynamodb' => 
+      'dynamodb' =>
       array (
         'driver' => 'dynamodb',
         'key' => '',
@@ -217,12 +217,12 @@
     ),
     'prefix' => 'laravel_cache',
   ),
-  'database' => 
+  'database' =>
   array (
     'default' => 'mysql',
-    'connections' => 
+    'connections' =>
     array (
-      'sqlite' => 
+      'sqlite' =>
       array (
         'driver' => 'sqlite',
         'url' => NULL,
@@ -230,12 +230,12 @@
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
-      'mysql' => 
+      'mysql' =>
       array (
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'training',
+        'database' => 'test',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8mb4',
@@ -244,11 +244,11 @@
         'prefix_indexes' => true,
         'strict' => false,
         'engine' => NULL,
-        'options' => 
+        'options' =>
         array (
         ),
       ),
-      'pgsql' => 
+      'pgsql' =>
       array (
         'driver' => 'pgsql',
         'url' => NULL,
@@ -263,7 +263,7 @@
         'schema' => 'public',
         'sslmode' => 'prefer',
       ),
-      'sqlsrv' => 
+      'sqlsrv' =>
       array (
         'driver' => 'sqlsrv',
         'url' => NULL,
@@ -278,22 +278,22 @@
       ),
     ),
     'migrations' => 'migrations',
-    'redis' => 
+    'redis' =>
     array (
       'client' => 'predis',
-      'options' => 
+      'options' =>
       array (
         'cluster' => 'predis',
         'prefix' => 'laravel_database_',
       ),
-      'default' => 
+      'default' =>
       array (
         'host' => '127.0.0.1',
         'password' => NULL,
         'port' => '6379',
         'database' => 0,
       ),
-      'cache' => 
+      'cache' =>
       array (
         'host' => '127.0.0.1',
         'password' => NULL,
@@ -302,25 +302,25 @@
       ),
     ),
   ),
-  'filesystems' => 
+  'filesystems' =>
   array (
     'default' => 'local',
     'cloud' => 's3',
-    'disks' => 
+    'disks' =>
     array (
-      'local' => 
+      'local' =>
       array (
         'driver' => 'local',
         'root' => 'C:\\Users\\ibrah\\centers_erp\\storage\\app',
       ),
-      'public' => 
+      'public' =>
       array (
         'driver' => 'local',
         'root' => 'C:\\Users\\ibrah\\centers_erp\\public/uploads',
         'url' => 'http://127.0.0.1:8000/public',
         'visibility' => 'public',
       ),
-      's3' => 
+      's3' =>
       array (
         'driver' => 's3',
         'key' => '',
@@ -331,24 +331,24 @@
       ),
     ),
   ),
-  'hashing' => 
+  'hashing' =>
   array (
     'driver' => 'bcrypt',
-    'bcrypt' => 
+    'bcrypt' =>
     array (
       'rounds' => 10,
     ),
-    'argon' => 
+    'argon' =>
     array (
       'memory' => 1024,
       'threads' => 2,
       'time' => 2,
     ),
   ),
-  'jwt' => 
+  'jwt' =>
   array (
     'secret' => 'rz6ExsxRscR7GIWIyRr6l6nrSW7L0w4q17Li0IXg4KEOk9dj9dYTHI8rYcAnFwVL',
-    'keys' => 
+    'keys' =>
     array (
       'public' => NULL,
       'private' => NULL,
@@ -357,7 +357,7 @@
     'ttl' => 120,
     'refresh_ttl' => 20160,
     'algo' => 'HS256',
-    'required_claims' => 
+    'required_claims' =>
     array (
       0 => 'iss',
       1 => 'iat',
@@ -366,7 +366,7 @@
       4 => 'sub',
       5 => 'jti',
     ),
-    'persistent_claims' => 
+    'persistent_claims' =>
     array (
     ),
     'lock_subject' => true,
@@ -374,41 +374,41 @@
     'blacklist_enabled' => true,
     'blacklist_grace_period' => 0,
     'decrypt_cookies' => false,
-    'providers' => 
+    'providers' =>
     array (
       'jwt' => 'Tymon\\JWTAuth\\Providers\\JWT\\Lcobucci',
       'auth' => 'Tymon\\JWTAuth\\Providers\\Auth\\Illuminate',
       'storage' => 'Tymon\\JWTAuth\\Providers\\Storage\\Illuminate',
     ),
   ),
-  'logging' => 
+  'logging' =>
   array (
     'default' => 'stack',
-    'channels' => 
+    'channels' =>
     array (
-      'stack' => 
+      'stack' =>
       array (
         'driver' => 'stack',
-        'channels' => 
+        'channels' =>
         array (
           0 => 'daily',
         ),
         'ignore_exceptions' => false,
       ),
-      'single' => 
+      'single' =>
       array (
         'driver' => 'single',
         'path' => 'C:\\Users\\ibrah\\centers_erp\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
-      'daily' => 
+      'daily' =>
       array (
         'driver' => 'daily',
         'path' => 'C:\\Users\\ibrah\\centers_erp\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
-      'slack' => 
+      'slack' =>
       array (
         'driver' => 'slack',
         'url' => NULL,
@@ -416,45 +416,45 @@
         'emoji' => ':boom:',
         'level' => 'critical',
       ),
-      'papertrail' => 
+      'papertrail' =>
       array (
         'driver' => 'monolog',
         'level' => 'debug',
         'handler' => 'Monolog\\Handler\\SyslogUdpHandler',
-        'handler_with' => 
+        'handler_with' =>
         array (
           'host' => NULL,
           'port' => NULL,
         ),
       ),
-      'stderr' => 
+      'stderr' =>
       array (
         'driver' => 'monolog',
         'handler' => 'Monolog\\Handler\\StreamHandler',
         'formatter' => NULL,
-        'with' => 
+        'with' =>
         array (
           'stream' => 'php://stderr',
         ),
       ),
-      'syslog' => 
+      'syslog' =>
       array (
         'driver' => 'syslog',
         'level' => 'debug',
       ),
-      'errorlog' => 
+      'errorlog' =>
       array (
         'driver' => 'errorlog',
         'level' => 'debug',
       ),
     ),
   ),
-  'mail' => 
+  'mail' =>
   array (
     'driver' => 'smtp',
     'host' => 'smtp.hostinger.ae',
     'port' => '587',
-    'from' => 
+    'from' =>
     array (
       'address' => 'traininghub@yohady.com',
       'name' => 'TrainingHub',
@@ -463,33 +463,33 @@
     'username' => 'traininghub@yohady.com',
     'password' => '123654789',
     'sendmail' => '/usr/sbin/sendmail -bs',
-    'markdown' => 
+    'markdown' =>
     array (
       'theme' => 'default',
-      'paths' => 
+      'paths' =>
       array (
         0 => 'C:\\Users\\ibrah\\centers_erp\\resources\\views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
   ),
-  'queue' => 
+  'queue' =>
   array (
     'default' => 'database',
-    'connections' => 
+    'connections' =>
     array (
-      'sync' => 
+      'sync' =>
       array (
         'driver' => 'sync',
       ),
-      'database' => 
+      'database' =>
       array (
         'driver' => 'database',
         'table' => 'queue_jobs',
         'queue' => 'default',
         'retry_after' => 90,
       ),
-      'beanstalkd' => 
+      'beanstalkd' =>
       array (
         'driver' => 'beanstalkd',
         'host' => 'localhost',
@@ -497,7 +497,7 @@
         'retry_after' => 90,
         'block_for' => 0,
       ),
-      'sqs' => 
+      'sqs' =>
       array (
         'driver' => 'sqs',
         'key' => '',
@@ -506,7 +506,7 @@
         'queue' => 'your-queue-name',
         'region' => 'us-east-1',
       ),
-      'redis' => 
+      'redis' =>
       array (
         'driver' => 'redis',
         'connection' => 'default',
@@ -515,47 +515,47 @@
         'block_for' => NULL,
       ),
     ),
-    'failed' => 
+    'failed' =>
     array (
       'database' => 'mysql',
       'table' => 'failed_jobs',
     ),
   ),
-  'services' => 
+  'services' =>
   array (
-    'mailgun' => 
+    'mailgun' =>
     array (
       'domain' => NULL,
       'secret' => NULL,
       'endpoint' => 'api.mailgun.net',
     ),
-    'postmark' => 
+    'postmark' =>
     array (
       'token' => NULL,
     ),
-    'ses' => 
+    'ses' =>
     array (
       'key' => '',
       'secret' => '',
       'region' => 'us-east-1',
     ),
-    'sparkpost' => 
+    'sparkpost' =>
     array (
       'secret' => NULL,
     ),
-    'stripe' => 
+    'stripe' =>
     array (
       'model' => 'App\\User',
       'key' => NULL,
       'secret' => NULL,
-      'webhook' => 
+      'webhook' =>
       array (
         'secret' => NULL,
         'tolerance' => 300,
       ),
     ),
   ),
-  'session' => 
+  'session' =>
   array (
     'driver' => 'file',
     'lifetime' => '120',
@@ -565,7 +565,7 @@
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
-    'lottery' => 
+    'lottery' =>
     array (
       0 => 2,
       1 => 100,
@@ -577,25 +577,25 @@
     'http_only' => true,
     'same_site' => NULL,
   ),
-  'view' => 
+  'view' =>
   array (
-    'paths' => 
+    'paths' =>
     array (
       0 => 'C:\\Users\\ibrah\\centers_erp\\resources\\views',
     ),
     'compiled' => 'C:\\Users\\ibrah\\centers_erp\\storage\\framework\\views',
   ),
-  'debug-server' => 
+  'debug-server' =>
   array (
     'host' => 'tcp://127.0.0.1:9912',
   ),
-  'image' => 
+  'image' =>
   array (
     'driver' => 'gd',
   ),
-  'datatables' => 
+  'datatables' =>
   array (
-    'search' => 
+    'search' =>
     array (
       'smart' => true,
       'multi_term' => true,
@@ -604,56 +604,56 @@
       'starts_with' => false,
     ),
     'index_column' => 'DT_RowIndex',
-    'engines' => 
+    'engines' =>
     array (
       'eloquent' => 'Yajra\\DataTables\\EloquentDataTable',
       'query' => 'Yajra\\DataTables\\QueryDataTable',
       'collection' => 'Yajra\\DataTables\\CollectionDataTable',
       'resource' => 'Yajra\\DataTables\\ApiResourceDataTable',
     ),
-    'builders' => 
+    'builders' =>
     array (
     ),
     'nulls_last_sql' => ':column :direction NULLS LAST',
     'error' => NULL,
-    'columns' => 
+    'columns' =>
     array (
-      'excess' => 
+      'excess' =>
       array (
         0 => 'rn',
         1 => 'row_num',
       ),
       'escape' => '*',
-      'raw' => 
+      'raw' =>
       array (
         0 => 'action',
       ),
-      'blacklist' => 
+      'blacklist' =>
       array (
         0 => 'password',
         1 => 'remember_token',
       ),
       'whitelist' => '*',
     ),
-    'json' => 
+    'json' =>
     array (
-      'header' => 
+      'header' =>
       array (
       ),
       'options' => 0,
     ),
   ),
-  'trustedproxy' => 
+  'trustedproxy' =>
   array (
     'proxies' => NULL,
     'headers' => 30,
   ),
-  'tinker' => 
+  'tinker' =>
   array (
-    'commands' => 
+    'commands' =>
     array (
     ),
-    'dont_alias' => 
+    'dont_alias' =>
     array (
       0 => 'App\\Nova',
     ),

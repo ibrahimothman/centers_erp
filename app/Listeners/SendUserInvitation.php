@@ -6,7 +6,7 @@ use App\Mail\Email;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendUserInvitation implements ShouldQueue
+class SendUserInvitation
 {
     /**
      * Create the event listener.

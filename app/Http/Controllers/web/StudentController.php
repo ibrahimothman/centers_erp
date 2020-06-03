@@ -164,5 +164,14 @@ class StudentController extends Controller
 
     }
 
+    public function getTests(Request $request)
+    {
+        return Student::findOrFail($request->get('student_id'))->tests();
+    }
+
+    public function getDiplomas(Request $request)
+    {
+        return Student::findOrFail($request->get('student_id'))->diplomas();
+    }
 
 }

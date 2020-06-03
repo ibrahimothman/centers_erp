@@ -95,7 +95,7 @@ class DiplomaController extends Controller
     public function destroy(Diploma $diploma)
     {
         $diploma->delete();
-        return redirect('diplomas');
+        return response()->json(['message' => 'deleted'], 200);
     }
 
     private function validateDiplomaData($request, $diploma_id)

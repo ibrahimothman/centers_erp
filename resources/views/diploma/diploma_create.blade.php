@@ -34,8 +34,7 @@
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" accept="image/*" name="image"
                                                    id="customFile1" src="" onchange="readURL(this, 1);" required>
-                                            <input type="file" accept="video/*" class="custom-file-input" name="video"
-                                                   id="customFile4" src="" onchange="readURL(this, 4);">
+
 
                                         </div>
                                     </div>
@@ -48,11 +47,7 @@
                                         <p>صورة الدبلومة</p>
                                    <!--     <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>-->
                                     </div>
-                                    <div class="course-image-input">
-                                        <img id="imageUploaded4"
-                                             src="http://simpleicon.com/wp-content/uploads/video.svg" alt="your video"/>
-                                        <p>ڤيديو الدبلومة</p>
-                                    </div>
+                                    
                                 </div>
 
                                 <div class="form-row">

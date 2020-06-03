@@ -54,7 +54,7 @@ class TestApiController extends Controller
         return Validator::make($request->all(),[
             'name' => 'required|unique:tests,name,'.$test_id,
             'description' => 'required',
-            'cost_ind' => 'required|integer',
+            'cost' => 'required|integer',
             'cost_course' => 'required|integer',
 
         ]);

@@ -187,7 +187,7 @@
 <script src="{{ asset('js/notify.min.js') }}"></script>
 <script src="{{ asset('js/notification.js') }}"></script>
 <script>var scope = 'students';</script>
-<script src="{{ asset('person.js') }}"></script>
+<script src="{{ asset('js/person.js') }}"></script>
 
 </body>
 

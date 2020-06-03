@@ -56,7 +56,7 @@
 
                             @foreach($groups as $group)
                                 @foreach($group->enrollers as $student)
-                                    <tr>
+                                    <tr id="container-{{$group->id}}-{{$student->id}}">
                                         <td>{{ $student->nameAr }}</td>
                                         <td>{{ $group->test->name }}</td>
                                         <td>{{ $group->times[0]->day }}</td>
@@ -116,7 +116,7 @@
             success : function (data, status) {
                 console.log(status);
                 if(status === 'success') {
-                    window.location.reload();
+                    $('tr[id=container-'+test_group_id+'-'+ student_id +']').remove();
                 }
             }
         });

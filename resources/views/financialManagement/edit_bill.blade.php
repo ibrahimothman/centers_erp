@@ -58,7 +58,7 @@
                                         <div class="form-row ">
                                             <div class="  col-sm-6  form-group ">
                                                 <label>التاريخ </label>
-                                                <input id="datetimepickerOutlayEdit" name="date" class="form-control datetimepickerOutlayEdit"  placeholder="التاريخ "    type="text" value="{{ $transaction->date }}" >
+                                                <input id="datetimepickerOutlayEdit" name="date" readonly class="form-control datetimepickerOutlayEdit"  placeholder="التاريخ "    type="text" value="{{ $transaction->date }}" >
                                                 <div>{{$errors->first('date')}}</div>
                                             </div>
                                         </div>

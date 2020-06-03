@@ -11,7 +11,7 @@ $factory->define(Test::class, function (Faker $faker) {
         'center_id' => factory(Center::class)->create(),
         'name' => $faker->unique()->title,
         'description' => 'test description',
-        'cost_ind' => 1000,
+        'cost' => 1000,
         'cost_course' => 500,
         'retake' => 1,
     ];

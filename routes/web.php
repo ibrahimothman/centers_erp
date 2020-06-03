@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
 
         Route::get('students.table', "$web_controllers_path\StudentController@showTable")->name('students.table');
         Route::get('/search_for_students', "$web_controllers_path\StudentController@searchByName");
+        Route::get('/get_student_tests', "$web_controllers_path\StudentController@getTests");
+        Route::get('/get_student_diplomas', "$web_controllers_path\StudentController@getDiplomas");
 
 
         //---------------------- Tests-------------------
@@ -122,8 +124,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
         });
         Route::resource('profits', "$web_controllers_path\ProfitController");
         Route::resource('expenses', "$web_controllers_path\ExpensesController");
+        Route::resource('salaries', "$web_controllers_path\SalaryController");
 //        Route::get('/expenses/{id}/{type}', "$web_controllers_path\ExpensesController@edit")->name('expenses.edit');
         Route::resource('revenues', "$web_controllers_path\RevenueController");
+        Route::resource('refund', "$web_controllers_path\RefundController");
         Route::resource('transactions', "$web_controllers_path\TransactionController");
         Route::get('all_transactions', "$web_controllers_path\TransactionController@allTransactions");
 

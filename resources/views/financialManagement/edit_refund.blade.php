@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
     <!-- style page -->
     <link href="/css/financialManagement_style.css" rel="stylesheet"/>
-    <title>income edit</title>
+    <title>refund edit</title>
 </head>
 <body id="page-top">
 
@@ -26,7 +26,7 @@
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
-                                <h3> تعديل ايرادات طالب </h3>
+                                <h3> تعديل استرجاع طالب </h3>
                             </div>
                         </header>
                         <div class="card-body">
@@ -40,18 +40,18 @@
                                                 <div class="form-row ">
                                                     <div class="col-sm-6  form-group ">
                                                         <label> الاسم  </label>
-                                                        <input placeholder="اختار" type="text" id="name" class="form-control" name="nameStudent" value="{{ $transaction->payer()->nameAr }}" readonly />
+                                                        <input placeholder="اختار" type="text" id="name" class="form-control" name="nameStudent" value="{{ $transaction->payFor()->nameAr }}" readonly />
 
                                                     </div>
                                                     <div class="col-sm-6 form-group ">
                                                         <label>الكورس /الدبلومه</label>
-                                                        <input placeholder="اختار" type="text" id="course" class="form-control" name="diploma" value="{{ $transaction->payFor()->name }}" readonly />
+                                                        <input placeholder="اختار" type="text" id="course" class="form-control" name="diploma" value="{{ $transaction->payer()->name }}" readonly />
 
                                                     </div>
                                                 </div>
                                             <div class="form-row ">
                                                     <div class="col-sm-6  form-group ">
-                                                        <label> التكلفه </label><input type="text" name="cost" class="form-control "  id="cost" value="{{ $transaction->payFor()->cost }}" readonly  >
+                                                        <label> التكلفه </label><input type="text" name="cost" class="form-control "  id="cost" value="{{ $transaction->payer()->cost }}" readonly  >
                                                     </div>
                                                     <div class="col-sm-6  form-group ">
                                                         <label> المدفوع  </label><input type="text" name="amount" class=" form-control  payIncome"  id="payIncome" value="{{ $transaction->amount }}"  >

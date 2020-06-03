@@ -7,7 +7,7 @@ $(document).ready(function () {
                 name: {
                     required: true,
                 },
-               cost_ind: {
+               cost: {
                     required: true,
                     number: true,
                 },
@@ -25,7 +25,7 @@ $(document).ready(function () {
                 name: {
                     required: "هذه الخانه مطلوبه",
                 },
-                cost_ind: {
+                cost: {
                     required: "هذه الخانه مطلوبه",
                     number:"ادخل الرقم الصحيح",
                 },

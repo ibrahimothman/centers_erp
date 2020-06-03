@@ -39,6 +39,11 @@ class InstructorsController extends Controller
         return Instructor::allInstructors($center);
     }
 
+//    public function getInstructorPayment()
+//    {
+//
+//    }
+
     /**
      * Show the form for creating a new resource.
      *

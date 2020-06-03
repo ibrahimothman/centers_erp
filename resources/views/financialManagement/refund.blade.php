@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
     <!-- style page -->
     <link href="/css/financialManagement_style.css" rel="stylesheet"/>
-    <title>income</title>
+    <title>refund</title>
 
 </head>
 <body id="page-top">
@@ -21,7 +21,7 @@
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
-                                <h3>الايرادات </h3>
+                                <h3>استرجاع </h3>
                             </div>
                         </header>
                         <div class="card-body">
@@ -30,7 +30,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <!-- select date -->
-                                        <form id="revenue-form">
+                                        <form id="refund-form">
                                             @csrf
                                             <div class="row title form-group">
                                                 <!-- date -->
@@ -158,10 +158,6 @@
 
 <script>
 
-    $(".datetimepicker").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d'
-    });
 
 
         // submit form
@@ -198,18 +194,17 @@
         });
 
 
-
     function createTransactionMetaDataJSON() {
         let transaction = {};
         let meta_data = {};
         var test_diploma_option = $('#test-diploma-option-1').children("option:selected");
         var test_diploma_value = $('#test-diploma-values-1').children("option:selected");
-        meta_data.payer_id = student_id;
-        meta_data.payer_type = "App\\Student";
-        meta_data.payFor_id = test_diploma_value.val();
-        meta_data.payFor_type =test_diploma_option.val();
+        meta_data.payFor_id = student_id;
+        meta_data.payFor_type = "App\\Student";
+        meta_data.payer_id = test_diploma_value.val();
+        meta_data.payer_type =test_diploma_option.val();
 
-        transaction.account_id = 3;
+        transaction.account_id = 9;
         transaction.rest = $("#rest-1").val();
         transaction.meta_data = meta_data;
         transaction.amount =  $("#paid-1").val();
@@ -220,6 +215,7 @@
         return transaction;
 
     }
+
         function checkIfAllInputsFilled() {
             var empty = $(".required_field").filter(function () {
                 return $(this).val().length === 0;

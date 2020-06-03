@@ -59,8 +59,11 @@ class DiplomaEnrollmentController extends Controller
 
         $student->diplomas_groups()->syncWithoutDetaching($enrollment_data['diploma_group_id']);
 
-        $next = $request->get('next') == 'save' ? 'diploma-enrollments' : 'diploma-enrollments/create';
-        return redirect($next)->with('success', 'The student has successfully added to this diploma');
+        if($request->get('next') == 'save' ){
+            return redirect('diploma-enrollments');
+        }
+
+        return redirect()->back()->with('success', 'The student has successfully added to this diploma');
 
     }
 
@@ -103,12 +106,12 @@ class DiplomaEnrollmentController extends Controller
         }));
 //
         $student->diplomas_groups()->sync($student_groups);
-        return redirect('diploma-enrollments');
+        return redirect("diploma-enrollments?diploma_id=$new_diploma_group->diploma_id");
     }
 
     public function destroy(Request $request)
     {
-        DiplomaGroup::findOrFail($request->all()['diploma_group_id'])->students()
+        DiplomaGroup::findOrFail($request->all()['group_id'])->students()
             ->detach($request->all()['student_id']);
         return response()->json('successfully detaching', 200);
     }

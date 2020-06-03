@@ -145,7 +145,7 @@
                             lines += "<span class='card-text text-justify'>"+test.description+"</span>";
                             lines += "<div class='dropdown-divider'></div>";
                             lines += "<div class='card-text clearfix '> <span class='w-50 p-3  text-primary' > تكلفه الامتحان :</span>";
-                            lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >فردي : </span> <span class=' text-secondary ' >"+test.cost_ind+" جنيها </span> </div>";
+                            lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >فردي : </span> <span class=' text-secondary ' >"+test.cost+" جنيها </span> </div>";
                             lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >كورس : </span> <span class=' text-secondary ' >"+test.cost_course+" جنيها </span> </div>";
                             if(test.retake)
                                 lines += "<div class='d-inline p-5  '> <span class='btn-success rep ' >قابل للاعاده</span> </div>";

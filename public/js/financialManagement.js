@@ -14,8 +14,8 @@ $(document).ready(function(){
     $("#outlayShow").click(function(){
         $("#section-1").css("display","none");
         $("#section-2").css("display","none");
-        $("#section-3").css("display","block");
-        $("#section-4").css("display","none");
+        $("#section-3").css("display","none");
+        $("#section-4").css("display","block");
         $("#section-5").css("display","none");
         $("#section-6").css("display","none");
     });
@@ -24,8 +24,19 @@ $(document).ready(function(){
         $("#section-1").css("display","none");
         $("#section-2").css("display","none");
         $("#section-3").css("display","none");
-        $("#section-4").css("display","block");
+        $("#section-4").css("display","none");
         $("#section-5").css("display","block");
+        $("#section-6").css("display","block");
+
+    });
+
+    $("#refundShow").click(function(){
+        console.log('refund btn');
+        $("#section-1").css("display","none");
+        $("#section-2").css("display","none");
+        $("#section-3").css("display","block");
+        $("#section-4").css("display","none");
+        $("#section-5").css("display","none");
         $("#section-6").css("display","none");
 
     });
@@ -47,15 +58,7 @@ $(document).ready(function(){
         $("#section-5").css("display","none");
         $("#section-6").css("display","none");
     });
-    // show content  profit
-    $("#details").click(function(){
-        $("#section-1").css("display","none");
-        $("#section-2").css("display","none");
-        $("#section-3").css("display","none");
-        $("#section-4").css("display","none");
-        $("#section-5").css("display","none");
-        $("#section-5").css("display","block");
-    });
+
     // end
     // select year btn
     for (i = new Date().getFullYear(); i > 1900; i--)
@@ -125,8 +128,9 @@ $(document).ready(function(){
         });
         $("#sumOutlay").val(sumOutlay);
         var id = $(this).attr('id')[6];
-        var rest_of_cost = $('#deserved_amount'+id).val() - $('#amount'+id).val();
-        $('#noPay'+id).val(rest_of_cost);
+        var rest_of_cost = $('#deserved_amount').val() - $('#amount').val();
+        console.log('asdasd');
+        $('#noPay').val(rest_of_cost);
 
     });
 
@@ -157,13 +161,16 @@ $(document).ready(function(){
 // add btn revenues
     $('#addButtonIncome').on('click', function() {
         var id = ($('.fieldIncome .form-row').length + 1).toString();
-        $('.fieldIncome').append(' <div class="form-row "> ' +
-            '<div class="col-lg-3 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control student-selector" list="studentList"  name="student'+id+'" id="student'+id+'" /> <datalist id="studentList"></datalist></div>' +
-            ' <div class="col-lg-3 col-sm-4 form-group "><label>الكورس/الدبلومه </label><input placeholder="اختار" type="text" id="diploma'+id+'" class="form-control" name="diploma'+id+'" list="diplomaList"/><datalist id="diplomaList"></datalist></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label>  التكلفه </label><input type="text" name="cost'+id+'" class="form-control "  id="cost'+id+'"  readonly ></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع </label><input type="text" name="payIncome'+id+'" class="form-control payIncome "  id="payIncome'+id+'"   ></div>' +
-            ' <div class="col-lg-2 col-sm-4 form-group "><label>  الباقي </label><input type="text" name="noPayIncome'+id+'" class="form-control "  id="noPayIncome'+id+'"   readonly></div>' +
-            '</div></div>');
+        $('.fieldIncome').append('<div class="form-row ">'+
+            '<input name="student-id-'+id+'" hidden>'+
+            '<div class="col-lg-2 col-sm-2 form-group "><label>امتحان/دبلومه</label><span class="required">*</span><select class="form-control " placeholder="اختار" id="test-diploma-option-'+id+'" name="test_diploma_option" required><option data-route="/get_student_tests" value="App\Test">امتحان</option><option data-route="/get_student_diplomas" value="App\Diploma">دبلومه</option></select></div>' +
+            '<div class="col-lg-2 col-sm-2 form-group "><label> الاسم/رقم قومي/موبايل  </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="search-option-'+id+'" name="search_option" required><option value="nameAr">الاسم</option><option value="idNumber">رقم القومي</option><option value="phoneNumber">الموبايل</option></select></div>'+
+            '<div class="col-lg-2 col-sm-4 form-group "><label>ادخل </label><input placeholder="اختار" type="text" id="search-input-'+id+'" class="form-control student-selector required_field" name="student" list="studentList-'+id+'" autocomplete="off"   /><div class="list-gpfrm-list" id="studentList-'+id+'"></div></div>'+
+            '<div class="col-lg-2 col-sm-4 form-group "><label>الامتحان /الدبلومه</label><span class="required">*</span><select class="form-control" id="test-diploma-values-'+id+'"></select></div>'+
+            '<div class="col-lg-1 col-sm-1 form-group "><label> التكلفه </label><input type="text" name="cost" class="form-control  "  id="cost'+id+'"  readonly ></div>'+
+            '<div class="col-lg-1 col-sm-1 form-group "><label> المدفوع  </label><input type="text" name="pay" class=" form-control  payIncome required_field"  id="paid-'+id+'"   ></div>' +
+            '<div class="col-lg-1 col-sm-1 form-group "><label>الباقي  </label><input type="text" name="noPayIncome" class="form-control "  id="rest-'+id+'"  readonly ></div>' +
+            '</div>');
 
 
     });
@@ -219,31 +226,7 @@ $(document).ready(function(){
 
     });
 
-    /*end */
-    /* edit revenues */
-    // date picker
-    $(function () {
-        $("#datetimepickerRevenuesEdit").datetimepicker({
-            timepicker:false,
-            format:'Y-m-d'
-        });
-    });
-    /* edit outlay */
-    // date picker
-    $(function () {
-        $("#datetimepickerOutlayEdit").datetimepicker({
-            timepicker:false,
-            format:'Y-m-d'
-        });
-    });
-    /* edit payroll */
-    // date picker
-    $(function () {
-        $("#datetimepickerPayrollEdit").datetimepicker({
-            timepicker:false,
-            format:'Y-m-d'
-        });
-    });
+
 /* profit page */
     // sum
     $(document).on("keyup", "#tax", function () {

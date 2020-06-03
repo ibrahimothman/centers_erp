@@ -161,8 +161,7 @@ class TestGroupController extends Controller
         $this->authorize('delete',Test::class);
 
         $testGroup->delete();
-        return redirect('/test-groups')
-            ->with('message','test group deleted successfully');
+        return response()->json(['message' => 'successfully deleted'], 200);
 
     }
 

@@ -18,7 +18,7 @@ class CreateTestsTable extends Migration
             $table->string('name')->unique();
             $table->string('code')->unique();
             $table->string('description');
-            $table->string('cost_ind');
+            $table->string('cost');
             $table->string('cost_course');
             $table->string('result');
             $table->boolean('retake')->default(0);

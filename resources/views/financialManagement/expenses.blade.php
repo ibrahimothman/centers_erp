@@ -23,12 +23,7 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <!-- nav btn-->
-                            <ul class="menu">
-                                <li><button class="item  btn btn-light px-5"  id="all">الكل</button></li>
-                                <li><button class="item btn btn-light "  id="outlay" > المصروفات </button></li>
-                                <li><button class="item  btn btn-light "  id="payroll">الرواتب</button></li>
-                            </ul>
+
                             <!-- view section 1 -->
                             <div id="section-1">
                                 <div class="card">
@@ -36,24 +31,25 @@
                                         <!-- select date -->
                                         <form id="expenses_form">
                                         <div class="row">
-                                            <div class=" col">
-                                        <!-- add pill -->
-                                                <input type='button' class="btn btn-success  "
-                                                       value=' + اضافه فاتوره ' id='addButton' name="add"/>
-                                        </div>
+
+                                            <div class="col-lg-2 col-sm-6  form-group">
+                                                <label for="validationCustom01"> التاريخ</label>
+                                                <input value="{{date('Y-m-d')}}" readonly type="date" id="date" name="dateOutlay" class="form-control dateOutlay">
+                                            </div>
+                                            <div class="col-lg-2 col-sm-6  form-group">
+                                                <label for="time"> الوقت</label>
+                                                <input value="{{date('H:i:s')}}" readonly type="text" id="time" name="time" class="form-control dateOutlay">
+                                            </div>
                                         </div>
                                           <br>
                                         <!-- end -->
                                         <!-- add row pill -->
                                         <div class="field">
                                             <div class="form-row ">
-                                                <div class="col-lg-3 col-sm-6  form-group">
-                                                    <label for="validationCustom01"> التاريخ</label>
-                                                    <input type="date" id="dateOutlay1" name="dateOutlay" class="form-control dateOutlay">
-                                                   </div>
+
                                                 <div class="col-lg-3 col-sm-6 form-group ">
                                                     <label> تحت بند  </label>
-                                                    <input type="text" placeholder="اختار" name="account" class="form-control expenses_field expenses_required"  id="account1" autocomplete="off" list="account_list"  >
+                                                    <input type="text" placeholder="اختار" name="account" class="form-control expenses_field expenses_required"  id="account" autocomplete="off" list="account_list"  >
                                                     <datalist id="account_list">
                                                         @foreach($accounts as $account)
                                                             <option data-account-id="{{ $account['id'] }}" value="{{ $account['name'] }}"></option>
@@ -61,31 +57,26 @@
                                                     </datalist>
                                                 </div>
                                                 <div class="col-lg-3 col-sm-4 form-group ">
-                                                    <label> المطلوب سداده </label><input type="text" autocomplete="off" name="deserved_amount" class="form-control expenses_required"  id="deserved_amount1"   >
+                                                    <label> المطلوب سداده </label><input type="text" autocomplete="off" name="deserved_amount" class="form-control expenses_required"  id="deserved_amount"   >
                                                 </div>
-                                                <div class="col-lg-2 col-sm-4 form-group ">
-                                                    <label> المدفوع  </label><input type="text" autocomplete="off" name="amount" class=" form-control payOutlay expenses_required"  id="amount1"   >
+                                                <div class="col-lg-3 col-sm-4 form-group ">
+                                                    <label> المدفوع  </label><input type="text" autocomplete="off" name="amount" class=" form-control payOutlay expenses_required"  id="amount"   >
                                                 </div>
-                                                <div class="col-lg-1 col-sm-4 form-group ">
-                                                    <label>الباقي  </label><input type="text" autocomplete="off" name="noPay" class="form-control "  id="noPay1"   >
+                                                <div class="col-lg-3 col-sm-4 form-group ">
+                                                    <label>الباقي  </label><input type="text" autocomplete="off" name="noPay" class="form-control "  id="noPay"   >
                                                 </div>
 
                                             </div>
                                         </div>
                                         <!-- end -->
-                                        <hr class=" border-primary">
+
                                             <!-- sum -->
-                                            <div class="row form-group">
-                                                <h5 class="text-warning ">المصروفات: </h5>
-                                                <div class="col-sm-4">
-                                                    <input type="number" name="sumOutlay" id="sumOutlay"  class="form-control"  readonly />
-                                                </div>
-                                            </div>
+
                                         <!-- save -->
                                         <div class="form-row save">
                                             <div class="col-sm-6 mx-auto" style="width: 200px;">
                                                 <button class="btn btn-primary action-buttons" type="submit"
-                                                        id="submit"> إضافة
+                                                        id="submit"> حفظ و انشاء جدبد
                                                 </button>
                                                 <button class="btn  btn-danger action-buttons" type="reset"> إلغاء
                                                 </button>
@@ -97,75 +88,7 @@
                                 </div>
                             </div>
                             <br>
-                            <!--  view section 2 -->
-                            <div id="section-2">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <!-- select date -->
-                                        <form id="salaries_form">
-                                            <div class="row">
-                                                <div class=" col">
-                                                    <!-- add pill -->
-                                                    <div>
-                                                        <input type='button' class="btn btn-success  "
-                                                               value=' + اضافه مرتب' id='addButtonPayroll' name="addPayoll"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <br>
-                                            <!-- end -->
-                                            <!-- add row pill -->
-                                            <div class="fieldPayroll">
-                                                <div class="form-row " id="data1">
-                                                    <div class="col-lg-2 col-sm-4 form-group">
-                                                        <label > التاريخ</label>
-                                                        <input type="date" id="datePayroll1" name="datePayroll1" class="form-control datePayroll required_field">
-                                                       </div>
 
-                                                    <div class="col-lg-2 col-sm-4 form-group ">
-                                                        <label> اختار </label>
-                                                        <input placeholder="اختار" type="text" id="instructor_employee1" class="form-control pay_for_selector required_field" name="list1" list="list"  />
-                                                        <datalist id="list">
-                                                            <option data-account="4" data-type="App\Instructor"  data-customValue="{{ $instructors }}" value="المدربين"></option>
-                                                            <option data-account="5" data-type="App\Employee" data-customValue="{{ $employees }}" value="الموظفين"></option>
-                                                        </datalist>
-                                                    </div>
-
-                                                    <div class="col-lg-2 col-sm-4 form-group ">
-                                                        <label> الاسم </label>
-                                                        <input placeholder="اختار" autocomplete="off" type="text" id="pay_for1" class="form-control  required_field" name="pay_for1" list="pay_for_list1"  />
-                                                        <datalist id="pay_for_list1">
-
-                                                        </datalist>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <!-- end -->
-                                            <hr class=" border-primary">
-                                            <!-- sum -->
-                                            <div class="row form-group">
-                                                <h5 class="text-warning ">المرتبات: </h5>
-                                                <div class="col-sm-4">
-                                                    <input type="number" name="sumPayroll" id="sumPayroll"  class="form-control"  readonly />
-                                                </div>
-                                            </div>
-                                            <!-- save -->
-                                            <div class="form-row save">
-                                                <div class="col-sm-6 mx-auto" style="width: 200px;">
-                                                    <button class="btn btn-primary action-buttons" type="submit"
-                                                            id="submit"> إضافة
-                                                    </button>
-                                                    <button class="btn  btn-danger action-buttons" type="reset"> إلغاء
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <!-- end form -->
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end section 2 -->
                         </div>
                     </div>
                     <br>
@@ -183,106 +106,11 @@
 @include('script')
 <!-- script style-->
 <script type='text/javascript' src="/js/financialManagement.js"></script>
+<script type='text/javascript' src="/js/ajaxHelper.js"></script>
+<script type='text/javascript' src="/js/notify.min.js"></script>
+<script type='text/javascript' src="/js/notification.js"></script>
 <script>
-    $(document).ready(function () {
 
-        $(document).on('input', '[id^=instructor_employee]',  function (){
-            var id = $(this).attr('id')[19];
-            $('#pay_for_list'+id).html('');
-            $('#pay_for'+id).val('');
-            var value = $(this).val();
-            if (value !== '') {
-                var selected = $.parseJSON($('#list [value="' + value + '"]').attr('data-customValue'));
-                var type = $('#list [value="' + value + '"]').attr('data-type');
-                $.each(selected, function (key, member) {
-                    // console.log("member: "+member);
-                    $('#pay_for_list'+id).append($("<option></option>")
-                        .data('custom', member)
-                        .data('type', type)
-                        .val(member.nameAr));
-                });
-            }
-        });
-
-        $(document).on('input', '[id^=pay_for]',  function () {
-            var id = $(this).attr('id')[7];
-            console.log(id);
-            $(".meta_data"+id).remove();
-            var value = $(this).val();
-            if (value !== '') {
-                var selected_pay_for_type = $('#pay_for_list'+id+' [value="' + value + '"]').data('type');
-                console.log("type: "+selected_pay_for_type);
-                var selected_pay_for = $('#pay_for_list'+id+' [value="' + value + '"]').data('custom');
-                console.log("detail: "+selected_pay_for.payment_model);
-{{--                {{ PaymentModelHelper::getPaymentModelAttribute() }}--}}
-                console.log(selected_pay_for_type);
-                $.each(selected_pay_for.payment_model, function (key, value) {
-                    console.log(key);
-                    $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>"+ key +"</label><input id='"+ key +id+"' value='"+value +"' class='form-control ' readonly/></div>");
-                });
-                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المستحق</label><input type='number' value='"+ selected_pay_for.total +"' name='total' class=' form-control   '  id='total"+ id +"' readonly/></div>");
-                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>المدفوع</label><input type='number' name='pay' class=' form-control  payPayroll required_field'  id='payIncome"+ id +"' /></div>");
-                $('#data'+id).append("<div class='col-lg-1 col-sm-4 form-group meta_data"+ id +"'><label>الباقي</label><input type='number' name='noPayIncome' class='form-control '  id='noPayIncome"+ id +"'  readonly /></div>");
-
-            }
-        });
-
-        $(document).on('keyup', '[id^=payIncome]',  function () {
-            var id = $(this).attr('id')[9];
-            // console.log($('#total'+id).val());
-            var rest_of_cost = $('#total'+id).val() - $(this).val();
-            $('#noPayIncome'+id).val(rest_of_cost);
-        });
-
-        // submit form
-        $("#salaries_form").submit(function (e) {
-            e.preventDefault();
-            if(checkIfAllInputsFilled()){
-                $.ajax({
-                    url: "{{ route("transactions.store") }}",
-                    type: "post",
-                    data: {
-                        transactions : createSalaryTransactionMetaDataJSON(),
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success : function (data) {
-                        alert(data.message);
-                        if(! data.error){
-                            setTimeout(function () {
-                                location.reload();
-                            }, 1000);
-                        }
-                    }
-
-                });
-        }else{
-            alert('fill in all fields');
-        }
-    });
-
-        function createSalaryTransactionMetaDataJSON() {
-            let transactions = [];
-            $(".pay_for_selector").each(function (i, v) {
-                let transaction = {};
-                let meta_data = {};
-                meta_data["payer_id"] = "{{ Session('center_id') }}";
-                meta_data['payer_type'] = "App\\Center";
-                meta_data['payFor_id'] = $('#pay_for_list'+ (i+1) +' [value="' + $("#pay_for"+ (i+1)).val() + '"]').data("custom").id;
-                meta_data['payFor_type'] = $('#pay_for_list'+(i+1)+' [value="' + $("#pay_for"+ (i+1)).val() + '"]').data('type');
-
-                transaction['account_id'] = $('#list [value="' + $("#instructor_employee"+ (i+1)).val() + '"]').attr("data-account");
-                transaction['rest'] = $('#noPayIncome'+ (i+1)).val();
-                transaction['date'] = $("#datePayroll"+(i+1)).val();
-                transaction['meta_data'] = meta_data;
-                transaction['amount'] =  $("#payIncome"+ (i+1)).val();
-                transaction['deserved_amount'] =  $("#salary"+ (i+1)).val();
-
-                transactions.push(transaction);
-
-            });
-
-            return transactions;
-        }
 
 
         function checkIfAllInputsFilled() {
@@ -296,21 +124,27 @@
 
         $('#expenses_form').submit(function (e) {
             e.preventDefault();
-            $.ajax({
-                url: "{{ route("transactions.store") }}",
-                type: "post",
-                data: {
-                    transactions : createExpensesTransactionMetaDataJSON(),
-                    _token: "{{ csrf_token() }}"
-                },
-                success : function (data) {
-                    alert(data.message);
-                    if(! data.error){
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1000);
-                    }
+            makeAjaxCall('/transactions', 'POST', {
+                transaction: createExpensesTransactionMetaDataJSON(),
+                _token: "{{csrf_token()}}"
+            }, function (data) {
+                $.notify(data.message, {
+                    position: "bottom left",
+                    style: 'successful-process',
+                    className: 'done',
+                });
+                setTimeout(function () {
+                    window.location.reload();
+                }, 5000)
+            }, function (xhr, status, error) {
+                if (xhr.status == 403) {
+                    $.notify(error, {
+                        position: "bottom left",
+                        style: 'successful-process',
+                        className: 'notDone',
+                    });
                 }
+
 
             });
 
@@ -318,8 +152,6 @@
         });
 
         function createExpensesTransactionMetaDataJSON() {
-            let transactions = [];
-            $(".expenses_field").each(function (i, v) {
                 let transaction = {};
                 let meta_data = {};
                 meta_data["payer_id"] = "{{ Session('center_id') }}";
@@ -328,20 +160,17 @@
                 meta_data['payFor_type'] = null;
 
 
-                transaction['account_id'] = $('#account_list [value="' + $("#account"+ (i+1)).val() + '"]').attr("data-account-id");
-                transaction['rest'] = $('#noPay'+ (i+1)).val();
-                transaction['date'] = $("#dateOutlay"+(i+1)).val();
+                transaction['account_id'] = $('#account_list [value="' + $("#account").val() + '"]').attr("data-account-id");
+                transaction['rest'] = $('#noPay').val();
+                transaction['date'] = $("#dateOutlay").val();
                 transaction['meta_data'] = meta_data;
-                transaction['amount'] =  $("#amount"+ (i+1)).val();
-                transaction['deserved_amount'] =  $("#deserved_amount"+ (i+1)).val();
+                transaction['amount'] =  $("#amount").val();
+                transaction['deserved_amount'] =  $("#deserved_amount").val();
 
-                transactions.push(transaction);
 
-            });
-
-            return transactions;
+            return transaction;
         }
-    });
+
 
 
 </script>
