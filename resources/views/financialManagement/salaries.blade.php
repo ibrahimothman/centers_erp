@@ -14,7 +14,8 @@
         @include('operationBar')
         <div class="container-fluid">
             <div class="row d-flex justify-content-center">
-                <div class="col-lg-12">
+                <div id="asd" class="col-lg-12">
+
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
@@ -45,7 +46,8 @@
                                             <!-- end -->
                                             <!-- add row pill -->
                                             <div class="fieldPayroll">
-                                                <div class="form-row " id="data1">
+                                                <div class="form-row " id="data-1">
+                                                    <input hidden id="instructor-employee-id-1">
 
 
                                                     <div class="col-lg-2 col-sm-4 form-group ">
@@ -148,6 +150,7 @@
         $("#salaries_form").submit(function (e) {
             e.preventDefault();
             if(checkIfAllInputsFilled()){
+                $(this).find(':submit').prop('disabled', true);
                 makeAjaxCall('/transactions', 'POST', {
                     transaction: createSalaryTransactionMetaDataJSON(),
                     _token: "{{csrf_token()}}"
@@ -157,17 +160,20 @@
                         style: 'successful-process',
                         className: 'done',
                     });
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 5000)
+
+                    $('#salaries_form').find(':submit').prop('disabled', false);
+                    $('#salaries_form').trigger('reset');
                 }, function (xhr, status, error) {
-                    if (xhr.status == 403) {
-                        $.notify(error, {
-                            position: "bottom left",
+                    if (xhr.status == 400) {
+                        $.notify("something went wrong. Please try again", {
+                            position: "bottom left ",
                             style: 'successful-process',
                             className: 'notDone',
                         });
+
                     }
+
+                    $('#salaries_form').find(':submit').prop('disabled', false);
 
 
                 });

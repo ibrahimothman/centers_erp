@@ -14,18 +14,18 @@ $('select[id^=test-diploma-option-]').on('change', function () {
 
 
 // search for student while entering letters into search input
-$('input[id^=search-input-]').on('keyup', function () {
+$(document).on('keyup', 'input[id^=search-input-]', function () {
 
-    row_number = $(this).attr('id').split('-')[2];
+    var row = $(this).attr('id').split('-')[2];
     // clear test-diploma-values-row_number's option when search_input changes
-    $('#test-diploma-values-'+row_number).empty();
+    $('#test-diploma-values-'+row).empty();
     var query=$(this).val().trim();
 
     if (query !== "") {
 
-        var search_by = $('#search-option-'+row_number).children("option:selected").val();
+        var search_by = $('#search-option-'+row).children("option:selected").val();
         var data = "search_by=" + search_by + "&value=" + query;
-        var suggestion_list = $('#studentList-' + row_number + '');
+        var suggestion_list = $('#studentList-' + row + '');
 
         searchForPersons('/search_for_students',data, function (students) {
             suggestion_list.show();
@@ -34,7 +34,7 @@ $('input[id^=search-input-]').on('keyup', function () {
 
             $.each(students, function (i, student) {
                 console.log(i + " --> " + student.nameAr);
-                output += " <li id='item-"+ row_number +"' value=" + student.id + "><a href='#'>" + student.nameAr + "</a></li>"
+                output += " <li id='item-"+ row +"' value=" + student.id + "><a href='#'>" + student.nameAr + "</a></li>"
 
             });
             output += '</ul>';
@@ -44,26 +44,28 @@ $('input[id^=search-input-]').on('keyup', function () {
         });
 
     }else{
-        $('#studentList-' + row_number + '').html("");
+        $('#studentList-' + row + '').html("");
     }
 });
 
 
 
 $(document).on('click', 'li', function(e){
-    $('#test-diploma-values-'+row_number).empty();
-    student_id = $(this).val();
-    var item_id = $(this).attr('id').split('-')[1];
-    console.log('item_id: '+item_id);
-    $('#search-input-'+item_id).val($(this).text());
-    $('#studentList-' + item_id+ '').fadeOut();
-    var test_diploma_option = $('#test-diploma-option-'+row_number).children("option:selected");
+
+    // set student_id
+    var row = $(this).attr('id').split('-')[1];
+    var student_id_input = $('#student-id-'+row+'');
+    student_id_input.val($(this).val());
+    $('#test-diploma-values-'+row).empty();
+    $('#search-input-'+row).val($(this).text());
+    $('#studentList-' + row+ '').fadeOut();
+    var test_diploma_option = $('#test-diploma-option-'+row).children("option:selected");
 
     // search for student's tests or diplomas based on test_diploma_option
-    makeAjaxCall(test_diploma_option.attr('data-route'), 'GET', {student_id: student_id}, function (responses) {
+    makeAjaxCall(test_diploma_option.attr('data-route'), 'GET', {student_id:  student_id_input.val()}, function (responses) {
         // responses are either tests or diplomas
         // 1- clear options of test-diploma-value-row_number
-        var test_diploma_values = $('#test-diploma-values-'+row_number);
+        var test_diploma_values = $('#test-diploma-values-'+row);
         test_diploma_values.empty();
         test_diploma_values.append($("<option>").val(0).text('اختر'));
         responses.forEach(function (response) {
@@ -81,15 +83,16 @@ $(document).on('click', 'li', function(e){
 
 // when test_diploma_values_row_number changes
 
-$('select[id^=test-diploma-values-]').on('change', function () {
+$(document).on('change', 'select[id^=test-diploma-values-]',  function () {
     var i = $(this).attr('id').split('-')[3];
-    // var cost_label = $('#cost-'+i).val('');
+
     var cost = $(this).find("option:selected").data('cost');
     $('#cost-'+i).val(cost);
+    $('#paid-'+i).val('');
 
 });
 
-$('input[id^=paid-]').on('keyup', function (e) {
+$(document).on('keyup', 'input[id^=paid-]', function (e) {
     var i = $(this).attr('id').split('-')[1];
     var paid = $(this).val();
     var cost = $('#cost-'+i).val();

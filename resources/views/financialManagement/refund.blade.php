@@ -164,6 +164,7 @@
         $("#submit").on('click', function (e) {
             e.preventDefault();
             if(checkIfAllInputsFilled()) {
+                $(this).prop('disabled', true);
                 makeAjaxCall('/transactions', 'POST', {
                     transaction: createTransactionMetaDataJSON(),
                     _token: "{{csrf_token()}}"
@@ -173,17 +174,17 @@
                         style: 'successful-process',
                         className: 'done',
                     });
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 5000)
+                    $('#submit').prop('disabled', false);
+                    $('#submit').closest('form').trigger('reset');
                 }, function (xhr, status, error) {
-                    if (xhr.status == 403) {
-                        $.notify(error, {
+                    if (xhr.status == 400) {
+                        $.notify("something went wrong. Please try again", {
                             position: "bottom left",
                             style: 'successful-process',
                             className: 'notDone',
                         });
                     }
+                    $(this).prop('disabled', false);
 
 
                     });
@@ -204,7 +205,7 @@
         meta_data.payer_id = test_diploma_value.val();
         meta_data.payer_type =test_diploma_option.val();
 
-        transaction.account_id = 9;
+        transaction.account_id= 9;
         transaction.rest = $("#rest-1").val();
         transaction.meta_data = meta_data;
         transaction.amount =  $("#paid-1").val();

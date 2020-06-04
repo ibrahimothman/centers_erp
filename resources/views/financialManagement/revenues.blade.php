@@ -42,11 +42,7 @@
                                                     <h5 class="text-primary  pt-1 pr-3 pl-0">الوقت: </h5>
                                                     <input id="time" readonly value="{{date('H:i:s')}}" name="time" class="form-control  required_field"  placeholder="الوقت "    type="text" >
                                                 </div>
-                                                <!-- add pill -->
-{{--                                                <div  class="form-group   mr-3  ">--}}
-{{--                                                    <input type='button' class="btn btn-success  "--}}
-{{--                                                           value=' + اضافه طالب ' id='addButtonIncome' name="addIncome"/>--}}
-{{--                                                </div>--}}
+
 
                                                 <!-- print bil -->
                                                 <div class="col-sm-4 form-group">
@@ -57,13 +53,19 @@
 
 
                                                 </div>
+
+                                                <!-- add pill -->
+                                                <div  class="form-group   mr-3  ">
+                                                    <input type='button' class="btn btn-success  "
+                                                           value=' + اضافه طالب ' id='addButtonIncome' name="addIncome"/>
+                                                </div>
                                             </div>
                                             <BR>
                                             <!-- end -->
                                             <!-- add row pill -->
                                             <div class="fieldIncome">
                                                 <div class="form-row ">
-                                                    <input name="student-id-1" hidden>
+                                                    <input id="student-id-1" hidden>
                                                     <div class="col-lg-2 col-sm-2 form-group ">
                                                         <label>امتحان/دبلومه</label>
                                                         <span class="required">*</span>
@@ -109,10 +111,10 @@
                                                     <div class="col-lg-1 col-sm-1 form-group ">
                                                         <label>الباقي  </label><input type="text" name="noPayIncome" class="form-control "  id="rest-1"  readonly >
                                                     </div>
+
                                                 </div>
                                             </div>
                                             <!-- end -->
-                                            <hr class=" border-primary">
                                            <!-- sum -->
 
                                             <!-- save -->
@@ -168,8 +170,10 @@
         $("#submit").on('click', function (e) {
             e.preventDefault();
             if(checkIfAllInputsFilled()) {
+                console.log(createTransactionMetaDataJSON());
+                // $(this).prop('disabled', true);
                 makeAjaxCall('/transactions', 'POST', {
-                    transaction: createTransactionMetaDataJSON(),
+                    transactions: createTransactionMetaDataJSON(),
                     _token: "{{csrf_token()}}"
                 }, function (data) {
                     $.notify(data.message, {
@@ -177,17 +181,21 @@
                         style: 'successful-process',
                         className: 'done',
                     });
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 5000)
+                    $('button[id=delete_row]').each(function (i, v) {
+                       $(this).closest('.form-row').remove();
+                    });
+                    $('#submit').prop('disabled',false);
+                    $('#submit').parents('form').trigger('reset');
                 }, function (xhr, status, error) {
-                    if (xhr.status == 403) {
-                        $.notify(error, {
+                    if (xhr.status == 400) {
+                        $.notify("something went wrong. Please try again", {
                             position: "bottom left",
                             style: 'successful-process',
                             className: 'notDone',
                         });
+
                     }
+                    $('#submit').prop('disabled',false);
 
 
                     });
@@ -200,24 +208,31 @@
 
 
     function createTransactionMetaDataJSON() {
-        let transaction = {};
-        let meta_data = {};
-        var test_diploma_option = $('#test-diploma-option-1').children("option:selected");
-        var test_diploma_value = $('#test-diploma-values-1').children("option:selected");
-        meta_data.payer_id = student_id;
-        meta_data.payer_type = "App\\Student";
-        meta_data.payFor_id = test_diploma_value.val();
-        meta_data.payFor_type =test_diploma_option.val();
+        let transactions = [];
+        $('input[id^=student-id-]').each(function () {
+            var i = $(this).attr('id').split('-')[2];
+            let transaction = {};
+            let meta_data = {};
+            var test_diploma_option = $('#test-diploma-option-'+i).children("option:selected");
+            var test_diploma_value = $('#test-diploma-values-'+i).children("option:selected");
+            meta_data.payer_id = $('#student-id-'+i).val();
+            meta_data.payer_type = "App\\Student";
+            meta_data.payFor_id = test_diploma_value.val();
+            meta_data.payFor_type =test_diploma_option.val();
 
-        transaction.account_id = 3;
-        transaction.rest = $("#rest-1").val();
-        transaction.meta_data = meta_data;
-        transaction.amount =  $("#paid-1").val();
-        transaction.deserved_amount =  $("#cost-1").val();
+            transaction.account_id = 3;
+            transaction.rest = $("#rest-"+i).val();
+            transaction.meta_data = meta_data;
+            transaction.amount =  $("#paid-"+i).val();
+            transaction.deserved_amount =  $("#cost-"+i).val();
+
+
+            transactions.push(transaction);
+        });
 
 
 
-        return transaction;
+        return transactions;
 
     }
         function checkIfAllInputsFilled() {

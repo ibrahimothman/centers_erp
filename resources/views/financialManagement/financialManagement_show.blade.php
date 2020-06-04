@@ -778,7 +778,8 @@
            type: "DELETE",
            data: {_token: "{{csrf_token()}}"},
            success: function(data){
-               $('#container-'+transaction_id).remove();
+               $('button[id^=delete-transaction-'+transaction_id+']').closest('tr').remove();
+               // $('#container-'+transaction_id).remove();
            }
        })
    })

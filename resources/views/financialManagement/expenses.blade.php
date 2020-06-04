@@ -113,6 +113,7 @@
 
 
 
+
         function checkIfAllInputsFilled() {
             var empty = $(".required_field").filter(function () {
                 return $(this).val().length === 0;
@@ -121,9 +122,16 @@
             return empty.length === 0;
         }
 
+        $('#amount').on('click', function (e) {
+            let deserved_amount = $('#deserved_amount').val();
+            let paid = $(this).val();
+           $("#noPay").val(deserved_amount - paid);
+        });
+
 
         $('#expenses_form').submit(function (e) {
             e.preventDefault();
+            $(this).find(':submit').prop('disabled', true);
             makeAjaxCall('/transactions', 'POST', {
                 transaction: createExpensesTransactionMetaDataJSON(),
                 _token: "{{csrf_token()}}"
@@ -133,17 +141,17 @@
                     style: 'successful-process',
                     className: 'done',
                 });
-                setTimeout(function () {
-                    window.location.reload();
-                }, 5000)
+                $('#expenses_form').find(':submit').prop('disabled', false);
+                $('#expenses_form').trigger('reset');
             }, function (xhr, status, error) {
-                if (xhr.status == 403) {
-                    $.notify(error, {
+                if (xhr.status == 400) {
+                    $.notify('something went wrong!Please try again', {
                         position: "bottom left",
                         style: 'successful-process',
                         className: 'notDone',
                     });
                 }
+                $('#expenses_form').find(':submit').prop('disabled', false);
 
 
             });

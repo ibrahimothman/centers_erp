@@ -162,18 +162,24 @@ $(document).ready(function(){
     $('#addButtonIncome').on('click', function() {
         var id = ($('.fieldIncome .form-row').length + 1).toString();
         $('.fieldIncome').append('<div class="form-row ">'+
-            '<input name="student-id-'+id+'" hidden>'+
+            '<input id="student-id-'+id+'" hidden>'+
             '<div class="col-lg-2 col-sm-2 form-group "><label>امتحان/دبلومه</label><span class="required">*</span><select class="form-control " placeholder="اختار" id="test-diploma-option-'+id+'" name="test_diploma_option" required><option data-route="/get_student_tests" value="App\Test">امتحان</option><option data-route="/get_student_diplomas" value="App\Diploma">دبلومه</option></select></div>' +
             '<div class="col-lg-2 col-sm-2 form-group "><label> الاسم/رقم قومي/موبايل  </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="search-option-'+id+'" name="search_option" required><option value="nameAr">الاسم</option><option value="idNumber">رقم القومي</option><option value="phoneNumber">الموبايل</option></select></div>'+
             '<div class="col-lg-2 col-sm-4 form-group "><label>ادخل </label><input placeholder="اختار" type="text" id="search-input-'+id+'" class="form-control student-selector required_field" name="student" list="studentList-'+id+'" autocomplete="off"   /><div class="list-gpfrm-list" id="studentList-'+id+'"></div></div>'+
             '<div class="col-lg-2 col-sm-4 form-group "><label>الامتحان /الدبلومه</label><span class="required">*</span><select class="form-control" id="test-diploma-values-'+id+'"></select></div>'+
-            '<div class="col-lg-1 col-sm-1 form-group "><label> التكلفه </label><input type="text" name="cost" class="form-control  "  id="cost'+id+'"  readonly ></div>'+
+            '<div class="col-lg-1 col-sm-1 form-group "><label> التكلفه </label><input type="text" name="cost" class="form-control  "  id="cost-'+id+'"  readonly ></div>'+
             '<div class="col-lg-1 col-sm-1 form-group "><label> المدفوع  </label><input type="text" name="pay" class=" form-control  payIncome required_field"  id="paid-'+id+'"   ></div>' +
             '<div class="col-lg-1 col-sm-1 form-group "><label>الباقي  </label><input type="text" name="noPayIncome" class="form-control "  id="rest-'+id+'"  readonly ></div>' +
+            '<div class="col-lg-1 col-sm-1 form-group "> <button id="delete_row" class="btn delete_row" style=" border: none; color: red; padding: 12px 16px;font-size: 16px; margin-top: 20px"><i class="fa fa-close"></i></button> </div>'+
             '</div>');
 
 
     });
+
+    $(document).on('click', '#delete_row', function (e) {
+        e.preventDefault();
+        $(this).closest('.form-row').remove();
+    })
 
     $(document).on('input', "[id^=student]",  function () {
         // clear all previous data
