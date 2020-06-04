@@ -31,7 +31,7 @@
                                     <div class="card-body">
                                         <!-- select date -->
                                         <form id="revenue-form">
-                                            @csrf
+
                                             <div class="row title form-group">
                                                 <!-- date -->
                                                 <div class=" col-sm-3 title pb-3">

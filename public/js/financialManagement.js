@@ -109,15 +109,16 @@ $(document).ready(function(){
     });
     // outlay add
     // add btn
-    $('input#addButton').on('click', function() {
-        var id = ($('.field .form-row').length + 1).toString();
-        $('.field').append(' <div class="form-row "> <div class="col-lg-3 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="dateOutlay'+id+'" name="dateOutlay'+id+'" class="form-control dateOutlay"></div></div>' +
-            '<div class="col-lg-3 col-sm-4 form-group "><label> تحت بند  </label><input type="text" placeholder="اختار" name="account'+id+'" class="form-control expenses_field expenses_required "  id="account'+id+'" list="account_list"  >' +
+    $('input#addBillButton').on('click', function() {
+        var id = ($('.billField .form-row').length + 1).toString();
+        $('.billField').append(' <div class="form-row ">'+
+            '<div class="col-lg-4 col-sm-4 form-group "><label> تحت بند  </label><input type="text" placeholder="اختار" name="account-'+id+'" class="form-control expenses_field required_field "  id="account-'+id+'" list="account_list"  >' +
             '<datalist id="account_list"></datalist> '+
             '</div>' +
-            ' <div class="col-lg-3 col-sm-4 form-group "><label> المطلوب سداده </label><input type="text" name="deserved_amount'+id+'" class="form-control expenses_required"  id="deserved_amount'+id+'"   ></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع  </label><input type="text" name="amount'+id+'" class="form-control payOutlay expenses_required"  id="amount'+id+'"   ></div>' +
-            '<div class="col-lg-1 col-sm-4 form-group "><label>الباقي  </label><input type="text" name="noPay'+id+'" class="form-control "  id="noPay'+id+'"   ></div>' +
+            ' <div class="col-lg-2 col-sm-4 form-group "><label> المطلوب سداده </label><input type="text" name="deserved-amount-'+id+'" class="form-control required_field"  id="deserved-amount-'+id+'"   ></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع  </label><input type="text" name="paid-'+id+'" class="form-control payOutlay required_field"  id="paid-'+id+'"   ></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label>الباقي  </label><input type="text" name="rest-'+id+'" class="form-control required_field "  id="rest-'+id+'"   ></div>' +
+            '<div class="col-lg-1 col-sm-1 form-group "> <button id="delete_row" class="btn delete_row" style=" border: none; color: red; padding: 12px 16px;font-size: 16px; margin-top: 20px"><i class="fa fa-close"></i></button> </div>'+
             '</div></div>');
     });
     // sum
@@ -126,11 +127,11 @@ $(document).ready(function(){
         $(".payOutlay").each(function(){
             sumOutlay += +$(this).val();
         });
-        $("#sumOutlay").val(sumOutlay);
-        var id = $(this).attr('id')[6];
-        var rest_of_cost = $('#deserved_amount').val() - $('#amount').val();
-        console.log('asdasd');
-        $('#noPay').val(rest_of_cost);
+        // $("#sumOutlay").val(sumOutlay);
+        var id = $(this).attr('id').split('-')[1];
+        console.log('id: '+id);
+        var rest_of_cost = $('#deserved-amount-'+id).val() - $('#paid-'+id).val();
+        $('#rest-'+id).val(rest_of_cost);
 
     });
 
@@ -140,7 +141,7 @@ $(document).ready(function(){
     // add btn payroll
     $('input#addButtonPayroll').on('click', function() {
         var id = ($('.fieldPayroll .form-row').length + 1).toString();
-        $('.fieldPayroll').append(' <div class="form-row " id="data'+ id +'" required_field> <div class="col-lg-2 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
+        $('.fieldPayroll').append(' <div class="form-row " id="data'+ id +'" > <div class="col-lg-2 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
             '<div class="col-lg-2 col-sm-4 form-group "><label> اختار  </label><input placeholder="اختار" type="text"  class="form-control  required_field" list="list"  name="list'+id+'" id="instructor_employee'+id+'" /> <datalist id="list">' +
             '</div>'+
             '<div class="col-lg-2 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control pay_for_selector required_field" list="pay_for_list'+ id +'"  name="pay_for'+id+'" id="pay_for'+id+'" /> <datalist id="pay_for_list'+ id +'">'+
