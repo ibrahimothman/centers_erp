@@ -21,7 +21,7 @@ class Instructor extends ImageUploader
     protected $hidden = array('pivot');
 
     protected $guarded = [];
-    protected $appends = ['last_rest'];
+    protected $appends = ['total'];
 
 
     public static function allInstructors($center)
@@ -91,12 +91,12 @@ class Instructor extends ImageUploader
     }
 
     // get last rest for instructor
-    public function getLastRestAttribute()
+    public function getTotalAttribute()
     {
         $center = Center::findOrFail(Session('center_id'));
         $rest = $center->transactions()->where("meta_data->payFor_type", "App\Instructor")
             ->where("meta_data->payFor_id", "$this->id")->latest()->first()['rest'];
-        return $this['rest'] = $rest;
+        return $this['total'] = $rest + $this->payment_model['salary'];
     }
 
     protected static function boot()

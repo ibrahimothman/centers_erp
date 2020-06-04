@@ -139,14 +139,21 @@ $(document).ready(function(){
 
     // Payroll
     // add btn payroll
-    $('input#addButtonPayroll').on('click', function() {
+    $('input#addSalaryButton').on('click', function() {
         var id = ($('.fieldPayroll .form-row').length + 1).toString();
-        $('.fieldPayroll').append(' <div class="form-row " id="data'+ id +'" > <div class="col-lg-2 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> اختار  </label><input placeholder="اختار" type="text"  class="form-control  required_field" list="list"  name="list'+id+'" id="instructor_employee'+id+'" /> <datalist id="list">' +
-            '</div>'+
-            '<div class="col-lg-2 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control pay_for_selector required_field" list="pay_for_list'+ id +'"  name="pay_for'+id+'" id="pay_for'+id+'" /> <datalist id="pay_for_list'+ id +'">'+
-            '</div></div>');
-    });
+        $('.fieldPayroll').append('<div class="form-row " id="data-'+id+'"><input hidden id="instructor-employee-id-'+id+'"><input hidden id="instructor-employee-model-'+id+'"><input hidden id="instructor-employee-salary-'+id+'"><input hidden id="instructor-employee-last-rest-'+id+'">' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label> مدرب/موظف </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="instructor-employee-option-'+id+'" name="instructor-employee-option-'+id+'" required><option data-account="4"  data-route="/search_for_instructors"   value="App\\Instructor">المدربين</option><option data-account="5" data-route="/search_for_employees"   value="App\\Employee">الموظفين</option></select></div>'+
+            '<div class="col-lg-2 col-sm-2 form-group "><label> الاسم/رقم قومي/موبايل  </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="search-option-'+id+'" name="search_option" required><option value="nameAr">الاسم</option> <option value="idNumber">رقم القومي</option><option value="phoneNumber">الموبايل</option></select></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label>ادخل </label><input placeholder="اختار" type="text" id="search-input-'+id+'" class="form-control student-selector required_field" name="instructor-employee" list="instructor-employee-list-'+id+'" autocomplete="off"   /><div class="list-gpfrm-list" id="instructor-employee-list-'+id+'"></div></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>النظام</label><input type="text"  name="payment_mdoel" class=" form-control"  id="payment-model-'+id+'" readonly/></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>المرتب</label><input type="number"  name="salary" class=" form-control"  id="salary-'+id+'" readonly/></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>المستحق</label><input type="number"  name="total" class="form-control"  id="total-'+id+'" readonly/></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data "><label>المدفوع</label><input type="number"  name="paid" class=" form-control"  id="paid-'+id+'" /></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>الباقي</label><input type="number"  name="rest" class=" form-control"  id="rest-'+id+'" readonly/></div>' +
+            '<div class="col-lg-1 col-sm-1 form-group "> <button id="delete_row" class="btn delete_row" style=" border: none; color: red; padding: 12px 16px;font-size: 16px; margin-top: 20px"><i class="fa fa-close"></i></button> </div>'+
+
+            '</div>');
+    })
 
     // sum
     $(document).on("keyup", ".payPayroll", function() {

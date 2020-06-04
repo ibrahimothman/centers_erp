@@ -18,7 +18,7 @@ class Employee extends ImageUploader
 {
     //
     protected $guarded = [];
-    protected $appends = ['last_rest'];
+    protected $appends = ['total'];
 
 
     public static function allEmployees($center)
@@ -93,12 +93,12 @@ class Employee extends ImageUploader
     }
 
     // get last rest for the employee
-    public function getLastRestAttribute()
+    public function getTotalAttribute()
     {
         $center = Center::findOrFail(Session('center_id'));
         $rest = $center->transactions()->where("meta_data->payFor_type", "App\Employee")
             ->where("meta_data->payFor_id", "$this->id")->latest()->first()['rest'];
-        return $this['rest'] = $rest;
+        return $this['total'] = $rest + $this->payment_model['salary'];
     }
 
     protected static function boot()

@@ -31,23 +31,43 @@
                                     <div class="card-body">
                                         <!-- select date -->
                                         <form id="salaries_form">
-                                            <div class="row">
-
-                                                <div class="col-lg-2 col-sm-6  form-group">
-                                                    <label for="validationCustom01"> التاريخ</label>
-                                                    <input value="{{date('Y-m-d')}}" readonly type="date" id="date" name="dateOutlay" class="form-control dateOutlay">
+                                            <div class="row title form-group">
+                                                <!-- date -->
+                                                <div class=" col-sm-3 title pb-3">
+                                                    <h5 class="text-primary  pt-1 pr-3 pl-0">التاريخ: </h5>
+                                                    <input id="date" readonly value="{{date('Y-m-d')}}" name="date" class="form-control  "  placeholder="التاريخ "    type="text" >
                                                 </div>
-                                                <div class="col-lg-2 col-sm-6  form-group">
-                                                    <label for="time"> الوقت</label>
-                                                    <input value="{{date('H:i:s')}}" readonly type="text" id="time" name="time" class="form-control dateOutlay">
+                                                <div class="  col-sm-3 title pb-3">
+                                                    <h5 class="text-primary  pt-1 pr-3 pl-0">الوقت: </h5>
+                                                    <input id="time" readonly value="{{date('H:i:s')}}" name="time" class="form-control  "  placeholder="الوقت "    type="text" >
+                                                </div>
+
+
+                                                <!-- print bil -->
+                                                <div class="col-sm-4 form-group">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" name="print_bill" id="print_bill">
+                                                        <label class="custom-control-label" for="print_bill">طباعة فاتوره</label>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <!-- add pill -->
+                                                <div  class="form-group   mr-3  ">
+                                                    <input type='button' class="btn btn-success  "
+                                                           value=' + اضافه مرتب ' id='addSalaryButton' name="addSalaryButton"/>
                                                 </div>
                                             </div>
                                         <br>
                                             <!-- end -->
-                                            <!-- add row pill -->
+
                                             <div class="fieldPayroll">
                                                 <div class="form-row " id="data-1">
                                                     <input hidden id="instructor-employee-id-1">
+                                                    <input hidden id="instructor-employee-model-1">
+                                                    <input hidden id="instructor-employee-salary-1">
+                                                    <input hidden id="instructor-employee-last-rest-1">
 
 
                                                     <div class="col-lg-2 col-sm-4 form-group ">
@@ -81,24 +101,25 @@
 
                                                     <div class='col-lg-1 col-sm-4 form-group meta_data'>
                                                         <label>النظام</label>
-                                                        <input type='text'  name='payment_mdoel' class=' form-control'  id='payment_model' readonly/>
+                                                        <input type='text'  name='payment-mdoel' class=' form-control'  id='payment-model-1' readonly/>
                                                     </div>
                                                     <div class='col-lg-1 col-sm-4 form-group meta_data'>
                                                         <label>المرتب</label>
-                                                        <input type='number'  name='salary' class=' form-control'  id='salary' readonly/>
+                                                        <input type='number'  name='salary' class=' form-control'  id='salary-1' readonly/>
                                                     </div>
                                                     <div class='col-lg-1 col-sm-4 form-group meta_data'>
                                                         <label>المستحق</label>
-                                                        <input type='number'  name='total' class=' form-control'  id='total' readonly/>
+                                                        <input type='number'  name='total' class=' form-control'  id='total-1' readonly/>
                                                     </div>
                                                     <div class='col-lg-1 col-sm-4 form-group meta_data '>
                                                         <label>المدفوع</label>
-                                                        <input type='number'  name='paid' class=' form-control'  id='paid' />
+                                                        <input type='number'  name='paid' class=' form-control'  id='paid-1' />
                                                     </div>
                                                     <div class='col-lg-1 col-sm-4 form-group meta_data'>
                                                         <label>الباقي</label>
-                                                        <input type='number'  name='rest' class=' form-control'  id='rest' readonly/>
+                                                        <input type='number'  name='rest' class=' form-control'  id='rest-1' readonly/>
                                                     </div>
+
 
                                                 </div>
                                             </div>
@@ -152,7 +173,7 @@
             if(checkIfAllInputsFilled()){
                 $(this).find(':submit').prop('disabled', true);
                 makeAjaxCall('/transactions', 'POST', {
-                    transaction: createSalaryTransactionMetaDataJSON(),
+                    transactions: createSalaryTransactionMetaDataJSON(),
                     _token: "{{csrf_token()}}"
                 }, function (data) {
                     $.notify(data.message, {
@@ -161,6 +182,9 @@
                         className: 'done',
                     });
 
+                    $('button[id=delete_row]').each(function (i, v) {
+                        $(this).closest('.form-row').remove();
+                    });
                     $('#salaries_form').find(':submit').prop('disabled', false);
                     $('#salaries_form').trigger('reset');
                 }, function (xhr, status, error) {
@@ -184,23 +208,29 @@
     });
 
         function createSalaryTransactionMetaDataJSON() {
-            let transaction = {};
-            let meta_data = {};
-            var instructor_employee_option = $('#instructor-employee-option-1').children("option:selected");
+            let transactions = [];
+            $('input[id^=instructor-employee-id-]').each(function () {
+                let i = $(this).attr('id').split('-')[3];
+                let transaction = {};
+                let meta_data = {};
+                var instructor_employee_option = $('#instructor-employee-option-'+i).children("option:selected");
 
-            meta_data.payer_id = "{{ Session('center_id') }}";
-            meta_data.payer_type = "App\\Center";
-            meta_data.payFor_id = $('#search-input-1').attr('person_id');
-            meta_data.payFor_type =instructor_employee_option.val();
+                meta_data.payer_id = "{{ Session('center_id') }}";
+                meta_data.payer_type = "App\\Center";
+                meta_data.payFor_id = $('#instructor-employee-id-'+i).val();
+                meta_data.payFor_type = instructor_employee_option.val();
 
-            transaction.account_id = $('#instructor-employee-option-1').children("option:selected").attr('data-account');
-            transaction.rest = $("#rest").val();
-            transaction.meta_data = meta_data;
-            transaction.amount =  $("#paid").val();
-            transaction.deserved_amount =  $("#total").val();
+                transaction.account_id = instructor_employee_option.attr('data-account');
+                transaction.rest = $("#rest-"+i).val();
+                transaction.meta_data = meta_data;
+                transaction.amount = $("#paid-"+i).val();
+                transaction.deserved_amount = $("#total-"+i).val();
+
+                transactions.push(transaction);
+            });
 
 
-            return transaction;
+            return transactions;
         }
 
 
