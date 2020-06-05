@@ -1,11 +1,8 @@
 
-// row_number -> number of row
-var row_number = 0;
-var test_diploma_option = "tests";
-var student_id;
+
 
 // when change between test and diploma option -> clear search_for_student input
-$('select[id^=test-diploma-option-]').on('change', function () {
+$(document).on('change', 'select[id^=test-diploma-option-]',  function () {
     var i = $(this).attr('id').split('-')[3];
     $('#search-input-'+i).val("");
 
@@ -98,6 +95,7 @@ $(document).on('keyup', 'input[id^=paid-]', function (e) {
     var cost = $('#cost-'+i).val();
     $('#rest-'+i).val(cost - paid);
 });
+
 
 
 

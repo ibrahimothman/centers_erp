@@ -151,7 +151,7 @@
 <!-- date picker script -->
 <script src="{{url('js/jquery.datetimepicker.js')}}"></script>
 <!-- script style-->
-<script type='text/javascript' src="/js/financialManagement.js"></script>
+<script type='text/javascript' src="{{asset('js/financialManagement.js')}}"></script>
 <script type='text/javascript' src="{{asset('js/ajaxHelper.js')}}"></script>
 <script type='text/javascript' src="{{asset('js/studentHelper.js')}}"></script>
 <script type='text/javascript' src="{{asset('js/revenueHelper.js')}}"></script>

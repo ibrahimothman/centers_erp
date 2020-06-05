@@ -65,9 +65,7 @@
                                             <div class="fieldPayroll">
                                                 <div class="form-row " id="data-1">
                                                     <input hidden id="instructor-employee-id-1">
-                                                    <input hidden id="instructor-employee-model-1">
-                                                    <input hidden id="instructor-employee-salary-1">
-                                                    <input hidden id="instructor-employee-last-rest-1">
+
 
 
                                                     <div class="col-lg-2 col-sm-4 form-group ">
@@ -157,17 +155,17 @@
 <!-- script-->
 @include('script')
 <!-- script style-->
-<script type='text/javascript' src="/js/financialManagement.js"></script>
-<script type='text/javascript' src="/js/ajaxHelper.js"></script>
-<script type='text/javascript' src="/js/studentHelper.js"></script>
-<script type='text/javascript' src="/js/expensesHelper.js"></script>
-<script type='text/javascript' src="/js/notify.min.js"></script>
-<script type='text/javascript' src="/js/notification.js"></script>
+<script type='text/javascript' src="{{asset('js/financialManagement.js')}}"></script>
+<script type='text/javascript' src="{{asset('js/ajaxHelper.js')}}"></script>
+<script type='text/javascript' src="{{asset('js/studentHelper.js')}}"></script>
+<script type='text/javascript' src="{{asset('js/expensesHelper.js')}}"></script>
+<script type='text/javascript' src="{{asset('js/notify.min.js')}}"></script>
+<script type='text/javascript' src="{{asset('js/notification.js')}}"></script>
 <script>
 
 
 
-        // submit form
+        // submit form asd
         $("#salaries_form").submit(function (e) {
             e.preventDefault();
             if(checkIfAllInputsFilled()){

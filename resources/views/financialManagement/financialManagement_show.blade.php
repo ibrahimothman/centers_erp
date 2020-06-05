@@ -767,12 +767,12 @@
 <!-- script style-->
 <script type='text/javascript' src="/js/financialManagement.js"></script>
 <!-- date picker script for modal -->
-<script src="{{url('js/jquery.datetimepicker.js')}}"></script>
 
 <script>
 
    $('button[id^=delete-transaction-]').on('click', function () {
        var transaction_id = $(this).attr('id').split('-')[2];
+       console.log('transaction_id: '+transaction_id);
        $.ajax({
            url: "/transactions/"+transaction_id,
            type: "DELETE",

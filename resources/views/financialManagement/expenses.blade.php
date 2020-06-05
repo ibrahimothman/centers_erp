@@ -117,15 +117,15 @@
         @include('footer')
     </div>
 </div>
-<!-- scroll top -->
+<!-- scroll top sad -->
 @include('scroll_top')
 <!-- script-->
 @include('script')
 <!-- script style-->
-<script type='text/javascript' src="/js/financialManagement.js"></script>
-<script type='text/javascript' src="/js/ajaxHelper.js"></script>
-<script type='text/javascript' src="/js/notify.min.js"></script>
-<script type='text/javascript' src="/js/notification.js"></script>
+<script type='text/javascript' src="{{asset('js/financialManagement.js')}}"></script>
+<script type='text/javascript' src="{{asset('js/ajaxHelper.js')}}"></script>
+<script type='text/javascript' src="{{asset('js/notify.min.js')}}"></script>
+<script type='text/javascript' src="{{asset('js/notification.js')}}"></script>
 <script>
 
 
@@ -212,6 +212,7 @@
 
             return transactions;
         }
+        //
 
 
 

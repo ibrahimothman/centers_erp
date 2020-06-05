@@ -1,7 +1,7 @@
 
 /* financial show */
 $(document).ready(function(){
-    // show content all scroll spy
+    // show content all scroll spy sda
     $("#allShow").click(function(){
         $("#section-1").css("display","block");
         $("#section-2").css("display","block");
@@ -141,8 +141,8 @@ $(document).ready(function(){
     // add btn payroll
     $('input#addSalaryButton').on('click', function() {
         var id = ($('.fieldPayroll .form-row').length + 1).toString();
-        $('.fieldPayroll').append('<div class="form-row " id="data-'+id+'"><input hidden id="instructor-employee-id-'+id+'"><input hidden id="instructor-employee-model-'+id+'"><input hidden id="instructor-employee-salary-'+id+'"><input hidden id="instructor-employee-last-rest-'+id+'">' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> مدرب/موظف </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="instructor-employee-option-'+id+'" name="instructor-employee-option-'+id+'" required><option data-account="4"  data-route="/search_for_instructors"   value="App\\Instructor">المدربين</option><option data-account="5" data-route="/search_for_employees"   value="App\\Employee">الموظفين</option></select></div>'+
+        $('.fieldPayroll').append('<div class="form-row " id="data-'+id+'"><input hidden id="instructor-employee-id-'+id+'">' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label> مدرب/موظف </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="instructor-employee-option-'+id+'" name="instructor-employee-option-'+id+'" required><option data-account="4"  data-route="/search_for_instructors"   value="App\Instructor">المدربين</option><option data-account="5" data-route="/search_for_employees"   value="App\Employee">الموظفين</option></select></div>'+
             '<div class="col-lg-2 col-sm-2 form-group "><label> الاسم/رقم قومي/موبايل  </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="search-option-'+id+'" name="search_option" required><option value="nameAr">الاسم</option> <option value="idNumber">رقم القومي</option><option value="phoneNumber">الموبايل</option></select></div>' +
             '<div class="col-lg-2 col-sm-4 form-group "><label>ادخل </label><input placeholder="اختار" type="text" id="search-input-'+id+'" class="form-control student-selector required_field" name="instructor-employee" list="instructor-employee-list-'+id+'" autocomplete="off"   /><div class="list-gpfrm-list" id="instructor-employee-list-'+id+'"></div></div>' +
             '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>النظام</label><input type="text"  name="payment_mdoel" class=" form-control"  id="payment-model-'+id+'" readonly/></div>' +

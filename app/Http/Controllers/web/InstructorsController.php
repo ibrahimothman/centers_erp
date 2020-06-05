@@ -94,7 +94,6 @@ class InstructorsController extends Controller
 
     public function show(Instructor $instructor)
     {
-        return json_encode($instructor);
         $courses = $instructor->courses()->where('center_id', Session('center_id'))->get();
         return view('instructor/overview_instructor', compact('instructor', 'courses'));
 

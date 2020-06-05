@@ -1,9 +1,4 @@
 
-// row_number -> number of row
-var row_number = 0;
-var test_diploma_option = "tests";
-var student_id;
-var person_data = new Map();
 
 // when change between instructor and employee option -> clear search input
 $(document).on('change', 'select[id^=instructor-employee-option-]',  function () {
@@ -28,7 +23,6 @@ $(document).on('keyup', 'input[id^=search-input-]', function () {
     $('#total-'+row).val('');
     $('#paid-'+row).val('');
     $('#rest-'+row).val('');
-    // person_data.clear();
     let query=$(this).val().trim();
 
 
@@ -48,7 +42,6 @@ $(document).on('keyup', 'input[id^=search-input-]', function () {
 
             $.each(persons, function (i, person) {
                 output += "<li data-id='"+person.id+"' data-model='"+person.payment_model.model+"' data-salary='"+person.payment_model.salary+"' data-total='"+person.total+"' id='item-"+ row +"' ><a href='#'>" + person.nameAr + "</a></li>"
-                // person_data.set('person-'+person.id+'', person);
             });
             output += '</ul>';
             suggestion_list.fadeIn();
@@ -103,28 +96,4 @@ $(document).on('keyup', 'input[id^=paid-]',  function (e) {
 
 
 
-function createTransactionMetaDataJSON() {
-    let transactions = [];
-    $('input[id^=instructor-employee-id-]').each(function () {
-       let i = $(this).attr('id').split('-')[3];
-        let transaction = {};
-        let meta_data = {};
-        var instructor_employee_option = $('#instructor-employee-option-1').children("option:selected");
-        var test_diploma_value = $('#test-diploma-values-1').children("option:selected");
-        meta_data.payer_id = "{{ Session('center_id') }}";
-        meta_data.payer_type = "App\\Center";
-        meta_data.payFor_id = test_diploma_value.val();
-        meta_data.payFor_type =instructor_employee_option.val();
 
-        transaction.account_id = 3;
-        transaction.rest = $("#rest-1").val();
-        transaction.meta_data = meta_data;
-        transaction.amount =  $("#paid-1").val();
-        transaction.deserved_amount =  $("#cost-1").val();
-    });
-
-
-
-    return transaction;
-
-}
