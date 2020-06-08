@@ -27,6 +27,28 @@
                                 <div class="card-body">
                                     <form action="{{ route('employees.store') }}" method="post" id="employeeCreate">
                                         @csrf
+                                        <div class="form-row image-upload">
+                                            <div class="col-sm-8">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" accept="image/*" name="idImage"
+                                                           id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                    <input type="file" class="custom-file-input" accept="image/*" name="image"
+                                                           id="customFile2" src="" onchange="readURL(this, 2);" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center  ">
+                                            <div class="course-image-input">
+                                                <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                     alt="your image"/>
+                                                <p>صورة البطاقه</p>
+                                            </div>
+                                            <div class="course-image-input">
+                                                <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                     alt="your image"/>
+                                                <p>الصوره الشخصيه</p>
+                                            </div>
+                                        </div>
                                         <div class="form-row form-group">
                                             <label>الاسم باللغه العربيه </label>
                                             <span class="required">*</span>
@@ -179,6 +201,30 @@
 </html>
 
 <script>
+/* img */
+
+    $('#imageUploaded1, #imageUploaded2').click(function () {
+        let photoNum = this.id[this.id.length - 1];
+        $(`#customFile${photoNum}`).trigger('click');
+    });
+    //code for the image uploaded to be shown
+    function readURL(input, num) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                if (num > 3) {
+                    $(`#imageUploaded${num}`)
+                        .attr('src', 'https://icon-library.net/images/done-icon/done-icon-5.jpg')
+                } else {
+                    $(`#imageUploaded${num}`)
+                        .attr('src', e.target.result)
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    /* end */
+
     $("#payment_models").on('change', function() {
         $('.meta_data').remove();
         var selected_model = $.parseJSON($(this).find(':selected').attr("data-extra"));
