@@ -1,30 +1,157 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
+
     @include('library')
     <!-- Bootstrap CSS & js -->
         <link rel="stylesheet" href="{{url("css/bootstrap.min.css")}}">
     <link rel="stylesheet" href="{{url("css/instructor_style.css")}}">
+
     <title>register instructor</title>
 </head>
 <body class="bg-light" id="page-top">
+
+
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
         @include('operationBar')
         <section>
+
             <div class="container-fluid   text-right">
+
         <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-lg-8">
+                @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        {{session()->get('success')}}
+                    </div>
+                @endif
                 <div class="card mb-4">
                     <div class="card-header text-primary">
                         تسجيل بيانات المدرب
                     </div>
                             <div class="card-body">
-                                <form id="addInstructor" action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data">
+                                <form action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data">
                                     @csrf
+                                    <input name="next" value="save" hidden>
+                                    <div class="form-row form-group">
+                                        <div class="col-sm-12 ">
+                                            <label>الاسم باللغه العربيه</label>
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" name="nameAr"
+
+                                                   placeholder="بالاسم باللغه العربيه " value="{{old('nameAr')}}">
+                                             <div>{{ $errors->first('nameAr') }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row form-group">
+                                        <div class="col">
+                                            <label>الاسم باللغه الانجليزيه</label>
+                                            <input type="text" name="nameEn" class="form-control"
+                                                   placeholder="الاسم باللغه الانجليزيه" value="{{old('nameEn')}}">
+                                            <div>{{ $errors->first('nameEn') }}</div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class=" form-row form-group">
+                                        <div class="col">
+                                            <label>البريد الالكترونى </label>
+                                            <span class="required">*</span>
+                                            <input type="text" name="email" placeholder="ادخل البريد الالكترونى "
+                                                   class="form-control" value="{{old('email')}}">
+                                            <div>{{ $errors->first('email') }}</div>
+                                        </div>
+                                    </div>
+
+
+
+                            <div class=" form-row form-group">
+                                <div class="col-sm-6  ">
+                                    <label>رقم التليفون المحمول</label>
+                                    <span class="required">*</span>
+                                    <input type="text" name="phoneNumber"
+                                           placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="{{old('phoneNumber')}}">
+                                    <div>{{ $errors->first('phoneNumber') }}</div>
+                                </div>
+
+                                        <div class="col-sm-6">
+                                            <label>تليفون اخر </label>
+                                            <input type="text" name="phoneNumberSec" placeholder="ادخل رقم التليفون" value="{{old('phoneNumberSec')}}"
+                                                   class="form-control">
+                                            <div>{{ $errors->first('phoneNumberSec') }}</div>
+                                        </div>
+
+                                    </div>
+
+                            <div class=" form-row form-group">
+                                <div class="col-sm-6 ">
+                                    <label>الرقم القومى </label>
+                                    <input type="text" name="idNumber" value="{{old('idNumber')}}"
+                                           placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
+                                    <div>{{ $errors->first('idNumber') }}</div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>رقم جواز السفر</label>
+                                    <input name="passportNum" type="text" placeholder="ادخل رقم جواز السفر" value="{{old('passportNum')}}"
+                                           class="form-control">
+                                    <div>{{ $errors->first('passportNum') }}</div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-row form-group">
+                                <div class="col-sm-6  ">
+                                    <label>البلد </label>
+                                    <input name="state" type="text" placeholder="البلد" value="{{old('state')}}"
+                                           class="form-control mb-1">
+                                    <div>{{ $errors->first('state') }}</div>
+                                </div>
+
+                                        <div class="col-sm-6  ">
+                                            <label>المدينه </label>
+                                            <input name="city" type="text" placeholder="المدينه" value="{{old('city')}}" class="form-control">
+                                            <div>{{ $errors->first('city') }}</div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class=" form-row  form-group">
+                                        <label>العنوان</label>
+                                        <span class="required">*</span>
+
+                                        <textarea name="address" placeholder="ادخل العنوان " rows="3"
+                                                  class="form-control">{{old('address')}}</textarea>
+                                        <div>{{ $errors->first('address') }}</div>
+                                    </div>
+
+                                    <div class=" form-row  form-group">
+                                        <label>نبذه عن</label>
+                                        <span class="required">*</span>
+
+                                        <textarea name="bio" placeholder="نبذه عن " rows="3"
+                                                  class="form-control" style="  overflow-scrolling:auto; ">{{old('bio')}}</textarea>
+                                        <div>{{ $errors->first('bio') }}</div>
+                                    </div>
+
+
+                                    <!-- payment model -->
+                                    <div class="form-row  " id="model_form" >
+                                        <div class="col form-group">
+                                            <label>نظام المحاسبه</label>
+                                            <span class="required">*</span>
+                                            <select class="form-control" id="payment_models" name="payment_model" required>
+                                                <option value="0">اختار</option>
+                                                @foreach($payment_models as $payment_model)
+                                                    <option data-extra="{{ $payment_model->meta_data }}" {{ $payment_model == old('payment_model')? 'selected':''}} value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
 
                                     <div class="form-row image-upload">
                                         <div class="col-sm-8">
@@ -50,123 +177,11 @@
                                             <p>الصوره الشخصيه</p>
                                         </div>
                                     </div>
-                                    <div class="form-row form-group">
-                                        <div class="col-sm-12 ">
-                                            <label>الاسم باللغه العربيه</label>
-                                            <span class="required">*</span>
-                                            <input type="text" class="form-control" name="nameAr"
-                                                   placeholder="بالاسم باللغه العربيه " value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-row form-group">
-                                        <div class="col">
-                                            <label>الاسم باللغه الانجليزيه</label>
-                                            <input type="text" name="nameEn" class="form-control"
-                                                   placeholder="الاسم باللغه الانجليزيه" value="">
-                                        </div>
-                                    </div>
-                                    <div class=" form-row form-group">
-                                        <div class="col">
-                                            <label>البريد الالكترونى </label>
-                                            <span class="required">*</span>
-                                            <input type="text" name="email" placeholder="ادخل البريد الالكترونى "
-                                                   class="form-control" value="">
-                                        </div>
-                                    </div>
-
-
-
-                            <div class=" form-row form-group">
-                                <div class="col-sm-6  ">
-                                    <label>رقم التليفون المحمول</label>
-                                    <span class="required">*</span>
-                                    <input type="text" name="phoneNumber"
-                                           placeholder="ادخل رقم التليفون المحمول" class="form-control mb-1 " value="">
-                                </div>
-
-                                        <div class="col-sm-6">
-                                            <label>تليفون اخر </label>
-                                            <input type="text" name="phoneNumberSec" placeholder="ادخل رقم التليفون" value=""
-                                                   class="form-control">
-                                        </div>
-
-                                    </div>
-
-                            <div class=" form-row form-group">
-                                <div class="col-sm-6 ">
-                                    <label>الرقم القومى </label>
-                                    <input type="text" name="idNumber" value=""
-                                           placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label>رقم جواز السفر</label>
-                                    <input name="passportNum" type="text" placeholder="ادخل رقم جواز السفر" value=""
-                                           class="form-control ">
-                                </div>
-                            </div>
-                            <div class="form-row form-group">
-                                <div class="col-sm-6  ">
-                                    <label>البلد </label>
-                                    <input name="state" type="text" placeholder="البلد" value=""
-                                           class="form-control mb-1">
-                                </div>
-
-                                        <div class="col-sm-6  ">
-                                            <label>المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="" class="form-control">
-
-                                        </div>
-                                    </div>
-
-                                    <div class=" form-row  form-group">
-                                        <label>العنوان</label>
-                                        <span class="required">*</span>
-
-                                        <textarea name="address" placeholder="ادخل العنوان " rows="3"
-                                                  class="form-control"></textarea>
-                                    </div>
-
-                                    <div class=" form-row  form-group">
-                                        <label>نبذه عن</label>
-                                        <textarea name="bio" placeholder="نبذه عن " rows="3"
-                                                  class="form-control" style="  overflow-scrolling:auto; "></textarea>
-                                    </div>
-
-
-                                    <!-- payment model -->
-                                    <div class="form-row  " id="model_form" >
-                                        <div class="col form-group">
-                                            <label>نظام المحاسبه</label>
-                                            <span class="required">*</span>
-                                            <select class="form-control" id="payment_models" name="payment_model" required>
-                                                <option value="">اختار</option>
-                                                @foreach($payment_models as $payment_model)
-                                                    <option data-extra="{{ $payment_model->meta_data }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row form-group">
-                                        <div class="col-sm-6">
-                                            <label>
-                                                <input type="radio" class="option-input radio"
-                                                       name="example" checked/>
-                                                يعمل
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label>
-                                                <input type="radio" class="option-input radio"
-                                                       name="example"/>
-                                                لا يعمل
-                                            </label>
-                                        </div>
-                                    </div>
                                     <br>
                                     <div class="form-row save">
                                         <div class="col-sm-6 mx-auto text-center">
                                             <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
+                                            <button class="btn btn-primary" type="submit" id="submit_create">حفظ و انشاء جديد</button>
                                             <button class="btn  btn-danger" type="reset"> الغاء</button>
                                         </div>
                                     </div>
@@ -237,6 +252,10 @@
         })
 
     });
+
+    $('#submit_create').on('click', function () {
+        $('input[name=next]').val('create');
+    })
 </script>
 
 

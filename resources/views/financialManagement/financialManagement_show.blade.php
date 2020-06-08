@@ -31,9 +31,9 @@
                                     <li><button class="item  btn btn-light "  id="allShow">الكل</button></li>
                                     <li><button class="item btn btn-light "  id="profitShowBtn" > الارباح </button></li>
                                     <li><button class="item  btn btn-light "  id="revenuesShow">الايرادات</button></li>
+                                    <li><button class="item  btn btn-light "  id="refundShow">الاسترجاع</button></li>
                                     <li><button class="item btn btn-light "  id="outlayShow" > المصروفات </button></li>
                                     <li><button class="item  btn btn-light "  id="payrollShow">الرواتب</button></li>
-                                    <li><button class="item  btn btn-light "  id="details">تفاصيل الارباح والطباعه</button></li>
                                 </ul>
                                 <!-- end nav -->
                                 <!-- time btn -->
@@ -173,7 +173,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th class="th-sm">الاسم</th>
-                                                                <th class="th-sm">الكورس/الدبلومه</th>
+                                                                <th class="th-sm">الامتحان/الدبلومه</th>
                                                                 <th class="th-sm">التكلفه</th>
                                                                 <th class="th-sm">المدفوع</th>
                                                                 <th class="th-sm">الباقي</th>
@@ -187,7 +187,7 @@
                                                             @foreach($results['transactions'] as $result)
                                                                 @foreach($result['transactions']->filterByAccount(3, false) as $transaction)
                                                                     @php($revenue += $transaction->amount)
-                                                                    <tr>
+                                                                    <tr id="container-{{$transaction->id}}">
                                                                         <td>{{ $transaction->payer()->nameAr }}</td>
                                                                         <td>{{ $transaction->payFor()->name }}</td>
                                                                         <td>{{ $transaction->deserved_amount }}</td>
@@ -201,14 +201,13 @@
 
                                                                         </td>
                                                                         <td>
-                                                                            <form method="post" action="{{ route('transactions.destroy', $transaction->id) }}">
-                                                                                @csrf
-                                                                                @method('delete')
-                                                                                <button type="submit"
+
+
+                                                                                <button type="button" id="delete-transaction-{{$transaction->id}}"
                                                                                         class="btn btn-outline-danger py-1 px-2">
                                                                                     <i class="fas fa-trash-alt m-0"></i>
                                                                                 </button>
-                                                                            </form>
+
                                                                         </td>
 
                                                                     </tr>
@@ -236,8 +235,93 @@
 
                                 </div>
                                 <!-- end section 2 -->
-                                <!-- section12  3outlay -->
+                                <!-- section 3  refund-->
                                 <div id="section-3">
+                                    <div class="row  mb-3">
+                                        <div class="col-sm-12">
+                                            <div class="card border-primary p-3 ">
+                                                <div class="card-header text-primary bg-transparent  border-primary ">
+                                                    <h5 class="fRight">  الاسترجاع</h5>
+
+                                                </div>
+                                                <!-- card table -->
+                                                <div class="card-body ">
+                                                    <div class="row form-group">
+                                                        <div class="col-sm-12">
+                                                            <!-- table -->
+                                                            <div class="table-responsive">
+                                                                <table id="dtBasicExample"
+                                                                       class="table table-striped table-bordered table-sm"
+                                                                       cellspacing="0"
+                                                                       width="100%">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th class="th-sm">الاسم</th>
+                                                                        <th class="th-sm">الامتحان/الدبلومه</th>
+                                                                        <th class="th-sm">التكلفه</th>
+                                                                        <th class="th-sm">المدفوع</th>
+                                                                        <th class="th-sm">الباقي</th>
+                                                                        <th class="th-sm">التاريخ</th>
+                                                                        <th class="th-sm"> تعديل</th>
+                                                                        <th class="th-sm"> ازاله</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody id="student_table">
+                                                                    @php($revenue = 0)
+                                                                    @foreach($results['transactions'] as $result)
+                                                                        @foreach($result['transactions']->filterByAccount(9, false) as $transaction)
+                                                                            @php($revenue += $transaction->amount)
+                                                                            <tr id="container-{{$transaction->id}}">
+                                                                                <td>{{ $transaction->payFor()->nameAr }}</td>
+                                                                                <td>{{ $transaction->payer()->name }}</td>
+                                                                                <td>{{ $transaction->deserved_amount }}</td>
+                                                                                <td>{{ $transaction->amount }}</td>
+                                                                                <td>{{ $transaction->rest}}</td>
+                                                                                <td>{{ $transaction->date }}</td>
+                                                                                <td>
+                                                                                    <a href="{{ route('refund.edit', $transaction->id) }}"
+                                                                                       class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                                                            class="fas fa-edit m-0 "></i> </a>
+
+                                                                                </td>
+                                                                                <td>
+
+
+                                                                                    <button type="button" id="delete-transaction-{{$transaction->id}}"
+                                                                                            class="btn btn-outline-danger py-1 px-2">
+                                                                                        <i class="fas fa-trash-alt m-0"></i>
+                                                                                    </button>
+
+                                                                                </td>
+
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    @endforeach
+
+                                                                    </tbody>
+
+                                                                </table>
+                                                                <!-- end table -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- sum -->
+                                                    <div class="row form-group">
+                                                        <h5 class="text-warning ">الايرادات: </h5>
+                                                        <div class="col-sm-4">
+                                                            <input type="number" value="{{ $revenue }}" name="sum" id="sum"  class="form-control"  readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- end section 2 -->
+
+                                <!-- section12  3outlay -->
+                                <div id="section-4">
                                     <div class="row  mb-3">
                                         <div class="col-sm-12">
                                             <div class="card border-primary p-3 ">
@@ -279,7 +363,7 @@
                                                             @foreach($results['transactions'] as $result)
                                                                 @foreach($result['transactions']->filterByAccount(6,true) as $transaction)
                                                                     @php($total_expenses += $transaction->amount)
-                                                                    <tr>
+                                                                    <tr id="container-{{$transaction->id}}">
                                                                         <td>{{ $transaction->account->name }}</td>
                                                                         <td>{{$transaction->deserved_amount}}</td>
                                                                         <td> {{ $transaction->amount }}</td>
@@ -292,14 +376,10 @@
 
                                                                         </td>
                                                                         <td>
-                                                                            <form method="post" action="{{ route('transactions.destroy', $transaction->id) }}">
-                                                                                @csrf
-                                                                                @method('delete')
-                                                                                <button type="submit"
-                                                                                        class="btn btn-outline-danger py-1 px-2">
-                                                                                    <i class="fas fa-trash-alt m-0"></i>
-                                                                                </button>
-                                                                            </form>
+                                                                            <button type="button" id="delete-transaction-{{$transaction->id}}"
+                                                                                    class="btn btn-outline-danger py-1 px-2">
+                                                                                <i class="fas fa-trash-alt m-0"></i>
+                                                                            </button>
                                                                         </td>
 
                                                                     </tr>
@@ -326,7 +406,7 @@
                                 </div>
                                 <!-- end section 3-->
                                 <!-- section4 payroll -->
-                                <div id="section-4"  >
+                                <div id="section-5"  >
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <div class="card border-primary p-3 ">
@@ -361,7 +441,7 @@
                                                             @foreach($results['transactions'] as $result)
                                                                 @foreach($result['transactions']->filterByAccount(4, false) as $transaction)
                                                                     @php($total_salaries += $transaction->amount)
-                                                                    <tr>
+                                                                    <tr id="container-{{$transaction->id}}">
                                                                         <td>{{ $transaction->payFor()->nameAr }}</td>
                                                                         <td>{{ $transaction->deserved_amount }}</td>
                                                                         <td> {{ $transaction->payFor()->payment_model['model'] }}</td>
@@ -376,14 +456,10 @@
 
                                                                         </td>
                                                                         <td>
-                                                                            <form method="post" action="{{ route('transactions.destroy', $transaction->id) }}">
-                                                                                @csrf
-                                                                                @method('delete')
-                                                                                <button type="submit"
-                                                                                        class="btn btn-outline-danger py-1 px-2">
-                                                                                    <i class="fas fa-trash-alt m-0"></i>
-                                                                                </button>
-                                                                            </form>
+                                                                            <button type="button" id="delete-transaction-{{$transaction->id}}"
+                                                                                    class="btn btn-outline-danger py-1 px-2">
+                                                                                <i class="fas fa-trash-alt m-0"></i>
+                                                                            </button>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -410,7 +486,7 @@
                                 </div>
                                 <!-- end section 4 payroll -->
                                 <!-- section4 payroll -->
-                                <div id="section-5"  >
+                                <div id="section-6"  >
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <div class="card border-primary p-3 ">
@@ -445,7 +521,7 @@
                                                                     @foreach($results['transactions'] as $result)
                                                                         @foreach($result['transactions']->filterByAccount(5, false) as $transaction)
                                                                             @php($total_salaries += $transaction->amount)
-                                                                            <tr>
+                                                                            <tr id="container-{{$transaction->id}}">
                                                                                 <td>{{ $transaction->payFor()->nameAr }}</td>
                                                                                 <td>{{ $transaction->deserved_amount }}</td>
                                                                                 <td> {{ $transaction->payFor()->payment_model['model'] }}</td>
@@ -460,14 +536,10 @@
 
                                                                                 </td>
                                                                                 <td>
-                                                                                    <form method="post" action="{{ route('transactions.destroy', $transaction->id) }}">
-                                                                                        @csrf
-                                                                                        @method('delete')
-                                                                                        <button type="submit"
-                                                                                                class="btn btn-outline-danger py-1 px-2">
-                                                                                            <i class="fas fa-trash-alt m-0"></i>
-                                                                                        </button>
-                                                                                    </form>
+                                                                                    <button type="button" id="delete-transaction-{{$transaction->id}}"
+                                                                                            class="btn btn-outline-danger py-1 px-2">
+                                                                                        <i class="fas fa-trash-alt m-0"></i>
+                                                                                    </button>
                                                                                 </td>
                                                                             </tr>
                                                                         @endforeach
@@ -492,9 +564,10 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <!-- end section 4 payroll -->
 {{--                                <!-- section5 profit -->--}}
-{{--                                    <div id="section-6">--}}
+{{--                                    <div id="section-5">--}}
 {{--                                        <div class="row  mb-3">--}}
 {{--                                            <div class="col-sm-12">--}}
 {{--                                                <div class="card border-primary p-3 ">--}}
@@ -604,7 +677,7 @@
 
         <div class="modal-content " id="contentForPrint">
             <div class="modal-body">
-                <div id="section-6">
+                <div id="section-7">
                     <div class="row  mb-3">
                         <div class="col-sm-12">
                             <div class="card  p-3 ">
@@ -694,47 +767,22 @@
 <!-- script style-->
 <script type='text/javascript' src="/js/financialManagement.js"></script>
 <!-- date picker script for modal -->
-<script src="{{url('js/jquery.datetimepicker.js')}}"></script>
 
 <script>
 
-    $(document).ready(function () {
-        // $('#date_form').submit(function (e) {
-        //     // e.preventDefault();
-        //     var start_date = $("<input>")
-        //         .attr('type', 'hidden')
-        //         .attr('name', 'start_date')
-        //         .attr('value', $("#datetimepickerModal1").val());
-        //     var end_date = $("<input>").attr('type', 'hidden').attr('name', 'end_date').attr('value', $("#datetimepickerModal2").val());
-        //
-        //     $(this).append(start_date).append(end_date);
-        // })
-            // var start_date = "2019-03-01";
-            // var end_date = "2020-01-01";
-            //
-            // $.ajax({
-            //     url: "/all_transactions?start_date="+start_date+"&end_date="+end_date,
-            //     type: "get",
-            //     success: function (transactions) {
-            //          // fill inputs
-            //         $("#revenues").val(transactions.revenues_amount);
-            //         $("#expenses").val(transactions.expenses_amount);
-            //
-            //         var profit = transactions.revenues_amount - transactions.expenses_amount;
-            //         $("#profit").val(transactions.revenues_amount - transactions.expenses_amount);
-            //
-            //         $("#tax").val("20");
-            //         var taxValue = profit * $("#tax").val() / 100;
-            //
-            //         $("#netProfit").val(profit - taxValue);
-            //
-            //     }
-            // });
-
-
-        });
-
-
+   $('button[id^=delete-transaction-]').on('click', function () {
+       var transaction_id = $(this).attr('id').split('-')[2];
+       console.log('transaction_id: '+transaction_id);
+       $.ajax({
+           url: "/transactions/"+transaction_id,
+           type: "DELETE",
+           data: {_token: "{{csrf_token()}}"},
+           success: function(data){
+               $('button[id^=delete-transaction-'+transaction_id+']').closest('tr').remove();
+               // $('#container-'+transaction_id).remove();
+           }
+       })
+   })
 
 
 </script>

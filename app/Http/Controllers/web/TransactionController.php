@@ -11,9 +11,11 @@ use App\Student;
 use App\Transaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 use phpDocumentor\Reflection\Types\Nullable;
+use function foo\func;
 
 class TransactionController extends Controller
 {
@@ -27,15 +29,21 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
+//        dd($request->all());
         $center = Center::findOrFail(Session('center_id'));
         $data = $this->validateTransaction($request);
         if($data->fails()){
+            dd($data->errors()->messages());
             return response()->json(['message' => 'invalid data'], 400);
         }
+
         $transactions = $data->validate()['transactions'];
-        foreach ($transactions as $transaction){
-            $center->transactions()->create($transaction);
-        }
+        DB::transaction(function() use ($transactions, $center){
+            foreach ($transactions as $transaction){
+                $center->transactions()->create($transaction);
+            }
+        });
+
         return response()->json(['message' => 'transactions are successfully added :)', 'error' => false]);
     }
 
@@ -57,7 +65,7 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
-        return redirect('/finance');
+        return response()->json(['massage' => 'deleted'], 200);
     }
 
     private function validateTransaction(Request $request)
@@ -71,11 +79,10 @@ class TransactionController extends Controller
             'transactions.*.amount' => ['required', 'integer'],
             'transactions.*.rest' => ['required', 'integer'],
             'transactions.*.deserved_amount' => ['required', 'integer'],
-            'transactions.*.date' => ['required', 'date'],
             'transactions.*.meta_data' => ['required', 'array'],
             'transactions.*.meta_data.payer_id' => ['required', 'integer'],
             'transactions.*.meta_data.payer_type' => ['required'],
-            'transactions.*.meta_data.payFor_id' => ['sometimes', 'nullable', 'integer', ],
+            'transactions.*.meta_data.payFor_id' => ['sometimes', 'nullable', 'integer'],
             'transactions.*.meta_data.payFor_type' => ['sometimes'],
         ]);
 

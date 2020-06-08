@@ -199,6 +199,8 @@
                                         <hr/>
                                         <button class="btn btn-primary action-buttons" type="button" id="submit"> إضافة
                                             <i class="fas fa-plus"></i></button>
+                                        <button class="btn btn-primary action-buttons" type="button" id="save_create_new">حفظ و انشاء جديد
+                                            <i class="fas fa-plus"></i></button>
                                         <button class="btn  btn-danger action-buttons" type="reset"> إلغاء <i
                                                 class="fas fa-times"></i></button>
                                     </div>
@@ -221,94 +223,107 @@
 <!--  course and category script plugin  -->
 <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
 <script type='text/javascript' src="{{url('js/notify.min.js')}}"></script>
-<script type='text/javascript' src="{{url('js/notificatio.js')}}"></script>
+<script type='text/javascript' src="{{url('js/notification.js')}}"></script>
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
 {{--<script type='text/javascript' src="/js/course_create_validation.js"></script>--}}
 <!--  end script-->
 <script>
+    function createCourse(next) {
+        var selected_categories_ids = getSelectedCategoriesIds();
+        // clear all previous validation errors
+        $('.errors').remove();
+
+        var courseName = $("#course-name").val();
+        var courseCode = $("#course-id").val();
+        var courseDescription = $("#course-description").val();
+        var courseDuration = $("#course-duration").val();
+        var courseCost = $("#course-cost").val();
+        var teamCost = $("#course-group-cost").val();
+        var courseChapter = $("#course-chapter-1").val();
+        var chapterDesc = $("#chapter-1-desc").val();
+        let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
+        let chapterDescription = [...$('fieldset textarea')];
+        let chapterName = [...$('fieldset input')];
+        chapterName.forEach(function (chapter, chapterIndex) {
+            let chapterInfo = {};
+            chapterInfo.name = chapterName[chapterIndex].value;
+            chapterInfo.description = chapterDescription[chapterIndex].value;
+            chapters.push(chapterInfo);
+        });
+
+
+        var fd = new FormData();
+        $('input[type="file"]').each(function (index, file) {
+            if(file.files.length != 0){
+                console.log(file.files[0]);
+                fd.append('images[]',file.files[0]);
+            }
+        });
+        $('.instructors[type="checkbox"]').each(function () {
+            if(this.checked)
+                fd.append('instructors[]',$(this).val());
+        });
+
+
+        fd.append('_token',"{{ csrf_token() }}");
+        fd.append('name',courseName);
+        fd.append('code', courseCode);
+        fd.append('description', courseDescription);
+        fd.append('duration', courseDuration);
+        fd.append('cost', courseCost);
+        fd.append('content', JSON.stringify(chapters));
+        fd.append('teamCost', teamCost);
+        selected_categories_ids.forEach(function (id) {
+            fd.append('categories[]', id);
+        });
+
+        $.ajax({
+            url: "/courses",
+            method: "POST",
+            data : fd,
+            contentType : false,
+            processData : false,
+            dataType: "json",
+            success: function (data) {
+                $.notify(data.message, {
+                    position:"bottom left",
+                    style: 'successful-process',
+                    className: 'done',
+                    // autoHideDelay: 500000
+                });
+                if (next === 'save'){
+                    window.location = '/courses/'+data.course_id;
+                }else{
+                    window.location = '/courses/create';
+                }
+            },
+            error: function (error) {
+                if (error.status == 400) {// validation
+                    // loop through the errors and show them to the user
+                    $.each(error.responseJSON.errors, function (i, error_message) {
+                        // error is message
+                        // i is element's name
+                        var element = $(document).find('[name="' + i + '"]');
+                        element.after($('<span class="errors" style="color: red;">' + error_message + '</span>'));
+                    });
+                }
+            }
+        });
+    }
+
     $(document).ready(function () {
 
 
         $("#submit").click(function () {
 
-            var selected_categories_ids = getSelectedCategoriesIds();
-            // clear all previous validation errors
-            $('.errors').remove();
+            createCourse('save');
+        });
 
-            var courseName = $("#course-name").val();
-            var courseCode = $("#course-id").val();
-            var courseDescription = $("#course-description").val();
-            var courseDuration = $("#course-duration").val();
-            var courseCost = $("#course-cost").val();
-            var teamCost = $("#course-group-cost").val();
-            var courseChapter = $("#course-chapter-1").val();
-            var chapterDesc = $("#chapter-1-desc").val();
-            let chapters = []; //add this eventually  it's like [ { name: 'test', description: 'test'}, { name: 'test', description: 'test'}, { name: 'test', description: 'test'}]
-            let chapterDescription = [...$('fieldset textarea')];
-            let chapterName = [...$('fieldset input')];
-            chapterName.forEach(function (chapter, chapterIndex) {
-                let chapterInfo = {};
-                chapterInfo.name = chapterName[chapterIndex].value;
-                chapterInfo.description = chapterDescription[chapterIndex].value;
-                chapters.push(chapterInfo);
-            });
+        $("#save_create_new").click(function () {
 
-
-            var fd = new FormData();
-            $('input[type="file"]').each(function (index, file) {
-               if(file.files.length != 0){
-                   console.log(file.files[0]);
-                    fd.append('images[]',file.files[0]);
-               }
-            });
-            $('.instructors[type="checkbox"]').each(function () {
-                if(this.checked)
-                    fd.append('instructors[]',$(this).val());
-            });
-
-
-            fd.append('_token',"{{ csrf_token() }}");
-            fd.append('name',courseName);
-            fd.append('code', courseCode);
-            fd.append('description', courseDescription);
-            fd.append('duration', courseDuration);
-            fd.append('cost', courseCost);
-            fd.append('content', JSON.stringify(chapters));
-            fd.append('teamCost', teamCost);
-            selected_categories_ids.forEach(function (id) {
-                fd.append('categories[]', id);
-            });
-
-            $.ajax({
-                url: "/courses",
-                method: "POST",
-                data : fd,
-                contentType : false,
-                processData : false,
-                dataType: "json",
-                success: function (data) {
-                    // $.notify(data.message, {
-                    //     position:"bottom left",
-                    //     style: 'successful-process',
-                    //     className: 'done',
-                    //     // autoHideDelay: 500000
-                    // });
-                    window.location = '/courses/'+data.course_id;
-                },
-                error: function (error) {
-                    if (error.status == 400) {// validation
-                        // loop through the errors and show them to the user
-                        $.each(error.responseJSON.errors, function (i, error_message) {
-                            // error is message
-                            // i is element's name
-                            var element = $(document).find('[name="' + i + '"]');
-                            element.after($('<span class="errors" style="color: red;">' + error_message + '</span>'));
-                        });
-                    }
-                }
-            });
+            createCourse('create');
         });
     });
 

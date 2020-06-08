@@ -1,7 +1,7 @@
 
 /* financial show */
 $(document).ready(function(){
-    // show content all scroll spy
+    // show content all scroll spy sda
     $("#allShow").click(function(){
         $("#section-1").css("display","block");
         $("#section-2").css("display","block");
@@ -14,8 +14,8 @@ $(document).ready(function(){
     $("#outlayShow").click(function(){
         $("#section-1").css("display","none");
         $("#section-2").css("display","none");
-        $("#section-3").css("display","block");
-        $("#section-4").css("display","none");
+        $("#section-3").css("display","none");
+        $("#section-4").css("display","block");
         $("#section-5").css("display","none");
         $("#section-6").css("display","none");
     });
@@ -24,8 +24,19 @@ $(document).ready(function(){
         $("#section-1").css("display","none");
         $("#section-2").css("display","none");
         $("#section-3").css("display","none");
-        $("#section-4").css("display","block");
+        $("#section-4").css("display","none");
         $("#section-5").css("display","block");
+        $("#section-6").css("display","block");
+
+    });
+
+    $("#refundShow").click(function(){
+        console.log('refund btn');
+        $("#section-1").css("display","none");
+        $("#section-2").css("display","none");
+        $("#section-3").css("display","block");
+        $("#section-4").css("display","none");
+        $("#section-5").css("display","none");
         $("#section-6").css("display","none");
 
     });
@@ -47,15 +58,7 @@ $(document).ready(function(){
         $("#section-5").css("display","none");
         $("#section-6").css("display","none");
     });
-    // show content  profit
-    $("#details").click(function(){
-        $("#section-1").css("display","none");
-        $("#section-2").css("display","none");
-        $("#section-3").css("display","none");
-        $("#section-4").css("display","none");
-        $("#section-5").css("display","none");
-        $("#section-6").css("display","block");
-    });
+
     // end
     // select year btn
     for (i = new Date().getFullYear(); i > 1900; i--)
@@ -106,15 +109,16 @@ $(document).ready(function(){
     });
     // outlay add
     // add btn
-    $('input#addButton').on('click', function() {
-        var id = ($('.field .form-row').length + 1).toString();
-        $('.field').append(' <div class="form-row "> <div class="col-lg-3 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="dateOutlay'+id+'" name="dateOutlay'+id+'" class="form-control dateOutlay"></div></div>' +
-            '<div class="col-lg-3 col-sm-4 form-group "><label> تحت بند  </label><input type="text" placeholder="اختار" name="account'+id+'" class="form-control expenses_field expenses_required "  id="account'+id+'" list="account_list"  >' +
+    $('input#addBillButton').on('click', function() {
+        var id = ($('.billField .form-row').length + 1).toString();
+        $('.billField').append(' <div class="form-row ">'+
+            '<div class="col-lg-4 col-sm-4 form-group "><label> تحت بند  </label><input type="text" placeholder="اختار" name="account-'+id+'" class="form-control expenses_field required_field "  id="account-'+id+'" list="account_list"  >' +
             '<datalist id="account_list"></datalist> '+
             '</div>' +
-            ' <div class="col-lg-3 col-sm-4 form-group "><label> المطلوب سداده </label><input type="text" name="deserved_amount'+id+'" class="form-control expenses_required"  id="deserved_amount'+id+'"   ></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع  </label><input type="text" name="amount'+id+'" class="form-control payOutlay expenses_required"  id="amount'+id+'"   ></div>' +
-            '<div class="col-lg-1 col-sm-4 form-group "><label>الباقي  </label><input type="text" name="noPay'+id+'" class="form-control "  id="noPay'+id+'"   ></div>' +
+            ' <div class="col-lg-2 col-sm-4 form-group "><label> المطلوب سداده </label><input type="text" name="deserved-amount-'+id+'" class="form-control required_field"  id="deserved-amount-'+id+'"   ></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع  </label><input type="text" name="paid-'+id+'" class="form-control payOutlay required_field"  id="paid-'+id+'"   ></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label>الباقي  </label><input type="text" name="rest-'+id+'" class="form-control required_field "  id="rest-'+id+'"   ></div>' +
+            '<div class="col-lg-1 col-sm-1 form-group "> <button id="delete_row" class="btn delete_row" style=" border: none; color: red; padding: 12px 16px;font-size: 16px; margin-top: 20px"><i class="fa fa-close"></i></button> </div>'+
             '</div></div>');
     });
     // sum
@@ -123,10 +127,11 @@ $(document).ready(function(){
         $(".payOutlay").each(function(){
             sumOutlay += +$(this).val();
         });
-        $("#sumOutlay").val(sumOutlay);
-        var id = $(this).attr('id')[6];
-        var rest_of_cost = $('#deserved_amount'+id).val() - $('#amount'+id).val();
-        $('#noPay'+id).val(rest_of_cost);
+        // $("#sumOutlay").val(sumOutlay);
+        var id = $(this).attr('id').split('-')[1];
+        console.log('id: '+id);
+        var rest_of_cost = $('#deserved-amount-'+id).val() - $('#paid-'+id).val();
+        $('#rest-'+id).val(rest_of_cost);
 
     });
 
@@ -134,14 +139,21 @@ $(document).ready(function(){
 
     // Payroll
     // add btn payroll
-    $('input#addButtonPayroll').on('click', function() {
+    $('input#addSalaryButton').on('click', function() {
         var id = ($('.fieldPayroll .form-row').length + 1).toString();
-        $('.fieldPayroll').append(' <div class="form-row " id="data'+ id +'" required_field> <div class="col-lg-2 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> اختار  </label><input placeholder="اختار" type="text"  class="form-control  required_field" list="list"  name="list'+id+'" id="instructor_employee'+id+'" /> <datalist id="list">' +
-            '</div>'+
-            '<div class="col-lg-2 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control pay_for_selector required_field" list="pay_for_list'+ id +'"  name="pay_for'+id+'" id="pay_for'+id+'" /> <datalist id="pay_for_list'+ id +'">'+
-            '</div></div>');
-    });
+        $('.fieldPayroll').append('<div class="form-row " id="data-'+id+'"><input hidden id="instructor-employee-id-'+id+'">' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label> مدرب/موظف </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="instructor-employee-option-'+id+'" name="instructor-employee-option-'+id+'" required><option data-account="4"  data-route="/search_for_instructors"   value="App\Instructor">المدربين</option><option data-account="5" data-route="/search_for_employees"   value="App\Employee">الموظفين</option></select></div>'+
+            '<div class="col-lg-2 col-sm-2 form-group "><label> الاسم/رقم قومي/موبايل  </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="search-option-'+id+'" name="search_option" required><option value="nameAr">الاسم</option> <option value="idNumber">رقم القومي</option><option value="phoneNumber">الموبايل</option></select></div>' +
+            '<div class="col-lg-2 col-sm-4 form-group "><label>ادخل </label><input placeholder="اختار" type="text" id="search-input-'+id+'" class="form-control student-selector required_field" name="instructor-employee" list="instructor-employee-list-'+id+'" autocomplete="off"   /><div class="list-gpfrm-list" id="instructor-employee-list-'+id+'"></div></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>النظام</label><input type="text"  name="payment_mdoel" class=" form-control"  id="payment-model-'+id+'" readonly/></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>المرتب</label><input type="number"  name="salary" class=" form-control"  id="salary-'+id+'" readonly/></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>المستحق</label><input type="number"  name="total" class="form-control"  id="total-'+id+'" readonly/></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data "><label>المدفوع</label><input type="number"  name="paid" class=" form-control"  id="paid-'+id+'" /></div>' +
+            '<div class="col-lg-1 col-sm-4 form-group meta_data"><label>الباقي</label><input type="number"  name="rest" class=" form-control"  id="rest-'+id+'" readonly/></div>' +
+            '<div class="col-lg-1 col-sm-1 form-group "> <button id="delete_row" class="btn delete_row" style=" border: none; color: red; padding: 12px 16px;font-size: 16px; margin-top: 20px"><i class="fa fa-close"></i></button> </div>'+
+
+            '</div>');
+    })
 
     // sum
     $(document).on("keyup", ".payPayroll", function() {
@@ -157,16 +169,25 @@ $(document).ready(function(){
 // add btn revenues
     $('#addButtonIncome').on('click', function() {
         var id = ($('.fieldIncome .form-row').length + 1).toString();
-        $('.fieldIncome').append(' <div class="form-row "> ' +
-            '<div class="col-lg-3 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control student-selector" list="studentList"  name="student'+id+'" id="student'+id+'" /> <datalist id="studentList"></datalist></div>' +
-            ' <div class="col-lg-3 col-sm-4 form-group "><label>الكورس/الدبلومه </label><input placeholder="اختار" type="text" id="diploma'+id+'" class="form-control" name="diploma'+id+'" list="diplomaList"/><datalist id="diplomaList"></datalist></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label>  التكلفه </label><input type="text" name="cost'+id+'" class="form-control "  id="cost'+id+'"  readonly ></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع </label><input type="text" name="payIncome'+id+'" class="form-control payIncome "  id="payIncome'+id+'"   ></div>' +
-            ' <div class="col-lg-2 col-sm-4 form-group "><label>  الباقي </label><input type="text" name="noPayIncome'+id+'" class="form-control "  id="noPayIncome'+id+'"   readonly></div>' +
-            '</div></div>');
+        $('.fieldIncome').append('<div class="form-row ">'+
+            '<input id="student-id-'+id+'" hidden>'+
+            '<div class="col-lg-2 col-sm-2 form-group "><label>امتحان/دبلومه</label><span class="required">*</span><select class="form-control " placeholder="اختار" id="test-diploma-option-'+id+'" name="test_diploma_option" required><option data-route="/get_student_tests" value="App\Test">امتحان</option><option data-route="/get_student_diplomas" value="App\Diploma">دبلومه</option></select></div>' +
+            '<div class="col-lg-2 col-sm-2 form-group "><label> الاسم/رقم قومي/موبايل  </label><span class="required">*</span><select class="form-control " placeholder="اختار" id="search-option-'+id+'" name="search_option" required><option value="nameAr">الاسم</option><option value="idNumber">رقم القومي</option><option value="phoneNumber">الموبايل</option></select></div>'+
+            '<div class="col-lg-2 col-sm-4 form-group "><label>ادخل </label><input placeholder="اختار" type="text" id="search-input-'+id+'" class="form-control student-selector required_field" name="student" list="studentList-'+id+'" autocomplete="off"   /><div class="list-gpfrm-list" id="studentList-'+id+'"></div></div>'+
+            '<div class="col-lg-2 col-sm-4 form-group "><label>الامتحان /الدبلومه</label><span class="required">*</span><select class="form-control" id="test-diploma-values-'+id+'"></select></div>'+
+            '<div class="col-lg-1 col-sm-1 form-group "><label> التكلفه </label><input type="text" name="cost" class="form-control  "  id="cost-'+id+'"  readonly ></div>'+
+            '<div class="col-lg-1 col-sm-1 form-group "><label> المدفوع  </label><input type="text" name="pay" class=" form-control  payIncome required_field"  id="paid-'+id+'"   ></div>' +
+            '<div class="col-lg-1 col-sm-1 form-group "><label>الباقي  </label><input type="text" name="noPayIncome" class="form-control "  id="rest-'+id+'"  readonly ></div>' +
+            '<div class="col-lg-1 col-sm-1 form-group "> <button id="delete_row" class="btn delete_row" style=" border: none; color: red; padding: 12px 16px;font-size: 16px; margin-top: 20px"><i class="fa fa-close"></i></button> </div>'+
+            '</div>');
 
 
     });
+
+    $(document).on('click', '#delete_row', function (e) {
+        e.preventDefault();
+        $(this).closest('.form-row').remove();
+    })
 
     $(document).on('input', "[id^=student]",  function () {
         // clear all previous data
@@ -219,31 +240,7 @@ $(document).ready(function(){
 
     });
 
-    /*end */
-    /* edit revenues */
-    // date picker
-    $(function () {
-        $("#datetimepickerRevenuesEdit").datetimepicker({
-            timepicker:false,
-            format:'Y-m-d'
-        });
-    });
-    /* edit outlay */
-    // date picker
-    $(function () {
-        $("#datetimepickerOutlayEdit").datetimepicker({
-            timepicker:false,
-            format:'Y-m-d'
-        });
-    });
-    /* edit payroll */
-    // date picker
-    $(function () {
-        $("#datetimepickerPayrollEdit").datetimepicker({
-            timepicker:false,
-            format:'Y-m-d'
-        });
-    });
+
 /* profit page */
     // sum
     $(document).on("keyup", "#tax", function () {

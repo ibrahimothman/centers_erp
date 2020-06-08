@@ -25,24 +25,12 @@ class TestResultController extends Controller
         $this->authorize('view', Test::class);
 
         $center = Center::findOrFail(Session('center_id'));
-        $tests = $center->tests;
-        if(Input::get('test')) {
-            $test_id = explode(',', Input::get('test'), 2)[0];
-            $group_id = explode(',', Input::get('test'), 2)[1];
+        $tests = Test::allTests($center);
 
-            $test = $center->tests()->findOrFail($test_id);
-            $students = $test->groups()->findOrFail($group_id)->enrollers;
-            return view('testResult.test-result',compact([
-                'tests' => $tests,
-                'test' => $test,
-                'students' => $students
-            ]));
-        }
 
         return view('testResult.test-result')->with([
             'tests' => $tests,
-            'test' => null,
-            'students' => null
+
         ]);
 
     }

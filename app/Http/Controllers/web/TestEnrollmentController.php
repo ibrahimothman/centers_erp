@@ -172,6 +172,10 @@ class TestEnrollmentController extends Controller
             return response()->json('enrollment has successfully updated', 200);
         }
 
+        else{
+            return response()->json('enrollment has successfully updated', 200);
+        }
+
 
     }
 

@@ -28,13 +28,12 @@
                         <div class="btn-group print-btn p-3 ">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
-                            <div class="dropdown-menu"> <a class="dropdown-item" href="#">السعر</a>
-                                <a class="dropdown-item" href="#">المده</a>
-                                <a class="dropdown-item" href="#">الخصم</a>
-                            </div>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="diplomas?order_by=cost&sort=desc">السعر</a>
+                                <a class="dropdown-item" href="diplomas?order_by=duration&sort=desc">المده</a> </div>
                         </div>
                         <div class="btn-group p-3 ">
-                            <input type="text" class="form-control " name="x" placeholder="ابحث">
+                            <input type="text" class="form-control " name="search" id="search" placeholder="ابحث">
                             <div class="btn-group">
                                 <button class="btn btn-success"><i class="fas fa-search"></i></button>
                             </div>
@@ -43,27 +42,19 @@
                             </div>
                             <!-- diploma view -->
                             @foreach($diplomas as $diploma)
-                                <a href="#">
-                                    <div class="card  cardDiploma mb-3 " style="max-width: 100%;height: 250px">
+                                    <div id="diplomaContainer-{{$diploma->id}}" class="card  cardDiploma" >
                                         <div class="row ">
                                             <div class="col-md-4">
-                                                <a href="{{ route('diplomas.show', $diploma->id) }}"> <img src="{{$diploma->image }}" class="card-img h-100"   alt="..."></a>
+                                                <a href="{{ route('diplomas.show', $diploma->id) }}"> <img src="{{$diploma->image }}" class="card-img" style="height:200px;"   alt="..."></a>
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
                                                     <div class="view-courses-title">
-<<<<<<< HEAD
-                                                        <h5 class="card-title text-primary">{{ $diploma->name }} <span class="text-warning " style="font-size: 15px">خصم 20%</span></h5>
-                                                        <form>
-=======
                                                         <h5 class="card-title text-primary">{{ $diploma->name }}</h5>
-                                                        <form method="post" action="{{ route('diplomas.destroy', ['diploma_id' => $diploma->id]) }}">
-                                                            @csrf
-                                                            @method('delete')
->>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
+                                                        <form >
                                                             <a href="{{ route('diplomas.edit', $diploma->id) }}" class=" btn btn-outline-primary  py-1 px-2"><i
                                                                         class="fas fa-edit m-0 "></i> </a>
-                                                            <button type="submit"  class="btn btn-outline-danger py-1 px-2">
+                                                            <button type="button" id="delete-diploma-{{$diploma->id}}"  class="btn btn-outline-danger py-1 px-2">
                                                                 <i class="fas fa-trash-alt m-0"></i></button>
                                                         </form>
                                                     </div>
@@ -77,7 +68,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+
                                 <br>
                             @endforeach
                             <!--  end diploma view -->
@@ -94,6 +85,39 @@
 @include('scroll_top')
 <!-- script-->
 @include('script')
+
+<script>
+
+    $('#search').on('keyup', function (e) {
+        var q = $(this).val().trim();
+        if(e.keyCode == 13){
+            var data = "search_by=name&value="+q;
+            window.location.href = "diplomas?"+data;
+        }
+    });
+
+    $('button[id^=delete-diploma-]').on('click', function (e) {
+        var id = $(this).attr('id').split('-')[2];
+        console.log('id: '+id);
+        callDelete(id);
+    });
+
+    function callDelete(id) {
+        $.ajax({
+            url: '/diplomas/'+id,
+            type: 'DELETE',
+            data: { '_token': $('meta[name=_token]').attr('content')},
+            success: function (data) {
+                $('#diplomaContainer-'+ id).remove();
+            }
+        })
+    }
+
+
+
+
+</script>
 </body>
 
 </html>
+

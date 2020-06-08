@@ -24,9 +24,15 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $employees = Employee::allEmployees($center);
+        $employees = $this->getEmployees();
         return view("employee/index", compact('employees'));
+    }
+
+    public function getEmployees()
+    {
+        $center = Center::findOrFail(Session('center_id'));
+        return Employee::allEmployees($center);
+
     }
 
     /**
@@ -84,14 +90,16 @@ class EmployeeController extends Controller
                 'jobs' => $data['job']
             ]);
         }
+        $next = $request->get('next') == 'save' ? "employees": 'employees/create';
 
-        return redirect("/employees");
+        return redirect($next)->with('success', 'The employee is added successfully');
     }
 
 
     public function show(Employee $employee)
     {
         //
+//        return json_encode($employee);
         return view('employee.show', compact('employee'));
 
     }
@@ -147,7 +155,7 @@ class EmployeeController extends Controller
     {
         //
         $employee->delete();
-        return back();
+        return response()->json('employee deleted successfully', 200);
     }
 
     private function validateRequest(Request $request)

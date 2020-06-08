@@ -28,7 +28,6 @@ class Utility {
         $today_date = strtotime($todayDate);
         $expire_date = strtotime($expireDate);
 
-
         if ($expire_date<$today_date){
             return true;
         }

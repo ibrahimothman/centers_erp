@@ -31,11 +31,18 @@
                                     @csrf
                                     @method('patch')
                                     <div class="form-row">
-                                        <div class="col-sm-8 form-group">
+                                        <div class="col-sm-4 form-group">
                                             <label for="validationCustom01">اسم الامتحان</label>
                                             <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom01" placeholder="اسم الامتحان " value="{{$test->name}}" name="name">
                                             {{ $errors->first('name') }}
+                                        </div>
+
+                                        <div class="col-sm-4 form-group">
+                                            <label for="validationCustom02">كود الامتحان</label>
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" id="validationCustom02" placeholder="كود الامتحان" value="{{$test->code}}" name="code">
+                                            {{ $errors->first('code') }}
                                         </div>
                                         <div class="col-sm-4 form-group">
                                             <div class="custom-control custom-checkbox">
@@ -45,21 +52,30 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col-sm-6  form-group">
+                                        <div class="col-sm-4  form-group">
                                             <label for="validationCustom02">
                                             مصاريف الامتحان/فردى
                                             </label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" id="validationCustom02" placeholder="" value="{{$test->cost_ind}}" name="cost_ind" >
-                                            <div>{{ $errors->first('cost_ind') }}</div>
+                                            <input type="text" class="form-control" id="validationCustom02" placeholder="" value="{{$test->cost}}" name="cost" >
+                                            <div>{{ $errors->first('cost') }}</div>
                                         </div>
-                                        <div class="col-sm-6  form-group">
+                                        <div class="col-sm-4  form-group">
                                             <label for="validationCustom03">
                                             مصاريف الامتحان/كورس
                                             </label>
                                             <span class="required">*</span>
                                             <input type="text" class="form-control" id="validationCustom03" placeholder="" value="{{$test->cost_course}}" name="cost_course" >
                                             {{ $errors->first('cost_course') }}
+                                        </div>
+
+                                        <div class="col-sm-4  form-group">
+                                            <label for="validationCustom04">
+                                                نتيجه الامتحان
+                                            </label>
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" id="validationCustom04" placeholder="" value="{{$test->result}}" name="result" >
+                                            {{ $errors->first('result') }}
                                         </div>
                                     </div>
                                     <div class=" form-row">

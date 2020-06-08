@@ -14,6 +14,11 @@
         <div class="container-fluid">
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-8">
+                    @if(session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title">
@@ -23,13 +28,13 @@
                         <div class="card-body">
                             <form id="formDiploma" enctype="multipart/form-data" action="{{ route('diplomas.store') }}" method="post">
                                 @csrf
+                                <input name="next" value="save" hidden>
                                 <div class="form-row image-upload">
                                     <div class="col-sm-8">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" accept="image/*" name="image"
                                                    id="customFile1" src="" onchange="readURL(this, 1);" required>
-                                            <input type="file" accept="video/*" class="custom-file-input" name="video"
-                                                   id="customFile4" src="" onchange="readURL(this, 4);">
+
 
                                         </div>
                                     </div>
@@ -42,11 +47,7 @@
                                         <p>صورة الدبلومة</p>
                                    <!--     <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>-->
                                     </div>
-                                    <div class="course-image-input">
-                                        <img id="imageUploaded4"
-                                             src="http://simpleicon.com/wp-content/uploads/video.svg" alt="your video"/>
-                                        <p>ڤيديو الدبلومة</p>
-                                    </div>
+                                    
                                 </div>
 
                                 <div class="form-row">
@@ -117,6 +118,8 @@
                                     <div class="col-sm-6 mx-auto" style="width: 200px;">
                                         <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة
                                            </button>
+                                        <button class="btn btn-primary action-buttons" type="submit" id="save_create"> حفظ و انشاء جديد
+                                        </button>
                                         <button class="btn  btn-danger action-buttons" type="reset"> إلغاء
                                                     </button>
                                     </div>
@@ -145,7 +148,11 @@
 <!-- client side validation page -->
 <script type='text/javascript' src="{{ asset('js/diploma_create_validation.js') }} "></script>
 
-
+<script>
+    $('#save_create').on('click', function () {
+        $('input[name=next]').val('create');
+    })
+</script>
 </body>
 
 </html>

@@ -7,6 +7,7 @@ use App\helper\ImageUploader;
 use App\helper\mathParser\Math;
 use App\helper\PaymentModelHelper;
 use App\QueryFilter\SearchBy;
+use App\QueryFilter\Sort;
 use App\Rules\UniquePerCenter;
 use http\Client\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ class Employee extends ImageUploader
 {
     //
     protected $guarded = [];
+    protected $appends = ['total'];
 
 
     public static function allEmployees($center)
@@ -24,10 +26,11 @@ class Employee extends ImageUploader
         return App(Pipeline::class)
             ->send($center->employees())
             ->through([
-                SearchBy::class
+                SearchBy::class,
+                Sort::class
             ])
             ->thenReturn()
-            ->paginate(request('limit')? request('limit') : 10);
+            ->get();
     }
 
     public function setImageAttribute($image){
@@ -87,6 +90,15 @@ class Employee extends ImageUploader
        return PaymentModelHelper::getPaymentModelAttribute($paymentModel,
            json_decode($this->payment_model_meta_data, true));
 
+    }
+
+    // get last rest for the employee
+    public function getTotalAttribute()
+    {
+        $center = Center::findOrFail(Session('center_id'));
+        $rest = $center->transactions()->where("meta_data->payFor_type", "App\Employee")
+            ->where("meta_data->payFor_id", "$this->id")->latest()->first()['rest'];
+        return $this['total'] = $rest + $this->payment_model['salary'];
     }
 
     protected static function boot()

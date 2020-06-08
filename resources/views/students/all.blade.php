@@ -70,6 +70,7 @@
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" id="search_by_name" href="#">الاسماء</a>
                                                 <a class="dropdown-item" id="search_by_id_number" href="#">الرقم القومى</a>
+                                                <a class="dropdown-item" id="search_by_phone_number" href="#">رقم الموبايل</a>
                                             </div>
                                         </div>
                                         <input type="hidden" name="search_param" value="all" id="search_param">
@@ -83,10 +84,10 @@
                             </div>
 
                             {{--                            @foreach($students as $students)--}}
-                            <div class="row cont-det" id="studentsContainer">
+                            <div class="row cont-det" id="container">
 
                                 @foreach($students as $student)
-                                    <div class="col-12 col-md-3" id="studentContainer-{{$student->id}}">
+                                    <div class="col-12 col-md-3" id="container-{{$student->id}}">
                                                     <div class="card card-sh  border-primary mb-3" >
 
                                                         <div class="card-header bg-transparent border-primary">{{$student->nameAr}}</div>
@@ -110,7 +111,7 @@
 
                                                         <form class="card-footer border-primary">
                                                             @can('delete', $student)
-                                                                <button type="button" class="btn btn-success btn-xs" id="delete-student-{{ $student->id }}"> <i class="fas fa-trash-alt"></i> </button>
+                                                                <button type="button" class="btn btn-success btn-xs" id="delete-students-{{ $student->id }}"> <i class="fas fa-trash-alt"></i> </button>
                                                             @endcan
                                                             @can('view', $student)
                                                                 <a href="/students/{{$student->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
@@ -262,7 +263,8 @@
 =======
 <script src="{{ asset('js/notify.min.js') }}"></script>
 <script src="{{ asset('js/notification.js') }}"></script>
-<script src="{{ asset('js/student.js') }}"></script>
+<script>var scope = 'students';</script>
+<script src="{{ asset('js/person.js') }}"></script>
 
 >>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
 </body>

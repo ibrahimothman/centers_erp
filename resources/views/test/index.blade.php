@@ -21,6 +21,7 @@
                             </div>
                         </div>
                         <div class="card-body">
+
                             <div class=" clearfix"> <span class="float-right">
                         <div class="btn-group print-btn p-3 ">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الترتيب حسب </button>
@@ -28,6 +29,15 @@
                         </div>
                         <div class="btn-group p-3 ">
 
+                            <div class="btn-group search-panel ">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span id="search_concept">البحث فى </span> <span class="caret"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" id="search_by_name" href="#">الاسماء</a>
+                                                <a class="dropdown-item" id="search_by_code" href="#">الكود</a>
+                                            </div>
+                                        </div>
                             <input type="hidden" name="search_param" value="all" id="search_param">
                             <input type="text" id="search" class="form-control " name="x" placeholder="ابحث">
                             <div class="btn-group">
@@ -69,17 +79,27 @@
                     sort: 'desc'
                 });
 
+                var search_by = name;
+                $('#search_by_name').on('click', function () {
+                    search_by = 'name';
+                    $('#search_concept').text($(this).text());
+                });
+
+                $('#search_by_code').on('click', function () {
+                    search_by = 'code';
+                    $('#search_concept').text($(this).text());
+                });
+
                 $('#search').on('keyup', function (e) {
                     if(e.keyCode == 13){
                         var query = $(this).val();
-                        if (query != ''){
                             getTests({
-                                search_by: 'name',
+                                search_by: search_by,
                                 value: query,
                                 order_by: 'created_at',
                                 sort: 'desc'
                             })
-                        }
+
                     }
                 })
             });
@@ -110,7 +130,7 @@
                             lines += "<span class='card-text text-justify'>"+test.description+"</span>";
                             lines += "<div class='dropdown-divider'></div>";
                             lines += "<div class='card-text clearfix '> <span class='w-50 p-3  text-primary' > تكلفه الامتحان :</span>";
-                            lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >فردي : </span> <span class=' text-secondary ' >"+test.cost_ind+" جنيها </span> </div>";
+                            lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >فردي : </span> <span class=' text-secondary ' >"+test.cost+" جنيها </span> </div>";
                             lines += "<div class='d-inline p-2 '> <span class='text-warning  ' >كورس : </span> <span class=' text-secondary ' >"+test.cost_course+" جنيها </span> </div>";
                             if(test.retake)
                                 lines += "<div class='d-inline p-5  '> <span class='btn-success rep ' >قابل للاعاده</span> </div>";

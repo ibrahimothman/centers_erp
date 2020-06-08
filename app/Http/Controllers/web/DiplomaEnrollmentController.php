@@ -9,9 +9,11 @@ use App\Diploma;
 use App\DiplomaGroup;
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
+use function foo\func;
 
 class DiplomaEnrollmentController extends Controller
 {
@@ -21,6 +23,8 @@ class DiplomaEnrollmentController extends Controller
         $center = Center::findOrFail(Session('center_id'));
         $all_diplomas = $center->diplomas()->with('groups.students')->get();
         $groups = DiplomaGroup::allEnrollments($center->diplomasIds());
+
+
 
 
         return view('diploma.diploma_student_show', compact('all_diplomas', 'groups'));
@@ -46,12 +50,20 @@ class DiplomaEnrollmentController extends Controller
         $student = Student::findOrFail($enrollment_data['student_id']);
 
         if($this->hasStudentEnrolledInDiplomaBefore($diploma_group, $student)){
-           dd('has already before');
+           return back()->with('error','This student has already enrolled in this diploma');
+        }
+
+        if ($diploma_group->getAvailableSeats() == 0){
+            return back()->with('error', 'This groups has no more available chairs');
         }
 
         $student->diplomas_groups()->syncWithoutDetaching($enrollment_data['diploma_group_id']);
 
-        return redirect("diploma-enrollments");
+        if($request->get('next') == 'save' ){
+            return redirect('diploma-enrollments');
+        }
+
+        return redirect()->back()->with('success', 'The student has successfully added to this diploma');
 
     }
 
@@ -94,12 +106,12 @@ class DiplomaEnrollmentController extends Controller
         }));
 //
         $student->diplomas_groups()->sync($student_groups);
-        return redirect('diploma-enrollments');
+        return redirect("diploma-enrollments?diploma_id=$new_diploma_group->diploma_id");
     }
 
     public function destroy(Request $request)
     {
-        DiplomaGroup::findOrFail($request->all()['diploma_group_id'])->students()
+        DiplomaGroup::findOrFail($request->all()['group_id'])->students()
             ->detach($request->all()['student_id']);
         return response()->json('successfully detaching', 200);
     }
@@ -116,4 +128,9 @@ class DiplomaEnrollmentController extends Controller
     {
         return $student->diplomas()->contains($diploma_group->diploma_id);
     }
+
+
+
+
+
 }

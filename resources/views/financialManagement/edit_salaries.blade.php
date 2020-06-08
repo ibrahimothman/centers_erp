@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="  col-sm-6  form-group ">
                                                 <label>التاريخ </label>
-                                                <input id="datetimepickerPayrollEdit" name="date" class="form-control datetimepickerPayrollEdit"  placeholder="التاريخ "  type="text" value="{{ $transaction->date }}" >
+                                                <input id="datetimepickerPayrollEdit" readonly name="date" class="form-control datetimepickerPayrollEdit"  placeholder="التاريخ "  type="text" value="{{ $transaction->date }}" >
                                                 <div>{{$errors->first('date')}}</div>
                                             </div>
                                         </div>

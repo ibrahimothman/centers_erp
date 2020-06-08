@@ -4,6 +4,7 @@ namespace App;
 
 use App\helper\ImageUploader;
 use App\QueryFilter\Id;
+use App\QueryFilter\SearchBy;
 use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
@@ -20,6 +21,7 @@ class Diploma extends ImageUploader
         return app(Pipeline::class)
             ->send($center->diplomas()->with('courses.instructors'))
             ->through([
+                SearchBy::class,
                 Id::class,
                 Sort::class
             ])

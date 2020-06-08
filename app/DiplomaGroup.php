@@ -49,6 +49,11 @@ class DiplomaGroup extends Model
 
     }
 
+    public function getAvailableSeats()
+    {
+        return $this->available_chairs - $this->students->count();
+    }
+
 
 
     public static function rules(Request $request)

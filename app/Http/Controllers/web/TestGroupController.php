@@ -75,13 +75,12 @@ class TestGroupController extends Controller
         $data = $this->validateRequest($request);
 
         if($data->fails()){
-            dd($data->errors()->messages());
             return back()->with('error', 'Please fill in all fields');
         }
 
         $data = $data->validate();
         // add times
-        $times = [];
+
         foreach ($data['groups'] as $test_group){
             $group = TestGroup::create([
                 'test_id' => $data['test_id'],
@@ -96,6 +95,7 @@ class TestGroupController extends Controller
             ]);
 
         }
+
         return redirect('/test-groups/create')->with('success', 'test group is successfully created');
 
 
@@ -161,8 +161,7 @@ class TestGroupController extends Controller
         $this->authorize('delete',Test::class);
 
         $testGroup->delete();
-        return redirect('/test-groups')
-            ->with('message','test group deleted successfully');
+        return response()->json(['message' => 'successfully deleted'], 200);
 
     }
 

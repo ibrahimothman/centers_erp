@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Bootstrap CSS & js -->
     @include('library')
     <title>register a student</title>
 </head>
+
 <body id="page-top">
 <!-- Begin Page Content -->
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
     @include('operationBar')
+
         <!-- Main Content -->
         <div id="content">
 <!-- Begin Page Content -->
             <div class="container-fluid">
+
                 <div class="row">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8">
@@ -31,13 +35,14 @@
                                 <form action="{{ route('students.store') }}" method="post" enctype="multipart/form-data" id="studentCreate">
                                     @csrf
                                     <!-- photo -->
+                                        <input name="next" value="students" hidden>
                                         <div class="form-row image-upload">
                                             <div class="col-sm-8">
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input" accept="image/*" name="idImage"
-                                                           id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                           id="customFile1" src="" onchange="readURL(this, 1);" >
                                                     <input type="file" class="custom-file-input" accept="image/*" name="image"
-                                                           id="customFile2" src="" onchange="readURL(this, 2);" required>
+                                                           id="customFile2" src="" onchange="readURL(this, 2);" >
                                                 </div>
                                             </div>
                                         </div>
@@ -46,11 +51,13 @@
                                                 <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                                      alt="your image"/>
                                                 <p>صورة البطاقه</p>
+                                          <!--      <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
                                             </div>
                                             <div class="course-image-input">
                                                 <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                                      alt="your image"/>
                                                 <p>الصوره الشخصيه</p>
+                                          <!--      <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
 
                                             </div>
                                         </div>
@@ -61,7 +68,7 @@
 
                                             <label for="validationCustom01">الاسم باللغه العربيه</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('nameAr') }}" >
+                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('nameAr') ?? 'asdas'}}" >
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
                                     </div>
@@ -69,7 +76,7 @@
                                         <div class="col-sm-12 form-group">
                                             <label for="validationCustom03">الاسم باللغه الانجليزيه</label>
                                             <span class="required">*</span>
-                                            <input type="text" name= "nameEn" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('nameEn') }}" >
+                                            <input type="text" name= "nameEn" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('nameEn')?? 'asdw' }}" >
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
                                     </div>
@@ -77,7 +84,7 @@
                                         <div class="col-sm-12 form-group">
                                         <label for="validationCustom05">البريد الالكترونى </label>
                                             <span class="required">*</span>
-                                        <input type="text" name="email" id="validationCustom05" placeholder="ادخل البريد الالكترونى " class="form-control" value="{{ old('email') }}">
+                                        <input type="text" name="email" id="validationCustom05" placeholder="ادخل البريد الالكترونى " class="form-control" value="{{ old('email') ?? 'asd@asd.asd'}}">
                                         <div>{{ $errors->first('email') }}</div>
                                     </div>
 
@@ -86,7 +93,7 @@
                                         <div class="col-sm-6 ">
                                             <label>رقم التليفون المحمول</label>
                                             <span class="required">*</span>
-                                            <input type="text" name="phoneNumber"  data-inputmask="'mask' : '(999) 99999999'"  placeholder="ادخل رقم التليفون المحمول"  class="form-control" value="{{ old('phoneNumber') }}">
+                                            <input type="text" name="phoneNumber"  data-inputmask="'mask' : '(999) 99999999'"  placeholder="ادخل رقم التليفون المحمول"  class="form-control" value="{{ old('phoneNumber')??'01265236521' }}">
                                             <div>{{ $errors->first('phoneNumber') }}</div>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -100,7 +107,7 @@
                                     <div class=" form-row">
                                         <div class="col-sm-6">
                                             <label for="validationCustom06">الرقم القومى </label>
-                                            <input type="text" name="idNumber" id="validationCustom06" value="{{ old('idNumber') }}"  placeholder="ادخل الرقم القومى " class="form-control" >
+                                            <input type="text" name="idNumber" id="validationCustom06" value="{{ old('idNumber') ?? '23652145214521'}}"  placeholder="ادخل الرقم القومى " class="form-control" >
                                             <div>{{ $errors->first('idNumber') }}</div>
 
                                         </div>
@@ -112,20 +119,21 @@
 
                                     </div>
                                     <br>
+
                                     <div class="form-row">
                                         <div class="col-sm-12  ">
 
                                         </div>
                                         <div class="col-sm-6 form-group ">
                                             <label for="">البلد </label>
-                                            <input name="state" type="text" placeholder="البلد" value="{{ old('state') }}" class="form-control">
+                                            <input name="state" type="text" placeholder="البلد" value="{{ old('state')?? 'asdas' }}" class="form-control">
                                             <div>{{ $errors->first('state') }}</div>
 
                                         </div>
 
                                         <div class="col-sm-6 form-group ">
                                             <label for="">المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="{{ old('city') }}" class="form-control">
+                                            <input name="city" type="text" placeholder="المدينه" value="{{ old('city')?? 'asdasd' }}" class="form-control">
                                             <div>{{ $errors->first('city') }}</div>
                                         </div>
                                     </div>
@@ -134,7 +142,7 @@
                                         <label>العنوان</label>
                                         <span class="required">*</span>
 
-                                        <textarea name="address" placeholder="ادخل العنوان " rows="3" class="form-control">{{ old('address') }}</textarea>
+                                        <textarea name="address" placeholder="ادخل العنوان " rows="3" class="form-control">{{ old('address')??'asda' }}</textarea>
                                         <div>{{ $errors->first('address') }}</div>
                                     </div>
 
@@ -163,12 +171,21 @@
                                     <div class=" form-row">
                                         <div class="col-sm-12 form-group ">
                                             <label>كارت المهاره</label>
-                                            <input type="text" value="{{ old('skillCardNumber') }}" placeholder="ادخل الرقم" name="skillCardNumber" class="form-control" >
+                                            <input type="text" value="{{ old('skillCardNumber')?? '215546' }}" placeholder="ادخل الرقم" name="skillCardNumber" class="form-control">
                                             <div>{{ $errors->first('skillCardNumber') }}</div>
                                         </div>
 
                                     </div>
-                              <div class="form-row save">
+                                   <!-- photo -->
+
+
+
+
+
+                                    <!-- end photo -->
+
+
+                                    <div class="form-row save">
                                         <div class="col-sm-3  form-group">
                                         </div>
                                         <div class="col-sm-6  form-group">
@@ -188,7 +205,7 @@
                 </div>
             </div>
             <!-- End of Main Content -->
-        </div>
+
             <!-- Footer -->
         @include('footer')
             <!-- End of Footer -->
@@ -196,8 +213,30 @@
         <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
-    <!-- scroll top -->
-@include('scroll_top')
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">هل تريد الخروج بالفعل</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">اضغط على الخروج اذا كنت ترغب قى  الخروج</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
+                    <a class="btn btn-primary" href="login.html">الخروج</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- script-->
 @include('script')
 <!-- client side validation plugin -->
@@ -244,6 +283,13 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
+
+
+                // add hidden input to determine next redirect route after successful form submission
+
+                $('#save_new').on('click', function (e) {
+                    $('input[name=next]').val('create') ;
+                })
 
 
         </script>

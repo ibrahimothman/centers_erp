@@ -18,7 +18,7 @@ class Test extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'cost_ind' => $this->cost_ind,
+            'cost' => $this->cost,
             'cost_course' => $this->cost_course,
             'result' => $this->result,
             'retake' => $this->retake,

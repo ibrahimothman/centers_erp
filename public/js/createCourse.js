@@ -1,5 +1,9 @@
 let chapterNum = 1;
-let courseDayNom = 1;
+let courseDayNom = 0;
+$('input[id^=diploma-day-]').each(function () {
+    courseDayNom++;
+});
+console.log('count: '+courseDayNom);
 function addChapterInput(num) {
     return `
     <hr/>

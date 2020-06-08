@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     @include('library')
-    <!-- Bootstrap CSS & js -->
-        <link rel="stylesheet" href="/css/employee.css">
     <title>add a new admin</title>
 </head>
 <body id="page-top">
@@ -20,6 +19,11 @@
                     <div class="row">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-8">
+                            @if(session()->has('success'))
+                                <div class="alert alert-success">
+                                    {{ session()->get('success') }}
+                                </div>
+                            @endif
                             <div class="card mb-4">
                                 <div class="card-header text-primary ">
                                     تسجيل بيانات الموظفين
@@ -27,9 +31,7 @@
                                 <div class="card-body">
                                     <form action="{{ route('employees.store') }}" method="post" enctype="multipart/form-data" id="employeeCreate">
                                         @csrf
-<<<<<<< HEAD
-                                        <div class="form-row form-group">
-=======
+                                        <input name="next" value="save" hidden>
                                         <div class="form-row image-upload">
                                             <div class="col-sm-8">
                                                 <div class="custom-file">
@@ -57,21 +59,16 @@
                                         </div>
 
                                         <div class="form-row">
->>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
                                             <label>الاسم باللغه العربيه </label>
                                             <span class="required">*</span>
                                             <input type="text" class="form-control"  name="nameAr" placeholder="الاسم " value="{{ old('nameAr') ?? 'asd' }}">
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
 
-                                        <div class="form-row form-group">
+                                        <div class="form-row">
                                             <label>الاسم باللغه الانجليزيه </label>
-<<<<<<< HEAD
-                                            <input type="text" class="form-control" name="nameEn" placeholder="الاسم " value="{{ old('nameEn') }}">
-=======
                                             <span class="required">*</span>
                                             <input type="text" class="form-control" name="nameEn" placeholder="الاسم " value="{{ old('nameEn') ?? 'asd' }}">
->>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
 
@@ -82,7 +79,7 @@
                                         </div>
 
 
-                                        <div class=" form-row form-group">
+                                        <div class=" form-row ">
                                             <div class="col-6 ">
                                                 <label>رقم التليفون </label>
                                                 <span class="required">*</span>
@@ -107,7 +104,7 @@
                                                 <select name="job" class="form-control">
                                                     <option value="0">اختار وظيفة</option>
                                                     @foreach($jobs as $job)
-                                                        <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                                        <option  {{$job == old('job') ? 'selected':''}} value="{{ $job->id }}">{{ $job->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div>{{ $errors->first('job') }}</div>
@@ -129,7 +126,9 @@
                                                 <div>{{ $errors->first('passportNum') }}</div>
                                             </div>
                                         </div>
-                                   <div class="form-row form-group">
+                                        <br>
+
+                                        <div class="form-row">
 
                                             <div class="col  ">
                                                 <label>البلد </label>
@@ -147,7 +146,7 @@
                                             </div>
                                         </div>
 
-                                        <div class=" form-row form-group">
+                                        <div class=" form-row">
                                             <label>العنوان</label>
                                             <span class="required">*</span>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="3"
@@ -161,31 +160,13 @@
                                                 <label>نظام المحاسبه</label>
                                                 <span class="required">*</span>
                                                 <select class="form-control" id="payment_models" name="payment_model" required>
-                                                    <option value="">اختار</option>
+                                                    <option value="0">اختار</option>
                                                     @foreach($payment_models as $payment_model)
                                                         <option data-extra="{{ $payment_model->meta_data }}" value="{{ $payment_model->id }}">{{ $payment_model->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-<<<<<<< HEAD
-                                            <div class="form-row form-group">
-                                                <div class="col-sm-6">
-                                                <label>
-                                                    <input type="radio" class="option-input radio"
-                                                           name="example" checked/>
-                                                   يعمل
-                                                </label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label>
-                                                    <input type="radio" class="option-input radio"
-                                                           name="example"/>
-                                                 لا يعمل
-                                                </label>
-                                            </div>
-                                            </div>
-=======
 
                                         <!-- user invitation checkbox-->
                                         <div class="form-row">
@@ -197,11 +178,11 @@
                                             </div>
                                         </div>
 
->>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599
                                         <br>
                                         <div class="form-row save">
                                             <div class="col-sm-6 mx-auto text-center">
                                                 <button class="btn btn-primary" type="submit" id="submit">حفظ</button>
+                                                <button class="btn btn-primary" type="submit" id="submit_new">حفظ و انشاء جديد</button>
                                                 <button class="btn  btn-danger" type="reset"> الغاء</button>
                                             </div>
                                         </div>
@@ -220,6 +201,24 @@
             @include('footer')
     </div>
 </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">هل تريد الخروج بالفعل</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">اضغط على الخروج اذا كنت ترغب قى  الخروج</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
+                    <a class="btn btn-primary" href="login.html">الخروج</a>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- scroll top -->
 @include('scroll_top')
 <!-- script-->
@@ -249,9 +248,6 @@
 
     });
 
-<<<<<<< HEAD
-</script>
-=======
 
     // upload images
 
@@ -283,6 +279,10 @@
     }
 
 
+    $('#submit_new').on('click', function (e) {
+        $('input[name=next]').val('create') ;
+    })
+
+
 
 </script>
->>>>>>> c41eee09e4a3e28fec761df558ef71049c27c599

@@ -54,6 +54,12 @@ class SideBarLinks
 
         ];
     }
+    public static function categoryLinks()
+    {
+        return [
+            url('/').'/'.'categories' => 'التصنيفات',
+        ];
+    }
 
     public static function instructorLinks()
     {
@@ -103,7 +109,10 @@ class SideBarLinks
         return [
             url('/').'/'.'finance' => 'عرض ملخص الماليات',
             url('/').'/'.'expenses/create' => 'المصاريف',
+            url('/').'/'.'salaries/create' => 'المرتبات',
             url('/').'/'.'revenues/create' => 'الايرادات',
+            url('/').'/'.'refund/create' => 'استرجاع',
+
         ];
     }
 

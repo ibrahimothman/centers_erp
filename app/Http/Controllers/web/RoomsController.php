@@ -40,6 +40,7 @@ class RoomsController extends Controller
 
     public function store(Request $request)
     {
+
         $center = Center::findOrFail(Session('center_id'));
         $room_data = $this->validateRoomRequest();
         $room_data['details'] = $this->setRoomDetails(Arr::except($room_data,['name','location']));
@@ -47,7 +48,9 @@ class RoomsController extends Controller
             $room_data['extras'] = $this->setRoomExtras($room_data['extras']);
         }
         $center->rooms()->create(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
-        return redirect("rooms");
+
+        $next = $request->get('next') == 'save'? 'rooms' : 'rooms/create';
+        return redirect($next)->with('success', 'Room is added successfully');
 
 
     }

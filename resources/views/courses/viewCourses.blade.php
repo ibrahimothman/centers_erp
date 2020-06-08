@@ -27,7 +27,7 @@
                                         <section class="courses-wrap">
                                             @php($j = 0)
                                             @foreach($courses as $course)
-                                        <article class="course">
+                                        <article id="courseContainer-{{$course->id}}" class="course">
                                                 <div id="jj{{$j}}" class="carousel slide" data-ride="carousel" data-interval="false">
                                                     <div class="carousel-inner">
                                                         @php($i = 0)
@@ -61,11 +61,10 @@
                                                    <div class="view-course-action-buttons">
                                                        <td class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}">تعديل</a></td>
 {{--                                                       <button  type="button" class="btn btn-primary btn-sm"> <a href="courses/{{ $course->id }}/edit"></a> تعديل</button>--}}
-                                                       <form action="{{ route('courses.destroy',[$course->id]) }}" method="post">
-                                                           @csrf
-                                                           @method('delete')
+                                                       <form >
+
                                                            <input type="hidden" name="_method" value="delete" />
-                                                       <button  type="submit" class="btn btn-danger btn-sm">حذف</button>                                                       </form>
+                                                       <button  type="button" id="delete-course-{{$course->id}}" class="btn btn-danger btn-sm">حذف</button>                                                       </form>
 
                                                    </div>
                                             </article>
@@ -92,6 +91,26 @@
             @include('scroll_top')
             <!-- script-->
             @include('script')
+
+            <script>
+                $('button[id^=delete-course-]').on('click', function (e) {
+                    var id = $(this).attr('id').split('-')[2];
+                    deleteCourse(id);
+
+                })
+
+                function deleteCourse(id) {
+                    $.ajax({
+                        url: '/courses/'+id,
+                        type: 'DELETE',
+                        data: {_token: "{{csrf_token()}}"},
+                        success: function (data) {
+                            // console.log(data.message);
+                            $('article[id=courseContainer-'+ id +']').remove();
+                        }
+                    })
+                }
+            </script>
     </body>
 
 </html>

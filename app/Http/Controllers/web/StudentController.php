@@ -93,7 +93,7 @@ class StudentController extends Controller
         ]);
 
         $center->students()->syncWithoutDetaching($student);
-        $return = $request->get('return') == 'students'? "/students/$student->id": "/students/create";
+        $return = $request->get('next') == 'students'? "/students/$student->id": "/students/create";
         return redirect($return)->with('success','Student added successfully');
 
     }
@@ -164,5 +164,14 @@ class StudentController extends Controller
 
     }
 
+    public function getTests(Request $request)
+    {
+        return Student::findOrFail($request->get('student_id'))->tests();
+    }
+
+    public function getDiplomas(Request $request)
+    {
+        return Student::findOrFail($request->get('student_id'))->diplomas();
+    }
 
 }

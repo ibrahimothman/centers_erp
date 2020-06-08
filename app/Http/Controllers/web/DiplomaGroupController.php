@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
@@ -28,7 +29,7 @@ class DiplomaGroupController extends Controller
         $diplomas = Diploma::allDiplomas($center);
 
         $allDiplomas = $center->diplomas;
-        return view('diploma.allgroups', compact('allDiplomas','diplomas'));
+        return view('diploma.allgroups', compact('allDiplomas', 'diplomas'));
     }
 
     public function create()
@@ -37,6 +38,7 @@ class DiplomaGroupController extends Controller
         $center = Center::findOrFail(Session('center_id'));
 //        $diplomas = Diploma::with('courses.instructors')->where('center_id', $center->id)->get();
         $diplomas = Diploma::allDiplomas($center);
+
 //        return json_encode($diplomas);
         return view('diploma.diploma_group_create', compact('diplomas'));
     }
@@ -47,17 +49,20 @@ class DiplomaGroupController extends Controller
 
         $center = Center::findOrFail(Session('center_id'));
         $data = $data->validate();
-        $group_data = Arr::except($data,['diploma','diploma-days','diploma-begins','diploma-ends', 'diploma-rooms']);
+        $group_data = Arr::except($data, ['diploma', 'diploma-days', 'diploma-begins', 'diploma-ends', 'diploma-rooms']);
 
-        $group = $center->diplomas()->findOrFail($data['diploma'])->groups()->create($group_data);
+        DB::transaction(function () use ($center, $data, $group_data) {
 
-        // create times
-        $times = Time::addTimes($data['diploma-days'],$data['diploma-begins'],$data['diploma-ends']);
+            $group = $center->diplomas()->findOrFail($data['diploma'])->groups()->create($group_data);
+
+            // create times
+            $times = Time::addTimes($data['diploma-days'], $data['diploma-begins'], $data['diploma-ends']);
 
 
-        $group->times()->sync($this->createTimesRoomsForGroup($times, $data['diploma-rooms']));
+            $group->times()->sync($this->createTimesRoomsForGroup($times, $data['diploma-rooms']));
+        });
 
-        return redirect("diploma-groups");
+        return redirect("diploma-groups/create")->with('success', 'Group is added successfully');
     }
 
     public function edit(DiplomaGroup $diplomaGroup)
@@ -73,14 +78,17 @@ class DiplomaGroupController extends Controller
         $data = $this->validateCourseGroupData($request);
 
         $data = $data->validate();
-        $group_data = Arr::except($data,['diploma','diploma-days','diploma-begins','diploma-ends', 'diploma-rooms']);
+        $group_data = Arr::except($data, ['diploma', 'diploma-days', 'diploma-begins', 'diploma-ends', 'diploma-rooms']);
 
-        // create times
-        $times = Time::addTimes($data['diploma-days'],$data['diploma-begins'],$data['diploma-ends']);
+        DB::transaction(function () use ($diplomaGroup, $data, $group_data) {
 
-        $diplomaGroup->times()->sync($this->createTimesRoomsForGroup($times, $data['diploma-rooms']));
+            // create times
+            $times = Time::addTimes($data['diploma-days'], $data['diploma-begins'], $data['diploma-ends']);
 
-        $group = $diplomaGroup->update($group_data);
+            $diplomaGroup->times()->sync($this->createTimesRoomsForGroup($times, $data['diploma-rooms']));
+
+            $group = $diplomaGroup->update($group_data);
+        });
         return redirect('diploma-groups');
     }
 
@@ -89,7 +97,7 @@ class DiplomaGroupController extends Controller
         $group = DiplomaGroup::findOrFail($group);
         $group->times()->detach();
         $group->delete();
-        return redirect('diploma-groups');
+        return response()->json(['message' => 'deleted'], 200);
     }
 
     private function validateCourseGroupData(Request $request)
@@ -105,7 +113,7 @@ class DiplomaGroupController extends Controller
     private function createTimesRoomsForGroup(array $times, array $rooms)
     {
         $times_rooms = [];
-        foreach ($times as $i => $time){
+        foreach ($times as $i => $time) {
             $temp['time_id'] = $time->id;
             $temp['room_id'] = $rooms[$i];
 
@@ -113,5 +121,8 @@ class DiplomaGroupController extends Controller
         }
 
         return $times_rooms;
+
     }
+
+
 }

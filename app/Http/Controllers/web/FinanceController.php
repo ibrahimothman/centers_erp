@@ -15,6 +15,7 @@ class FinanceController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $results = TransactionRepository::getInstance()->fetchTransactions($center);
+//        return json_encode($results);
 
 //        return json_encode($results);
 

@@ -22,9 +22,14 @@ class DiplomaController extends Controller
 
     public function index()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $diplomas = $center->diplomas;
+        $diplomas = $this->allDiplomas();
         return view('diploma/diploma_view_all', compact('diplomas'));
+    }
+
+    public function allDiplomas()
+    {
+        $center = Center::findOrFail(Session('center_id'));
+        return Diploma::allDiplomas($center);
     }
 
 
@@ -50,21 +55,21 @@ class DiplomaController extends Controller
 
         // attach courses to diploma
         $diploma->courses()->syncWithoutDetaching($diploma_courses);
-
-        return redirect('diplomas');
+        $next = $request->get('next') == 'save' ? "diplomas/$diploma->id" : 'diplomas/create';
+        return redirect($next)->with('success', 'diploma added successfully');
 
     }
 
     public function show(Diploma $diploma)
     {
-        $diploma = Diploma::with('courses')->with('groups.times')->with('groups.instructor')->findOrFail($diploma)->first();
+        $diploma = Diploma::with('courses')->with('groups.times')->with('groups.instructor')->findOrFail($diploma->id);
         return view('diploma/diploma_details', compact('diploma'));
     }
 
     public function edit(Diploma $diploma)
     {
 
-        $diploma = Diploma::with('courses')->findOrFail($diploma)->first();
+        $diploma = Diploma::with('courses')->findOrFail($diploma->id);
         $courses = $diploma->center->courses;
         return view('diploma/diploma_update', compact('diploma', 'courses'));
     }
@@ -90,7 +95,7 @@ class DiplomaController extends Controller
     public function destroy(Diploma $diploma)
     {
         $diploma->delete();
-        return redirect('diplomas');
+        return response()->json(['message' => 'deleted'], 200);
     }
 
     private function validateDiplomaData($request, $diploma_id)

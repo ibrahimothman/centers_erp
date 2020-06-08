@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 @include('library')
-    <!-- style  date picker-->
+<!-- style  date picker-->
     <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
     <!-- style page -->
     <link href="/css/financialManagement_style.css" rel="stylesheet"/>
@@ -21,7 +21,7 @@
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
-                                <h3>الايرادات </h3>
+                                <h3>الاسترجاع </h3>
                             </div>
                         </header>
                         <div class="card-body">
@@ -36,7 +36,7 @@
                                                 <!-- date -->
                                                 <div class=" col-sm-3 title pb-3">
                                                     <h5 class="text-primary  pt-1 pr-3 pl-0">التاريخ: </h5>
-                                                        <input id="date" readonly value="{{date('Y-m-d')}}" name="date" class="form-control  required_field"  placeholder="التاريخ "    type="text" >
+                                                    <input id="date" readonly value="{{date('Y-m-d')}}" name="date" class="form-control  required_field"  placeholder="التاريخ "    type="text" >
                                                 </div>
                                                 <div class="  col-sm-3 title pb-3">
                                                     <h5 class="text-primary  pt-1 pr-3 pl-0">الوقت: </h5>
@@ -115,7 +115,7 @@
                                                 </div>
                                             </div>
                                             <!-- end -->
-                                           <!-- sum -->
+                                            <!-- sum -->
 
                                             <!-- save -->
                                             <div class="form-row save">
@@ -166,44 +166,44 @@
     });
 
 
-        // submit form
-        $("#submit").on('click', function (e) {
-            e.preventDefault();
-            if(checkIfAllInputsFilled()) {
-                console.log(createTransactionMetaDataJSON());
-                // $(this).prop('disabled', true);
-                makeAjaxCall('/transactions', 'POST', {
-                    transactions: createTransactionMetaDataJSON(),
-                    _token: "{{csrf_token()}}"
-                }, function (data) {
-                    $.notify(data.message, {
+    // submit form
+    $("#submit").on('click', function (e) {
+        e.preventDefault();
+        if(checkIfAllInputsFilled()) {
+            console.log(createTransactionMetaDataJSON());
+            // $(this).prop('disabled', true);
+            makeAjaxCall('/transactions', 'POST', {
+                transactions: createTransactionMetaDataJSON(),
+                _token: "{{csrf_token()}}"
+            }, function (data) {
+                $.notify(data.message, {
+                    position: "bottom left",
+                    style: 'successful-process',
+                    className: 'done',
+                });
+                $('button[id=delete_row]').each(function (i, v) {
+                    $(this).closest('.form-row').remove();
+                });
+                $('#submit').prop('disabled',false);
+                $('#submit').parents('form').trigger('reset');
+            }, function (xhr, status, error) {
+                if (xhr.status == 400) {
+                    $.notify("something went wrong. Please try again", {
                         position: "bottom left",
                         style: 'successful-process',
-                        className: 'done',
-                    });
-                    $('button[id=delete_row]').each(function (i, v) {
-                       $(this).closest('.form-row').remove();
-                    });
-                    $('#submit').prop('disabled',false);
-                    $('#submit').parents('form').trigger('reset');
-                }, function (xhr, status, error) {
-                    if (xhr.status == 400) {
-                        $.notify("something went wrong. Please try again", {
-                            position: "bottom left",
-                            style: 'successful-process',
-                            className: 'notDone',
-                        });
-
-                    }
-                    $('#submit').prop('disabled',false);
-
-
+                        className: 'notDone',
                     });
 
-            }else{
-                alert('fill in all fields');
-            }
-        });
+                }
+                $('#submit').prop('disabled',false);
+
+
+            });
+
+        }else{
+            alert('fill in all fields');
+        }
+    });
 
 
 
@@ -215,12 +215,12 @@
             let meta_data = {};
             var test_diploma_option = $('#test-diploma-option-'+i).children("option:selected");
             var test_diploma_value = $('#test-diploma-values-'+i).children("option:selected");
-            meta_data.payer_id = $('#student-id-'+i).val();
-            meta_data.payer_type = "App\\Student";
-            meta_data.payFor_id = test_diploma_value.val();
-            meta_data.payFor_type =test_diploma_option.val();
+            meta_data.payFor_id = $('#student-id-'+i).val();
+            meta_data.payFor_type = "App\\Student";
+            meta_data.payer_id = test_diploma_value.val();
+            meta_data.payer_type =test_diploma_option.val();
 
-            transaction.account_id = 3;
+            transaction.account_id = 9;
             transaction.rest = $("#rest-"+i).val();
             transaction.meta_data = meta_data;
             transaction.amount =  $("#paid-"+i).val();
@@ -235,13 +235,13 @@
         return transactions;
 
     }
-        function checkIfAllInputsFilled() {
-            var empty = $(".required_field").filter(function () {
-                return $(this).val().length === 0;
-            });
+    function checkIfAllInputsFilled() {
+        var empty = $(".required_field").filter(function () {
+            return $(this).val().length === 0;
+        });
 
-            return empty.length === 0 ;
-        }
+        return empty.length === 0 ;
+    }
     //
 
 </script>

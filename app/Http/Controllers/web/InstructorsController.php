@@ -9,10 +9,13 @@ use App\Instructor;
 use App\PaymentModel;
 use App\repository\InstructorRepository;
 use App\Room;
+use App\Rules\UniquePerCenter;
 use App\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
 class InstructorsController extends Controller
@@ -25,12 +28,21 @@ class InstructorsController extends Controller
     public function index()
     {
 
-        $center = Center::findOrFail(Session('center_id'));
-        $instructors = Instructor::allInstructors($center);
         return view("instructor/view_all_instructors")
-            ->with('instructors',$instructors);
+            ->with('instructors',$this->searchInstructors());
 
     }
+
+    public function searchInstructors()
+    {
+        $center = Center::findOrFail(Session('center_id'));
+        return Instructor::allInstructors($center);
+    }
+
+//    public function getInstructorPayment()
+//    {
+//
+//    }
 
     /**
      * Show the form for creating a new resource.
@@ -53,20 +65,30 @@ class InstructorsController extends Controller
     {
 
 //        dd($request->all());
-        $data = $this->validateRequest('');
+        $data = $this->validateRequest($request);
+//        if($data->fails()){
+//            dd($data->errors()->messages());
+//        }
+
+        $data = $data->validate();
 
         // fetch center from session
         $center = Center::findOrFail(Session('center_id'));
-//        PaymentModel::findOrFail($data['payment_model'])->instructors()->create(Arr::except($data,['payment_model', 'state','city','address']));
-        $instructor=Instructor::create(Arr::except($data,['state','city','address']));
+
+        $instructor = Instructor::create(Arr::except($data,['state','city','address']));
+        // attach student with center
         $instructor->address()->create([
-            'state' => $data['state'],
-            'city' => $data['city'],
-            'address' => $data['address'],
+            'state' => $request->all()['state'],
+            'city' => $request->all()['city'],
+            'address' => $request->all()['address'],
         ]);
 
         $center->instructors()->syncWithoutDetaching($instructor);
-        return redirect('instructors/'.$instructor->id);
+        $next = $request->get('next') == 'save' ? "instructors/$instructor->id": 'instructors/create';
+
+        return redirect($next)->with('success', 'The instructor is added successfully');
+
+
     }
 
 
@@ -86,7 +108,7 @@ class InstructorsController extends Controller
 
     public function update(Request $request, Instructor $instructor)
     {
-        $data = $this->validateRequest('');
+        $data = $this->validateRequest($request);
 
 
         $instructor->update(Arr::except($data,['state','city','address']));
@@ -99,35 +121,27 @@ class InstructorsController extends Controller
         return redirect('instructors/'.$instructor->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
 
+    public function destroy(Instructor $instructor)
+    {
+        $instructor->delete();
+        return response()->json('instructor deleted successfully', 200);
     }
 
-    public function searchInstructors(Request $request){
 
 
-        return view("instructor/view_all_instructors");
-    }
-
-    private function validateRequest($user_id)
+    private function validateRequest(Request $request)
     {
-        return request()->validate([
-            'nameAr' => 'required',
-            'nameEn' => 'required',
-            'email' => 'required',
-            'idNumber' => 'required|digits:14',
+        return Validator::make($request->all(),[
+            'nameAr' => ['required', new UniquePerCenter(Instructor::class, '','instructors',false)],
+            'nameEn' =>['required', new UniquePerCenter(Instructor::class, '','instructors',false)] ,
+            'email' =>['required', new UniquePerCenter(Instructor::class, '','instructors',false)],
+            'idNumber' => ['required','digits:14',new UniquePerCenter(Instructor::class, '','instructors',false)],
             'image' => ' nullable|image|file | max:10000',
             'idImage' => 'nullable|image|file | max:10000',
-            'phoneNumber' => 'required|regex:/(01)[0-9]{9}/',
-            'phoneNumberSec' => 'nullable|regex:/(01)[0-9]{9}/',
-            'passportNumber' => 'sometimes',
+            'phoneNumber' => ['required','regex:/(01)[0-9]{9}/', new UniquePerCenter(Instructor::class, '','instructors',false)],
+            'phoneNumberSec' => ['nullable','regex:/(01)[0-9]{9}/',new UniquePerCenter(Instructor::class, '','instructors',false)],
+            'passportNumber' => ['sometimes',new UniquePerCenter(Instructor::class, '','instructors',false)],
             'state' => 'required',
             'city' => 'required',
             'address' => 'required',

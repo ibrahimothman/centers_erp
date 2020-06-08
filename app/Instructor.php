@@ -7,11 +7,13 @@ use App\helper\ImageUploader;
 use App\helper\MathParser\Math;
 use App\helper\PaymentModelHelper;
 use App\QueryFilter\SearchBy;
+use App\QueryFilter\Sort;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\Integer;
 
 
 class Instructor extends ImageUploader
@@ -19,17 +21,20 @@ class Instructor extends ImageUploader
     protected $hidden = array('pivot');
 
     protected $guarded = [];
+    protected $appends = ['total'];
+
 
     public static function allInstructors($center)
     {
         return App(Pipeline::class)
             ->send($center->instructors())
             ->through([
-                SearchBy::class
+                SearchBy::class,
+                Sort::class
 
             ])
             ->thenReturn()
-            ->paginate(5);
+            ->get();
     }
 
     public function getImage($key)
@@ -83,6 +88,15 @@ class Instructor extends ImageUploader
         $original = $this->saveImage($idImage);
         return $this->attributes['idImage'] = url($this->getDir()."/".$original);
 
+    }
+
+    // get last rest for instructor
+    public function getTotalAttribute()
+    {
+        $center = Center::findOrFail(Session('center_id'));
+        $rest = $center->transactions()->where("meta_data->payFor_type", "App\Instructor")
+            ->where("meta_data->payFor_id", "$this->id")->latest()->first()['rest'];
+        return $this['total'] = $rest + $this->payment_model['salary'];
     }
 
     protected static function boot()

@@ -32,6 +32,7 @@
                                 <form class="needs-validation" method="post" action="{{url("test-enrollments.store")}}"
                                       novalidate autocomplete="off" id="testEnrollCreate">
                                     @csrf
+                                    <input name="next" value="save" hidden>
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label for="validationCustom01"> اسم الامتحان </label>
@@ -135,12 +136,11 @@
                 loc = $('<a>', { href: window.location })[0];
                 var data = "name="+query;
                 $.ajax({
-                    url: "/search_student_by_name",
+                    url: "/search_for_students",
                     method: "GET",
                     data: data,
                     dataType: "json",
                     success: function (data) {
-                        console.log(data);
                         $('#studentsList').show();
                         var output='<ul class="dropdown-menu" style="display:block; position:relative">';
 
@@ -208,6 +208,7 @@
                             className: 'done',
                             // autoHideDelay: 500000
                         });
+
                     },
                     error: function (xhr, status, error) {
                         if (xhr.status == 403){

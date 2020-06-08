@@ -147,7 +147,7 @@ class CoursesController extends Controller
     {
         //delete course
         $course->delete();
-        return redirect("/courses");
+        return response()->json(['message' => 'deleted'], 200);
     }
 
     private function getValidatedCourseData(Request $request){

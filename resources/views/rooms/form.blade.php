@@ -1,4 +1,4 @@
-
+<input name="next" value="save" hidden>
 <div class="form-row form-group">
     <div class="col-3 ">اسم الغرفه
     <span class="required">*</span>
