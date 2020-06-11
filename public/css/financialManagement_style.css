@@ -115,3 +115,8 @@ input[type="date"], focus {
 }
 
 
+/* revenues */
+/* print */
+.data{
+    font-weight: bold;
+}

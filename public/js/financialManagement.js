@@ -86,6 +86,26 @@ $(document).ready(function(){
         $("#showDetails").toggle( 1000);
 
     });
+    // print revenues
+
+    $('#print-revenues').on('click', function() {
+        window.print();
+        return false; // why false?
+    });
+    // print  expenses
+    $('#print-expenses').on('click', function() {
+        window.print();
+        return false; // why false?
+    });
+    // print payroll
+    $('#print-payroll').on('click', function() {
+        window.print();
+        return false; // why false?
+    });
+    $('#print-payroll-employee').on('click', function() {
+        window.print();
+        return false; // why false?
+    });
     /* end */
     /* outlay page */
     // show content all scroll spy
@@ -108,14 +128,21 @@ $(document).ready(function(){
     // add btn
     $('input#addButton').on('click', function() {
         var id = ($('.field .form-row').length + 1).toString();
-        $('.field').append(' <div class="form-row "> <div class="col-lg-3 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="dateOutlay'+id+'" name="dateOutlay'+id+'" class="form-control dateOutlay"></div></div>' +
-            '<div class="col-lg-3 col-sm-4 form-group "><label> تحت بند  </label><input type="text" placeholder="اختار" name="account'+id+'" class="form-control expenses_field expenses_required "  id="account'+id+'" list="account_list"  >' +
+        $('.field').append(' <div class="form-row "> <div class="col-lg-3 col-sm-6 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="dateOutlay'+id+'" name="dateOutlay'+id+'" class="form-control dateOutlay"></div></div>' +
+            '<div class="col-lg-3 col-md-6 form-group "><label> تحت بند  </label><input type="text" placeholder="اختار" name="account'+id+'" class="form-control expenses_field expenses_required "  id="account'+id+'" list="account_list"  >' +
             '<datalist id="account_list"></datalist> '+
             '</div>' +
-            ' <div class="col-lg-3 col-sm-4 form-group "><label> المطلوب سداده </label><input type="text" name="deserved_amount'+id+'" class="form-control expenses_required"  id="deserved_amount'+id+'"   ></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع  </label><input type="text" name="amount'+id+'" class="form-control payOutlay expenses_required"  id="amount'+id+'"   ></div>' +
-            '<div class="col-lg-1 col-sm-4 form-group "><label>الباقي  </label><input type="text" name="noPay'+id+'" class="form-control "  id="noPay'+id+'"   ></div>' +
+            ' <div class="col-lg-2 col-md-3 form-group "><label> المطلوب </label><input type="text" name="deserved_amount'+id+'" class="form-control expenses_required"  id="deserved_amount'+id+'"   ></div>' +
+            '<div class="col-lg-2 col-md-3 form-group "><label> المدفوع  </label><input type="text" name="amount'+id+'" class="form-control payOutlay expenses_required"  id="amount'+id+'"   ></div>' +
+            '<div class="col-lg-1 col-md-3 form-group "><label>الباقي  </label><input type="text" name="noPay'+id+'" class="form-control "  id="noPay'+id+'"   ></div>' +
+            ' <div class="col-lg-1 col-md-3 form-group "> <label>طباعه</label><button type="button"  name="printPill'+id+'" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>'+
+            '</div>'+
             '</div></div>');
+    });
+    // print
+    $('#print-button-expenses').on('click', function() {
+        window.print();
+        return false; // why false?
     });
     // sum
     $(document).on("keyup", ".payOutlay", function() {
@@ -136,13 +163,20 @@ $(document).ready(function(){
     // add btn payroll
     $('input#addButtonPayroll').on('click', function() {
         var id = ($('.fieldPayroll .form-row').length + 1).toString();
-        $('.fieldPayroll').append(' <div class="form-row " id="data'+ id +'" required_field> <div class="col-lg-2 col-sm-4 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> اختار  </label><input placeholder="اختار" type="text"  class="form-control  required_field" list="list"  name="list'+id+'" id="instructor_employee'+id+'" /> <datalist id="list">' +
+        $('.fieldPayroll').append(' <div class="form-row " id="data'+ id +'" required_field> <div class="col-lg-3 col-md-6 form-group" "><label for="validationCustom01"> التاريخ</label><div class="input-group-append">  <input type="date" id="datePayroll'+id+'" name="datePayroll'+id+'" class="form-control datePayroll"></div></div>' +
+            '<div class="col-lg-3 col-md-6 form-group "><label> اختار  </label><input placeholder="اختار" type="text"  class="form-control  required_field" list="list"  name="list'+id+'" id="instructor_employee'+id+'" /> <datalist id="list">' +
             '</div>'+
-            '<div class="col-lg-2 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control pay_for_selector required_field" list="pay_for_list'+ id +'"  name="pay_for'+id+'" id="pay_for'+id+'" /> <datalist id="pay_for_list'+ id +'">'+
-            '</div></div>');
+            '<div class="col-lg-3 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control pay_for_selector required_field" list="pay_for_list'+ id +'"  name="pay_for'+id+'" id="pay_for'+id+'" /> <datalist id="pay_for_list'+ id +'">'+
+            '</div>'+
+            ' <div class="col-lg-1 col-md-3 form-group "> <label>طباعه</label><button type="button"  name="printPayroll'+id+'" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModalPayroll"><i class="fa fa-print   px-2"> </i></button>'+
+            '</div>'+
+            '</div>');
     });
-
+// print
+    $('#print-button-payroll').on('click', function() {
+        window.print();
+        return false; // why false?
+    });
     // sum
     $(document).on("keyup", ".payPayroll", function() {
         var sumPayroll = 0;
@@ -158,11 +192,13 @@ $(document).ready(function(){
     $('#addButtonIncome').on('click', function() {
         var id = ($('.fieldIncome .form-row').length + 1).toString();
         $('.fieldIncome').append(' <div class="form-row "> ' +
-            '<div class="col-lg-3 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control student-selector" list="studentList"  name="student'+id+'" id="student'+id+'" /> <datalist id="studentList"></datalist></div>' +
-            ' <div class="col-lg-3 col-sm-4 form-group "><label>الكورس/الدبلومه </label><input placeholder="اختار" type="text" id="diploma'+id+'" class="form-control" name="diploma'+id+'" list="diplomaList"/><datalist id="diplomaList"></datalist></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label>  التكلفه </label><input type="text" name="cost'+id+'" class="form-control "  id="cost'+id+'"  readonly ></div>' +
-            '<div class="col-lg-2 col-sm-4 form-group "><label> المدفوع </label><input type="text" name="payIncome'+id+'" class="form-control payIncome "  id="payIncome'+id+'"   ></div>' +
-            ' <div class="col-lg-2 col-sm-4 form-group "><label>  الباقي </label><input type="text" name="noPayIncome'+id+'" class="form-control "  id="noPayIncome'+id+'"   readonly></div>' +
+            '<div class="col-lg-3 col-md-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control student-selector" list="studentList"  name="student'+id+'" id="student'+id+'" /> <datalist id="studentList"></datalist></div>' +
+            ' <div class="col-lg-2 col-md-4 form-group "><label>الكورس/الدبلومه </label><input placeholder="اختار" type="text" id="diploma'+id+'" class="form-control" name="diploma'+id+'" list="diplomaList"/><datalist id="diplomaList"></datalist></div>' +
+            '<div class="col-lg-2 col-md-4 form-group "><label>  التكلفه </label><input type="text" name="cost'+id+'" class="form-control "  id="cost'+id+'"  readonly ></div>' +
+            '<div class="col-lg-2 col-md-4 form-group "><label> المدفوع </label><input type="text" name="payIncome'+id+'" class="form-control payIncome "  id="payIncome'+id+'"   ></div>' +
+            ' <div class="col-lg-2 col-md-4 form-group "><label>  الباقي </label><input type="text" name="noPayIncome'+id+'" class="form-control "  id="noPayIncome'+id+'"   readonly></div>' +
+           ' <div class="col-lg-1 col-md-4 form-group "> <label>طباعه</label><button type="button"  name="print'+id+'" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>'+
+            '</div>'+
             '</div></div>');
 
 
@@ -202,6 +238,11 @@ $(document).ready(function(){
             timepicker:false,
             format:'Y-m-d'
         });
+    });
+    // print
+    $('#print-button-revenues').on('click', function() {
+        window.print();
+        return false; // why false?
     });
     /* end */
 

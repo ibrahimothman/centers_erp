@@ -80,7 +80,13 @@
                                                 <input type="number" name="netProfit" id="netProfit"
                                                        class="form-control" readonly/>
                                             </div>
+                                            <div class=" col-sm-6">
+                                            <div class="btn-group print-btn ">
+                                                <button type="button" class="btn btn-success fLeft" data-toggle="modal" data-target="#printModal">طباعه</button>
+                                            </div>
+                                            </div>
                                         </div>
+
                                         <!-- save -->
                                         <div class="form-row save">
                                             <div class="col-sm-6 mx-auto" style="width: 200px;">
@@ -109,6 +115,100 @@
         @include('footer')
     </div>
 </div>
+<!-- print -->
+<!-- Central Modal Small -->
+<div class="modal fade"  id="printModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <!-- Change class .modal-sm to change the size of the modal -->
+    <div class="modal-dialog " id="modalForPrint"  role="document">
+
+
+        <div class="modal-content " id="contentForPrint">
+            <div class="modal-body">
+                <div id="section-6">
+                    <div class="row  mb-3">
+                        <div class="col-sm-12">
+                            <div class="card  p-3 ">
+                                <div class="card-body ">
+                                    <div class="col-sm-12">
+                                        <h1>طباعه تقرير الارباح</h1>
+                                        <div class="fRight">
+                                            <h4>الارباح: <span> 5000 </span></h4>
+                                            <h4>صافي الارباح: <span> 20000  </span></h4>
+
+                                        </div>
+                                        <div class="fLeft">
+                                            <h4 >المصروفات: <span> 5000 </span></h4>
+                                            <h4 >الايرادات: <span> 20000  </span></h4>
+                                            <h4>الضرائب: <span> 20% </span></h4>
+                                        </div>
+                                        <br>
+                                        <!-- table -->
+                                        <div class="table-responsive ">
+                                            <table id="dtBasicExample"
+                                                   class="table table-striped table-bordered table-sm"
+                                                   cellspacing="0"
+                                                   width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th class="th-sm">الشهر</th>
+                                                    <th class="th-sm">التاريخ</th>
+                                                    <th class="th-sm">الايرادات</th>
+                                                    <th class="th-sm">تفاصيل الايرادات</th>
+                                                    <th class="th-sm">المصروفات</th>
+                                                    <th class="th-sm">تفاصيل المصروفات</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>يناير</td>
+                                                    <td>2/1/2020</td>
+                                                    <td>300</td>
+                                                    <td>طلاب</td>
+                                                    <td>1000</td>
+                                                    <td>الايجار</td>
+                                                </tr>
+                                                <!-- second row -->
+                                                <tr>
+                                                    <td>يناير</td>
+                                                    <td>2/1/2020</td>
+                                                    <td>300</td>
+                                                    <td>طلاب</td>
+                                                    <td>1000</td>
+                                                    <td>الايجار</td>
+                                                </tr>
+                                                <!-- third row -->
+                                                <tr>
+                                                    <td>يناير</td>
+                                                    <td>2/1/2020</td>
+                                                    <td>300</td>
+                                                    <td>طلاب</td>
+                                                    <td>1000</td>
+                                                    <td>الايجار</td>
+                                                </tr>
+                                                </tbody>
+
+                                            </table>
+                                            <!-- end table -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end section 5 profit -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success  dismiss" id="print-button"> <i class="fa fa-print   px-2"> </i>طباعه </button>
+                <button type="button" class="btn btn-danger  print" data-dismiss="modal">الغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end print -->
 <!-- scroll top -->
 @include('scroll_top')
 <!-- script-->

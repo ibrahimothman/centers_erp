@@ -7,7 +7,6 @@
     <!-- style page -->
     <link href="/css/financialManagement_style.css" rel="stylesheet"/>
     <title>income</title>
-
 </head>
 <body id="page-top">
 
@@ -49,7 +48,7 @@
                                             <!-- add row pill -->
                                             <div class="fieldIncome">
                                                 <div class="form-row ">
-                                                    <div class="col-lg-3 col-sm-4 form-group ">
+                                                    <div class="col-lg-3 col-md-4 form-group ">
                                                         <label> الاسم  </label>
                                                         <input placeholder="اختار" type="text" id="student1" class="form-control student-selector required_field" name="student" list="studentList" autocomplete="off"   />
                                                         <datalist id="studentList">
@@ -58,21 +57,26 @@
                                                             @endforeach
                                                         </datalist>
                                                     </div>
-                                                    <div class="col-lg-3 col-sm-4 form-group ">
-                                                        <label>الكورس /الدبلومه</label>
+                                                    <div class="col-lg-2 col-md-4 form-group ">
+                                                        <label>الكورس </label>
                                                             <input placeholder="اختار" type="text" id="diploma1" class="form-control required_field" name="diploma" list="diplomaList"  />
                                                             <datalist id="diplomaList">
 
                                                             </datalist>
                                                     </div>
-                                                    <div class="col-lg-2 col-sm-4 form-group ">
+                                                    <div class="col-lg-2 col-md-4 form-group ">
                                                         <label> التكلفه </label><input type="text" name="cost" class="form-control  "  id="cost1"  readonly >
                                                     </div>
-                                                    <div class="col-lg-2 col-sm-4 form-group ">
+                                                    <div class="col-lg-2 col-md-4 form-group ">
                                                         <label> المدفوع  </label><input type="text" name="pay" class=" form-control  payIncome required_field"  id="payIncome1"   >
                                                     </div>
-                                                    <div class="col-lg-2 col-sm-4 form-group ">
+                                                    <div class="col-lg-2 col-md-4 form-group ">
                                                         <label>الباقي  </label><input type="text" name="noPayIncome" class="form-control "  id="noPayIncome1"  readonly >
+                                                    </div>
+                                                    <div class="col-lg-1 col-md-4 form-group ">
+                                                        <label>طباعه</label>
+                                                        <button type="button" name="print" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,6 +116,88 @@
         @include('footer')
     </div>
 </div>
+<!-- print -->
+<!-- Central Modal Small -->
+<div class="modal fade"  id="printModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <!-- Change class .modal-sm to change the size of the modal -->
+    <div class="modal-dialog " id="modalForPrint"  role="document">
+
+
+        <div class="modal-content " id="contentForPrint">
+            <div class="modal-body">
+                <div id="section-6">
+                    <div class="row  mb-3">
+                        <div class="col-sm-12">
+                            <div class="card  p-3 ">
+                                <div class="card-body ">
+                                    <div class="col-sm-12">
+                                        <div class="fRight">
+                                            <h5>رقم الفاتوره: <span class="data"> 5000 </span></h5>
+                                            <h5>التاريخ: <span class="data"> 20000  </span></h5>
+                                            <h5 >الاسم: <span class="data"> hhhh </span></h5>
+                                        </div>
+                                        <br>
+                                        <!-- table -->
+                                        <div class="table-responsive ">
+                                            <table id="dtBasicExample"
+                                                   class="table table-bordered table-sm"
+                                                   cellspacing="0"
+                                                   width="100%">
+                                                <thead style="background-color: #dee2e6">
+                                                <tr>
+                                                    <th class="th-sm">امتحان/دبلومه</th>
+                                                    <th class="th-sm">التكلفه</th>
+                                                    <th class="th-sm">المدفوع</th>
+                                                    <th class="th-sm">الباقي</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>lang</td>
+                                                    <td>300</td>
+                                                    <td>1000</td>
+                                                    <td>1000</td>
+                                                </tr>
+                                                <!-- second row -->
+                                                <tr>
+                                                    <td>lang</td>
+                                                    <td>300</td>
+                                                    <td>1000</td>
+                                                    <td>1000</td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <td>الاجمالي</td>
+                                                <td>300</td>
+                                                <td>1000</td>
+                                                <td>1000</td>
+                                                </tfoot>
+                                            </table>
+                                            <!-- end table -->
+                                            <div class="fRight">
+                                                <h5>المدفوع: <span  class="data"> 5000 </span></h5>
+                                                <h5>المطلوب: <span class="data"> 20000  </span></h5>
+                                                <h5 >الباقي: <span class="data"> 5555 </span></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end section 5 profit -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success  dismiss" id="print-button-revenues"> <i class="fa fa-print   px-2"> </i>طباعه </button>
+                <button type="button" class="btn btn-danger  print" data-dismiss="modal">الغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end print -->
 <!-- scroll top -->
 @include('scroll_top')
 <!-- script-->
@@ -122,8 +208,6 @@
 <script type='text/javascript' src="/js/financialManagement.js"></script>
 
 <script>
-
-
     $(document).ready(function () {
 
         $(document).on('input', "[id^=student]",  function () {
