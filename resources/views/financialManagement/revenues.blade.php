@@ -166,12 +166,14 @@
     });
 
 
-        // submit form
+
+
+    // submit form
         $("#submit").on('click', function (e) {
             e.preventDefault();
-            if(checkIfAllInputsFilled()) {
-                console.log(createTransactionMetaDataJSON());
-                // $(this).prop('disabled', true);
+            if(checkIfAllInputsFilled()){
+
+                $(this).prop('disabled', true);
                 makeAjaxCall('/transactions', 'POST', {
                     transactions: createTransactionMetaDataJSON(),
                     _token: "{{csrf_token()}}"
@@ -181,6 +183,9 @@
                         style: 'successful-process',
                         className: 'done',
                     });
+
+
+
                     $('button[id=delete_row]').each(function (i, v) {
                        $(this).closest('.form-row').remove();
                     });
@@ -242,6 +247,8 @@
 
             return empty.length === 0 ;
         }
+
+    
     //
 
 </script>

@@ -158,7 +158,7 @@
                                             <select class="form-control" id="payment_models" name="payment_model" required>
                                                 <option value="0">اختار</option>
                                                 @foreach($payment_models as $payment_model)
-                                                    <option data-extra="{{ $employee->payment_model == $payment_model->id? $employee->payment_model_meta_data :  $payment_model->meta_data }}" value="{{ $payment_model->id }}" {{ $employee->payment_model == $payment_model->id ? 'selected' : ''}}>{{ $payment_model->name }}</option>
+                                                    <option data-extra="{{ $employee->payment_model['model'] == $payment_model->name? $employee->payment_model_meta_data :  $payment_model->meta_data }}" value="{{ $payment_model->id }}" {{ $employee->payment_model['model'] == $payment_model->name ? 'selected' : ''}}>{{ $payment_model->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

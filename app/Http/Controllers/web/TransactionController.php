@@ -37,6 +37,7 @@ class TransactionController extends Controller
             return response()->json(['message' => 'invalid data'], 400);
         }
 
+
         $transactions = $data->validate()['transactions'];
         DB::transaction(function() use ($transactions, $center){
             foreach ($transactions as $transaction){
@@ -70,6 +71,7 @@ class TransactionController extends Controller
 
     private function validateTransaction(Request $request)
     {
+//        dd($request->get('print'));
         /*
          * date, amount, account, meta-data
          * */

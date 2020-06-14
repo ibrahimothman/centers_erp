@@ -50,7 +50,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-6 form-group clearfix "> <br>
+                                        <div class="col-md-6 form-group clearfix mr-0 "> <br>
                                             <input type='button' class="btn btn-outline-success float-right" value=' + اضافه ميعاد ' id='addButton'  name="add" />
                                         </div>
                                     </div>

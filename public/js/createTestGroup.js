@@ -1,4 +1,5 @@
 
+//sc
 $('input#addButton').on('click', function() {
     var id = ($('.field .form-row').length + 1).toString();
     $('.field').append(
@@ -25,12 +26,17 @@ $('input#addButton').on('click', function() {
         '<label for="validationCustom01">  عدد المقاعد  </label>' +
         '<input type="number" name="groups['+ id +'][available_chairs]" class="form-control char"  id="seat-'+id+'"    >' +
         '</div>' +
+        '<div class="col-lg-1 col-sm-1 form-group "> <button id="delete_row" class="btn delete_row" style=" border: none; color: red; padding: 12px 16px;font-size: 16px; margin-top: 20px"><i class="fa fa-close"></i></button> </div>'+
         '</div></div>');
     $(".datetimepicker").datetimepicker({
         timepicker:false,
         format:'Y-m-d'
     });
 });
+
+$(document).on('click', '#delete_row', function () {
+    $(this).closest('.form-row').remove();
+})
 
 
 var hours = [];

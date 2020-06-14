@@ -33,7 +33,7 @@
                                                     تعديل البيانات المركز
                                                     <i class="fas fa-angle-double-left  "></i> </a>
 
-                                                
+
                                             </div>  <!-- list-group .// -->
                                         </div>
                                     </article> <!-- card-group-item.// -->

@@ -20,7 +20,9 @@ use function foo\func;
 
 $web_controllers_path = "\App\Http\Controllers\web";
 
-Route::group(['middleware' => ['auth', 'verified']], function () use ($web_controllers_path){
+Route::group([
+    'middleware' => ['auth', 'verified'],
+    ], function () use ($web_controllers_path){
 
     //-------------------- settings ---------------------
     Route::resource('settings', "$web_controllers_path\SettingController");
@@ -36,7 +38,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
 
         // --------------------- students --------------------
         Route::get('/', "$web_controllers_path\StudentController@create");
-        Route::resource('students', "$web_controllers_path\StudentController")->middleware('center');
+        Route::resource('students', "$web_controllers_path\StudentController");
 
         Route::get('students.table', "$web_controllers_path\StudentController@showTable")->name('students.table');
         Route::get('/search_for_students', "$web_controllers_path\StudentController@searchByName");
@@ -139,23 +141,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () use ($web_contr
 
 });
 
-Route::get('set_role',function (){
-    $roles = ['student.add','student.view','student.update','student.delete',
-        'test.add','test.view','test.update','test.delete',
-        'test-group.add','test-group.view','test-group.update','test-group.delete',
-        'test-enrollment.add','test-enrollment.view','test-enrollment.update','test-enrollment.delete',
-    ];
-    foreach ($roles as $role) {
-        Role::create(['name' => $role]);
-    }
-});
+
 
 Route::resource('invites',"$web_controllers_path\InvitationController");
 Route::get('process',"$web_controllers_path\InvitationController@processInvitation");
 
-Route::get('fresh', function (){
-    Artisan::call('migrate:fresh --seed');
-});
 
 
 Auth::routes(['verify' => true]);

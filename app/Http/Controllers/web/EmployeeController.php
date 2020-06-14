@@ -107,7 +107,7 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-//        dd($employee->payment_model_meta_data);
+//        return $employee;
         $center = Center::findOrFail(Session('center_id'));
         $jobs = $center->jobs;
         $payment_models = $center->paymentModels;

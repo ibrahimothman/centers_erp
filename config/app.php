@@ -82,6 +82,13 @@ return [
 
     'locale' => 'en',
 
+
+    // available languages
+    'languages' => [
+      'en' => 'English',
+      'ar' => 'العربيه',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -93,7 +100,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ar',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,6 +169,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
 
         /*
@@ -232,6 +240,7 @@ return [
         'From' =>Collective\Html\FormFacade::class,
         'Html' =>Collective\Html\HtmlFacade::class,
         'DataTables' => yajra\DataTables\Facades\DataTables::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

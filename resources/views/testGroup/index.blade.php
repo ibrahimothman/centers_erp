@@ -162,11 +162,11 @@
 <!--det-end-->
 
 
-                            <nav aria-label="Page navigation ">
-                                <ul class="pagination justify-content-center">
-                                    {{$tests->links()}}
-                                </ul>
-                            </nav>
+{{--                            <nav aria-label="Page navigation ">--}}
+{{--                                <ul class="pagination justify-content-center">--}}
+{{--                                    {{$tests->links()}}--}}
+{{--                                </ul>--}}
+{{--                            </nav>--}}
                         </div>
                     </div>
                 </div>

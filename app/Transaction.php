@@ -59,9 +59,14 @@ class Transaction extends Model
 
     public function payFor()
     {
-        if(! is_null($this->meta_data['payFor_type'])){
+        if (!is_null($this->meta_data['payFor_type'])) {
             return $this->meta_data['payFor_type']::find($this->meta_data['payFor_id']);
         }
-
     }
+
+    public function getCode()
+    {
+        return $this->account->code. '-' .$this->id;
+    }
+
 }
