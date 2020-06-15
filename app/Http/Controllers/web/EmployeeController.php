@@ -17,11 +17,7 @@ use mysql_xdevapi\Session;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $employees = $this->getEmployees();
@@ -30,42 +26,26 @@ class EmployeeController extends Controller
 
     public function getEmployees()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        return Employee::allEmployees($center);
+        return Employee::allEmployees($this->center);
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
         $employee = new Employee();
-        $center = Center::findOrFail(Session('center_id'));
-        $jobs = $center->jobs;
-        $payment_models = $center->paymentModels;
+        $jobs = $this->center->jobs;
+        $payment_models = $this->center->paymentModels;
         return view('employee.create', compact('employee', 'jobs', 'payment_models'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-
-        // 2) create an employee related to that user
         $data = $this->validateRequest($request);
-
         $data = $data->validate();
-
-        $center = Center::findOrFail(Session('center_id'));
-        $employee=$center->employees()->create(Arr::except($data,['state','city','address', 'job', 'send_invitation']));
+        $employee=$this->center->employees()->create(Arr::except($data,['state','city','address', 'job', 'send_invitation']));
 
 
         // create address
@@ -98,8 +78,6 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
-        //
-//        return json_encode($employee);
         return view('employee.show', compact('employee'));
 
     }
@@ -107,16 +85,13 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-//        return $employee;
-        $center = Center::findOrFail(Session('center_id'));
-        $jobs = $center->jobs;
-        $payment_models = $center->paymentModels;
+        $jobs = $this->center->jobs;
+        $payment_models = $this->center->paymentModels;
         return view('employee.update', compact('employee', 'jobs', 'payment_models'));
     }
 
     public function update(Request $request, Employee $employee)
     {
-        //
         $data = $this->validateRequest($request);
 
         $data = $data->validate();

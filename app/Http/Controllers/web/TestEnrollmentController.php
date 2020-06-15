@@ -15,25 +15,18 @@ use App\Test;
 use App\StudentTestGroup;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\Rules\In;
-use mysql_xdevapi\Session;
 
 
 class TestEnrollmentController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
 
     public function index()
     {
         $this->authorize('view', Test::class);
-        $center = Center::findOrFail(Session('center_id'));
-        $all_tests = $center->tests()->with('groups.enrollers')->get();
+        $all_tests = $this->center->tests()->with('groups.enrollers')->get();
 
-        $groups = TestGroup::allEnrollments($center->testsIds());
+        $groups = TestGroup::allEnrollments($this->center->testsIds());
 
 
 
@@ -44,9 +37,8 @@ class TestEnrollmentController extends Controller
     public function create()
     {
         $this->authorize('create', Test::class);
-        $center = Center::findOrFail(Session('center_id'));
-        $students = $center->students;
-        $tests = Test::allTests($center);
+        $students = $this->center->students;
+        $tests = Test::allTests($this->center);
 
 
          $selected_group = Input::has('group_id') ?
@@ -109,8 +101,8 @@ class TestEnrollmentController extends Controller
         }
 
         // todo determine center
-        $center = Center::findOrFail(Session('center_id'));
-        $test = $center->tests()->with('groups.enrollers')->with('statement')->findOrFail($test_id);
+        $this->center = Center::findOrFail(Session('center_id'));
+        $test = $this->center->tests()->with('groups.enrollers')->with('statement')->findOrFail($test_id);
 
         return $test ;
 

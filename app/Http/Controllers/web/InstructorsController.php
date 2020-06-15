@@ -20,11 +20,7 @@ use mysql_xdevapi\Session;
 
 class InstructorsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 
@@ -35,45 +31,25 @@ class InstructorsController extends Controller
 
     public function searchInstructors()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        return Instructor::allInstructors($center);
+        return Instructor::allInstructors($this->center);
     }
 
-//    public function getInstructorPayment()
-//    {
-//
-//    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $payment_models = Center::findOrFail(Session('center_id'))->paymentModels;
         return view('instructor/register_instructor', compact('payment_models'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
 
-//        dd($request->all());
         $data = $this->validateRequest($request);
-//        if($data->fails()){
-//            dd($data->errors()->messages());
-//        }
 
         $data = $data->validate();
 
         // fetch center from session
-        $center = Center::findOrFail(Session('center_id'));
 
         $instructor = Instructor::create(Arr::except($data,['state','city','address']));
         // attach student with center
@@ -83,7 +59,7 @@ class InstructorsController extends Controller
             'address' => $request->all()['address'],
         ]);
 
-        $center->instructors()->syncWithoutDetaching($instructor);
+        $this->center->instructors()->syncWithoutDetaching($instructor);
         $next = $request->get('next') == 'save' ? "instructors/$instructor->id": 'instructors/create';
 
         return redirect($next)->with('success', 'The instructor is added successfully');
@@ -175,8 +151,7 @@ class InstructorsController extends Controller
 
     public function allInstructors()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        return $center->instructors;
+        return $this->center->instructors;
     }
 
     public function getAvailableBegins()

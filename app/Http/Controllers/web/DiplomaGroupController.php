@@ -18,17 +18,16 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Session;
+
 
 class DiplomaGroupController extends Controller
 {
 
     public function index()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $diplomas = Diploma::allDiplomas($center);
+        $diplomas = Diploma::allDiplomas($this->center);
 
-        $allDiplomas = $center->diplomas;
+        $allDiplomas = $this->center->diplomas;
         return view('diploma.allgroups', compact('allDiplomas', 'diplomas'));
     }
 
@@ -36,10 +35,7 @@ class DiplomaGroupController extends Controller
     {
 
         $center = Center::findOrFail(Session('center_id'));
-//        $diplomas = Diploma::with('courses.instructors')->where('center_id', $center->id)->get();
         $diplomas = Diploma::allDiplomas($center);
-
-//        return json_encode($diplomas);
         return view('diploma.diploma_group_create', compact('diplomas'));
     }
 
@@ -47,7 +43,7 @@ class DiplomaGroupController extends Controller
     {
         $data = $this->validateCourseGroupData($request);
 
-        $center = Center::findOrFail(Session('center_id'));
+        $center = $this->center;
         $data = $data->validate();
         $group_data = Arr::except($data, ['diploma', 'diploma-days', 'diploma-begins', 'diploma-ends', 'diploma-rooms']);
 
@@ -68,8 +64,6 @@ class DiplomaGroupController extends Controller
     public function edit(DiplomaGroup $diplomaGroup)
     {
         $instructors = $diplomaGroup->diploma->instructors();
-
-//        return json_encode($diplomaGroup->times);
         return view('diploma.diploma_update_register', compact('diplomaGroup', 'instructors'));
     }
 

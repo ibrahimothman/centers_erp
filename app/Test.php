@@ -17,7 +17,7 @@ class Test extends Model
     public static function allTests($center)
     {
         return app(Pipeline::class)
-            ->send($center->tests()->has('groups.enrollers')->with('groups.enrollers'))
+            ->send($center->tests()->with('groups.enrollers'))
             ->through([
                 Id::class,
                 SearchBy::class,

@@ -17,15 +17,6 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class TestTakeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
 
     public function create()
@@ -36,8 +27,7 @@ class TestTakeController extends Controller
 
         $this->authorize('create', Test::class);
 
-        $center = Center::findOrFail(Session('center_id'));
-        $tests = $center->tests()->has('groups.enrollers')->with('groups.enrollers')->get();
+        $tests = $this->center->tests()->has('groups.enrollers')->with('groups.enrollers')->get();
         return view('testTakes/test-take')->with('tests',$tests);
     }
 

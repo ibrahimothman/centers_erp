@@ -129,7 +129,7 @@
                     success: function (data) {
                         console.log(data);
                         var lines = "";
-                        data.data.forEach(function (test) {
+                        data.forEach(function (test) {
                             // console.log(test.name);
                             lines += "<div class='card card  card-sh  border-primary p-3 test-view'>";
                             lines += "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";

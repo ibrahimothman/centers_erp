@@ -75,7 +75,7 @@
 
                                             <label for="validationCustom02">مصاريف الامتحان/فردى</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" id="validationCustom02" placeholder="" value="{{ old('cost') }}" name="cost">
+                                            <input type="number" class="form-control" id="validationCustom02" placeholder="" value="{{ old('cost') }}" name="cost">
                                             <div>{{ $errors->first('cost') }}</div>
 
                                         </div>
@@ -83,7 +83,7 @@
                                         <div class="col-sm-4  form-group">
                                             <label for="validationCustom03">مصاريف الامتحان/كورس</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" id="validationCustom03" placeholder="" value="{{ old('cost_course') }}" name="cost_course">
+                                            <input type="number" class="form-control" id="validationCustom03" placeholder="" value="{{ old('cost_course') }}" name="cost_course">
                                             <div>{{ $errors->first('cost_course') }}</div>
 
                                         </div>
@@ -91,7 +91,7 @@
                                         <div class="col-sm-4  form-group">
                                             <label for="validationCustom04">نتيجه الامتحان</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" id="validationCustom04" placeholder="" value="{{ old('result') }}" name="result">
+                                            <input type="number" class="form-control" id="validationCustom04" placeholder="" value="{{ old('result') }}" name="result">
                                             <div>{{ $errors->first('result') }}</div>
 
                                         </div>

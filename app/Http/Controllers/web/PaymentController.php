@@ -14,17 +14,10 @@ class PaymentController extends Controller
     public function create()
     {
 
-        $center = Center::findOrFail(Session('center_id'));
-        $instructors = $center->instructors;
-        $employees = $center->employees;
-        $payment_models = $center->paymentModels;
+        $instructors = $this->center->instructors;
+        $employees = $this->center->employees;
+        $payment_models = $this->center->paymentModels;
         return view('paymentRecord.payment_instructor', compact('instructors', 'employees',  'payment_models'));
-    }
-
-    public function store(Request $request)
-    {
-
-
     }
 
     private function validateRequest(Request $request)

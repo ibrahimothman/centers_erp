@@ -14,19 +14,12 @@ use function foo\func;
 
 class RoomsController extends Controller
 {
-    private $center;
-
-    public function __construct()
-    {
-
-        $this->middleware('auth');
-    }
 
 
     public function index()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $rooms = $center->rooms;
+
+        $rooms = $this->center->rooms;
         return view('rooms/rooms_view',compact('rooms'));
     }
 
@@ -41,26 +34,19 @@ class RoomsController extends Controller
     public function store(Request $request)
     {
 
-        $center = Center::findOrFail(Session('center_id'));
+
         $room_data = $this->validateRoomRequest();
         $room_data['details'] = $this->setRoomDetails(Arr::except($room_data,['name','location']));
         if($request->has('extras')) {
             $room_data['extras'] = $this->setRoomExtras($room_data['extras']);
         }
-        $center->rooms()->create(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
+        $this->center->rooms()->create(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
 
         $next = $request->get('next') == 'save'? 'rooms' : 'rooms/create';
         return redirect($next)->with('success', 'Room is added successfully');
 
 
     }
-
-
-    public function show(Room $room)
-    {
-
-    }
-
 
     public function edit(Room $room)
     {
@@ -79,10 +65,6 @@ class RoomsController extends Controller
     }
 
 
-    public function destroy($id)
-    {
-        //
-    }
 
     private function validateRoomRequest(){
         return request()->validate([
@@ -119,7 +101,7 @@ class RoomsController extends Controller
         }
         $time = Time::where('day', $day)->where('begin', $begin)->where('end', $end)->first();
 
-        $rooms = Center::findOrFail(Session('center_id'))->rooms()->whereDoesnthave('times', function ($q) use ($time, $begin, $day, $end) {
+        $rooms = $this->center->rooms()->whereDoesnthave('times', function ($q) use ($time, $begin, $day, $end) {
             $q->where('time_id', is_null($time)? 0 : $time->id)
                 ->orWhere(function ($q) use ($day, $begin, $end){
                 $q->where('day',$day)
@@ -153,8 +135,7 @@ class RoomsController extends Controller
 
     public function allRooms()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        return $center->rooms;
+        return $this->center->rooms;
     }
 
 

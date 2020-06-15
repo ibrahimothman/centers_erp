@@ -13,21 +13,16 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use mysql_xdevapi\Session;
+
 
 class CoursesController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $courses=Course::allCourses($center);
+
+        $courses=Course::allCourses($this->center);
         return view('courses/viewCourses')
             ->with('courses',$courses);
     }
@@ -35,8 +30,8 @@ class CoursesController extends Controller
 
     public function create()
     {
-        $center=Center::findOrFail(Session("center_id"));
-        $instructors= $center->instructors;
+
+        $instructors= $this->center->instructors;
         $categories = CategoryRepository::getInstance()->allCategories();
         return view('courses/addCourse', compact('instructors', 'categories'));
 
@@ -45,9 +40,6 @@ class CoursesController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->all());
-        $center = Center::findOrFail(Session('center_id'));
-//
         $data = $this->getValidatedCourseData($request);
         if($data->fails()){
             return response()->json(['message' => 'invalid data', 'errors' => $data->errors()->messages()], 400);
@@ -55,7 +47,7 @@ class CoursesController extends Controller
 
         // create the course
         $course_data = Arr::except($data->validate(),['images','instructors', 'categories']);
-        $course = $center->courses()->create($course_data);
+        $course = $this->center->courses()->create($course_data);
 
         // attach the course to the instructors
         $course->instructors()->sync($request->all()['instructors']);
@@ -65,7 +57,7 @@ class CoursesController extends Controller
         $course->categories()->sync($request->all()['categories']);
 
 
-//        // upload images
+        // upload images
         $this->uploadImages($request,$course);
         return response()->json(['message' => 'Successfully added the course', 'course_id' => $course->id],200);
     }
@@ -74,19 +66,17 @@ class CoursesController extends Controller
     public function show( $id)
     {
         $course=Course::find($id);
-        $center=Center::find(Session("center_id"));
         if ($course==null)
             abort(404,"Course was not found");
         return view('courses/courseDetails')
             ->with("course",$course)
-            ->with("center",$center);
+            ->with("center",$this->center);
     }
 
 
     public function edit($id )
     {
-        $center=Center::findOrFail(Session("center_id"));
-        $instructors= $center->instructors;
+        $instructors= $this->center->instructors;
         $course=Course::find($id);
         if ($course==null)
             abort(404,"Course was not found");
@@ -99,8 +89,7 @@ class CoursesController extends Controller
 
     public function update(Request $request, Course $course)
     {
-//        dd($request->all());
-        // todo handle validation with ajax
+       // todo handle validation with ajax
         // delete all course's image from db and files
         if($request->hasFile('image')) {
             Image::deleteImages("/uploads/courses", $course->images);
@@ -120,13 +109,6 @@ class CoursesController extends Controller
             $course->instructors()->sync($request->all()['instructors']);
         }
 
-        // update categories
-//        if (isset($data->validate()['categories'])) {
-//            foreach ($data->validate()['categories'] as $category) {
-//                $course->categories()->syncWithoutDetaching($category);
-//            }
-//        }
-
         $this->uploadImages($request,$course);
         return $course;
 
@@ -135,7 +117,6 @@ class CoursesController extends Controller
     public function uploadImages(Request $request, $course){
 
         if($request->hasFile('images')) {
-//            dd(Collection::wrap($request->file('images')));
             $course->uploadImages(Collection::wrap($request->file('images')));
 
         }
@@ -151,7 +132,6 @@ class CoursesController extends Controller
     }
 
     private function getValidatedCourseData(Request $request){
-//        echo 'validate';
         return Validator::make($request->all(),Course::rules($request));
     }
 

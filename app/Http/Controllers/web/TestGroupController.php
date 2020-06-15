@@ -5,26 +5,17 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 
 use App\Center;
-use App\Role;
-use App\Room;
+
 use App\Time;
-use http\Exception\BadConversionException;
 use Illuminate\Http\Request;
 use App\Test;
 use App\TestGroup;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
-use phpDocumentor\Reflection\Types\Null_;
+
 
 class TestGroupController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
@@ -32,10 +23,9 @@ class TestGroupController extends Controller
 
         $this->authorize('view',Test::class);
 
-        $center = Center::findOrFail(Session('center_id'));;
-        $allTests = $center->tests;
+        $allTests = $this->center->tests;
 
-        $tests = Test::allTests($center);
+        $tests = Test::allTests($this->center);
 
 
         return view('testGroup.index')
@@ -51,12 +41,12 @@ class TestGroupController extends Controller
      */
     public function create()
     {
+
         // check if user has rights to view create_test_group_form
         $this->authorize('create',Test::class);
-        $center = Center::findOrFail(Session('center_id'));
-        $allTests = $center->tests;
+        $allTests = $this->center->tests;
 
-        $test = Input::has('id')? Test::allTests($center)[0]: new Test();
+        $test = Input::has('id')? Test::allTests($this->center)[0]: new Test();
 
 
          return view('testGroup.create')
@@ -101,12 +91,6 @@ class TestGroupController extends Controller
 
     }
 
-
-    public function show(TestGroup $testGroup)
-    {
-        // todo this view is missing
-//        return json_encode($testGroup->times);
-    }
 
 
     public function edit(TestGroup $testGroup)

@@ -9,32 +9,24 @@ use App\Diploma;
 use App\DiplomaGroup;
 use App\Student;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Session;
-use function foo\func;
 
 class DiplomaEnrollmentController extends Controller
 {
 
     public function index()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $all_diplomas = $center->diplomas()->with('groups.students')->get();
-        $groups = DiplomaGroup::allEnrollments($center->diplomasIds());
-
-
-
+        $all_diplomas = $this->center->diplomas()->with('groups.students')->get();
+        $groups = DiplomaGroup::allEnrollments($this->center->diplomasIds());
 
         return view('diploma.diploma_student_show', compact('all_diplomas', 'groups'));
     }
 
     public function create()
     {
-        $center = Center::findOrFail(Session('center_id'));
 
-        $diplomas = Diploma::with('groups')->where('center_id', $center->id)->get();
+        $diplomas = Diploma::with('groups')->where('center_id', $this->center->id)->get();
 
         $selected_group = Input::has('group_id')? DiplomaGroup::findOrFail(Input::get('group_id')): new DiplomaGroup();
 

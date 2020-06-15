@@ -18,16 +18,10 @@ use phpDocumentor\Reflection\DocBlock\Tags\See;
 class TestStatementController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function create()
     {
         $this->authorize('create',Test::class);
-        $center = Center::findOrFail(Session('center_id'));
-        $tests = $center->tests;
+        $tests = $this->center->tests;
         return view('statement/editor',compact('tests'));
     }
 
@@ -56,9 +50,8 @@ class TestStatementController extends Controller
 
     public function previewStatement(Student $student)
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $statement = $center->statement;
-        $statement['body'] = $this->parseStatement($statement, $center,$student);
+        $statement = $this->center->statement;
+        $statement['body'] = $this->parseStatement($statement, $this->center,$student);
 //        dd($statement['body']);
 
         return view('statement/statementPreview')
@@ -73,10 +66,10 @@ class TestStatementController extends Controller
         }
 
         if (strpos($statement['body'], '@اسم المركز') !== false) {
-            $statement['body']=str_replace('@اسم المركز',$center->name,$statement['body']);
+            $statement['body']=str_replace('@اسم المركز',$this->center->name,$statement['body']);
         }
         if (strpos($statement['body'], '@اسم المدير') !== false) {
-            $manger=$center->manager_name;
+            $manger=$this->center->manager_name;
 
             $statement['body']=str_replace('@اسم المدير',$manger,$statement['body']);
         }if (strpos($statement['body'], '@التاريخ') !== false) {

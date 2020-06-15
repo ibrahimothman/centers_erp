@@ -200,9 +200,10 @@
 
                 });
 
-            }else{
-            alert('fill in all fields');
-        }
+            }else {
+                alert('fill in all fields');
+            }
+
     });
 
         function createSalaryTransactionMetaDataJSON() {

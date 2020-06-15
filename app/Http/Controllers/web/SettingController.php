@@ -12,16 +12,11 @@ use mysql_xdevapi\Session;
 
 class SettingController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
 
         $center = Auth::user()->center;
-//        dd(Session('center_id'));
         return view('account_settings/setting', compact('center'));
     }
 

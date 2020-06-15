@@ -15,17 +15,12 @@ use Illuminate\Support\Facades\Input;
 
 class TestResultController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
         $this->authorize('view', Test::class);
 
-        $center = Center::findOrFail(Session('center_id'));
-        $tests = Test::allTests($center);
+        $tests = Test::allTests($this->center);
 
 
         return view('testResult.test-result')->with([
@@ -40,17 +35,8 @@ class TestResultController extends Controller
     {
         //
         $this->authorize('create', Test::class);
-        $center = Center::findOrFail(Session('center_id'));
-        $tests = Test::allTests($center);
+        $tests = Test::allTests($this->center);
 
-        // get only opened groups which have students
-//        $tests = $tests->each(function ($test) use (&$tests){
-//           return $test->groups->filter(function ($group){
-//              return $group->opened ;
-//           });
-//        });
-
-//        return json_encode($tests);
         return view('testResult.test-result-add',compact('tests'));
     }
 

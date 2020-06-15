@@ -30,11 +30,6 @@ class StudentController extends Controller
 {
 
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
 
@@ -44,16 +39,14 @@ class StudentController extends Controller
     }
 
     public function getStudents(){
-        $center = Center::findOrFail(Session('center_id'));
-        return Student::allStudents($center);
+        return Student::allStudents($this->center);
 
     }
 
 
     public function showTable()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $students = Student::allStudents($center);
+        $students = Student::allStudents($this->center);
         return view('students.all-table')->with('students', $students);
     }
 
@@ -70,17 +63,11 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->all());
         // check if user has rights to add a new student
         $this->authorize('create', Student::class);
 
         $data = $this->validateRequest($request);
-//        if ($data->fails()){
-//            dd($data->errors()->messages());
-//        }
 
-        // fetch center from session
-        $center = Center::findOrFail(Session('center_id'));
 
         // create a new student
         $student = Student::create(Arr::except($data->validate(),['state','city','address']));
@@ -92,7 +79,7 @@ class StudentController extends Controller
             'address' => $request->all()['address'],
         ]);
 
-        $center->students()->syncWithoutDetaching($student);
+        $this->center->students()->syncWithoutDetaching($student);
         $return = $request->get('next') == 'students'? "/students/$student->id": "/students/create";
         return redirect($return)->with('success','Student added successfully');
 
@@ -103,8 +90,7 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         // check if student related to the auth center
-        $center = Center::findOrFail(Session('center_id'));
-        if (! $center->students->contains($student)){
+        if (! $this->center->students->contains($student)){
             return abort(404);
         }
 

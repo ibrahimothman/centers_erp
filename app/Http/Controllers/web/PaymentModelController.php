@@ -14,16 +14,8 @@ class PaymentModelController extends Controller
     {
         $center = Center::findOrFail(Session('center_id'));
         $payment_models = $center->paymentModels;
-//        return json_encode($payment_models);
         return view('welcome', compact('payment_models'));
     }
 
-    public function updateInstructorPayment()
-    {
-////        echo json_encode(request('payment_model'));
-//        $instructor = Instructor::findOrFail(2);
-//        foreach (json_decode($instructor->payment_model, true) as $key => $value){
-//            echo $key;
-//        }
-    }
+
 }

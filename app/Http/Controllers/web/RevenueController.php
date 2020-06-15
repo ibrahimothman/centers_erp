@@ -12,22 +12,17 @@ use mysql_xdevapi\Session;
 
 class RevenueController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
     public function index()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        return json_encode(Transaction::allTransactions($center));
+        return json_encode(Transaction::allTransactions($this->center));
     }
 
     public function create()
     {
         // get students with diplomas in which they enroll
-        $center = Center::findOrFail(Session('center_id'));
-        $students = $center->students()->with('diplomas_groups.diploma')->get();
+        $students = $this->center->students()->with('diplomas_groups.diploma')->get();
 //        return json_encode($students);
         return view("financialManagement/revenues", compact('students'));
     }

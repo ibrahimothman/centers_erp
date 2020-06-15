@@ -14,7 +14,7 @@ class Transaction extends Model
     //
     protected $guarded = [];
 
-    public static function allTransactions($center)
+    public static function allTransactions(Center $center)
     {
         return App(Pipeline::class)
             ->send($center->transactions()->orderBy('date', 'asc'))

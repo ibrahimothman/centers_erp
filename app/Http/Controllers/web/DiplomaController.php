@@ -13,12 +13,6 @@ use mysql_xdevapi\Session;
 
 class DiplomaController extends Controller
 {
-    private $center;
-    public function __construct()
-    {
-
-        $this->middleware('auth');
-    }
 
     public function index()
     {
@@ -28,15 +22,13 @@ class DiplomaController extends Controller
 
     public function allDiplomas()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        return Diploma::allDiplomas($center);
+        return Diploma::allDiplomas($this->center);
     }
 
 
     public function create()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        $courses = $center->courses;
+        $courses = $this->center->courses;
         return view('diploma/diploma_create', compact('courses'));
     }
 
@@ -50,8 +42,7 @@ class DiplomaController extends Controller
 
         $diploma_courses = $diploma_data->validate()['courses'];
 
-        $center = Center::findOrFail(Session('center_id'));
-        $diploma = $center->diplomas()->create(Arr::except($diploma_data->validate(), 'courses'));
+        $diploma = $this->center->diplomas()->create(Arr::except($diploma_data->validate(), 'courses'));
 
         // attach courses to diploma
         $diploma->courses()->syncWithoutDetaching($diploma_courses);

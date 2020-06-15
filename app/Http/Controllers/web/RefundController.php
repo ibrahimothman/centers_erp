@@ -12,21 +12,10 @@ use mysql_xdevapi\Session;
 
 class RefundController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-//    public function index()
-//    {
-//        $center = Center::findOrFail(Session('center_id'));
-//        return json_encode(Transaction::allTransactions($center));
-//    }
 
     public function create()
     {
-        // get students with diplomas in which they enroll
-//        return json_encode($students);
+
         return view("financialManagement/refund");
     }
 

@@ -23,14 +23,12 @@ class TransactionController extends Controller
 
     public function allTransactions()
     {
-        $center = Center::findOrFail(Session('center_id'));
-        return TransactionRepository::getInstance()->fetchTransactions($center);
+        return TransactionRepository::getInstance()->fetchTransactions($this->center);
     }
 
     public function store(Request $request)
     {
-//        dd($request->all());
-        $center = Center::findOrFail(Session('center_id'));
+        $center = $this->center;
         $data = $this->validateTransaction($request);
         if($data->fails()){
             dd($data->errors()->messages());
@@ -71,7 +69,6 @@ class TransactionController extends Controller
 
     private function validateTransaction(Request $request)
     {
-//        dd($request->get('print'));
         /*
          * date, amount, account, meta-data
          * */

@@ -35,7 +35,7 @@ class CategoryController extends Controller
             }
         }
 
-        $category = Center::findOrFail(Session('center_id'))->categories()->create($data->validate());
+        $category = $this->center->categories()->create($data->validate());
         return response()->json([$category], 200);
     }
 

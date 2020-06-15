@@ -10,24 +10,18 @@ use Illuminate\Http\Request;
 use App\Test;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Session;
 
 class TestController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
+
         $this->authorize('view', Test::class);
         return view('test.index');
     }
     public function getTests(){
-        $center = Center::findOrFail(Session('center_id'));
-        $tests = Test::allTests($center);
+        $tests = Test::allTests($this->center);
         return response()->json($tests, 200);
     }
 
@@ -45,7 +39,7 @@ class TestController extends Controller
 
         // check if auth user has rights to add a new test
         $this->authorize('create',Test::class);
-        $center = Center::findOrFail(Session('center_id'));
+        $center = $this->center;
         $data = $this->validateRequest($request);
         DB::transaction(function () use ($center, $data){
             $test = $center->tests()->create($data->validate());
@@ -83,22 +77,6 @@ class TestController extends Controller
     {
         $this->authorize('delete',$test);
         $test->delete();
-    }
-
-
-    public function getStudents($id)
-    {
-
-        // return 'listTestStudents';
-        $students = DB::table('students')
-            ->join('student_tests', 'students.id', '=', 'student_tests.student_id')
-            ->where('student_tests.test_id',$id)
-            ->get();
-        return view('studentTest.show')->with('students',$students);
-    }
-    public function testTime(){
-        // return 'test add time';
-        return view ('testGroup.test-time-add');
     }
 
 

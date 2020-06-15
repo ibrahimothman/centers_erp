@@ -12,16 +12,7 @@ use mysql_xdevapi\Session;
 class CenterController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
-    public function show(Center $center)
-    {
-        $expenses = Collection::make($center->expenses);
-        dd($expenses->where('id', 3));
-    }
 
     public function store(Request $request)
     {
