@@ -36,7 +36,7 @@ class TestGroup extends Model
             ])
             ->thenReturn()->get();
     }
-    
+
     public function test()
     {
         return $this->belongsTo(Test::class);
@@ -50,7 +50,9 @@ class TestGroup extends Model
     public function times()
     {
         return $this->morphToMany(Time::class, 'timeable', 'timeables')
-            ->withPivot('room_id');
+            ->using(Timeables::class)
+            ->withPivot('room_id')
+            ->withTimestamps();
 
     }
 

@@ -28,7 +28,8 @@ Route::group([
     Route::resource('settings', "$web_controllers_path\SettingController");
 
         //------------------------ center -------------
-        Route::resource('centers', "$web_controllers_path\CenterController");
+    Route::get('centers/options',"$web_controllers_path\CenterController@options");
+    Route::resource('centers', "$web_controllers_path\CenterController");
     Route::group(['middleware' => 'center'], function ()use ($web_controllers_path){
 
 
@@ -89,6 +90,7 @@ Route::group([
         Route::get('/all-rooms', "$web_controllers_path\RoomsController@allRooms");
         Route::get('/rooms-calendar/{room}', "$web_controllers_path\RoomsController@showRoomCalendar");
 
+
         //------------------ Diplomas ---------------
         Route::resource('diplomas', "$web_controllers_path\DiplomaController");
 
@@ -136,6 +138,9 @@ Route::group([
         //---------------- payment model -----------------
         Route::resource('payment_models', "$web_controllers_path\PaymentModelController");
         Route::resource('payments', "$web_controllers_path\PaymentController");
+
+        //------------------- center options -----------------------
+
     });
 
 
@@ -145,7 +150,6 @@ Route::group([
 
 Route::resource('invites',"$web_controllers_path\InvitationController");
 Route::get('process',"$web_controllers_path\InvitationController@processInvitation");
-
 
 
 Auth::routes(['verify' => true]);

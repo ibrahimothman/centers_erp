@@ -22,19 +22,28 @@ class CenterController extends Controller
 
     public function update(Request $request, Center $center)
     {
+
         $center->update($this->validateRequest());
-        return redirect('settings');
+        return back()->with('success', 'successfully updated');
     }
 
     private function validateRequest()
     {
         return request()->validate([
-            'name' => 'required',
-            'manager_name' => 'required',
+            'name' => 'sometimes',
+            'manager_name' => 'sometimes',
             'location' => 'sometimes',
             'image' => 'sometimes | image',
             'about_manager' => 'sometimes',
             'about_center' => 'sometimes',
+            'options' => 'sometimes',
         ]);
+    }
+
+    public function options()
+    {
+        $options = $this->center->getRoomOptions();
+
+        return view('options/room', compact('options'));
     }
 }

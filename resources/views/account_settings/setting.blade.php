@@ -14,6 +14,11 @@
         <div class="container-fluid">
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-12">
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="card mb-4 shadowed">
                         <header>
                             <div class="card-header text-primary form-title view-logos-title">

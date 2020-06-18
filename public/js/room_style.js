@@ -30,13 +30,16 @@ $.fn.insertAtCaret = function (text) {
 // add option
 $('#addBtn div[name="add"]').click(function (event) {
     event.preventDefault();
+    var i = $('input[name^=option-]').length + 1;
     var code = $(this).find('button[name="option"]').text();
-    var option=' <span  class="field " style=" display: inline-block; padding: 5px; border-radius: 10em; color: #007bff; margin: 5px;  border: solid 1px #007bff;  " ><span  style=" ">  ' +code+' <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">' +
+    var option=' <span  class="field " style=" display: inline-block; padding: 5px; border-radius: 10em; color: #007bff; margin: 5px;  border: solid 1px #007bff;  " ><input hidden name="extras[]" value="'+code+'"><span  style=" ">  ' +code+' <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">' +
         '        <span aria-hidden="true">&times;</span>' +
         '    </button></span></span >';
-    $('#reply-messsage').append(option);
-    //delete option
-    if ($(".close").click(function () {
-        $(this).parents(".field").remove();
-    })) ;
+    $('#reply-message').append(option);
+
+});
+
+//delete option
+$(document).on("click", ".close", function () {
+    $(this).parents(".field").remove();
 });

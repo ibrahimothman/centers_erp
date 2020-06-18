@@ -89,25 +89,35 @@
                                     </div>
                                 </div>
                                 <br>
-                                <h6>محتويات الغرفه</h6>
+                                <h6>تفاصيل مساحه الغرفه</h6>
                                 <div class="card ">
                                     <div class="card-body">
-                                        <div class="row ">
-                                            <div class="col-md-3">
-                                                <input name="extras[camera]" class="extra-class" type="checkbox" {{ ! is_null($room->extras) && array_key_exists('camera',$room->extras) && $room->extras['camera'] == 'on' ? 'checked' : '' }}>
-                                                <label>كاميرات مراقبه</label>
+                                        <div class=" row smiley-wrapper justify-content-center">
+                                            <div class="smiley " id="addBtn">
+                                                @foreach($options as $option)
+                                                    <div name="add" style="display: inline-block;">
+                                                        <button class="btn btn-primary" name="option"> <span >{{ $option }}</span></button>
+                                                    </div>
+                                                @endforeach
+
                                             </div>
-                                            <div class="col-md-3">
-                                                <input name="extras[air-conditioner]" class="extra-class" type="checkbox" {{  ! is_null($room->extras) && array_key_exists('air-conditioner',$room->extras) && $room->extras['air-conditioner'] == 'on' ? 'checked' : '' }} >
-                                                <label>تكيف</label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input name="extras[data-show]" class="extra-class" type="checkbox" {{ ! is_null($room->extras) && array_key_exists('data-show',$room->extras) && $room->extras['data-show'] == 'on' ? 'checked' : '' }} >
-                                                <label>دتاشو</label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input type="checkbox" onClick="selectAll(this)">
-                                                <label>تحديد الكل</label>
+                                        </div>
+                                        <Br>
+                                        <div class=" row">
+                                            <div class="col text-center">
+                                                <fieldset  name="message"  style="min-height: 100px;" id="reply-message" class="markItUpEditor ">
+                                                    @foreach($room->extras as $option)
+                                                        <span  class="field " style=" display: inline-block; padding: 5px; border-radius: 10em; color: #007bff; margin: 5px;  border: solid 1px #007bff;  " >
+                                                            <input name="extras[]" value="{{$option}}" hidden>
+                                                            <span>{{ $option }}
+                                                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </span>
+                                                        </span >
+                                                    @endforeach
+                                                </fieldset>
+
                                             </div>
                                         </div>
                                     </div>
@@ -133,6 +143,7 @@
         <script src="{{url('js/jquery-3.3.1.min.js')}}"></script>
         <script src="{{url('js/popper.min.js')}}"></script>
         <script src="{{url('js/bootstrap.min.js')}}"></script>
+        <script src="{{url('js/room_style.js')}}"></script>
 
         <script>
             function selectAll(source) {

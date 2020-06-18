@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\web;
 
+use App\helper\RoomHelper;
 use App\Http\Controllers\Controller;
 
 use App\Center;
@@ -9,12 +10,20 @@ use App\Room;
 use App\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 use function foo\func;
 
 class RoomsController extends Controller
 {
 
+    private $roomHelper;
+
+    public function __construct(RoomHelper $helper)
+    {
+        parent::__construct();
+        $this->roomHelper = $helper;
+    }
 
     public function index()
     {
@@ -27,19 +36,16 @@ class RoomsController extends Controller
     public function create()
     {
         $room = new Room();
-        return view('rooms/room_create',compact('room'));
+        $options = $this->center->getRoomOptions();
+        return view('rooms/room_create',compact('room', 'options'));
     }
 
 
     public function store(Request $request)
     {
-
-
         $room_data = $this->validateRoomRequest();
-        $room_data['details'] = $this->setRoomDetails(Arr::except($room_data,['name','location']));
-        if($request->has('extras')) {
-            $room_data['extras'] = $this->setRoomExtras($room_data['extras']);
-        }
+        $room_data = $room_data->validated();
+        $room_data['details'] = $this->roomHelper->setRoomDetails(Arr::except($room_data,['name','location']));
         $this->center->rooms()->create(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
 
         $next = $request->get('next') == 'save'? 'rooms' : 'rooms/create';
@@ -50,24 +56,32 @@ class RoomsController extends Controller
 
     public function edit(Room $room)
     {
-        return view('rooms/edit',compact('room'));
+        $options = $this->center->getRoomOptions();
+        return view('rooms/edit',compact('room', 'options'));
     }
 
     public function update(Request $request, Room $room)
     {
         $room_data = $this->validateRoomRequest();
-        $room_data['details'] = $this->setRoomDetails(Arr::except($room_data,['name','location']));
-        if($request->has('extras')) {
-            $room_data['extras'] = $this->setRoomExtras($room_data['extras']);
-        }else $room_data['extras'] = null;
+
+         $room_data = $room_data->validated();
+        $room_data['details'] = $this->roomHelper->setRoomDetails(Arr::except($room_data,['name','location']));
+        if(!$request->has('extras')) {
+            $room_data['extras'] = null;
+        }
         $room->update(Arr::except($room_data,['area','no_of_chairs','no_of_computers']));
         return redirect("rooms");
+    }
+
+    public function destroy(Request $request, Room $room)
+    {
+
     }
 
 
 
     private function validateRoomRequest(){
-        return request()->validate([
+        return Validator::make(request()->all(),[
             'name' => 'required',
             'location' => 'required',
             'area' => 'required|integer',
@@ -78,60 +92,19 @@ class RoomsController extends Controller
 
     }
 
-    private function setRoomDetails(array $except)
-    {
-        $room_details['area'] = $except['area'];
-        $room_details['no_of_chairs'] = $except['no_of_chairs'];
-        $room_details['no_of_computers'] = $except['no_of_computers'];
-        return json_encode($room_details);
-    }
-
-    private function setRoomExtras(array $extras)
-    {
-        return json_encode($extras);
-    }
-
-
     public function getAvailableRooms()
     {
-        if(request()->ajax()){
-            $day= request('day');
-            $begin = request('begin');
-            $end = request('end');
-        }
-        $time = Time::where('day', $day)->where('begin', $begin)->where('end', $end)->first();
+        $day = request('day');
+        $begin = request('begin');
+        $end = request('end');
 
-        $rooms = $this->center->rooms()->whereDoesnthave('times', function ($q) use ($time, $begin, $day, $end) {
-            $q->where('time_id', is_null($time)? 0 : $time->id)
-                ->orWhere(function ($q) use ($day, $begin, $end){
-                $q->where('day',$day)
-                    ->where('begin' , '>=', $begin)
-                    ->where('begin' , '<', $end);
-            })->orWhere(function ($q) use($day, $begin, $end){
-                $q->where('day',$day)
-                    ->where('begin' , '<=', $begin)
-                    ->where('end' , '>', $begin);
-            });
-        })->get();
-        return $rooms;
-
-
+        return $this->roomHelper->getAvailableRooms($this->center, $day, $begin, $end);
     }
 
-    public function showRoomCalendar(Room $room){
-        $groups = [];
-        foreach ($room->course_groups as $course_group){
-            foreach ($course_group->times as $time){
-                $temp['title'] = $course_group->course->name;
-                $temp['start'] = $time->day;
-                $temp['end'] = $time->day;
-                $groups[] = $temp;
-
-            }
-        }
-        return response()->json($groups);
+    public function showRoomCalendar(Room $room)
+    {
+        return $this->showRoomCalendar($room);
     }
-
 
     public function allRooms()
     {

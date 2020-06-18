@@ -39,6 +39,21 @@ class Center extends ImageUploader
         return json_decode($expenses, true);
     }
 
+    public function getOptionsAttribute($options)
+    {
+        return json_decode($options, true);
+    }
+
+    public function setOptionsAttribute($options)
+    {
+        return $this->attributes['options'] = json_encode($options, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getRoomOptions()
+    {
+        return $this->options['room'];
+    }
+
     public function owner()
     {
         return $this->belongsTo(User::class);

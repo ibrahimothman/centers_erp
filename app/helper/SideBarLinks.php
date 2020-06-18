@@ -75,6 +75,7 @@ class SideBarLinks
         return[
             url('/').'/'.'rooms/create' => 'اضافه غرفه جديده',
            url('/').'/'.'rooms' => 'عرض/تعديل بيانات الغرف',
+
         ];
     }
 
@@ -120,6 +121,7 @@ class SideBarLinks
     {
         return [
             url('/').'/'.'settings' =>'الاعدادات',
+            url('/').'/'.'centers/options' => 'امكانيات الغرف',
 
         ];
     }

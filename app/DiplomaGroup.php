@@ -45,7 +45,9 @@ class DiplomaGroup extends Model
     public function times()
     {
         return $this->morphToMany(Time::class, 'timeable', 'timeables')
-            ->withPivot('room_id');
+            ->using(Timeables::class)
+            ->withPivot('room_id')
+            ->withTimestamps();
 
     }
 

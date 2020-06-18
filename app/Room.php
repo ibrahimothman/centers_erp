@@ -14,9 +14,16 @@ class Room extends Model
         return json_decode($key,true);
     }
 
-    public function getExtrasAttribute($key)
+
+    public function getExtrasAttribute($extras)
     {
-        return json_decode($key,true);
+        return json_decode($extras, true);
+    }
+
+
+    public function setExtrasAttribute($value)
+    {
+        return $this->attributes['extras'] = json_encode($value, JSON_UNESCAPED_UNICODE);
     }
 
     public function center()

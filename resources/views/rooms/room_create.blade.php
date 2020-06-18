@@ -103,22 +103,20 @@
                                 <h6>محتويات الغرفه</h6>
                                 <div class="card ">
                                     <div class="card-body">
-                                        <div class="row ">
-                                            <div class="col-md-3">
-                                                <input name="extras[camera]" class="extra-class check" type="checkbox" {{ ! is_null($room->extras) && array_key_exists('camera',$room->extras) && $room->extras['camera'] == 'on' ? 'checked' : '' }}>
-                                                <label>كاميرات مراقبه</label>
+                                        <div class=" row smiley-wrapper justify-content-center">
+                                            <div class="smiley " id="addBtn">
+                                                @foreach($options as $option)
+                                                    <div name="add">
+                                                        <button class="btn btn-primary" name="option"> <span >{{ $option }}</span></button>
+                                                    </div>
+                                                 @endforeach
+
                                             </div>
-                                            <div class="col-md-3">
-                                                <input name="extras[air-conditioner]" class="extra-class check" type="checkbox" {{  ! is_null($room->extras) && array_key_exists('air-conditioner',$room->extras) && $room->extras['air-conditioner'] == 'on' ? 'checked' : '' }} >
-                                                <label>تكيف</label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input name="extras[data-show]" class="extra-class check " type="checkbox" {{ ! is_null($room->extras) && array_key_exists('data-show',$room->extras) && $room->extras['data-show'] == 'on' ? 'checked' : '' }} >
-                                                <label>دتاشو</label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input type="checkbox" onClick="selectAll(this)">
-                                                <label>تحديد الكل</label>
+                                        </div>
+                                        <Br>
+                                        <div class=" row">
+                                            <div class="col text-center">
+                                                <fieldset  name="message"  style="min-height: 100px;" id="reply-message" class="markItUpEditor "></fieldset>
                                             </div>
                                         </div>
                                     </div>
