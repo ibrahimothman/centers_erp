@@ -135,8 +135,6 @@ $(document).ready(function(){
             ' <div class="col-lg-2 col-md-3 form-group "><label> المطلوب </label><input type="text" name="deserved_amount'+id+'" class="form-control expenses_required"  id="deserved_amount'+id+'"   ></div>' +
             '<div class="col-lg-2 col-md-3 form-group "><label> المدفوع  </label><input type="text" name="amount'+id+'" class="form-control payOutlay expenses_required"  id="amount'+id+'"   ></div>' +
             '<div class="col-lg-1 col-md-3 form-group "><label>الباقي  </label><input type="text" name="noPay'+id+'" class="form-control "  id="noPay'+id+'"   ></div>' +
-            ' <div class="col-lg-1 col-md-3 form-group "> <label>طباعه</label><button type="button"  name="printPill'+id+'" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>'+
-            '</div>'+
             '</div></div>');
     });
     // print
@@ -168,8 +166,6 @@ $(document).ready(function(){
             '</div>'+
             '<div class="col-lg-3 col-sm-4 form-group "><label> الاسم  </label><input placeholder="اختار" type="text"  class="form-control pay_for_selector required_field" list="pay_for_list'+ id +'"  name="pay_for'+id+'" id="pay_for'+id+'" /> <datalist id="pay_for_list'+ id +'">'+
             '</div>'+
-            ' <div class="col-lg-1 col-md-3 form-group "> <label>طباعه</label><button type="button"  name="printPayroll'+id+'" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModalPayroll"><i class="fa fa-print   px-2"> </i></button>'+
-            '</div>'+
             '</div>');
     });
 // print
@@ -197,8 +193,6 @@ $(document).ready(function(){
             '<div class="col-lg-2 col-md-4 form-group "><label>  التكلفه </label><input type="text" name="cost'+id+'" class="form-control "  id="cost'+id+'"  readonly ></div>' +
             '<div class="col-lg-2 col-md-4 form-group "><label> المدفوع </label><input type="text" name="payIncome'+id+'" class="form-control payIncome "  id="payIncome'+id+'"   ></div>' +
             ' <div class="col-lg-2 col-md-4 form-group "><label>  الباقي </label><input type="text" name="noPayIncome'+id+'" class="form-control "  id="noPayIncome'+id+'"   readonly></div>' +
-           ' <div class="col-lg-1 col-md-4 form-group "> <label>طباعه</label><button type="button"  name="print'+id+'" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>'+
-            '</div>'+
             '</div></div>');
 
 

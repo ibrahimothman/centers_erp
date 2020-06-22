@@ -73,11 +73,7 @@
                                                     <div class="col-lg-2 col-md-4 form-group ">
                                                         <label>الباقي  </label><input type="text" name="noPayIncome" class="form-control "  id="noPayIncome1"  readonly >
                                                     </div>
-                                                    <div class="col-lg-1 col-md-4 form-group ">
-                                                        <label>طباعه</label>
-                                                        <button type="button" name="print" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>
 
-                                                    </div>
                                                 </div>
                                             </div>
                                             <!-- end -->
@@ -100,11 +96,76 @@
                                             </div>
                                         </form>
                                         <!-- end form -->
+
                                     </div>
                                 </div>
                             </div>
                             <br>
+                            <!-- done -->
+                            <div class="card-body ">
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+                                        <!-- table -->
+                                        <div class="table-responsive">
+                                            <table id="dtBasicExample"
+                                                   class="table table-striped table-bordered table-sm"
+                                                   cellspacing="0"
+                                                   width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th class="th-sm">الاسم</th>
+                                                    <th class="th-sm">الكورس/الدبلومه</th>
+                                                    <th class="th-sm">التكلفه</th>
+                                                    <th class="th-sm">المدفوع</th>
+                                                    <th class="th-sm">الباقي</th>
+                                                    <th class="th-sm">التاريخ</th>
+                                                    <th class="th-sm"> تعديل</th>
+                                                    <th class="th-sm"> ازاله</th>
+                                                    <th class="th-sm"> الديون</th>
+                                                    <th class="th-sm">طباعه</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>ff</td>
+                                                    <td>ff</td>
+                                                    <td>ff</td>
+                                                    <td>ff</td>
+                                                    <td>ff</td>
+                                                    <td>ff</td>
+                                                    <td>
+                                                        <a href=""
+                                                           class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                                    class="fas fa-edit m-0 "></i>
+                                                        </a>
 
+                                                    </td>
+                                                    <td>
+                                                        <form>
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-danger py-1 px-2">
+                                                                <i class="fas fa-trash-alt m-0"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <a href=""
+                                                           class=" btn btn-outline-primary  py-1 px-2 ">
+                                                            <i class="fas fa-money-check-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" name="print" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>
+
+                                                    </td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- finish -->
                         </div>
                     </div>
                     <br>
@@ -208,6 +269,7 @@
 <script type='text/javascript' src="/js/financialManagement.js"></script>
 
 <script>
+
     $(document).ready(function () {
 
         $(document).on('input', "[id^=student]",  function () {
