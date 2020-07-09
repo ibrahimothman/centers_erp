@@ -131,7 +131,7 @@
                                                             <td>العنوان</td>
                                                             <td colspan="2">
                                                                 <span>{{$student->address->state}} - </span>
-                                                                <span>ا{{$student->address->city}} - </span>
+                                                                <span>{{$student->address->city}} - </span>
                                                                 <span>{{$student->address->address}}</span>
                                                         </tr>
 

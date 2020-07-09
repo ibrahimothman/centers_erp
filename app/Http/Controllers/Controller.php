@@ -17,7 +17,9 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->middleware(function ($request, $next){
-            $this->center = Center::findOrFail(session('center_id'));
+            if(session(('center_id'))){
+                $this->center = Center::findOrFail(session('center_id'));
+            }
             return $next($request);
         });
     }

@@ -94,6 +94,7 @@
                                     <div class="card-body">
                                         <div class=" row smiley-wrapper justify-content-center">
                                             <div class="smiley " id="addBtn">
+
                                                 @foreach($options as $option)
                                                     <div name="add" style="display: inline-block;">
                                                         <button class="btn btn-primary" name="option"> <span >{{ $option }}</span></button>
@@ -106,16 +107,18 @@
                                         <div class=" row">
                                             <div class="col text-center">
                                                 <fieldset  name="message"  style="min-height: 100px;" id="reply-message" class="markItUpEditor ">
-                                                    @foreach($room->extras as $option)
-                                                        <span  class="field " style=" display: inline-block; padding: 5px; border-radius: 10em; color: #007bff; margin: 5px;  border: solid 1px #007bff;  " >
-                                                            <input name="extras[]" value="{{$option}}" hidden>
-                                                            <span>{{ $option }}
-                                                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </span>
-                                                        </span >
-                                                    @endforeach
+                                                    @if($room->extras)
+                                                        @foreach($room->extras as $option)
+                                                            <span  class="field " style=" display: inline-block; padding: 5px; border-radius: 10em; color: #007bff; margin: 5px;  border: solid 1px #007bff;  " >
+                                                                <input name="extras[]" value="{{$option}}" hidden>
+                                                                <span>{{ $option }}
+                                                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </span>
+                                                            </span >
+                                                        @endforeach
+                                                    @endif
                                                 </fieldset>
 
                                             </div>

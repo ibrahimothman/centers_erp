@@ -1,7 +1,9 @@
 <?php
 
 
+use App\State;
 use App\Time;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 $api_controller_path = "\App\Http\Controllers\Api";
 Route::group([
@@ -38,6 +40,8 @@ Route::resource('reviews',"$api_controller_path\ReviewsApiController");
 Route::get('/get_hours', function (){
    return response()->json(Time::hours());
 });
+
+
 
 
 

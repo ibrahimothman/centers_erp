@@ -103,7 +103,7 @@
                                                                     {{$time->end }}
 
                                                                     <span class="w-50 p-3  text-primary"> القاعه :</span>
-                                                                    {{ App\Room::findOrFail($time->pivot->room_id)->name }}
+                                                                    {{ $time->pivot->room->name }}
                                                                 </div>
 
                                                             @endforeach

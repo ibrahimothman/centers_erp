@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\web;
 
+use App\Address;
+use App\City;
 use App\Http\Controllers\Controller;
 
 use App\Center;
@@ -10,6 +12,7 @@ use App\PaymentModel;
 use App\repository\InstructorRepository;
 use App\Room;
 use App\Rules\UniquePerCenter;
+use App\State;
 use App\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -37,8 +40,9 @@ class InstructorsController extends Controller
 
     public function create()
     {
-        $payment_models = Center::findOrFail(Session('center_id'))->paymentModels;
-        return view('instructor/register_instructor', compact('payment_models'));
+        $payment_models = PaymentModel::all();
+        $address = new Address();
+        return view('instructor/register_instructor', compact('payment_models', 'address'));
     }
 
 
@@ -52,11 +56,12 @@ class InstructorsController extends Controller
         // fetch center from session
 
         $instructor = Instructor::create(Arr::except($data,['state','city','address']));
+
         // attach student with center
         $instructor->address()->create([
-            'state' => $request->all()['state'],
-            'city' => $request->all()['city'],
-            'address' => $request->all()['address'],
+            'state' => $request->get('state'),
+            'city' => $request->get('city'),
+            'address' => $request->get('address'),
         ]);
 
         $this->center->instructors()->syncWithoutDetaching($instructor);
@@ -78,7 +83,8 @@ class InstructorsController extends Controller
 
     public function edit(Instructor $instructor)
     {
-        return view("instructor/update_instructor", compact('instructor'));
+        $payment_models = $this->center->paymentModels;
+        return view("instructor/update_instructor", compact('instructor', 'payment_models'));
     }
 
 
@@ -86,7 +92,7 @@ class InstructorsController extends Controller
     {
         $data = $this->validateRequest($request);
 
-
+        $data = $data->validate();
         $instructor->update(Arr::except($data,['state','city','address']));
         $instructor->address()->update([
             'state' => $data['state'],
@@ -108,23 +114,8 @@ class InstructorsController extends Controller
 
     private function validateRequest(Request $request)
     {
-        return Validator::make($request->all(),[
-            'nameAr' => ['required', new UniquePerCenter(Instructor::class, '','instructors',false)],
-            'nameEn' =>['required', new UniquePerCenter(Instructor::class, '','instructors',false)] ,
-            'email' =>['required', new UniquePerCenter(Instructor::class, '','instructors',false)],
-            'idNumber' => ['required','digits:14',new UniquePerCenter(Instructor::class, '','instructors',false)],
-            'image' => ' nullable|image|file | max:10000',
-            'idImage' => 'nullable|image|file | max:10000',
-            'phoneNumber' => ['required','regex:/(01)[0-9]{9}/', new UniquePerCenter(Instructor::class, '','instructors',false)],
-            'phoneNumberSec' => ['nullable','regex:/(01)[0-9]{9}/',new UniquePerCenter(Instructor::class, '','instructors',false)],
-            'passportNumber' => ['sometimes',new UniquePerCenter(Instructor::class, '','instructors',false)],
-            'state' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'bio' => 'nullable',
-            'payment_model' => ['required', 'integer'],
-            'payment_model_meta_data' => ['required', 'array'],
-        ]);
+
+        return Validator::make($request->all(), Instructor::rules($request));
     }
 
     public function showInstructorCalendar(Instructor $instructor){

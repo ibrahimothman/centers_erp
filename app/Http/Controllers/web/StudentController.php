@@ -1,29 +1,18 @@
 <?php
 namespace App\Http\Controllers\web;
 
-use App\helper\AccessRightsHelper;
+use App\Address;
+use App\City;
 use App\Http\Controllers\Controller;
 
-use App\Center;
-use App\helper\ImageUploader;
-use App\Job;
-use App\QueryFilter\SearchBy;
-use App\QueryFilter\Sort;
-use App\QueryFilter\SortElse;
+use App\State;
 use Illuminate\Http\Request;
 use App\Student;
-use Illuminate\Pipeline\Pipeline;
+
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Input;
+
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
-use phpDocumentor\Reflection\Types\Null_;
-use const http\Client\Curl\AUTH_ANY;
-use mysql_xdevapi\Session;
+
 
 
 class StudentController extends Controller
@@ -57,6 +46,7 @@ class StudentController extends Controller
         $this->authorize('create', Student::class);
 
         $student = new Student();
+        $student->address = new Address();
         return view('students.studentCreate',compact('student'));
     }
 
@@ -68,15 +58,14 @@ class StudentController extends Controller
 
         $data = $this->validateRequest($request);
 
-
         // create a new student
         $student = Student::create(Arr::except($data->validate(),['state','city','address']));
 
         // attach student with center
         $student->address()->create([
-            'state' => $request->all()['state'],
-            'city' => $request->all()['city'],
-            'address' => $request->all()['address'],
+            'state' => $request->get('state'),
+            'city' => $request->get('city'),
+            'address' => $request->get('address'),
         ]);
 
         $this->center->students()->syncWithoutDetaching($student);
@@ -96,6 +85,7 @@ class StudentController extends Controller
 
         // authorization check
         $this->authorize('view', Student::class);
+        $student->address = $student->getAddress($student->address);
         return view('students.show',compact('student'));
     }
 
@@ -120,9 +110,9 @@ class StudentController extends Controller
         // update address
 
         $student->address()->update([
-            'state' => $request->has('state')? $request->all()['state']: $student->address->state,
-            'city' => $request->has('city')? $request->all()['city']: $student->address->city,
-            'address' => $request->has('address')? $request->all()['address']: $student->address->address,
+            'state' => $request->has('state')? $request->get('state'): $student->address->state,
+            'city' => $request->has('city')? $request->get('city'): $student->address->city,
+            'address' => $request->has('address')? $request->get('address'): $student->address->address,
         ]);
 
         return redirect("/students/$student->id")->with('success','updated');

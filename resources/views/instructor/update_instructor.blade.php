@@ -34,6 +34,34 @@
                                     @csrf
                                     @method('patch')
 
+                                    <div class="form-row image-upload">
+                                        <div class="col-sm-8">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
+                                                       id="customFile1"  onchange="readURL(this, 1);" >
+                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
+                                                       id="customFile2"  onchange="readURL(this, 2);" >
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center  ">
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded1" src="{{ $instructor->getImage("idImage") }}"
+                                                 alt="your image"/>
+                                            <p>صورة البطاقه</p>
+                                            <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
+                                        </div>
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded2" src="{{ $instructor->getImage("image") }}"
+                                                 alt="your image"/>
+                                            <p >الصوره الشخصيه</p>
+                                            <div id="photo2" class="photo" >هذه الخانه مطلوبه</div>
+                                        </div>
+                                    </div>
+                                    <div class="photo"></div>
+
                                     <div class="form-row form-group">
                                         <div class="col-sm-12 ">
                                             <label>الاسم باللغه العربيه</label>
@@ -94,18 +122,8 @@
                                     </div>
                                     <br>
 
-                                    <div class="form-row form-group">
-                                        <div class="col-sm-6  ">
-                                            <label>البلد </label>
-                                            <input name="state" type="text" placeholder="البلد" value="{{ $instructor->address->state }}"
-                                                   class="form-control mb-1">
-                                        </div>
-
-                                        <div class="col-sm-6  ">
-                                            <label>المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="{{ $instructor->address->city }}" class="form-control">
-
-                                        </div>
+                                    <div id="app">
+                                        <address_component :address="{{ $instructor->address }}"></address_component>
                                     </div>
 
                                     <div class=" form-row  form-group">
@@ -126,33 +144,21 @@
 
                                     </div>
 
-                                    <div class="form-row image-upload">
-                                        <div class="col-sm-8">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
-                                                       id="customFile1" src="{{ $instructor->getImage("idImage") }}" onchange="readURL(this, 1);" required>
-                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
-                                                       id="customFile2" src="{{ $instructor->getImage("image") }}" onchange="readURL(this, 2);" required>
-
-
-                                            </div>
+                                    <!-- payment model -->
+                                    <div class="form-row  " id="model_form" >
+                                        <div class="col form-group">
+                                            <label>نظام المحاسبه</label>
+                                            <span class="required">*</span>
+                                            <select class="form-control" id="payment_models" name="payment_model" required>
+                                                <option value="0">اختار</option>
+                                                @foreach($payment_models as $payment_model)
+                                                    <option data-extra="{{ $instructor->payment_model['model'] == $payment_model->name? $instructor->payment_model_meta_data :  $payment_model->meta_data }}" value="{{ $payment_model->id }}" {{ $instructor->payment_model['model'] == $payment_model->name ? 'selected' : ''}}>{{ $payment_model->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-center  ">
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded1" src="{{ $instructor->getImage("idImage") }}"
-                                                 alt="your image"/>
-                                            <p>صورة البطاقه</p>
-                                            <div id="photo1" class="photo" >هذه الخانه مطلوبه</div>
-                                        </div>
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded2" src="{{ $instructor->getImage("image") }}"
-                                                 alt="your image"/>
-                                            <p >الصوره الشخصيه</p>
-                                            <div id="photo2" class="photo" >هذه الخانه مطلوبه</div>
-                                        </div>
-                                    </div>
-                                    <div class="photo"></div>
+
+
 
                                     <br>
                                     <div class="form-row save">
@@ -179,6 +185,7 @@
     </div>
 </div>
 <!-- scroll top -->
+<script src="{{ asset('js/app.js') }}"></script>
 @include('scroll_top')
 <!-- script-->
 @include('script')
@@ -190,6 +197,41 @@
 
 
 <script>
+
+
+
+
+    $(document).ready(function () {
+        var selected_model_meta_data = $.parseJSON($("#payment_models").find(':selected').attr("data-extra"));
+        console.log(selected_model_meta_data);
+        drawPaymentModelOptions(selected_model_meta_data);
+    });
+
+    $("#payment_models").on('change', function() {
+        // console.log('change');
+        $('.meta_data').remove();
+        var selected_model_meta_data = $.parseJSON($(this).find(':selected').attr("data-extra"));
+        drawPaymentModelOptions(selected_model_meta_data);
+
+
+    });
+
+    function drawPaymentModelOptions(payment_model_meta_data) {
+        $.each(payment_model_meta_data, function (key, value) {
+            $('#model_form').after("<div class='row form-group meta_data'>" +
+                "<div class='col-sm-12'>" +
+                "<label>"+ key +"</label>" +
+                "<span class='required'>*</span>" +
+                "<input class='form-control payType' type='text' value='"+ value +"' name='payment_model_meta_data["+ key +"]' id='"+ key +"'>" +
+                "</div>" +
+                "</div>");
+        })
+    }
+
+
+
+
+
     $('#imageUploaded1, #imageUploaded2, #imageUploaded3, #imageUploaded4').click(function () {
         let photoNum = this.id[this.id.length - 1];
         $(`#customFile${photoNum}`).trigger('click');

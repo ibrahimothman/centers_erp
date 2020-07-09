@@ -5,21 +5,36 @@ $(document).ready(function () {
         return value.indexOf(" ") < 0 && value != "";
     }, "No space please and don't leave it empty");
     /* write only english */
-    $.validator.addMethod("validUsername", function (value, element) {
-        return /^[a-zA-Z0-9_.-]+$/.test(value);
+    $.validator.addMethod("validNameEn", function (value, element) {
+        return /^[A-Za-z0-9_ ]+$/.test(value);
     }, "Please enter a valid username");
+
+    // valid phone number
+    $.validator.addMethod("validNameAr", function (value, element) {
+        return /[\u0600-\u06FF\u0750-\u077F]/.test(value);
+    }, "Please enter a valid username");
+
+    // valid phone number
+    $.validator.addMethod("validPhoneNumber", function (value, element) {
+        return /(01)[0-9]{9}/.test(value);
+    }, "Please enter a valid phone number");
+
 
     /* validation */
     $('#studentCreate').validate(
         {
            // onkeyup: true,
             rules: {
+                image:{
+                    required: true
+                },
                 nameAr: {
                     required: true,
+                    validNameAr: true
                 },
                 nameEn: {
                     required: true,
-                    validUsername: true
+                    validNameEn: true
                 },
 
                 email: {
@@ -29,6 +44,7 @@ $(document).ready(function () {
                 phoneNumber: {
                     required: true,
                     noSpace:true,
+                    validPhoneNumber: true,
                     number: true,
                     minlength: 11,
                     maxlength:11
@@ -51,13 +67,16 @@ $(document).ready(function () {
                 },
             },
             messages: {
-
+                image: {
+                    required: "هذه الخانه مطلوبه",
+                },
                 nameAr: {
                     required: "هذه الخانه مطلوبه",
+                    validNameAr: "مسموح بالعربي فقط"
                 },
                 nameEn: {
                     required: "هذه الخانه مطلوبه",
-                    validUsername: "مسموح بالانجليزي فقط"
+                    validNameEn: "مسموح بالانجليزي فقط"
                 },
 
                 email: {
@@ -67,6 +86,7 @@ $(document).ready(function () {
                 phoneNumber: {
                     required: "هذه الخانه مطلوبه",
                     number:"ادخل الرقم الصحيح",
+                    validPhoneNumber: "ادخل الرقم صحيح",
                     minlength: "ادخل الرقم الصحيح" ,
                     maxlength:"ادخل الرقم الصحيح",
                     noSpace:"غير مسموح بالمسافات"

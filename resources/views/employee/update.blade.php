@@ -124,22 +124,8 @@
                                     </div>
                                     <br>
 
-                                    <div class="form-row">
-
-                                        <div class="col  ">
-                                            <label>البلد </label>
-                                            <input name="state" type="text" placeholder="البلد" value="{{ $employee->address->state ?? old('state') }}" class="form-control">
-                                            <div>{{ $errors->first('state') }}</div>
-                                            <div></div>
-
-                                        </div>
-
-                                        <div class="col  ">
-                                            <label >المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="{{ $employee->address->city ?? old('city') }}" class="form-control">
-                                            <div>{{ $errors->first('city') }}</div>
-
-                                        </div>
+                                    <div id="app">
+                                        <address_component :address="{{ $employee->address }}"></address_component>
                                     </div>
 
                                     <div class=" form-row">
@@ -221,6 +207,7 @@
     </div>
 </div>
 <!-- scroll top -->
+<script src="{{ asset('js/app.js')  }}"></script>
 @include('scroll_top')
 <!-- script-->
 @include('script')

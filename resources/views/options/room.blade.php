@@ -34,7 +34,7 @@
                                     </div>
                                 </div>
                                 <div class="options">
-                                    @if(count($options) > 0)
+                                    @if($options && count($options) > 0)
                                         @foreach($options as $option)
                                             <div  style='display: inline-block' class='option-item'>
                                                 <input hidden name='options[room][]' value='{{$option}}'>

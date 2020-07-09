@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\web;
 
+use App\Address;
 use App\Employee;
 use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\Instructor;
 use App\Invitation;
+use App\PaymentModel;
 use App\Rules\UniquePerCenter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -35,8 +37,9 @@ class EmployeeController extends Controller
     {
         //
         $employee = new Employee();
+        $employee->address = new Address();
         $jobs = $this->center->jobs;
-        $payment_models = $this->center->paymentModels;
+        $payment_models = PaymentModel::all();
         return view('employee.create', compact('employee', 'jobs', 'payment_models'));
     }
 
@@ -78,6 +81,7 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
+        $employee->address = $employee->getAddress($employee->address);
         return view('employee.show', compact('employee'));
 
     }

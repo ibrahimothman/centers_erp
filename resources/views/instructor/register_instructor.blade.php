@@ -103,20 +103,8 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="form-row form-group">
-                                <div class="col-sm-6  ">
-                                    <label>البلد </label>
-                                    <input name="state" type="text" placeholder="البلد" value="{{old('state')}}"
-                                           class="form-control mb-1">
-                                    <div>{{ $errors->first('state') }}</div>
-                                </div>
-
-                                        <div class="col-sm-6  ">
-                                            <label>المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="{{old('city')}}" class="form-control">
-                                            <div>{{ $errors->first('city') }}</div>
-
-                                        </div>
+                                    <div id="app">
+                                        <address_component :address="{{ $address }}"></address_component>
                                     </div>
 
                                     <div class=" form-row  form-group">
@@ -202,6 +190,7 @@
     </div>
 </div>
 <!-- scroll top -->
+<script src="{{  asset('js/app.js') }}"></script>
 @include('scroll_top')
 <!-- script-->
 @include('script')

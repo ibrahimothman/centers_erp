@@ -15,7 +15,6 @@ class SettingController extends Controller
 
     public function index()
     {
-
         $center = Auth::user()->center;
         return view('account_settings/setting', compact('center'));
     }

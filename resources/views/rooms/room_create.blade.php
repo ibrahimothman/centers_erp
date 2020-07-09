@@ -101,15 +101,19 @@
                                 </div>
                                 <br>
                                 <h6>محتويات الغرفه</h6>
+
                                 <div class="card ">
+                                    @if($options)
                                     <div class="card-body">
                                         <div class=" row smiley-wrapper justify-content-center">
                                             <div class="smiley " id="addBtn">
+
                                                 @foreach($options as $option)
                                                     <div name="add">
                                                         <button class="btn btn-primary" name="option"> <span >{{ $option }}</span></button>
                                                     </div>
                                                  @endforeach
+
 
                                             </div>
                                         </div>
@@ -120,6 +124,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @else
+                                        <a href="/centers/options">اضف امكانيات</a>
+                                    @endif
+
                                 </div>
                                 <br>
                                 <div class="form-row save">

@@ -8,7 +8,11 @@ use App\helper\MathParser\Math;
 use App\helper\PaymentModelHelper;
 use App\QueryFilter\SearchBy;
 use App\QueryFilter\Sort;
+use App\Rules\DegreeRule;
+use App\Rules\FacultyRule;
+use App\Rules\UniquePerCenter;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
@@ -74,6 +78,13 @@ class Instructor extends ImageUploader
     public function address()
     {
         return $this->morphOne(Address::class,'addressable');
+    }
+
+    public function getAddress($address)
+    {
+        $address->state = State::where('state_id', $address->state)->where('lang', 'ar')->first()->name;
+        $address->city = City::where('city_id', $address->city)->where('lang', 'ar')->first()->name;
+        return $address;
     }
 
     // save image before center it to db
@@ -147,5 +158,47 @@ class Instructor extends ImageUploader
         return '/uploads/profiles';
     }
 
+    public static function rules(Request $request)
+    {
+
+        if($request->isMethod('post')){
+            return [
+                'nameAr' => ['required', new UniquePerCenter(Instructor::class, '', 'instructors', false)],
+                'nameEn' => ['required', new UniquePerCenter(Instructor::class, '', 'instructors', false)],
+                'email' => ['required', new UniquePerCenter(Instructor::class, '', 'instructors', false)],
+                'idNumber' => ['required', 'digits:14', new UniquePerCenter(Instructor::class, '', 'instructors', false)],
+                'image' => ' required|image|file | max:10000',
+                'idImage' => 'required|image|file | max:10000',
+                'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/', new UniquePerCenter(Instructor::class, '', 'instructors', false)],
+//                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
+                'passportNumber' => 'sometimes',
+                'state' => 'sometimes',
+                'city' => 'required',
+                'address' => 'required',
+                'bio' => 'nullable',
+                'payment_model' => ['required', 'integer'],
+                'payment_model_meta_data' => ['required', 'array'],
+            ];
+        }else{
+            $instructor_id = $request->route('instructor')->id;
+            return[
+                'nameAr' => ['required', new UniquePerCenter(Instructor::class, $instructor_id, 'instructors', false)],
+                'nameEn' => ['required', new UniquePerCenter(Instructor::class, $instructor_id, 'instructors', false)],
+                'email' => ['required', new UniquePerCenter(Instructor::class, $instructor_id, 'instructors', false)],
+                'idNumber' => ['required', 'digits:14', new UniquePerCenter(Instructor::class, $instructor_id, 'instructors', false)],
+                'image' => ' sometimes|image|file | max:10000',
+                'idImage' => 'sometimes|image|file | max:10000',
+                'phoneNumber' => ['required', 'regex:/(01)[0-9]{9}/', new UniquePerCenter(Instructor::class, $instructor_id, 'instructors', false)],
+//                'phoneNumberSec' => 'sometimes|regex:/(01)[0-9]{9}/',
+                'passportNumber' => 'sometimes',
+                'state' => 'sometimes',
+                'city' => 'sometimes',
+                'address' => 'sometimes',
+                'bio' => 'nullable',
+                'payment_model' => ['required', 'integer'],
+                'payment_model_meta_data' => ['required', 'array'],
+            ];
+        }
+    }
 
 }

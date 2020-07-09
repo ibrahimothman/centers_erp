@@ -14,3 +14,4 @@ config/database.php
 
 /public/uploads
 /uploads
+.git

@@ -9,6 +9,7 @@
 
 <body id="page-top">
 <!-- Begin Page Content -->
+<div id="app">
 <div id="wrapper">
     @include('sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
@@ -39,9 +40,9 @@
                                         <div class="form-row image-upload">
                                             <div class="col-sm-8">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" accept="image/*" name="idImage"
+                                                    <input type="file" class="custom-file-input" accept="image/*" name="idImage" required
                                                            id="customFile1" src="" onchange="readURL(this, 1);" >
-                                                    <input type="file" class="custom-file-input" accept="image/*" name="image"
+                                                    <input type="file" class="custom-file-input" accept="image/*" name="image" required
                                                            id="customFile2" src="" onchange="readURL(this, 2);" >
                                                 </div>
                                             </div>
@@ -51,12 +52,14 @@
                                                 <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                                      alt="your image"/>
                                                 <p>صورة البطاقه</p>
+                                                <div>{{$errors->first('idImage')}}</div>
                                           <!--      <div id="photo1" class="photo" >هذه الخانه مطلوبه</div> -->
                                             </div>
                                             <div class="course-image-input">
                                                 <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
                                                      alt="your image"/>
                                                 <p>الصوره الشخصيه</p>
+                                                <div>{{$errors->first('image')}}</div>
                                           <!--      <div id="photo2" class="photo" >هذه الخانه مطلوبه</div> -->
 
                                             </div>
@@ -68,7 +71,7 @@
 
                                             <label for="validationCustom01">الاسم باللغه العربيه</label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('nameAr') ?? 'asdas'}}" >
+                                            <input type="text" class="form-control" name="nameAr" id="validationCustom01" placeholder="الاسم باللغه العربيه "  value="{{ old('nameAr') }}" >
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
                                     </div>
@@ -76,7 +79,7 @@
                                         <div class="col-sm-12 form-group">
                                             <label for="validationCustom03">الاسم باللغه الانجليزيه</label>
                                             <span class="required">*</span>
-                                            <input type="text" name= "nameEn" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('nameEn')?? 'asdw' }}" >
+                                            <input type="text" name= "nameEn" class="form-control" id="validationCustom03" placeholder="الاسم باللغه الانجليزيه" value="{{ old('nameEn') }}" >
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
                                     </div>
@@ -84,7 +87,7 @@
                                         <div class="col-sm-12 form-group">
                                         <label for="validationCustom05">البريد الالكترونى </label>
                                             <span class="required">*</span>
-                                        <input type="text" name="email" id="validationCustom05" placeholder="ادخل البريد الالكترونى " class="form-control" value="{{ old('email') ?? 'asd@asd.asd'}}">
+                                        <input type="text" name="email" id="validationCustom05" placeholder="ادخل البريد الالكترونى " class="form-control" value="{{ old('email') }}">
                                         <div>{{ $errors->first('email') }}</div>
                                     </div>
 
@@ -93,12 +96,12 @@
                                         <div class="col-sm-6 ">
                                             <label>رقم التليفون المحمول</label>
                                             <span class="required">*</span>
-                                            <input type="text" name="phoneNumber"  data-inputmask="'mask' : '(999) 99999999'"  placeholder="ادخل رقم التليفون المحمول"  class="form-control" value="{{ old('phoneNumber')??'01265236521' }}">
+                                            <input type="text" name="phoneNumber"  data-inputmask="'mask' : '(999) 99999999'"  placeholder="999999999 (01)"  class="form-control" value="{{ old('phoneNumber') }}">
                                             <div>{{ $errors->first('phoneNumber') }}</div>
                                         </div>
                                         <div class="col-sm-6 form-group">
                                             <label>تليفون اخر </label>
-                                            <input type="text" name="phoneNumberSec" placeholder="ادخل رقم التليفون" value="{{ old('phoneNumberSec') }}"   class="form-control">
+                                            <input type="text" name="phoneNumberSec" placeholder="999999999 (01)" value="{{ old('phoneNumberSec') }}"   class="form-control">
                                             <div>{{ $errors->first('phoneNumberSec') }}</div>
                                         </div>
 
@@ -107,7 +110,7 @@
                                     <div class=" form-row">
                                         <div class="col-sm-6">
                                             <label for="validationCustom06">الرقم القومى </label>
-                                            <input type="text" name="idNumber" id="validationCustom06" value="{{ old('idNumber') ?? '23652145214521'}}"  placeholder="ادخل الرقم القومى " class="form-control" >
+                                            <input type="text" name="idNumber" id="validationCustom06" value="{{ old('idNumber') }}"  placeholder="ادخل الرقم القومى " class="form-control" >
                                             <div>{{ $errors->first('idNumber') }}</div>
 
                                         </div>
@@ -119,30 +122,15 @@
 
                                     </div>
                                     <br>
+                                    <address_component :address="{{ $student->address }}"></address_component>
 
-                                    <div class="form-row">
-                                        <div class="col-sm-12  ">
 
-                                        </div>
-                                        <div class="col-sm-6 form-group ">
-                                            <label for="">البلد </label>
-                                            <input name="state" type="text" placeholder="البلد" value="{{ old('state')?? 'asdas' }}" class="form-control">
-                                            <div>{{ $errors->first('state') }}</div>
-
-                                        </div>
-
-                                        <div class="col-sm-6 form-group ">
-                                            <label for="">المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="{{ old('city')?? 'asdasd' }}" class="form-control">
-                                            <div>{{ $errors->first('city') }}</div>
-                                        </div>
-                                    </div>
 
                                     <div class=" form-row form-group">
                                         <label>العنوان</label>
                                         <span class="required">*</span>
 
-                                        <textarea name="address" placeholder="ادخل العنوان " rows="3" class="form-control">{{ old('address')??'asda' }}</textarea>
+                                        <textarea name="address" placeholder="ادخل العنوان " rows="3" class="form-control">{{ old('address') }}</textarea>
                                         <div>{{ $errors->first('address') }}</div>
                                     </div>
 
@@ -156,6 +144,7 @@
                                                     <option {{ $degree == old('degree')? 'selected': '' }}>{{ $degree }}</option>
                                                 @endforeach
                                             </select>
+                                            <div>{{ $errors->first('degree') }}</div>
                                         </div>
 
                                         <div class="col-sm-6  ">
@@ -166,12 +155,13 @@
                                                     <option {{ $faculty == old('faculty')? 'selected': '' }}>{{ $faculty }}</option>
                                                 @endforeach
                                             </select>
+                                            <div>{{ $errors->first('faculty') }}</div>
                                         </div>
                                     </div>
                                     <div class=" form-row">
                                         <div class="col-sm-12 form-group ">
                                             <label>كارت المهاره</label>
-                                            <input type="text" value="{{ old('skillCardNumber')?? '215546' }}" placeholder="ادخل الرقم" name="skillCardNumber" class="form-control">
+                                            <input type="text" value="{{ old('skillCardNumber')}}" placeholder="ادخل الرقم" name="skillCardNumber" class="form-control">
                                             <div>{{ $errors->first('skillCardNumber') }}</div>
                                         </div>
 
@@ -220,13 +210,14 @@
 
 
 </div>
+</div>
 <!-- script-->
+<script src="{{ asset("js/app.js") }}"></script>
 @include('script')
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
-<script type='text/javascript' src="/js/students_create_validation.js"></script>
-<script type='text/javascript' src="/js/student.js"></script>
+<script type='text/javascript' src="{{ asset('/js/students_create_validation.js') }}"></script>
 <script>
 
         $(document).ready(function() {

@@ -114,7 +114,7 @@
                                             <div class="col-sm-3 form-group {{ $i > 1? 'extra_time' : ''}}">
                                                 <label for="validationCustom0{{$i}}">اختر الغرفه</label>
                                                 <select class="form-control" id="diploma-room-{{$i}}" name="diploma-rooms[]">
-                                                    <option value="{{ $time->pivot->room_id }}">{{ App\Room::findOrFail($time->pivot->room_id)->name }}</option>
+                                                    <option value="{{ $time->pivot->room_id }}">{{ $time->pivot->room->name }}</option>
                                                 </select>
                                             </div>
                                             @php($i++)

@@ -116,41 +116,9 @@
                                     </div>
                                     <br>
 
-                                    {{--  <div class=" form-row ">
-                                          <div class="col-sm-6" >
 
-                                              <div class="custom-file">
-                                                  <input type="file" class="custom-file-input" name="image" id="customFile1" src="{{ old('image') }}" >
-                                                  <label class="custom-file-label" for="customFile">صوره الشخصيه</label>
-                                                  <div>{{ $errors->first('image') }}</div>
-                                              </div>
-                                          </div>
-                                          <div class="col-sm-6 ">
-                                              <div class="custom-file">
-                                                  <input type="file" class="custom-file-input" name="idPicture" src="{{ old('idPicture') }}" id="customFile2">
-                                                  <label class="custom-file-label" for="customFile">صوره  البطاقه </label>
-                                                  <div>{{ $errors->first('idPicture') }}</div>
-                                              </div>
-                                          </div>
-
-                                      </div>
-                                    --}}
-                                    <div class="form-row">
-                                        <div class="col-sm-12  ">
-
-                                        </div>
-                                        <div class="col-sm-6 form-group ">
-                                            <label for="">البلد </label>
-                                            <input name="state" type="text" placeholder="البلد" value="{{ $student->address->state }}" class="form-control">
-                                            <div>{{ $errors->first('state') }}</div>
-
-                                        </div>
-
-                                        <div class="col-sm-6 form-group ">
-                                            <label for="">المدينه </label>
-                                            <input name="city" type="text" placeholder="المدينه" value="{{ $student->address->city }}" class="form-control">
-                                            <div>{{ $errors->first('city') }}</div>
-                                        </div>
+                                    <div id="app">
+                                        <address_component :address="{{ $student->address }}"></address_component>
                                     </div>
 
                                     <div class=" form-row form-group">
@@ -252,6 +220,7 @@
     </div>
 </div>
 <!-- script-->
+<script src="{{ asset('js/app.js') }}"></script>
 @include('script')
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>

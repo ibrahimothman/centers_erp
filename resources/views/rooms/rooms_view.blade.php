@@ -67,9 +67,7 @@
                                                         <i class="fas fa-edit  "></i>
                                                     </a>
 
-                                                    <button id="delete-room-{{$room->id}}"  type="button" class="btn btn-outline-danger py-1 px-1 ">
-                                                        <i class="fas fa-trash-alt "></i>
-                                                    </button>
+
                                                 </div>
 
                                             </div>
@@ -94,17 +92,17 @@
 @include('script')
 
 <script>
-    $('button[id^=delete-room-]').on('click', function () {
-        let room_id = $(this).attr('id').split('-')[2];
-        $.ajax({
-            url: "rooms/"+room_id,
-            type: "DELETE",
-            data: {_token: "{{csrf_token()}}"},
-            success: function () {
+    {{--$('button[id^=delete-room-]').on('click', function () {--}}
+    {{--    let room_id = $(this).attr('id').split('-')[2];--}}
+    {{--    $.ajax({--}}
+    {{--        url: "rooms/"+room_id,--}}
+    {{--        type: "DELETE",--}}
+    {{--        data: {_token: "{{csrf_token()}}"},--}}
+    {{--        success: function () {--}}
 
-            }
-        });
-    })
+    {{--        }--}}
+    {{--    });--}}
+    {{--})--}}
 </script>
 </body>
 </html>

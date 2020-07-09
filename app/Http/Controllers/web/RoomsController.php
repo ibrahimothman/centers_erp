@@ -37,6 +37,7 @@ class RoomsController extends Controller
     {
         $room = new Room();
         $options = $this->center->getRoomOptions();
+
         return view('rooms/room_create',compact('room', 'options'));
     }
 
@@ -73,9 +74,9 @@ class RoomsController extends Controller
         return redirect("rooms");
     }
 
-    public function destroy(Request $request, Room $room)
+    public function destroy(Room $room)
     {
-
+        $room->delete();
     }
 
 

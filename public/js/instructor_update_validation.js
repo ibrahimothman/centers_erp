@@ -108,7 +108,7 @@ $(document).ready(function () {
         $(this).validate();
     });
     /* image1 validation */
-    /*
+
     $("#submit").click(function () {
         if (document.getElementById("customFile1").files.length == 0) {
             $("#photo1").fadeIn();
@@ -119,9 +119,9 @@ $(document).ready(function () {
             $("#photo1").fadeOut();
         }
     });
-    */
+
     /* image2 validation */
-    /*
+
     $("#submit").click(function () {
         if (document.getElementById("customFile2").files.length == 0) {
             $("#photo2").fadeIn();
@@ -132,7 +132,7 @@ $(document).ready(function () {
             $("#photo2").fadeOut();
         }
     });
-*/
+
 
 
 }); // end document.ready

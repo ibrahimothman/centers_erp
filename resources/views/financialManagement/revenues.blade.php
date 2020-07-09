@@ -45,14 +45,14 @@
 
 
                                                 <!-- print bil -->
-                                                <div class="col-sm-4 form-group">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" name="print_bill" id="print_bill" data-toggle="modal" data-target="#printModal">
-                                                        <label class="custom-control-label" for="print_bill">طباعة فاتوره</label>
-                                                    </div>
+{{--                                                <div class="col-sm-4 form-group">--}}
+{{--                                                    <div class="custom-control custom-checkbox">--}}
+{{--                                                        <input type="checkbox" class="custom-control-input" name="print_bill" id="print_bill" data-toggle="modal" data-target="#printModal">--}}
+{{--                                                        <label class="custom-control-label" for="print_bill">طباعة فاتوره</label>--}}
+{{--                                                    </div>--}}
 
 
-                                                </div>
+{{--                                                </div>--}}
 
                                                 <!-- add pill -->
                                                 <div  class="form-group   mr-3  ">
@@ -111,11 +111,11 @@
                                                     <div class="col-lg-1 col-sm-1 form-group ">
                                                         <label>الباقي  </label><input type="text" name="noPayIncome" class="form-control "  id="rest-1"  readonly >
                                                     </div>
-                                                    <div class="col-lg-1 col-md-4 form-group ">
-                                                        <label>طباعه</label>
-                                                        <button type="button" name="print" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>
+{{--                                                    <div class="col-lg-1 col-md-4 form-group ">--}}
+{{--                                                        <label>طباعه</label>--}}
+{{--                                                        <button type="button" id="print" name="print" class="btn btn-warning form-control" data-toggle="modal" data-target="#printModal"><i class="fa fa-print   px-2"> </i></button>--}}
 
-                                                    </div>
+{{--                                                    </div>--}}
 
                                                 </div>
                                             </div>
@@ -261,7 +261,6 @@
         $("#submit").on('click', function (e) {
             e.preventDefault();
             if(checkIfAllInputsFilled()){
-
                 $(this).prop('disabled', true);
                 makeAjaxCall('/transactions', 'POST', {
                     transactions: createTransactionMetaDataJSON(),

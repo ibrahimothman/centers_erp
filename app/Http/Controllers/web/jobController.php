@@ -14,6 +14,11 @@ use mysql_xdevapi\Session;
 class jobController extends Controller
 {
 
+//    public function index()
+//    {
+//        return view('jobs/index');
+//    }
+
     public function create()
     {
 

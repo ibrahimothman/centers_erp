@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+console.log("appjs")
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -13,13 +15,13 @@ window.Vue = require('vue');
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/CalendarComponent.vue -> <example-component></example-component>
+ * Eg. ./components/AddressComponent.vue -> <example-component></example-component>
  */
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('calendar_component', require('./components/CalendarComponent.vue').default);
+Vue.component('address_component', require('./components/AddressComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

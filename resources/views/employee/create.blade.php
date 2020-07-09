@@ -61,20 +61,20 @@
                                         <div class="form-row">
                                             <label>الاسم باللغه العربيه </label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control"  name="nameAr" placeholder="الاسم " value="{{ old('nameAr') ?? 'asd' }}">
+                                            <input type="text" class="form-control"  name="nameAr" placeholder="الاسم " value="{{ old('nameAr')  }}">
                                             <div>{{ $errors->first('nameAr') }}</div>
                                         </div>
 
                                         <div class="form-row">
                                             <label>الاسم باللغه الانجليزيه </label>
                                             <span class="required">*</span>
-                                            <input type="text" class="form-control" name="nameEn" placeholder="الاسم " value="{{ old('nameEn') ?? 'asd' }}">
+                                            <input type="text" class="form-control" name="nameEn" placeholder="الاسم " value="{{ old('nameEn') }}">
                                             <div>{{ $errors->first('nameEn') }}</div>
                                         </div>
 
                                         <div class="form-row">
                                             <label>الايميل</label>
-                                            <input type="text" class="form-control" name="email" placeholder="ادخل الايميل " value="{{ old('email') ?? 'asda@asd.com'}}">
+                                            <input type="text" class="form-control" name="email" placeholder="ادخل الايميل " value="{{ old('email') }}">
                                             <div>{{ $errors->first('email') }}</div>
                                         </div>
 
@@ -84,7 +84,7 @@
                                                 <label>رقم التليفون </label>
                                                 <span class="required">*</span>
                                                 <input type="text" name="phoneNumber" placeholder="ادخل رقم التليفون المحمول  "
-                                                       class="form-control" value="{{ old('phoneNumber') ?? '01254111111' }}">
+                                                       class="form-control" value="{{ old('phoneNumber')  }}">
                                                 <div>{{ $errors->first('phoneNumber') }}</div>
                                             </div>
 
@@ -114,7 +114,7 @@
                                         <div class=" form-row form-group">
                                             <div class="col-sm-6 ">
                                                 <label>الرقم القومى </label>
-                                                <input type="text" name="idNumber" value="{{ old('idNumber') ?? '22223333000101' }}"
+                                                <input type="text" name="idNumber" value="{{ old('idNumber')  }}"
                                                        placeholder="ادخل الرقم القومى " class="form-control mb-1  ">
                                                 <div>{{ $errors->first('idNumber') }}</div>
                                             </div>
@@ -128,29 +128,15 @@
                                         </div>
                                         <br>
 
-                                        <div class="form-row">
-
-                                            <div class="col  ">
-                                                <label>البلد </label>
-                                                <input name="state" type="text" placeholder="البلد" value="{{ old('state') ?? 'asd'}}" class="form-control">
-                                                <div>{{ $errors->first('state') }}</div>
-                                                <div></div>
-
-                                            </div>
-
-                                            <div class="col  ">
-                                                <label >المدينه </label>
-                                                <input name="city" type="text" placeholder="المدينه" value="{{ old('city') ?? 'sad'}}" class="form-control">
-                                                <div>{{ $errors->first('city') }}</div>
-
-                                            </div>
+                                        <div id="app">
+                                            <address_component :address="{{ $employee->address }}"></address_component>
                                         </div>
 
                                         <div class=" form-row">
                                             <label>العنوان</label>
                                             <span class="required">*</span>
                                             <textarea name="address" placeholder="ادخل العنوان " rows="3"
-                                                      class="form-control">{{ old('address') ?? 'asda'}}</textarea>
+                                                      class="form-control">{{ old('address') }}</textarea>
                                             <div>{{ $errors->first('address') }}</div>
                                         </div>
 
@@ -220,6 +206,7 @@
         </div>
     </div>
 <!-- scroll top -->
+<script src="{{ asset('js/app.js')  }}"></script>
 @include('scroll_top')
 <!-- script-->
 @include('script')

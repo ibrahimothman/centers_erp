@@ -61,6 +61,13 @@ class Employee extends ImageUploader
         return $this->morphOne(Address::class,'addressable');
     }
 
+    public function getAddress($address)
+    {
+        $address->state = State::where('state_id', $address->state)->where('lang', 'ar')->first()->name;
+        $address->city = City::where('city_id', $address->city)->where('lang', 'ar')->first()->name;
+        return $address;
+    }
+
     public function center()
     {
         return $this->belongsTo(Center::class);

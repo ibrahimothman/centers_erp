@@ -167,7 +167,7 @@
 
                         });
                         output += '</ul>';
-                        $("#studentsList").fadeIn();
+                        $("#studentsList").slideDown();
                         $("#studentsList").html(output);
 
                     },
@@ -181,7 +181,7 @@
             $(document).on('click', 'li', function(e){
                 student_id = $(this).val();
                 $('#student-id').val($(this).text());
-                $('#studentsList').fadeOut();
+                $('#studentsList').slideUp();
             });
 
             $('#testselector').change(function() {

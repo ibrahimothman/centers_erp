@@ -45,14 +45,14 @@
 
 
                                                 <!-- print bil -->
-                                                <div class="col-sm-4 form-group">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" name="print_bill" id="print_bill">
-                                                        <label class="custom-control-label" for="print_bill">طباعة فاتوره</label>
-                                                    </div>
+{{--                                                <div class="col-sm-4 form-group">--}}
+{{--                                                    <div class="custom-control custom-checkbox">--}}
+{{--                                                        <input type="checkbox" class="custom-control-input" name="print_bill" id="print_bill">--}}
+{{--                                                        <label class="custom-control-label" for="print_bill">طباعة فاتوره</label>--}}
+{{--                                                    </div>--}}
 
 
-                                                </div>
+{{--                                                </div>--}}
 
                                                 <!-- add pill -->
                                                 <div  class="form-group   mr-3  ">

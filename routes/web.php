@@ -12,9 +12,11 @@
 */
 
 use App\Role;
+use App\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use function foo\func;
 
@@ -150,6 +152,20 @@ Route::group([
 
 Route::resource('invites',"$web_controllers_path\InvitationController");
 Route::get('process',"$web_controllers_path\InvitationController@processInvitation");
+
+Route::get('/states', function (){
+    return response()->json(State::where('lang', 'ar')->get());
+});
+
+Route::get('/states/{stateId}/cities', function ($stateId){
+    $cities = DB::table('cities')
+        ->join('cities_translation', 'cities.id', '=', 'cities_translation.city_id')
+        ->where('cities.state_id', '=', $stateId)
+        ->where('cities_translation.lang', '=', 'ar')
+        ->select('cities_translation.*')
+        ->get();
+    return response()->json($cities);
+});
 
 
 Auth::routes(['verify' => true]);
