@@ -42,21 +42,10 @@
                                                 </div>
 
 
-                                                <!-- print bil -->
-{{--                                                <div class="col-sm-4 form-group">--}}
-{{--                                                    <div class="custom-control custom-checkbox">--}}
-{{--                                                        <input type="checkbox" class="custom-control-input" name="print_bill" id="print_bill">--}}
-{{--                                                        <label class="custom-control-label" for="print_bill">طباعة فاتوره</label>--}}
-{{--                                                    </div>--}}
-
-
+{{--                                                <div  class="form-group   mr-3  ">--}}
+{{--                                                    <input type='button' class="btn btn-success  "--}}
+{{--                                                           value=' + اضافه فاتوره ' id='addBillButton' name="addBillButton"/>--}}
 {{--                                                </div>--}}
-
-                                                <!-- add pill -->
-                                                <div  class="form-group   mr-3  ">
-                                                    <input type='button' class="btn btn-success  "
-                                                           value=' + اضافه فاتوره ' id='addBillButton' name="addBillButton"/>
-                                                </div>
                                             </div>
                                           <br>
                                         <!-- end -->
@@ -133,11 +122,8 @@
 
         function checkIfAllInputsFilled() {
             var empty = $(".required_field").filter(function () {
-                // console.log($('#paid-1').val().length === 0);
                 return $(this).val().length === 0;
             });
-
-            console.log(empty.length === 0);
             return empty.length === 0;
         }
 
@@ -154,10 +140,10 @@
             if(checkIfAllInputsFilled()) {
                 console.log(createExpensesTransactionMetaDataJSON());
                 makeAjaxCall('/transactions', 'POST', {
-                    transactions: createExpensesTransactionMetaDataJSON(),
+                    transaction: createExpensesTransactionMetaDataJSON(),
                     _token: "{{csrf_token()}}"
                 }, function (data) {
-                    $.notify(data.message, {
+                    $.notify('عمليه ناجحه', {
                         position: "bottom left",
                         style: 'successful-process',
                         className: 'done',
@@ -188,10 +174,9 @@
 
 
         function createExpensesTransactionMetaDataJSON() {
-            let transactions = [];
-            $('input[id^=account-]').each(function () {
-                let i = $(this).attr('id').split('-')[1];
-
+            // $('input[id^=account-]').each(function () {
+            //     let i = $(this).attr('id').split('-')[1];
+                let i = 1;
                 let transaction = {};
                 let meta_data = {};
                 meta_data["payer_id"] = "{{ Session('center_id') }}";
@@ -206,11 +191,10 @@
                 transaction['amount'] = $("#paid-"+i).val();
                 transaction['deserved_amount'] = $("#deserved-amount-"+i).val();
 
-                transactions.push(transaction)
-            });
+            // });
 
 
-            return transactions;
+            return transaction;
         }
         //
 

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class FinanceAccount extends Model
 {
+    protected $appends = ['top_parent'];
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
@@ -14,6 +16,16 @@ class FinanceAccount extends Model
     public function parent()
     {
         return $this->belongsTo(FinanceAccount::class, 'parent_id');
+    }
+
+    public function getTopParentAttribute()
+    {
+        $topParent = $this;
+        while ($topParent->parent != null){
+            $topParent = $topParent->parent;
+        }
+
+        return $topParent->id;
     }
 
     public function children()

@@ -14,11 +14,6 @@ class RevenueController extends Controller
 {
 
 
-    public function index()
-    {
-        return json_encode(Transaction::allTransactions($this->center));
-    }
-
     public function create()
     {
         // get students with diplomas in which they enroll

@@ -6,6 +6,7 @@
             <select class="form-control" name="state" v-model="selectedState" @change="getCities(selectedState)">
                 <option v-for="state in states"
                     :value="state.state_id"
+                    :key="state.id"
 
                 >{{ state.name }}</option>
             </select>
@@ -15,6 +16,7 @@
             <select class="form-control" name="city" v-model="selectedCity" >
                 <option v-for="city in cities"
                         :value="city.city_id"
+                        :key="city.id"
                 >{{ city.name }}</option>
             </select>
         </div>
@@ -46,24 +48,27 @@
 
         },
         methods: {
-            getStates(){
-                axios.get('/states')
-                    .then(res => {
-                        this.states = res.data
-                    })
-                    .catch(err => console.log(err))
+            async getStates(){
+                try {
+                    const response = await axios.get('/states');
+                    this.states = response.data
+
+                } catch (err) {
+                    console.log(err);
+                }
             },
-            getCities(stateId){
-                axios.get(`/states/${stateId}/cities`)
-                    .then(res => {
-                        this.cities = res.data
-                        if(!this.selectedCity) {
-                            this.selectedCity = res.data[0].city_id
-                        }
+            async getCities(stateId){
+                try {
+                    const response = await axios.get(`/states/${stateId}/cities`)
+                    this.cities = response.data
+                    // console.log(response.data);
+                    if(!this.selectedCity) {
+                        this.selectedCity = response.data[0].city_id
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
 
-
-                    })
-                    .catch(err => console.log(err))
             },
         }
     }

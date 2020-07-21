@@ -31,7 +31,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             @include('operationBar')
 
-            <calendar_component></calendar_component>
+            <transaction></transaction>
         </div>
     </div>
 </div>

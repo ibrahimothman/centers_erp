@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
     <!-- style -->
     <link href="/css/financialManagement_style.css" rel="stylesheet"/>
+
     <title>expenses show</title>
 </head>
 <body id="page-top">
@@ -272,8 +273,8 @@
                                                                         @foreach($result['transactions']->filterByAccount(9, false) as $transaction)
                                                                             @php($revenue += $transaction->amount)
                                                                             <tr id="container-{{$transaction->id}}">
-                                                                                <td>{{ $transaction->payFor()->nameAr }}</td>
-                                                                                <td>{{ $transaction->payer()->name }}</td>
+                                                                                <td>{{ $transaction->payer()->nameAr }}</td>
+                                                                                <td>{{ $transaction->payFor()->name }}</td>
                                                                                 <td>{{ $transaction->deserved_amount }}</td>
                                                                                 <td>{{ $transaction->amount }}</td>
                                                                                 <td>{{ $transaction->rest}}</td>
@@ -633,18 +634,18 @@
                 <!--Body-->
                 <div class="modal-body">
                     <!--Body-->
-                    <form id="date_form" >
+                    <form id="date_form"  >
                         <div class="form-row">
                             <label class="text-primary">من يوم</label>
                             <div class='input-group date'>
-                                <input id="datetimepickerModal1" name="start_date"  class="form-control" type="text">
+                                <input autocomplete="off" id="datetimepickerModal1" name="start_date"  class="form-control datetimepicker" type="text">
 
                             </div>
                         </div>
                         <div class="form-row">
                             <label class="text-primary">الي يوم</label>
                             <div class='input-group date'>
-                                <input id="datetimepickerModal2" name = "end_date" class="form-control" type="text">
+                                <input autocomplete="off" id="datetimepickerModal2" name = "end_date" class="form-control" type="text">
 
                             </div>
                         </div>
@@ -766,9 +767,14 @@
 @include('script')
 <!-- script style-->
 <script type='text/javascript' src="/js/financialManagement.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js"></script>
 <!-- date picker script for modal -->
 
 <script>
+
+    $(function() {
+        $(".datetimepicker").datetimepicker();
+    });
 
    $('button[id^=delete-transaction-]').on('click', function () {
        var transaction_id = $(this).attr('id').split('-')[2];
