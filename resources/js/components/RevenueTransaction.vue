@@ -149,6 +149,7 @@ export default {
                 this.transaction = {};
                 this.printDate = this.preparePrintData(res.data.data);
 
+
             } catch (err) {
                 console.log(err);
             }

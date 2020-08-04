@@ -111,12 +111,12 @@
                                             </div>
 
                                             <form class="card-footer border-primary">
-{{--                                                @can('delete', $employee)--}}
+                                                @can('delete', $employee)
                                                     <button type="button" class="btn btn-success btn-xs" id="delete-employees-{{ $employee->id }}"> <i class="fas fa-trash-alt"></i> </button>
-{{--                                                @endcan--}}
-{{--                                                @can('view', $employee)--}}
+                                                @endcan
+                                                @can('view', $employee)
                                                     <a href="/employees/{{$employee->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
-{{--                                                @endcan--}}
+                                                @endcan
                                             </form>
 
 
@@ -151,24 +151,8 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">هل تريد الخروج بالفعل</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">اضغط على الخروج اذا كنت ترغب قى  الخروج</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
-                <a class="btn btn-primary" href="login.html">الخروج</a>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 <!-- script-->
 
 @include('script')

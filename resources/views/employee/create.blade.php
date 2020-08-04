@@ -213,7 +213,7 @@
 <!-- client side validation plugin -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- client side validation page -->
-<script type='text/javascript' src="/js/employee_create_validation.js"></script>
+<script type='text/javascript' src="{{ asset('js/employee_create_validation.js')  }}"></script>
 
 </body>
 

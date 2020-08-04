@@ -34,7 +34,7 @@
                         تسجيل بيانات المدرب
                     </div>
                             <div class="card-body">
-                                <form action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data">
+                                <form action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data" id="addInstructor">
                                     @csrf
                                     <input name="next" value="save" hidden>
                                     <div class="form-row form-group">
@@ -198,7 +198,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 
 <!-- client side validation page -->
-<script type='text/javascript' src="{{url("js/instructor_register_validation.js")}}"></script>
+<script type='text/javascript' src="{{asset('js/instructor_register_validation.js')}}"></script>
 
 
 

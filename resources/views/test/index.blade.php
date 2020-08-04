@@ -31,6 +31,8 @@
                         <div class="btn-group p-3 ">
 
                             <div class="btn-group search-panel ">
+{{--                                <input hidden id="canUpdate"--}}
+{{--                                       value="{{ App\helper\SidebarHelper::rules('update')  }}">--}}
                                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <span id="search_concept">البحث فى </span> <span class="caret"></span>
                                             </button>
@@ -86,7 +88,11 @@
     @include('script')
     <script src="{{ asset('js/notify.min.js') }}"></script>
     <script src="{{ asset('js/notification.js') }}"></script>
-        <script>
+    <script>
+            // check for update and delete policies
+            const canUpdate = '{{ App\helper\PolicyHelper::checkPolicy('update', App\Test::class) }}';
+            const canDelete = '{{ App\helper\PolicyHelper::checkPolicy('delete', App\Test::class) }}';
+            const canCreate = '{{ App\helper\PolicyHelper::checkPolicy('create', App\Test::class) }}';
             $(document).ready(function () {
                 // get all center's tests
                 getTests({
@@ -122,21 +128,24 @@
 
 
             function getTests(data) {
+                console.log();
                 $.ajax({
                     url:'/all-tests',
                     type:'GET',
                     data: data,
                     success: function (data) {
-                        console.log(data);
                         var lines = "";
                         data.forEach(function (test) {
                             // console.log(test.name);
                             lines += "<div class='card card  card-sh  border-primary p-3 test-view'>";
                             lines += "<div class='card-header bg-transparent border-primary text-success font-weight-bold  clearfix'>";
                             lines += "<span class='float-right'>";
-                            lines += "<a href='/test-groups/create?id="+test.id+"' class='btn btn-outline-success '><i class='fas fa-plus'></i> <SPAN>تسجيل الامتحان</SPAN> </a>";
-                            lines += "<a href='tests/"+test.id+"/edit/' class=' btn btn-outline-primary '><i class='fas fa-edit'></i> </a>";
-                            lines += "<button onclick='deleteTest("+test.id+");' class='btn btn-outline-danger'> <i class='fas fa-trash-alt'></i> </button>";
+                            if (canCreate === '1')
+                                lines += "<a href='/test-groups/create?id="+test.id+"' class='btn btn-outline-success '><i class='fas fa-plus'></i> <SPAN>تسجيل الامتحان</SPAN> </a>";
+                            if (canUpdate === '1')
+                                lines += "<a href='tests/" + test.id + "/edit/' class=' btn btn-outline-primary '><i class='fas fa-edit'></i> </a>";
+                            if(canDelete === '1')
+                                lines += "<button onclick='deleteTest("+test.id+");' class='btn btn-outline-danger'> <i class='fas fa-trash-alt'></i> </button>";
                             lines += "</span>";
                             lines += "<span  class=' float-left'>"+test.name+"</span>";
                             lines += "</div>";

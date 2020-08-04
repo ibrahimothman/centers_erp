@@ -68,10 +68,12 @@ class EmployeeController extends Controller
 
         // if this employee is wanted to be a user, send him an user invitation
         if(isset($data['send_invitation'])){
+//            dd('sendinvitaion');
             $invitation = (new \App\Invitation)->addNew([
                 'email' => $data['email'],
                 'jobs' => $data['job']
             ]);
+
         }
         $next = $request->get('next') == 'save' ? "employees": 'employees/create';
 

@@ -19,9 +19,11 @@
                 <div class="card">
                     <div class="card-header text-primary form-title view-courses-title">
                         <h3>الطلاب المسجلين بالامتحان </h3>
-                        <a href="{{ route('test-enrollments.create') }}">
-                            <button type="button" class="btn btn-success">أضف طالب</button>
-                        </a>
+                        @can('create', App\Test::class)
+                            <a href="{{ route('test-enrollments.create') }}">
+                                <button type="button" class="btn btn-success">أضف طالب</button>
+                            </a>
+                         @endcan
                     </div>
                     <div class="card-body">
                         <div class=" clearfix"> <span class="float-right">

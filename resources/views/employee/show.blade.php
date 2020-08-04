@@ -41,9 +41,9 @@
                                         </div></hr><br>
                                         <p>تاريخ الاضافه : {{$employee->created_at}}</p>
 
-
-                                        <a href="{{ route('employees.edit', ['employee' => $employee->id]) }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> تعديل الملف الشخصى  </a>
-
+                                        @can('update', $employee)
+                                            <a href="{{ route('employees.edit', ['employee' => $employee->id]) }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> تعديل الملف الشخصى  </a>
+                                        @endcan
                                         <br>
 
                                     </div>

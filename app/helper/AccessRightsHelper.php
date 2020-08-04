@@ -16,7 +16,7 @@ class AccessRightsHelper
     public static function create($scope)
     {
 
-        return Session('job_id') == 0 ? true : collect(Job::findOrFail(Session('job_id'))->roles)
+        return Session('job_id') == 0  || collect(Job::findOrFail(Session('job_id'))->roles)
             ->where('scope', $scope)->pluck('value')[0][0] == 1;
     }
 

@@ -27,6 +27,7 @@ abstract class Policy
 
     public function create()
     {
+
         return AccessRightsHelper::create($this->getScope());
     }
 

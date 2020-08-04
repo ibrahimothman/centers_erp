@@ -20,7 +20,9 @@
                                     <header>
                                         <div class="card-header text-primary form-title view-courses-title">
                                         <h3>الدورات المتاحة </h3>
-                                        <a href="/courses/create"><button type="button" class="btn btn-success">أضف دورة</button></a>
+                                        @can('create', App\Course::class)
+                                            <a href="/courses/create"><button type="button" class="btn btn-success">أضف دورة</button></a>
+                                        @endcan
                                         </div>
                                     </header>
                                     <div class="card-body">
@@ -59,13 +61,15 @@
                                                     <p class="about">{{$course->description}}</p>
                                                    </div>
                                                    <div class="view-course-action-buttons">
-                                                       <td class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}">تعديل</a></td>
-{{--                                                       <button  type="button" class="btn btn-primary btn-sm"> <a href="courses/{{ $course->id }}/edit"></a> تعديل</button>--}}
-                                                       <form >
-
-                                                           <input type="hidden" name="_method" value="delete" />
-                                                       <button  type="button" id="delete-course-{{$course->id}}" class="btn btn-danger btn-sm">حذف</button>                                                       </form>
-
+                                                       @can('update', $course)
+                                                           <td class="btn btn-primary btn-sm"> <a href="{{ route('courses.edit',[$course->id]) }}">تعديل</a></td>
+                                                       @endcan
+                                                       @can('delete', $course)
+                                                           <form>
+                                                               <input type="hidden" name="_method" value="delete" />
+                                                               <button  type="button" id="delete-course-{{$course->id}}" class="btn btn-danger btn-sm">حذف</button>
+                                                           </form>
+                                                       @endcan
                                                    </div>
                                             </article>
                                                 @php($j++)

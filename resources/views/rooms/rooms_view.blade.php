@@ -49,9 +49,11 @@
                     <div class="card mb-4">
                         <div class="card-header text-primary ">
                             <h3 class="float-left"> الغرف</h3>
-                            <a href="{{ route('rooms.create') }}">
-                                <button type="button" class="btn btn-success float-right ">اضافه غرفه جديده</button>
-                            </a>
+                            @can('create', App\Room::class)
+                                <a href="{{ route('rooms.create') }}">
+                                    <button type="button" class="btn btn-success float-right ">اضافه غرفه جديده</button>
+                                </a>
+                            @endcan
                         </div>
                         <div class="card-body">
                             <!-- card-->
@@ -62,10 +64,12 @@
                                             <div class="card-body">
                                                 <h5 class="card-text text-center">{{ $room->name }}</h5>
                                                 <div class="card-options">
-                                                    <a href="{{ route('rooms.edit',$room->id) }}"
-                                                       class=" btn btn-outline-primary  py-1 px-1 ">
-                                                        <i class="fas fa-edit  "></i>
-                                                    </a>
+                                                    @can('update', App\Room::class)
+                                                        <a href="{{ route('rooms.edit',$room->id) }}"
+                                                           class=" btn btn-outline-primary  py-1 px-1 ">
+                                                            <i class="fas fa-edit  "></i>
+                                                        </a>
+                                                    @endcan
 
 
                                                 </div>

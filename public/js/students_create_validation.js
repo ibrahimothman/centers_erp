@@ -123,7 +123,7 @@ $(document).ready(function () {
 //);
     /* image1 validation */
     /* image2 validation */
-    /*
+
     $("#submit").click(function () {
         var img1=document.getElementById("customFile1");
         var img2=document.getElementById("customFile2");
@@ -145,7 +145,7 @@ $(document).ready(function () {
         }
     });
 
-*/
+
 }); // end document.ready
 
 

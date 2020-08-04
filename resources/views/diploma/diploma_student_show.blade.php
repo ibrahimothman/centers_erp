@@ -19,9 +19,11 @@
                 <div class="card">
                     <div class="card-header text-primary form-title view-courses-title">
                         <h3>الطلاب المسجلين بالدبلومه </h3>
-                        <a href="{{ route('diploma-enrollments.create') }}">
-                            <button type="button" class="btn btn-success">أضف طالب</button>
-                        </a>
+                        @can('create', App\Diploma::class)
+                            <a href="{{ route('diploma-enrollments.create') }}">
+                                <button type="button" class="btn btn-success">أضف طالب</button>
+                            </a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <div class=" clearfix"> <span class="float-right">
@@ -44,8 +46,12 @@
                                 <th class="th-sm">اسم الطالب</th>
                                 <th class="th-sm">اسم الدبلومه</th>
                                 <th class="th-sm">المعاد</th>
-                                <th class="th-sm"> تعديل</th>
-                                <th class="th-sm"> ازاله</th>
+                                @can('update', App\Diploma::class)
+                                    <th class="th-sm"> تعديل</th>
+                                @endcan
+                                @can('delete', App\Diploma::class)
+                                    <th class="th-sm"> ازاله</th>
+                                    @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -56,18 +62,22 @@
                                         <td>{{ $student->nameAr }}</td>
                                         <td>{{ $group->diploma->name }}</td>
                                         <td>{{ $group->starts_at }}</td>
-                                        <td>
+                                        @can('update', App\Diploma::class)
+                                            <td>
 
-                                            <a href="{{ route('diploma-enrollments.edit', ['student_id' => $student->id, 'diploma_group' => $group->id]) }}" class=" btn btn-outline-primary  py-1 px-2 "><i
-                                                    class="fas fa-edit m-0 "></i> </a>
+                                                <a href="{{ route('diploma-enrollments.edit', ['student_id' => $student->id, 'diploma_group' => $group->id]) }}" class=" btn btn-outline-primary  py-1 px-2 "><i
+                                                        class="fas fa-edit m-0 "></i> </a>
 
-                                        </td>
-                                        <td>
-                                            <form>
-                                                <button type="button" id="delete-diploma-enrollment-{{$group->id}}-{{$student->id}}" class="btn btn-outline-danger py-1 px-2">
-                                                    <i class="fas fa-trash-alt m-0"></i></button>
-                                            </form>
-                                        </td>
+                                            </td>
+                                        @endcan
+                                        @can('delete', App\Diploma::class)
+                                            <td>
+                                                <form>
+                                                    <button type="button" id="delete-diploma-enrollment-{{$group->id}}-{{$student->id}}" class="btn btn-outline-danger py-1 px-2">
+                                                        <i class="fas fa-trash-alt m-0"></i></button>
+                                                </form>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             @endforeach

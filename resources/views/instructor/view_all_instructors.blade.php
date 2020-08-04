@@ -111,8 +111,12 @@
                                             </div>
 
                                             <form class="card-footer border-primary">
+                                                @can('delete', $instructor)
                                                     <button type="button" class="btn btn-success btn-xs" id="delete-instructors-{{ $instructor->id }}"> <i class="fas fa-trash-alt"></i> </button>
+                                                @endcan
+                                                @can('update', $instructor)
                                                     <a href="/instructors/{{$instructor->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
+                                                @endcan
                                             </form>
 
 

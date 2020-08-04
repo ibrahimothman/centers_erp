@@ -174,13 +174,17 @@
                                             <div class="card-header bg-transparent border-primary text-success font-weight-bold  clearfix">
                                         <span  class=" float-left">{{$diploma->name}}
                                             <a href="{{url('/diplomas/'.$diploma->id)}}" >
-                                                <i class="fas fa-info-circle"></i></a> </span>
-                                                <span  class=" float-right">
-                                            <a href="{{ route('diploma-groups.create', ['id' => $diploma->id]) }}" class="btn btn-success btn-sm ">
-                                                <i class="fas fa-plus"></i>
-                                                <SPAN> اضافه مجموعه</SPAN>
+                                                <i class="fas fa-info-circle"></i>
                                             </a>
                                         </span>
+                                        @can('create', App\Diploma::class)
+                                            <span  class=" float-right">
+                                                <a href="{{ route('diploma-groups.create', ['id' => $diploma->id]) }}" class="btn btn-success btn-sm ">
+                                                    <i class="fas fa-plus"></i>
+                                                    <SPAN> اضافه مجموعه</SPAN>
+                                                </a>
+                                            </span>
+                                        @endcan
                                             </div>
                                             <div class="card-body ">
                                                 <div class="col-md-12">
@@ -221,11 +225,14 @@
                                                                     </a></td>
                                                                 <td>
                                                                     <form>
-                                                                        <a href="/diploma-groups/{{$group->id}}/edit" class=" btn btn-outline-primary btn-sm ">
-                                                                            <i class="fas fa-edit"></i> </a> </span> </span>
-
-                                                                        <button type="button" id="delete-diploma-group-{{$group->id}}" name="delete" class="btn btn-outline-danger   btn-sm ">
-                                                                            <i class="fas fa-trash-alt"></i> </button>
+                                                                        @can('update', $diploma)
+                                                                            <a href="/diploma-groups/{{$group->id}}/edit" class=" btn btn-outline-primary btn-sm ">
+                                                                                <i class="fas fa-edit"></i> </a> </span> </span>
+                                                                        @endcan
+                                                                        @can('delete', $diploma)
+                                                                            <button type="button" id="delete-diploma-group-{{$group->id}}" name="delete" class="btn btn-outline-danger   btn-sm ">
+                                                                                <i class="fas fa-trash-alt"></i> </button>
+                                                                        @endcan
                                                                     </form>
                                                                 </td>
                                                                 </tr>

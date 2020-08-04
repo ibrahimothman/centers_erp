@@ -18,9 +18,11 @@
                         <header>
                             <div class="card-header text-primary form-title view-courses-title">
                                 <h3>الدبلومات المتاحة </h3>
-                                <a href="{{ route('diplomas.create') }}">
-                                    <button type="button" class="btn btn-success">أضف دبلومه</button>
-                                </a>
+                                @can('create', App\Diploma::class)
+                                    <a href="{{ route('diplomas.create') }}">
+                                        <button type="button" class="btn btn-success">أضف دبلومه</button>
+                                    </a>
+                                @endcan
                             </div>
                         </header>
                         <div class="card-body">
@@ -52,10 +54,16 @@
                                                     <div class="view-courses-title">
                                                         <h5 class="card-title text-primary">{{ $diploma->name }}</h5>
                                                         <form >
-                                                            <a href="{{ route('diplomas.edit', $diploma->id) }}" class=" btn btn-outline-primary  py-1 px-2"><i
-                                                                        class="fas fa-edit m-0 "></i> </a>
-                                                            <button type="button" id="delete-diploma-{{$diploma->id}}"  class="btn btn-outline-danger py-1 px-2">
-                                                                <i class="fas fa-trash-alt m-0"></i></button>
+                                                            @can('update', App\Diploma::class)
+                                                                <a href="{{ route('diplomas.edit', $diploma->id) }}" class=" btn btn-outline-primary  py-1 px-2">
+                                                                    <i class="fas fa-edit m-0 "></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('delete', App\Diploma::class)
+                                                                <button type="button" id="delete-diploma-{{$diploma->id}}"  class="btn btn-outline-danger py-1 px-2">
+                                                                    <i class="fas fa-trash-alt m-0"></i>
+                                                                </button>
+                                                            @endcan
                                                         </form>
                                                     </div>
                                                     <div class="mb-1">

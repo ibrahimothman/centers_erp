@@ -20,6 +20,7 @@ class SalaryController extends Controller
     public function create()
     {
 
+        $this->authorize('create', Transaction::class);
         $instructors = InstructorRepository::getInstance()->allInstructors();
         $employees = EmployeeRepository::getInstance()->allEmployees();
 
@@ -31,6 +32,7 @@ class SalaryController extends Controller
 
     public function edit($transaction)
     {
+        $this->authorize('update', Transaction::class);
         $type = Input::has('type') ? Input::get('type'): 'salaries';
         $transaction = Transaction::findOrFail($transaction);
 
