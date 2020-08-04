@@ -221,7 +221,7 @@
 
 
     <!-- finance -->
-    @can('create', App\Transaction::class)
+    @canany(['create', 'update', 'view', 'viewAny', 'delete'], App\Transaction::class)
     <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::financeLinks())||strpos(Request::url(), 'revenues') ||strpos(Request::url(), 'expenses')||strpos(Request::url(), 'salaries') ||strpos(Request::url(), 'refund') ||strpos(Request::url(), 'finance')? 'active' : ''}}"  >
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#financeCollapse" aria-expanded="true" aria-controls="financeCollapse">
             <i class="fas fa-fw fa-wrench"></i>
@@ -231,7 +231,9 @@
             <div class="bg-white py-2 collapse-inner rounded">
 
                 @foreach(\App\helper\SideBarLinks::financeLinks() as $linkKey => $linkValue)
-                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                    @canany(App\helper\PolicyHelper::checkPolicyFromRoute($linkKey), App\Job::class)
+                        <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                    @endcanany
                 @endforeach
 
             </div>

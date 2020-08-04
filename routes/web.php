@@ -36,6 +36,7 @@ Route::group([
 
 
         //--------------------------- employees ------------------
+
         Route::resource('employees', "$web_controllers_path\EmployeeController");
         Route::get('search_for_employees', "$web_controllers_path\EmployeeController@getEmployees");
 
@@ -166,6 +167,8 @@ Route::get('/states/{stateId}/cities', function ($stateId){
         ->get();
     return response()->json($cities);
 });
+
+
 
 
 Auth::routes(['verify' => true]);

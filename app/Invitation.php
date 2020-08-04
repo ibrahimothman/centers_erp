@@ -5,6 +5,7 @@ namespace App;
 use App\Events\NewInvitationHasCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use function GuzzleHttp\Psr7\str;
 
@@ -41,6 +42,7 @@ class Invitation extends Model
 
         // send invitation email
         static::created(function ($invitation){
+            Artisan::call('queue:work &');
             event(new NewInvitationHasCreated($invitation));
         });
     }

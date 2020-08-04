@@ -36,7 +36,7 @@ class CreateEmployeesTable extends Migration
             $table->unsignedBigInteger('job_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('setNull')->onUpdate('cascade');
             $table->foreign('center_id')->references('id')->on('centers')->onDelete('cascade');
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
         });

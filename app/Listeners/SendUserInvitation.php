@@ -2,21 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Mail\Email;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Mail;
 
-class SendUserInvitation
+use App\Notifications\InvitationSent;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+use Illuminate\Support\Facades\Notification;
+
+class SendUserInvitation implements ShouldQueue
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
@@ -26,7 +19,10 @@ class SendUserInvitation
      */
     public function handle($event)
     {
-        Mail::to($event->invitation->email)->send(new Email($event->invitation->token));
+
+        Notification::route('mail', $event->invitation->email)
+                    ->notify(new InvitationSent($event->invitation->token));
+        // Mail::to($event->invitation->email)->send(new Email($event->invitation->token));
 
     }
 }

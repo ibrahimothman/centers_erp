@@ -95,6 +95,8 @@ class RegisterController extends Controller
 
                 // update employee_userID
                 Employee::where('email', $invitation->email)->update(['user_id' => $user->id]);
+                // delete invitation
+                $invitation->delete();
             }
         }
 

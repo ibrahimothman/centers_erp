@@ -27,6 +27,7 @@ class InstructorsController extends Controller
     public function index()
     {
 
+        $this->authorize('viewAny', Instructor::class);
         return view("instructor/view_all_instructors")
             ->with('instructors',$this->searchInstructors());
 
@@ -40,6 +41,7 @@ class InstructorsController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Instructor::class);
         $payment_models = PaymentModel::all();
         $address = new Address();
         return view('instructor/register_instructor', compact('payment_models', 'address'));
@@ -48,6 +50,7 @@ class InstructorsController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Instructor::class);
 
         $data = $this->validateRequest($request);
 
@@ -75,6 +78,7 @@ class InstructorsController extends Controller
 
     public function show(Instructor $instructor)
     {
+        $this->authorize('view', $instructor);
         $courses = $instructor->courses()->where('center_id', Session('center_id'))->get();
         return view('instructor/overview_instructor', compact('instructor', 'courses'));
 
@@ -83,6 +87,7 @@ class InstructorsController extends Controller
 
     public function edit(Instructor $instructor)
     {
+        $this->authorize('update', $instructor);
         $payment_models = $this->center->paymentModels;
         return view("instructor/update_instructor", compact('instructor', 'payment_models'));
     }
@@ -90,6 +95,7 @@ class InstructorsController extends Controller
 
     public function update(Request $request, Instructor $instructor)
     {
+        $this->authorize('update', $instructor);
         $data = $this->validateRequest($request);
 
         $data = $data->validate();
@@ -106,6 +112,7 @@ class InstructorsController extends Controller
 
     public function destroy(Instructor $instructor)
     {
+        $this->authorize('delete', $instructor);
         $instructor->delete();
         return response()->json('instructor deleted successfully', 200);
     }
