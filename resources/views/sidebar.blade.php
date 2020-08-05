@@ -161,21 +161,21 @@
     @endcanany
 
     <!-- calendar -->
-{{--    <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::CalendarLinks() )? 'active' : ''}}"  >--}}
-{{--        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarCollapse" aria-expanded="true" aria-controls="calendarCollapse">--}}
-{{--            <i class="fas fa-fw fa-wrench"></i>--}}
-{{--            <span>كالندر</span>--}}
-{{--        </a>--}}
-{{--        <div id="calendarCollapse" class="{{array_key_exists(Request::url(),\App\helper\SideBarLinks::CalendarLinks() )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">--}}
-{{--            <div class="bg-white py-2 collapse-inner rounded">--}}
+    <li class="nav-item {{array_key_exists(Request::url(),\App\helper\SideBarLinks::CalendarLinks() )? 'active' : ''}}"  >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarCollapse" aria-expanded="true" aria-controls="calendarCollapse">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>كالندر</span>
+        </a>
+        <div id="calendarCollapse" class="{{array_key_exists(Request::url(),\App\helper\SideBarLinks::CalendarLinks() )? 'collapse show' : 'collapse'}}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
 
-{{--                @foreach(\App\helper\SideBarLinks::CalendarLinks() as $linkKey => $linkValue)--}}
-{{--                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>--}}
-{{--                @endforeach--}}
+                @foreach(\App\helper\SideBarLinks::CalendarLinks() as $linkKey => $linkValue)
+                    <a class="collapse-item {{ Request::url() == $linkKey ? 'active' : '' }}" href="{{ $linkKey }}">{{ $linkValue }}</a>
+                @endforeach
 
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </li>--}}
+            </div>
+        </div>
+    </li>
 
     <!-- employees -->
     @canany(['create', 'update', 'view', 'viewAny', 'delete'], App\Employee::class)

@@ -43,20 +43,19 @@ class RoomHelper
     }
 
     public function showRoomCalendar(Room $room){
-        $groups = [];
-        foreach ($room->course_groups as $course_group){
-            foreach ($course_group->times as $time){
-                $temp['title'] = $course_group->course->name;
-                $temp['start'] = $time->day;
-                $temp['end'] = $time->day;
-                $groups[] = $temp;
 
-            }
-        }
-        return response()->json($groups);
+        return response()->json(array_merge_recursive($room->diplomas(),$room->test_groups()));
+
     }
 
+    public function getRoomTimes(Room $room, $relation, $prop)
+    {
+        $groups = [];
 
+
+        return $groups;
+
+    }
 
 
 }

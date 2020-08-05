@@ -127,16 +127,14 @@ class InstructorsController extends Controller
 
     public function showInstructorCalendar(Instructor $instructor){
         $groups = [];
-        foreach ($instructor->courses as $course){
-            foreach ($course->groups as $group){
-                foreach ($group->times as $time){
-                    $temp['title'] = $course->name;
-                    $temp['start'] = $time->day;
-                    $temp['end'] = $time->day;
-                    $groups[] = $temp;
-                }
-            }
-        }
+         foreach ($instructor->diplomaGroups as $group){
+             foreach ($group->times as $time){
+                 $temp['title'] = $group->diploma->name;
+                 $temp['start'] = $time->day;
+                 $temp['end'] = $time->day;
+                 $groups[] = $temp;
+             }
+         }
 
         return json_encode($groups);
     }

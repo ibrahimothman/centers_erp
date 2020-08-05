@@ -104,7 +104,7 @@ class RoomsController extends Controller
 
     public function showRoomCalendar(Room $room)
     {
-        return $this->showRoomCalendar($room);
+        return $this->roomHelper->showRoomCalendar($room);
     }
 
     public function allRooms()
