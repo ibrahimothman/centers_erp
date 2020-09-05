@@ -84,7 +84,7 @@ export default {
     },
     watch: {
         success: function () {
-            setTimeout(function () {
+            setTimeout(() => {
                 console.log('after 1000 sec');
                 this.success = false;
             }, 1000);
