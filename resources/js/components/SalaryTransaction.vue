@@ -26,6 +26,7 @@
                     <search
                         :endpoint="selectedModel.endpoint"
                         :onPersonSelected="onPersonSelected"
+                        :reset="reset"
                         ></search>
 
                     <div class='col-lg-1 col-sm-4 form-group meta_data'>
@@ -141,6 +142,7 @@ export default {
         },
         initialData(){
             return {
+                reset: false,
                 success: false,
                 saved: false,
                 models: [

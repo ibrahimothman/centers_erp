@@ -118,7 +118,7 @@
 
 
                                     <div id="app">
-                                        <address_component :address="{{ $student->address }}"></address_component>
+                                        <address_component address="{{ $student->address }}" state="{{  old('state') }}" city="{{  old('city') }}"></address_component>
                                     </div>
 
                                     <div class=" form-row form-group">

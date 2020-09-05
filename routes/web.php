@@ -41,6 +41,7 @@ Route::group([
         Route::get('search_for_employees', "$web_controllers_path\EmployeeController@getEmployees");
 
         // --------------------- students --------------------
+
         Route::get('/', "$web_controllers_path\StudentController@create");
         Route::resource('students', "$web_controllers_path\StudentController");
 
@@ -168,8 +169,9 @@ Route::get('/states/{stateId}/cities', function ($stateId){
     return response()->json($cities);
 });
 
-
-
+Route::get('/home', function (){
+    return view('landingPage.landingPage');
+})->name('home');
 
 Auth::routes(['verify' => true]);
 

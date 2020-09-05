@@ -31,33 +31,6 @@ class Job extends Model
         return $this->belongsToMany(Invitation::class)->withTimestamps();
     }
 
-    public function setRolesAttribute($roles)
-    {
-
-        $newRoles = [];
-        foreach ($roles as $role){
-            $role['scope'] = $this->setRoleScopeOptions()[$role['scope']];
-            $newRoles[] = $role;
-        }
-        return $this->attributes['roles'] = json_encode($newRoles, JSON_UNESCAPED_UNICODE);
-    }
-
-    private function setRoleScopeOptions()
-    {
-        return[
-            'الطلاب' => 'students',
-            'الامتحانات' => 'tests',
-            'المدربين' => 'instructors',
-            'الماليات' => 'finance',
-            'الكورسات' => 'courses',
-            'الدبلومات' => 'diplomas',
-            'الغرف' => 'rooms',
-            'الوظائف' => 'jobs',
-            'الموظفين' => 'employees',
-        ];
-    }
-
-
 
     public function getRolesAttribute($roles)
     {
@@ -69,9 +42,19 @@ class Job extends Model
         if($request->isMethod('post')){
             return [
                 'name' => ['required', new UniquePerCenter(Job::class, '')],
-                'roles' => ['sometimes', 'array'],
+                'roles' => ['sometimes'],
                 'roles.*.scope' => ['required'],
-                'roles.*.value' => ['required'],
+                'roles.*.option' => ['required'],
+                'roles.*.isChecked' => ['required'],
+            ];
+        }else{
+            $job_id = $request->route('job')->id;
+            return [
+                'name' => ['required', new UniquePerCenter(Job::class, $job_id)],
+                'roles' => ['sometimes'],
+                'roles.*.scope' => ['required'],
+                'roles.*.option' => ['required'],
+                'roles.*.isChecked' => ['required'],
             ];
         }
     }

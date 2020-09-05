@@ -167,7 +167,7 @@ class Student extends ImageUploader
                 'address' => 'required',
                 'degree' => ['required',new DegreeRule],
                 'faculty' => ['required',new FacultyRule],
-                'skillCardNumber' => ['sometimes', new UniquePerCenter(Student::class, '', 'students', false)],
+                'skillCardNumber' => ['required', new UniquePerCenter(Student::class, '', 'students', false)],
             ];
         }else{
             $student_id = $request->route('student')->id;

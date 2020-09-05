@@ -11,9 +11,6 @@ use mysql_xdevapi\Session;
 
 class CenterController extends Controller
 {
-
-
-
     public function store(Request $request)
     {
         $center = Auth::user()->center()->create($this->validateRequest());
@@ -22,7 +19,6 @@ class CenterController extends Controller
 
     public function update(Request $request, Center $center)
     {
-
         $center->update($this->validateRequest());
         return back()->with('success', 'successfully updated');
     }

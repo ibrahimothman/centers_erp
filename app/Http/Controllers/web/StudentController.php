@@ -46,7 +46,6 @@ class StudentController extends Controller
         $this->authorize('create', Student::class);
 
         $student = new Student();
-        $student->address = new Address();
         return view('students.studentCreate',compact('student'));
     }
 

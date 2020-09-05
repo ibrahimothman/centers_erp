@@ -16,26 +16,27 @@ class AccessRightsHelper
     public static function create($scope)
     {
 
-        return Session('job_id') == 0  || collect(Job::findOrFail(Session('job_id'))->roles)
-            ->where('scope', $scope)->pluck('value')[0][0] == 1;
+        return
+            Session('job_id') == 0
+            || Job::findOrFail(Session('job_id'))->roles[$scope]['create'] == 'true';
     }
 
     public static function show($scope)
     {
-        return Session('job_id') == 0 ? true : collect(Job::findOrFail(Session('job_id'))->roles)
-            ->where('scope', $scope)->pluck('value')[0][1] == 1;
+        return Session('job_id') == 0
+            || Job::findOrFail(Session('job_id'))->roles[$scope]['read'] == 'true';
     }
 
     public static function update($scope)
     {
-        return Session('job_id') == 0 ? true : collect(Job::findOrFail(Session('job_id'))->roles)
-            ->where('scope', $scope)->pluck('value')[0][2] == 1;
+        return Session('job_id') == 0
+            || Job::findOrFail(Session('job_id'))->roles[$scope]['update'] == 'true';
     }
 
     public static function delete($scope)
     {
-        return Session('job_id') == 0 ? true : collect(Job::findOrFail(Session('job_id'))->roles)
-            ->where('scope', $scope)->pluck('value')[0][3] == 1;
+        return Session('job_id') == 0
+            || Job::findOrFail(Session('job_id'))->roles[$scope]['delete'] == 'true';
     }
 
 }

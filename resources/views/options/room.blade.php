@@ -24,7 +24,7 @@
                             </div>
                         </header>
                         <div class="card-body">
-                            <form method="post" action="{{route('centers.update', session('center_id'))}}" enctype="multipart/form-data">
+                            <form id="form" method="post" action="{{route('centers.update', session('center_id'))}}" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="form-row">
@@ -97,10 +97,6 @@
     })
 
 
-    // $('#submit').on('click', function (e) {
-    //     e.preventDefault();
-    //
-    // })
 </script>
 </body>
 </html>

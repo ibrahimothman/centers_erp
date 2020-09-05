@@ -27,7 +27,7 @@ class TestGroupController extends Controller
 
         $tests = Test::allTests($this->center);
 
-
+//        return json_encode($tests);
         return view('testGroup.index')
             ->with('allTests',$allTests)
             ->with('tests',$tests);

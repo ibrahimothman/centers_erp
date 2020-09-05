@@ -146,7 +146,7 @@ return [
     */
 
     'attributes' => [
-        'email' => 'الايميل'
+
     ],
 
 ];

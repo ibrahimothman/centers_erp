@@ -18,7 +18,7 @@
 <!-- nav bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="#">
-        <h3 class="text-light">ITC Academy</h3>
+        <h3 class="text-light">{{ config('app.name') }}</h3>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -30,16 +30,16 @@
                 <a class="nav-link text-light" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light " href="#">About</a>
+                <a class="nav-link text-light " href="#about_section">About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" href="#">Contact</a>
+                <a class="nav-link text-light" href="#contact_section">Contact</a>
             </li>
 
         </ul>
         <ul>
             <li class="nav-item text-right">
-                <a href="" class=" nav-link btn btn-light btn-rounded " data-toggle="modal" data-target="#darkModalForm">Log in</a>
+                <a href="{{ route('login') }}" class=" nav-link btn btn-light btn-rounded ">{{ __('Login') }}</a>
             </li>
         </ul>
     </div>
@@ -60,7 +60,7 @@
                         <h3>Log In <br>
                             Admin Panel <br>
                             Now</h3>
-                        <a href="" class=" boxed_btn " data-toggle="modal" data-target="#formSignUp">Sign Up Now</a>
+                        <a href="{{ route('register') }}" class=" boxed_btn " >{{ __('Register') }}</a>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
 </div>
 <!-- slider_area_end -->
 <!-- content -->
-<div class="site-section mt-5 mb-5" >
+<div class="site-section mt-5 mb-5" id="about_section" >
     <div class="container">
         <div class="row mb-5">
             <div class="col-12 text-center">
@@ -95,7 +95,7 @@
 </div>
 <!--  end content -->
 <!-- footer -->
-<footer class="footer footer_bg_1 py-5 mt-5 ">
+<footer class="footer footer_bg_1 py-5 mt-5 " id="contact_section">
     <div class="footer_top">
         <div class="container">
             <div class="row">

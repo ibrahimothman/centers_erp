@@ -38,7 +38,8 @@
 
                            <search
                                 endpoint="/search_for_students"
-                                :onPersonSelected="onPersonSelected">
+                                :onPersonSelected="onPersonSelected"
+                                :resetFields="reset">
                                 </search>
 
                             <div class="col-lg-2 col-sm-4 form-group ">
@@ -180,11 +181,13 @@ export default {
                 ]
             }
         },
-        resetData(){
+        async resetData(){
+            this.reset = true;
             Object.assign(this.$data, this.initialData());
         },
         initialData() {
             return {
+                reset: false,
                 modal: false,
                 success: false,
                 saved: false,

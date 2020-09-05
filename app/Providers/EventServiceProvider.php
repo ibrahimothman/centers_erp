@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Events\NewCenterHasCreated;
+use App\Events\NewUserHasRegistered;
 use App\Events\NewInvitationHasCreated;
-use App\Listeners\CreateAdminJobForNewCenter;
+use App\Listeners\CreateCenterForNewUser;
 use App\Listeners\CreateEmployeeForCenterOwner;
 use App\Listeners\LogVerifiedUser;
 use App\Listeners\SendUserInvitation;
@@ -27,6 +27,10 @@ class EventServiceProvider extends ServiceProvider
         NewInvitationHasCreated::class => [
             SendUserInvitation::class,
         ],
+        NewUserHasRegistered::class => [
+            CreateCenterForNewUser::class,
+        ],
+
 
     ];
 

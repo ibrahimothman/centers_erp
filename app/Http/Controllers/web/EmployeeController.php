@@ -92,7 +92,7 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $jobs = $this->center->jobs;
-        $payment_models = $this->center->paymentModels;
+        $payment_models = PaymentModel::all();
         return view('employee.update', compact('employee', 'jobs', 'payment_models'));
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Employee;
+use App\Events\NewUserHasRegistered;
 use App\Invitation;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -82,6 +83,7 @@ class RegisterController extends Controller
                 ->where('token', $data['invitation_token'])
                 ->where('accepted', 0)
                 ->first();
+
             if($invitation){
                 // update invitation
                 $invitation->update([
@@ -97,7 +99,12 @@ class RegisterController extends Controller
                 Employee::where('email', $invitation->email)->update(['user_id' => $user->id]);
                 // delete invitation
                 $invitation->delete();
+
             }
+        }
+        // Create a center for the new registered user without invitations
+        else{
+            event(new NewUserHasRegistered($user));
         }
 
 

@@ -1,0 +1,9 @@
+{
+    "Login": "Sign in",
+    "Register": "Sign Up",
+    "scopes": [
+        {
+            "students": "طلاب"
+        }
+    ]
+}

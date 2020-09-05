@@ -7,24 +7,24 @@ $('input#addButton').on('click', function() {
         '<div class="col-sm-6 col-md-2 form-group">' +
         '<label for="validationCustom01">   تاريخ الامتحان</label>' +
         '<div class="input-group-append"> ' +
-        '<input  id="date-'+id+'" name="groups['+ id +'][date][day]" class="form-control datetimepicker"  placeholder="تاريخ الامتحان"    type="text" >' +
+        '<input autocomplete="off"  id="date-'+id+'" name="groups['+ id +'][date][day]" class="form-control datetimepicker required"  placeholder="تاريخ الامتحان"    type="text" >' +
         '<span class="fas fa-calendar-alt input-group-text start_date_calendar" aria-hidden="true "></span>' +
         ' </div></div>' +
         '<div class="col-sm-6 col-md-2 form-group ">' +
         '<label for="groups['+ id +'][begin]">  البدايه  </label>' +
-        '<select name="groups['+ id +'][date][begin]" class="form-control times"  id="begin-'+id+'"    ></select>' +
+        '<select name="groups['+ id +'][date][begin]" class="form-control times required"  id="begin-'+id+'"    ></select>' +
         '</div>' +
         '<div class="col-sm-6 col-md-2 form-group ">' +
         '<label for="groups['+ id +'][end]">  النهايه  </label>' +
-        '<select name="groups['+ id +'][date][end]" class="form-control times"  id="end-'+id+'"    ></select>' +
+        '<select name="groups['+ id +'][date][end]" class="form-control times required"  id="end-'+id+'"    ></select>' +
         '</div>' +
         '<div class="col-sm-6 col-md-2 form-group ">' +
         '<label for="groups['+ id +'][room]">  الغرفه  </label>' +
-        '<select name="groups['+ id +'][room]" class="form-control "  id="room-'+id+'"    ></select>' +
+        '<select name="groups['+ id +'][room]" class="form-control  required"  id="room-'+id+'"    ></select>' +
         '</div>' +
         '<div class="col-sm-6 col-md-1 form-group ">' +
         '<label for="validationCustom01">  عدد المقاعد  </label>' +
-        '<input type="number" name="groups['+ id +'][available_chairs]" class="form-control char"  id="seat-'+id+'"    >' +
+        '<input type="number" name="groups['+ id +'][available_chairs]" class="form-control char required"  id="seat-'+id+'"    >' +
         '</div>' +
         '<div class="col-lg-1 col-sm-1 form-group "> <button id="delete_row" class="btn delete_row" style=" border: none; color: red; padding: 12px 16px;font-size: 16px; margin-top: 20px"><i class="fa fa-close"></i></button> </div>'+
         '</div></div>');

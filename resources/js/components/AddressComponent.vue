@@ -3,7 +3,11 @@
     <div class="form-row">
         <div class="col-sm-6 form-group">
             <label> المحافظة </label>
-            <select class="form-control" name="state" v-model="selectedState" @change="getCities(selectedState)">
+            <select
+                class="form-control"
+                name="state"
+                v-model="selectedState"
+                @change="getCities(selectedState)">
                 <option v-for="state in states"
                     :value="state.state_id"
                     :key="state.id"
@@ -27,21 +31,24 @@
 <script>
     import axios from 'axios';
     export default {
-        props: ['address'],
+        props: ['address', 'state', 'city'],
         data(){
             return{
                 states: [],
-                selectedState: this.address.state || '',
-                selectedCity: this.address.city || '',
+                selectedState: this.state || this.address.state || '',
+                selectedCity: this.city || this.address.city || '',
                 cities: [],
 
 
             }
         },
+        watch: {
+          selectedState: function (newValue, oldValue) {
+
+          }
+        },
         created() {
-            // this.state = 'cairo'
-            console.log(this.selectedCity)
-            this.getStates()
+            this.getStates();
             if(this.selectedState){
                 this.getCities(this.selectedState)
             }
@@ -59,9 +66,8 @@
             },
             async getCities(stateId){
                 try {
-                    const response = await axios.get(`/states/${stateId}/cities`)
-                    this.cities = response.data
-                    // console.log(response.data);
+                    const response = await axios.get(`/states/${stateId}/cities`);
+                    this.cities = response.data;
                     if(!this.selectedCity) {
                         this.selectedCity = response.data[0].city_id
                     }

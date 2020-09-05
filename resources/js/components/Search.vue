@@ -46,7 +46,7 @@ import axios from 'axios';
 import debounce from 'lodash.debounce';
 
 export default {
-    props: ['endpoint', 'onPersonSelected'],
+    props: ['endpoint', 'onPersonSelected', 'resetFields'],
     data: function(){
         return this.initialData();
     },
@@ -54,8 +54,15 @@ export default {
         this.debouncedSearch = debounce(this.search, 500);
     },
     watch: {
-        searchValue: function(newValue, oldValue){
+        searchValue: function(){
             this.debouncedSearch();
+        },
+        resetFields: function(newValue){
+            if (newValue) {
+                setTimeout(function () {
+                    Object.assign(this.$data, this.initialData());
+                }, 3000);
+            }
         }
     },
     methods: {
@@ -69,12 +76,13 @@ export default {
             console.log('searching...');
             if(this.searchValue.trim()){
                 try {
-                    const res = await await axios.get(this.endpoint, {
+                    const res = await axios.get(this.endpoint, {
                         params: {
                             search_by: this.searchOption,
                             value:  this.searchValue
                         }
                     });
+                    console.log(res.data);
                     this.suggestionList = res.data;
                     this.modal = true;
                 } catch (error) {
@@ -105,7 +113,9 @@ export default {
                 suggestionList:[],
                 selectedPerson: {},
             }
-        }
+        },
+
+
     }
 }
 </script>

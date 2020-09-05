@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Center;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,19 +11,19 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewCenterHasCreated
+class NewUserHasRegistered
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    private $center;
+    public $user;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $user
      */
-    public function __construct($center)
+    public function __construct($user)
     {
-        $this->center = $center;
+        $this->user = $user;
     }
 
 

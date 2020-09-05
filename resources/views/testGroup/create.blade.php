@@ -43,7 +43,7 @@
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label class="s" for="test-options"> اسم الامتحان </label>
-                                            <select id="test-options" name="test_id" class="form-control" id="exampleFormControlSelect1">
+                                            <select id="test-options" name="test_id" class="form-control required" id="exampleFormControlSelect1">
                                                 <option value="0">اختار</option>
                                                 @foreach($allTests as $test)
                                                     <option value="{{ $test->id }}" {{ $test->id == $selected_test->id? 'selected': '' }}>{{ $test->name }}</option>
@@ -59,36 +59,36 @@
                                             <div class="col-sm-6 col-md-2 form-group" id="form-group">
                                                 <label for="validationCustom01">   تاريخ الامتحان</label>'
                                                 <div class="input-group-append">
-                                                    <input  id="date-1" name="groups[1][date][day]" class="form-control datetimepicker"  placeholder="تاريخ الامتحان"    type="text" >
+                                                    <input autocomplete="off"  id="date-1" name="groups[1][date][day]" class="form-control datetimepicker required"  placeholder="تاريخ الامتحان"    type="text" >
                                                     <span class="fas fa-calendar-alt input-group-text start_date_calendar" aria-hidden="true "></span>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-6 col-md-2 form-group" id="form-group">
                                                 <label for="test_time[1][begin]">  البدايه  </label>
-                                                <select name="groups[1][date][begin]" class="form-control times "  id="begin-1">
+                                                <select name="groups[1][date][begin]" class="form-control times required"  id="begin-1">
                                                 </select>
                                             </div>
 
                                             <div class="col-sm-6 col-md-2 form-group" id="form-group">
                                                 <label for="test_time[1][end]">  النهايه  </label>
-                                                <select  name="groups[1][date][end]" class="form-control times"  id="end-1"></select>
+                                                <select  name="groups[1][date][end]" class="form-control times required"  id="end-1"></select>
                                             </div>
 
                                             <div class="col-sm-6 col-md-2 form-group" id="form-group">
                                                 <label for="test_time[1][room]">  الغرفه  </label>
-                                                <select name="groups[1][room]" class="form-control "  id="room-1"></select>
+                                                <select name="groups[1][room]" class="form-control required"  id="room-1"></select>
                                             </div>
 
                                             <div class="col-sm-6 col-md-1 form-group" id="form-group">
                                                 <label for="test_time[1][seats]">  عدد المقاعد  </label>
-                                                <input type="number" name="groups[1][available_chairs]" class="form-control char"  id="seat-1">
+                                                <input type="number" name="groups[1][available_chairs]" class="form-control char required"  id="seat-1">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-row save">
                                         <div class="col-sm-6  ml-auto form-group">
-                                            <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> حفظ</button>
+                                            <button id="submit" class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> حفظ</button>
                                             <button class="btn  btn-danger" type="reset"><i class="glyphicon glyphicon-repeat"></i> الغاء</button>
                                         </div>
                                     </div>
@@ -138,6 +138,20 @@
             format:'Y-m-d'
         });
     })
+
+
+
+    $('#submit').on('click', function (e) {
+        console.log($( "#test-options option:selected" ).val() == 0);
+        if ($('.required').filter(function () {
+            return $.trim($(this).val()).length == 0;
+        }).length !== 0 || $( "#test-options option:selected" ).val() == 0) {
+            e.preventDefault();
+            alert('Please enter all data');
+        }
+    });
+
+
 </script>
 
 

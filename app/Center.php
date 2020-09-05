@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Events\NewCenterHasCreated;
+use App\Events\NewUserHasRegistered;
 use App\helper\ImageUploader;
 use App\QueryFilter\GroupId;
 use App\QueryFilter\Id;
@@ -68,6 +68,7 @@ class Center extends ImageUploader
     {
         return $this->hasMany(Job::class);
     }
+
 
     public function students()
     {

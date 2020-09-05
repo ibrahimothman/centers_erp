@@ -24,7 +24,7 @@
                     <div class="card mb-4">
                         <header>
                             <div class="card-header text-primary form-title ">
-                                <h3>تسجيل وظيفه جديده </h3>
+                                <h3>تعديل الوظائف</h3>
 
                             </div>
                         </header>
@@ -32,9 +32,8 @@
                             <form id="fromJob">
                                 <div class="form-group">
                                     <label>اسم الوظيفه</label>
-                                    <span class="required">*</span>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                           placeholder="اسم الوظيفه">
+                                    <input type="text" id="job_name" name="name" class="form-control" value="{{$job->name}}">
+
                                 </div>
                                 <!-- table -->
                                 <table id="roles_list" class="table table-striped table-bordered table-sm roles_list"
@@ -52,9 +51,17 @@
                                     <!-- first row -->
                                     @foreach(Lang::get('rules.scopes') as $scopeKey => $scope)
                                         <tr>
-                                            <th scope="row">{{$scope}}</th>
+                                            <th scope="row" id="{{ $scope }}">{{$scope}}</th>
                                             @foreach(Lang::get('rules.options') as $optionKey => $option)
-                                                <td><input id="{{ strtolower($scopeKey). '.'. strtolower($optionKey) }}" name="" type="checkbox" value=""></td>
+                                                <td>
+                                                    <input
+                                                        id="{{ strtolower($scopeKey). '.'. strtolower($optionKey) }}"
+                                                        name=""
+                                                        type="checkbox"
+                                                        {{ $job
+                                                            ->roles[Lang::get(strtolower($scopeKey))][Lang::get(strtolower($optionKey))] == 'true'? 'checked': '' }}
+                                                    >
+                                                </td>
                                             @endforeach
                                         </tr>
                                     @endforeach
@@ -65,7 +72,7 @@
                                 <div class="form-row save">
                                     <div class="col-sm-6 mx-auto text-center" style="width: 200px;">
                                         <button class="btn btn-primary" type="submit"
-                                                id="submit">اضافه
+                                                id="submit">تعديل
                                         </button>
                                         <button class="btn  btn-danger" type="reset"> الغاء</button>
                                     </div>
@@ -125,13 +132,12 @@
     $('#fromJob').submit(function (e) {
         e.preventDefault();
         $('.errors').remove();
-        var job_name = $('#name').val();
-        if(job_name.length === 0){
-            alert('enter job name');
-        }else {
+        const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+        console.log(id);
+        const job_name = $('#job_name').val();
             $.ajax({
-                type: 'POST',
-                url: '/jobs',
+                type: 'PATCH',
+                url: `/jobs/${id}`,
                 data: {
                     name: job_name,
                     roles: JSON.stringify(createRolesJson()),
@@ -144,9 +150,7 @@
                         className: 'done',
                         // autoHideDelay: 500000
                     });
-                    setTimeout(function () {
-                        location.reload();
-                    }, 3000);
+                    
                 },
                 error: function (error) {
                     if (error.status == 400) {// validation
@@ -161,10 +165,9 @@
                 }
 
             });
-        }
+
 
     });
-
 
 
 </script>
