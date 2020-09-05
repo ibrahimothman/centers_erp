@@ -23,13 +23,6 @@
         integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If"
         crossorigin="anonymous">
 
-    <style>
-        div[name="add"]{
-            display: inline-block;
-
-        }
-    </style>
-
 </head>
 <body class="bg-light">
 <div id="wrapper">
@@ -102,32 +95,8 @@
                                 <br>
                                 <h6>محتويات الغرفه</h6>
 
-                                <div class="card ">
-                                    @if($options)
-                                    <div class="card-body">
-                                        <div class=" row smiley-wrapper justify-content-center">
-                                            <div class="smiley " id="addBtn">
-
-                                                @foreach($options as $option)
-                                                    <div name="add">
-                                                        <button class="btn btn-primary" name="option"> <span >{{ $option }}</span></button>
-                                                    </div>
-                                                 @endforeach
-
-
-                                            </div>
-                                        </div>
-                                        <Br>
-                                        <div class=" row">
-                                            <div class="col text-center">
-                                                <fieldset  name="message"  style="min-height: 100px;" id="reply-message" class="markItUpEditor "></fieldset>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @else
-                                        <a href="/centers/options">اضف امكانيات</a>
-                                    @endif
-
+                                <div id="app">
+                                    <room-options :options="{{ $options }}" :extras="[]" :center_id="{{ session('center_id') }}"></room-options>
                                 </div>
                                 <br>
                                 <div class="form-row save">
@@ -155,6 +124,7 @@
 @include('scroll_top')
 <!-- script-->
 @include('script')
+<script src="{{ asset('js/app.js') }}"></script>
 <!-- script room option field-->
 <script type='text/javascript' src="/js/room_style.js"></script>
 <!-- client side validation plugin -->
@@ -163,14 +133,6 @@
 <script type='text/javascript' src="/js/room_create_validation.js"></script>
 
 <script>
-
-    function selectAll(source) {
-        console.log('asd');
-        var checkboxes = document.getElementsByClassName('check');
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-            checkboxes[i].checked = source.checked;
-        }
-    }
 
     $('#submit_new').on('click', function (e) {
         $('input[name=next]').val('create');

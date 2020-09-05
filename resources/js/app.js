@@ -31,6 +31,8 @@ import address_component from './components/AddressComponent.vue';
 import revenue_transaction from './components/RevenueTransaction.vue';
 import salary_transaction from './components/SalaryTransaction.vue';
 import calendar from './components/Calendar.vue';
+import RoomOptions from './components/RoomOptions.vue';
+import AddRoomOption from './components/AddRoomOption.vue';
 
 const app = new Vue({
     el: '#app',
@@ -39,5 +41,7 @@ const app = new Vue({
         revenue_transaction,
         salary_transaction,
         calendar,
+        RoomOptions,
+        AddRoomOption,
     }
 });

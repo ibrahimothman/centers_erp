@@ -36,8 +36,7 @@ class RoomsController extends Controller
     public function create()
     {
         $room = new Room();
-        $options = $this->center->getRoomOptions();
-
+        $options = $this->center->getRoomOptionsAsString();
         return view('rooms/room_create',compact('room', 'options'));
     }
 
@@ -57,7 +56,7 @@ class RoomsController extends Controller
 
     public function edit(Room $room)
     {
-        $options = $this->center->getRoomOptions();
+        $options = $this->center->getRoomOptionsAsString();
         return view('rooms/edit',compact('room', 'options'));
     }
 

@@ -49,7 +49,12 @@ class Center extends ImageUploader
         return $this->attributes['options'] = json_encode($options, JSON_UNESCAPED_UNICODE);
     }
 
-    public function getRoomOptions()
+    public function getRoomOptionsAsString()
+    {
+        return json_encode($this->options['room']);
+    }
+
+    public function getRoomOptionsAsArray()
     {
         return $this->options['room'];
     }

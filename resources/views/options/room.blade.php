@@ -23,38 +23,8 @@
                                 اضافه امكانيات الغرف
                             </div>
                         </header>
-                        <div class="card-body">
-                            <form id="form" method="post" action="{{route('centers.update', session('center_id'))}}" enctype="multipart/form-data">
-                                @csrf
-                                @method('put')
-                                <div class="form-row">
-                                    <div class="col form-group">
-                                        <label for="name">امكانيات المعمل</label>
-                                        <input id="option" type="text" placeholder="امكانيات المعمل" class="form-control " >
-                                    </div>
-                                </div>
-                                <div class="options">
-                                    @if($options && count($options) > 0)
-                                        @foreach($options as $option)
-                                            <div  style='display: inline-block' class='option-item'>
-                                                <input hidden name='options[room][]' value='{{$option}}'>
-                                                <button type="button" style='margin: 0 20px 20px;' class='btn btn-primary remove-option' data-dismiss='toast' aria-label='Close'>
-                                                    <span aria-hidden='true'>&times;</span>
-                                                    {{ $option }}</button>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                                <br>
-                                <div class="form-row save">
-                                    <div class="col-sm-6 mx-auto" style="width: 200px;">
-                                        <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة
-                                        </button>
-                                        <button class="btn  btn-danger action-buttons" type="reset"> إلغاء
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                        <div id="app">
+                            <add-room-option :options="{{ $options }}" :center_id="{{ session('center_id') }}"></add-room-option>
                         </div>
                     </div>
                 </div>
@@ -100,3 +70,4 @@
 </script>
 </body>
 </html>
+<script src="{{ asset('js/app.js') }}"></script>

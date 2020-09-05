@@ -19,7 +19,11 @@ class CenterController extends Controller
 
     public function update(Request $request, Center $center)
     {
-        $center->update($this->validateRequest());
+        $data = $this->validateRequest();
+        $center->update(array_except($data, ['source']));
+        if (isset($data['source']) && $data['source'] == 'api'){
+            return response()->json("successfully added", 200);
+        }
         return back()->with('success', 'successfully updated');
     }
 
@@ -33,12 +37,13 @@ class CenterController extends Controller
             'about_manager' => 'sometimes',
             'about_center' => 'sometimes',
             'options' => 'sometimes',
+            'source' => 'sometimes',
         ]);
     }
 
     public function options()
     {
-        $options = $this->center->getRoomOptions();
+        $options = $this->center->getRoomOptionsAsString();
 
         return view('options/room', compact('options'));
     }
