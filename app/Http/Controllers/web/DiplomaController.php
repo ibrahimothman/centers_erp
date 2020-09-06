@@ -6,17 +6,23 @@ use App\Http\Controllers\Controller;
 
 use App\Center;
 use App\Diploma;
+use App\Http\Resources\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Session;
 
 class DiplomaController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $diplomas = $this->allDiplomas();
+        if ($request->get('source') == 'api'){
+            $diplomas = $this->center->diplomas;
+            return response()->json($diplomas, 200);
+        }
         return view('diploma/diploma_view_all', compact('diplomas'));
     }
 
@@ -103,5 +109,22 @@ class DiplomaController extends Controller
 
 
 
+    }
+
+    public function getDiplomaInstructors($id)
+    {
+        $instructors = DB::select(
+            "SELECT DISTINCT * FROM instructors 
+                    INNER JOIN course_instructor 
+                    ON instructors.id = course_instructor.instructor_id 
+                    WHERE course_instructor.course_id 
+                    IN (
+                        SELECT courses.id FROM courses 
+                        INNER JOIN course_diploma 
+                        ON courses.id = course_diploma.course_id 
+                        WHERE course_diploma.diploma_id = $id)"
+        );
+
+        return response()->json($instructors, 200);
     }
 }

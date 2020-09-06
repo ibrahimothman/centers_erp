@@ -21,7 +21,7 @@ $('#instructor-options').on('change', function (e) {
 });
 
 function fillTimes(results, num, prefix) {
-        $('#diploma-day-'+prefix+'-'+num).append('<option value="0">اختر ميعاد</option>');
+        $('#diploma-day-'+prefix+'-'+num).append('<option value="">اختر ميعاد</option>');
         $.each(results, function (i, v) {
             $('#diploma-day-'+prefix+'-'+num).append('<option value="' + i + '">' + v + '</option>');
         });
@@ -79,7 +79,7 @@ $(document).on('change', '[id^=diploma-day-begin-]', function () {
 
 
 function fillRooms(results, num, prefix) {
-    $('#diploma-'+prefix+'-'+num).append('<option value="0">اختر الغرفه</option>');
+    $('#diploma-'+prefix+'-'+num).append('<option value="">اختر الغرفه</option>');
     $.each(results, function (i, room) {
         $('#diploma-'+prefix+'-'+num).append('<option value="' + room.id + '">' +room.name + '</option>');
     });
@@ -95,6 +95,7 @@ $(document).on('change', '[id^=diploma-day-end-]', function () {
     };
     makeCall('/available_rooms', 'GET', data, fillRooms,'room', num);
 });
+
 
 function time(day, begin, end) {
     this.day = day;

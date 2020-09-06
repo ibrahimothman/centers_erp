@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Center;
+use App\Diploma;
 use App\State;
 use App\Time;
 use Illuminate\Support\Facades\DB;

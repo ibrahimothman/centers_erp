@@ -46,7 +46,7 @@
                                                     <label for="validationCustom01">   تاريخ بداية الدورة</label>
                                                         <span class="required">*</span>
                                                         <div class='input-group date'>
-                                                            <input   id="datetimepicker" name="starts_at"  class="form-control" type="text" >                                                            <span class="input-group-addon">
+                                                            <input   id="datetimepicker" name="starts_at"  class="form-control required-input" type="text" required >                                                            <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
 
@@ -59,7 +59,7 @@
                                                     <label for="validationCustom01">عدد المقاعد المتاحه</label>
                                                     <span class="required">*</span>
                                                     <div class='input-group '>
-                                                        <input   id="available_chairs" name="available_chairs"  class="form-control" type="number" >                                                            <span class="input-group-addon">
+                                                        <input   id="available_chairs" name="available_chairs"  class="form-control required-input" type="number" required>                                                            <span class="input-group-addon">
                                                             </span>
                                                     </div>
                                                     <div class="addError" ></div>
@@ -71,7 +71,7 @@
                                                 <div class="col-sm-6 form-group">
                                                     <label for="course">اختار الدبلومه</label>
                                                     <span class="required">*</span>
-                                                    <select class="form-control" name="diploma"  id="selected_diploma" >
+                                                    <select class="form-control required-input" name="diploma"  id="selected_diploma" required>
                                                         <option value="">اختر</option>
                                                         @foreach($diplomas as $diploma)
                                                             <option data-extra="{{ $diploma }}" value="{{ $diploma->id }}">{{ $diploma->name }}</option>
@@ -83,7 +83,7 @@
 
                                                 <div class="col-sm-6 form-group">
                                                     <label for="validationCustom01">اختر المدرس</label>
-                                                    <select class="form-control" id="instructor-options" name="instructor_id">
+                                                    <select class="form-control required-input" id="instructor-options" name="instructor_id" required>
                                                     </select>
                                                 </div>
 
@@ -95,7 +95,7 @@
                                                     <label for="validationCustom01">   اختر اليوم</label>
                                                     <div class='input-group date'>
 
-                                                        <input id="diploma-day-1" name="diploma-days[]" onclick="onDayClicked(1)"  class="form-control" type="text" >
+                                                        <input id="diploma-day-1" name="diploma-days[]" onclick="onDayClicked(1)"  class="form-control required-input" type="text" autocomplete="off" required >
                                                         <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
@@ -104,7 +104,7 @@
                                                 </div>
                                                 <div class="col-sm-3 form-group">
                                                     <label for="diploma-day-1-begin"> بداية المحاضرة</label>
-                                                    <select class="form-control" id="diploma-day-begin-1" name="diploma-begins[]"
+                                                    <select class="form-control required-input" id="diploma-day-begin-1" name="diploma-begins[]" required
                                                             >
 
                                                     </select>
@@ -114,7 +114,7 @@
 
                                                 <div class="col-sm-3 form-group">
                                                     <label for="diploma-day-1-end"> نهاية المحاضرة</label>
-                                                    <select class="form-control" id="diploma-day-end-1" name="diploma-ends[]"
+                                                    <select class="form-control required-input" id="diploma-day-end-1" name="diploma-ends[]" required
                                                             >
 
                                                     </select>
@@ -124,7 +124,7 @@
 
                                                 <div class="col-sm-3 form-group">
                                                     <label for="validationCustom01">اختر الغرفه</label>
-                                                    <select class="form-control" id="diploma-room-1" name="diploma-rooms[]"
+                                                    <select class="form-control required-input" id="diploma-room-1" name="diploma-rooms[]" required
                                                             >
 
                                                     </select>
@@ -138,7 +138,7 @@
 
                                                 <div class="col-sm-6 mx-auto" style="width: 200px;">
                                                     <hr/>
-                                                    <button class="btn btn-primary action-buttons" type="submit" id="submit"> إضافة  <i class="fas fa-plus"></i></button>
+                                                    <button class="btn btn-primary action-buttons" type="submit" id="submit" > إضافة  <i class="fas fa-plus"></i></button>
                                                     <button class="btn  btn-danger action-buttons" type="reset">  إلغاء  <i class="fas fa-times"></i></button>
                                                 </div>
 
@@ -172,8 +172,6 @@
                     format:'Y-m-d'
                 });
             });
-             // let number = 1;
-
              function onDayClicked(num) {
                  $('#diploma-day-'+num).datetimepicker({
                      timepicker:false,
@@ -187,6 +185,5 @@
     <link rel="stylesheet" type="text/css" href="{{url('css/jquery.datetimepicker.min.css')}}"/>
     <script src="{{url('js/jquery.datetimepicker.js')}}"></script>
     <script type='text/javascript' src="{{url('js/createCourse.js')}}"></script>
-
 </html>
 

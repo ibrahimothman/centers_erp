@@ -32,7 +32,7 @@ function addDayInCourse(num) {
         <label for="validationCustom01">   اختر اليوم</label>
         <div class='input-group date'>
 
-        <input id="diploma-day-${num}" name="diploma-days[]"   onclick="onDayClicked(${num})" class="form-control" type="text" >
+        <input id="diploma-day-${num}" name="diploma-days[]"   onclick="onDayClicked(${num})" class="form-control required-input" type="text" autocomplete="off" required >
         
         <span class="input-group-addon">
            <span class="glyphicon glyphicon-calendar"></span>
@@ -42,7 +42,7 @@ function addDayInCourse(num) {
       </div>
     <div class="col-sm-3 form-group extra_time">
         <label for="diploma-day-${num}-begin"> بداية المحاضرة</label>
-        <select class="form-control" id="diploma-day-begin-${num}"  name="diploma-begins[]" >
+        <select class="form-control required-input" id="diploma-day-begin-${num}"  name="diploma-begins[]" required >
             
         </select>
             <span id="test_diploma-day-${num}-begin_error"></span>
@@ -50,7 +50,7 @@ function addDayInCourse(num) {
     </div>
     <div class="col-sm-3 form-group extra_time">
         <label for="diploma-day-${num}-end"> نهاية المحاضرة</label>
-        <select class="form-control" id="diploma-day-end-${num}" name="diploma-ends[]">
+        <select class="form-control required-input" id="diploma-day-end-${num}" name="diploma-ends[]" required>
             
         </select>
             <span id="test_diploma-day-${num}-end_error"></span>
@@ -58,7 +58,7 @@ function addDayInCourse(num) {
     </div>
     <div class="col-sm-3 form-group extra_time">
        <label for="validationCustom01">اختر الغرفه</label>
-       <select class="form-control" id="diploma-room-${num}" name="diploma-rooms[]"required></select>
+       <select class="form-control required-input" id="diploma-room-${num}" name="diploma-rooms[]"required></select>
     </div>
     
     

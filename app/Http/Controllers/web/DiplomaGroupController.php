@@ -23,10 +23,9 @@ use Illuminate\Support\Facades\Validator;
 class DiplomaGroupController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $diplomas = Diploma::allDiplomas($this->center);
-
         $allDiplomas = $this->center->diplomas;
         return view('diploma.allgroups', compact('allDiplomas', 'diplomas'));
     }

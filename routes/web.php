@@ -96,6 +96,7 @@ Route::group([
 
 
         //------------------ Diplomas ---------------
+        Route::get('/diplomas/{id}/instructors', "$web_controllers_path\DiplomaController@getDiplomaInstructors");
         Route::resource('diplomas', "$web_controllers_path\DiplomaController");
 
         //----------------- Diploma Groups----------------
