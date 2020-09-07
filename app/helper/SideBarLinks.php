@@ -121,7 +121,7 @@ class SideBarLinks
     {
         return [
             url('/').'/'.'settings' =>'الاعدادات',
-            url('/').'/'.'centers/options' => 'امكانيات الغرف',
+//            url('/').'/'.'centers/options' => 'امكانيات الغرف',
 
         ];
     }

@@ -38,9 +38,10 @@
                                         <div class="text-center">
                                             <img src="{{ $student->getImage("image") }}" class="avatar img-circle img-thumbnail" alt="avatar">
 
-                                        </div></hr><br>
-                                        <p>تاريخ الاضافه : {{$student->created_at}}</p>
+                                        </div></hr>
 
+                                        <p>تاريخ الاضافه : {{$student->created_at}}</p>
+                                        <br>
                                         @can('update', $student)
                                             <a href="{{ route('students.edit', ['student' => $student]) }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> تعديل الملف الشخصى  </a>
                                         @endcan
