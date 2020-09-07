@@ -37,6 +37,31 @@
                                 <form action="{{route('instructors.store')}}" method="post" enctype="multipart/form-data" id="addInstructor">
                                     @csrf
                                     <input name="next" value="save" hidden>
+                                    <div class="form-row image-upload">
+                                        <div class="col-sm-8">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
+                                                       id="customFile1" src="" onchange="readURL(this, 1);" required>
+                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
+                                                       id="customFile2" src="" onchange="readURL(this, 2);" required>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center  ">
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                 alt="your image"/>
+                                            <p>صورة البطاقه</p>
+                                        </div>
+                                        <div class="course-image-input">
+                                            <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
+                                                 alt="your image"/>
+                                            <p>الصوره الشخصيه</p>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="form-row form-group">
                                         <div class="col-sm-12 ">
                                             <label>الاسم باللغه العربيه</label>
@@ -141,31 +166,8 @@
                                     </div>
 
 
-                                    <div class="form-row image-upload">
-                                        <div class="col-sm-8">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" accept="image/*" name="idImage"
-                                                       id="customFile1" src="" onchange="readURL(this, 1);" required>
-                                                <input type="file" class="custom-file-input" accept="image/*" name="image"
-                                                       id="customFile2" src="" onchange="readURL(this, 2);" required>
 
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-center  ">
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded1" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
-                                                 alt="your image"/>
-                                            <p>صورة البطاقه</p>
-                                        </div>
-                                        <div class="course-image-input">
-                                            <img id="imageUploaded2" src="http://simpleicon.com/wp-content/uploads/camera-2.svg"
-                                                 alt="your image"/>
-                                            <p>الصوره الشخصيه</p>
-                                        </div>
-                                    </div>
-                                    <br>
                                     <div class="form-row save">
                                         <div class="col-sm-6 mx-auto text-center">
                                             <button class="btn btn-primary" type="submit" id="submit">حفظ</button>

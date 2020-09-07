@@ -88,20 +88,21 @@
                             <div class="row cont-det" id="container">
 
                                 @foreach($employees as $employee)
-                                    <div class="col-12 col-md-3" id="container-{{$employee->id}}">
-                                        <div class="card card-sh  border-primary mb-3" >
+                                    <div class="col-12 col-md-3 px-1" id="container-{{$employee->id}}">
+                                        <div class="card card-sh  border-primary mb-3 " >
 
                                             <div class="card-header bg-transparent border-primary">{{$employee->nameAr}}</div>
                                             <div class="card-body ">
                                                 <p class="card-text">
-                                                    <img src="{{$employee->image }}" alt="" onerror="imgError(this);" class="rounded-circle img-profile-contact float-right img-responsive">
+                                                    <img src="{{$employee->image }}" alt="" onerror="imgError(this);" class="rounded-circle img-profile-contact img-responsive">
+                                               <br>
                                                 <ul class="list-unstyled contact-det">
-                                                    <li><i class="fas fa-envelope btn-circle"></i> البريد الالكترونى
+                                                    <li><i class="fas fa-envelope btn-circle text-primary"></i><span class="text-primary">البريد الالكترونى </span>
                                                         <br>{{$employee->email}}
                                                     </li>
                                                     <li>
-                                                        <i class="fa fa-phone btn-circle"></i> التليفون:
-                                                        <span> {{$employee->phoneNumber}}  </span>
+                                                        <i class="fa fa-phone btn-circle text-primary"></i><span class="text-primary">التليفون:</span>
+                                                        <span>{{$employee->phoneNumber}}  </span>
                                                     </li>
                                                     <li class="gray">تاريخ الاضافه : {{ $employee->created_at }}</li>
 
@@ -111,12 +112,13 @@
                                             </div>
 
                                             <form class="card-footer border-primary">
+                                                @can('view', $employee)
+                                                    <a href="/employees/{{$employee->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى</a>
+                                                @endcan
                                                 @can('delete', $employee)
                                                     <button type="button" class="btn btn-success btn-xs" id="delete-employees-{{ $employee->id }}"> <i class="fas fa-trash-alt"></i> </button>
                                                 @endcan
-                                                @can('view', $employee)
-                                                    <a href="/employees/{{$employee->id}}" class="btn btn-primary btn-xs"><i class="fa fa-user"> </i> الملف الشخصى </a>
-                                                @endcan
+
                                             </form>
 
 
